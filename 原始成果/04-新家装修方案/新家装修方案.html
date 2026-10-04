@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>新家装修方案 · 暖木自然</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Clean / Natural  ·  warm white + olive accent + serif headings
+   Canvas 1280 x 720 (fixed px only — no vw/vh/clamp inside canvas)
+   ============================================================ */
+:root{
+  --bg:#fafaf8;
+  --bg-2:#f4f3f0;
+  --surface:#edecea;
+  --line:rgba(0,0,0,.06);
+  --line-strong:rgba(0,0,0,.12);
+  --text:#1a1816;
+  --text-2:#5c5650;
+  --text-3:#9a928a;
+  --accent:#2d4a3e;
+  --accent-soft:rgba(45,74,62,.08);
+  /* 书挡页（封面 / 结尾）专用暖调 —— 陶土棕 */
+  --accent-warm:#8f4a26;
+  --accent-warm-deep:#6d3618;
+  --serif:'Cormorant Garamond','Noto Serif SC','Source Han Serif SC','Songti SC',Georgia,serif;
+  --sans:'Inter','Noto Sans SC',system-ui,'Microsoft YaHei',sans-serif;
+  --pad-x:72px;
+  --pad-y:56px;
+  --radius:16px;
+  --radius-sm:12px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:#ecebe7;
+  color:var(--text);
+  font-family:var(--sans);
+  overflow:hidden;
+}
+
+/* ---------- Canvas (single layer: positioning + scaling merged) ---------- */
+#canvas{
+  position:fixed;
+  top:50%; left:50%;
+  width:1280px; height:720px;
+  background:var(--bg);
+  color:var(--text);
+  overflow:hidden;
+  border-radius:3px;
+  box-shadow:0 10px 60px rgba(0,0,0,.16), 0 2px 8px rgba(0,0,0,.08);
+  transform:translate(-50%,-50%) scale(1);
+  transform-origin:50% 50%;
+}
+
+/* ---------- Slides ---------- */
+.slide{
+  position:absolute; inset:0;
+  padding:var(--pad-y) var(--pad-x);
+  display:grid;
+  opacity:0; visibility:hidden;
+  transform:translateY(8px);
+  transition:opacity .7s cubic-bezier(.4,0,.2,1),
+             transform .7s cubic-bezier(.4,0,.2,1),
+             visibility .7s;
+}
+.slide.active{opacity:1; visibility:visible; transform:translateY(0)}
+
+/* ---------- Typography ---------- */
+.kicker{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--text-3)}
+.label{font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3)}
+.h-display{font-family:var(--serif);font-weight:300;font-size:108px;line-height:.96;
+  letter-spacing:-.02em;color:var(--text)}
+.h-1{font-family:var(--serif);font-weight:400;font-size:64px;line-height:1.02;
+  letter-spacing:-.01em;color:var(--text)}
+.h-2{font-family:var(--serif);font-weight:400;font-size:36px;line-height:1.15;color:var(--text)}
+.lead{font-family:var(--sans);font-size:18px;line-height:1.7;color:var(--text-2);max-width:62ch}
+.body{font-family:var(--sans);font-size:15px;line-height:1.7;color:var(--text-2)}
+em{font-style:italic;color:var(--accent)}
+
+/* ---------- Chrome (absolute children of the canvas) ---------- */
+.chrome-top,.chrome-bottom{
+  position:absolute; left:var(--pad-x); right:var(--pad-x);
+  display:flex; align-items:center; justify-content:space-between;
+  font-family:var(--sans); font-size:11px; letter-spacing:.06em;
+  color:var(--text-3); z-index:20; pointer-events:none;
+  transition:opacity .4s ease, visibility .4s;
+}
+.chrome-top{top:0;padding-top:28px}
+.chrome-bottom{bottom:0;padding-bottom:28px}
+.chrome-bottom b{font-weight:500;color:var(--text-2)}
+#canvas.is-close .chrome-top,#canvas.is-close .chrome-bottom{opacity:0;visibility:hidden}
+
+/* ---------- Nav dots ---------- */
+#nav{
+  position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
+  display:flex; align-items:center; gap:8px; z-index:30;
+}
+#nav i{display:block;width:16px;height:2px;border-radius:1px;
+  background:var(--line-strong);cursor:pointer;transition:background .3s,width .3s}
+#nav i.active{background:var(--accent);width:24px}
+#canvas.is-bookend #nav i.active{background:var(--accent-warm)}
+
+/* ---------- Stagger motion ---------- */
+.slide .stagger > *{opacity:0}
+.slide.active .stagger > *{animation:fadeUp .9s cubic-bezier(.25,.8,.25,1) both}
+.slide.active .stagger > *:nth-child(1){animation-delay:.06s}
+.slide.active .stagger > *:nth-child(2){animation-delay:.16s}
+.slide.active .stagger > *:nth-child(3){animation-delay:.26s}
+.slide.active .stagger > *:nth-child(4){animation-delay:.36s}
+.slide.active .stagger > *:nth-child(5){animation-delay:.46s}
+.slide.active .stagger > *:nth-child(6){animation-delay:.56s}
+.slide.active .stagger > *:nth-child(7){animation-delay:.66s}
+.slide.active .stagger > *:nth-child(8){animation-delay:.76s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ============================================================
+   T01-D · Cover Hero
+   ============================================================ */
+.s-cover-hero{grid-template-rows:1fr auto;padding:0;overflow:hidden;
+  background:#2b1a10 center/cover no-repeat}
+.s-cover-hero::before{content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top,rgba(58,27,10,.86) 0%,rgba(92,48,20,.42) 48%,rgba(120,72,32,.08) 100%)}
+.cover-hero-content{position:relative;z-index:2;align-self:end;max-width:78%;
+  padding:0 var(--pad-x) 26px}
+.cover-hero-content .kicker{color:rgba(255,230,206,.72)}
+.cover-hero-content .h-display{color:#fff;font-size:96px;line-height:.94;margin-top:16px}
+.cover-hero-content .lead{color:rgba(255,238,224,.86);margin-top:20px;max-width:46ch;font-size:16px}
+.cover-hero-meta{position:relative;z-index:2;display:flex;justify-content:flex-end;
+  gap:36px;padding:16px var(--pad-x) 46px;font-size:11px;letter-spacing:.06em;
+  color:rgba(255,228,204,.68)}
+.cover-hero-meta strong{margin-left:8px;font-weight:500;font-size:13px;color:rgba(255,242,228,.96)}
+
+/* ============================================================
+   T02 · Agenda
+   ============================================================ */
+.s-agenda{grid-template-columns:330px 1fr;gap:72px;align-items:center}
+.s-agenda .h-1{font-size:52px;margin-top:18px}
+.s-agenda .lead{margin-top:22px;font-size:15px;max-width:30ch}
+.agenda-list{display:flex;flex-direction:column;min-height:0;overflow:hidden;max-height:608px}
+.agenda-item{display:grid;grid-template-columns:60px 1fr auto;gap:20px;
+  align-items:baseline;padding:18px 0;border-bottom:1px solid var(--line)}
+.agenda-item:last-child{border-bottom:none}
+.agenda-item .idx{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--accent)}
+.agenda-item .name{font-family:var(--serif);font-size:26px;font-weight:500;color:var(--text)}
+.agenda-item .en{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-3)}
+
+/* ============================================================
+   T10 · Feature Split
+   ============================================================ */
+.s-feature{grid-template-columns:55% 1fr;gap:64px;align-items:center}
+.s-feature.reverse{grid-template-columns:1fr 55%}
+.s-feature.reverse .feature-img{grid-column:2;grid-row:1}
+.s-feature.reverse .feature-text{grid-column:1;grid-row:1}
+.feature-img{height:608px;max-height:608px;border-radius:var(--radius-sm);
+  overflow:hidden;background:var(--surface)}
+.feature-img img{width:100%;height:100%;object-fit:cover;display:block}
+.feature-text{max-height:582px;overflow:hidden;align-self:center}
+.feature-text .h-1{font-size:42px;line-height:1.1;margin-top:16px}
+.feature-text .lead{margin-top:18px;font-size:16px;max-width:40ch}
+.feature-points{margin-top:26px}
+.feature-point{display:grid;grid-template-columns:56px 1fr;gap:20px;
+  padding:14px 0;border-top:1px solid var(--line)}
+.feature-point .idx{font-family:var(--serif);font-size:13px;color:var(--accent);padding-top:4px}
+.feature-point .h{font-size:18px;font-weight:600;color:var(--text)}
+.feature-point .d{font-size:13.5px;line-height:1.55;margin-top:5px;color:var(--text-2)}
+
+/* ============================================================
+   T13 · Hero Image
+   ============================================================ */
+.s-hero{grid-template-rows:1fr auto;gap:0}
+.hero-img{overflow:hidden;max-height:456px;align-self:start;
+  border-radius:var(--radius-sm);background:var(--surface)}
+.hero-img img{width:100%;height:100%;max-height:456px;object-fit:cover;display:block}
+.hero-bottom{display:grid;grid-template-columns:1fr auto;align-items:end;gap:40px;
+  padding:22px 4px 0}
+.hero-bottom .kicker{margin-bottom:8px}
+.hero-bottom .h-1{font-size:40px}
+.hero-bottom .lead{margin-top:10px;font-size:14px;max-width:58ch}
+.hero-meta{display:flex;gap:28px;align-items:baseline;padding-bottom:4px}
+.hero-meta span{font-size:11px;letter-spacing:.04em;color:var(--text-3);white-space:nowrap}
+.hero-meta strong{font-weight:500;font-size:15px;color:var(--text);margin-left:8px}
+.hero-meta .tagline{color:var(--accent);font-weight:500}
+
+/* ============================================================
+   Shared heads (gallery / dense / free)
+   ============================================================ */
+.gallery-head,.dense-head,.free-head{display:grid;grid-template-columns:auto 1fr;
+  align-items:end;gap:32px}
+.gallery-head .h-1,.free-head .h-1{font-size:40px;margin-top:12px}
+.gallery-head .lead,.free-head .lead{font-size:14px;max-width:54ch;
+  justify-self:end;text-align:right;align-self:end}
+.dense-head .h-1{font-size:42px;line-height:1.1;margin-top:12px}
+.dense-head .lead{max-width:48ch;font-size:15px;align-self:end;
+  justify-self:end;text-align:right}
+
+/* ============================================================
+   T09 · Gallery Grid
+   ============================================================ */
+.s-gallery{padding-top:80px;padding-bottom:84px;gap:16px;grid-template-rows:auto 1fr}
+.gallery-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+  gap:12px;min-height:0;overflow:hidden}
+.gallery-card{display:flex;flex-direction:column;gap:10px;min-height:0;overflow:hidden}
+.gallery-img{flex:1;min-height:0;overflow:hidden;border-radius:var(--radius-sm);
+  background:var(--surface)}
+.gallery-img img{width:100%;height:100%;object-fit:cover;display:block}
+.gallery-cap{display:flex;align-items:center;gap:14px}
+.gallery-cap .title{font-family:var(--serif);font-size:15px;font-weight:500;color:var(--text)}
+
+/* ============================================================
+   T11 · Duo Images
+   ============================================================ */
+.s-duo{padding-top:80px;padding-bottom:84px;gap:20px;grid-template-rows:auto 1fr}
+.duo-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;min-height:0;overflow:hidden}
+.duo-card{display:flex;flex-direction:column;gap:12px;min-height:0;overflow:hidden}
+.duo-img{flex:1;min-height:0;overflow:hidden;border-radius:var(--radius-sm);
+  background:var(--surface)}
+.duo-img img{width:100%;height:100%;object-fit:cover;display:block}
+.duo-cap .title{font-family:var(--serif);font-size:19px;font-weight:500;
+  color:var(--text);margin-top:8px}
+.duo-cap .desc{font-size:13.5px;line-height:1.6;color:var(--text-2);
+  margin-top:8px;max-width:52ch}
+.duo-cap .swatches{display:flex;gap:8px;margin-top:12px}
+.duo-cap .swatches span{font-size:11px;padding:5px 12px;border-radius:999px;
+  background:var(--surface);color:var(--text-2)}
+
+/* ============================================================
+   T18 · Dense Table
+   ============================================================ */
+.s-dense-table{grid-template-rows:auto auto;align-content:center;gap:20px}
+.dense-table{display:flex;flex-direction:column;border-radius:10px;overflow:hidden}
+.dt-row{display:grid;grid-template-columns:170px 1fr 118px 84px 1fr;
+  gap:16px;align-items:center;padding:12px 18px;
+  border-bottom:1px solid var(--line);font-size:13px;color:var(--text-2)}
+.dt-row:nth-child(even){background:rgba(0,0,0,.016)}
+.dt-header{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--bg-2);color:var(--text-3);border-bottom:1px solid var(--line)}
+.dt-label{font-weight:600;font-size:13px;color:var(--text)}
+.dt-num{font-family:var(--serif);font-size:17px;color:var(--accent)}
+.dt-total{background:var(--accent-soft);border-bottom:none;font-weight:600;color:var(--text)}
+.dt-total .dt-num{color:var(--accent)}
+
+/* ============================================================
+   T23 · Free Single (timeline)
+   ============================================================ */
+.s-free-single{grid-template-rows:auto 1fr;gap:24px}
+.free-body{min-height:0;overflow:hidden}
+.tl{display:flex;flex-direction:column}
+.tl-item{display:grid;grid-template-columns:84px 24px 1fr auto;gap:18px;
+  align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+.tl-item:last-child{border-bottom:none}
+.tl-week{font-family:var(--serif);font-size:17px;color:var(--accent);letter-spacing:.02em}
+.tl-rail{position:relative;align-self:stretch;display:flex;align-items:center;justify-content:center}
+.tl-rail::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:1px;
+  background:var(--line-strong);transform:translateX(-50%)}
+.tl-item:first-child .tl-rail::before{top:50%}
+.tl-item:last-child .tl-rail::before{bottom:50%}
+.tl-dot{position:relative;z-index:1;width:8px;height:8px;border-radius:50%;
+  background:var(--line-strong);box-shadow:0 0 0 5px var(--bg)}
+.tl-item.confirm .tl-dot{background:var(--accent)}
+.tl-body{min-width:0}
+.tl-h{display:block;font-size:17px;font-weight:600;color:var(--text)}
+.tl-d{display:block;font-size:13px;color:var(--text-2);margin-top:3px}
+.tl-tag{font-size:11px;letter-spacing:.08em;color:var(--text-3);white-space:nowrap}
+.tl-item.confirm .tl-tag{color:var(--accent);font-weight:500}
+
+/* ============================================================
+   T24 · Free Dual
+   ============================================================ */
+.s-free-dual{grid-template-rows:auto 1fr;gap:22px}
+.free-body.free-cols-2{display:grid;grid-template-columns:1fr 1fr;gap:28px;
+  align-items:stretch}
+.free-col{display:flex;flex-direction:column;gap:14px;min-height:0}
+.bed-img{flex:1;min-height:0;overflow:hidden;border-radius:var(--radius-sm);
+  background:var(--surface)}
+.bed-img img{width:100%;height:100%;object-fit:cover;display:block}
+.mat-card{flex:1;display:flex;flex-direction:column;justify-content:center;
+  background:var(--bg-2);border-radius:var(--radius);padding:30px 32px}
+.mat-row{display:grid;grid-template-columns:76px 1fr;gap:22px;align-items:baseline;
+  padding:15px 0;border-bottom:1px solid var(--line)}
+.mat-row:last-child{border-bottom:none}
+.mat-k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3)}
+.mat-v{font-size:15px;color:var(--text)}
+.mat-v small{display:block;font-size:12px;color:var(--text-3);margin-top:3px}
+
+/* ============================================================
+   T25 · Free Triple
+   ============================================================ */
+.s-free-triple{grid-template-rows:auto auto;gap:24px;align-content:center}
+.free-body.free-cols-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;
+  align-items:stretch}
+.card{background:var(--bg-2);border-radius:var(--radius);padding:30px 28px;
+  display:flex;flex-direction:column}
+.q-num{font-family:var(--serif);font-size:46px;font-weight:300;line-height:1;color:var(--accent)}
+.q-title{font-family:var(--serif);font-size:24px;font-weight:500;line-height:1.25;
+  color:var(--text);margin-top:18px}
+.q-desc{font-size:13.5px;line-height:1.72;color:var(--text-2);margin-top:14px}
+.q-opts{margin-top:auto;padding-top:22px;display:flex;flex-direction:column;gap:8px}
+.q-opts span{font-size:12px;padding:9px 14px;border-radius:9px;
+  background:var(--surface);color:var(--text-2)}
+
+/* ============================================================
+   T08 · Closing
+   ============================================================ */
+.s-close{grid-template-columns:1fr 1fr;padding:0}
+.close-left{background:var(--accent-warm);color:#fff;display:flex;flex-direction:column;
+  justify-content:space-between;padding:28px 46px 28px var(--pad-x)}
+.close-right{background:var(--bg);display:flex;flex-direction:column;
+  justify-content:space-between;padding:28px var(--pad-x) 28px 46px}
+.chrome-min{display:flex;justify-content:space-between;font-size:11px;
+  letter-spacing:.06em;color:rgba(255,235,220,.74)}
+.close-right .chrome-min{color:var(--text-3)}
+.manifesto .meta{font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(255,235,220,.76)}
+.manifesto h2{font-family:var(--serif);font-size:80px;font-weight:300;line-height:.98;
+  color:#fff;margin-top:16px}
+.manifesto .sub{font-size:15px;line-height:1.7;color:rgba(255,242,232,.86);
+  margin-top:16px;max-width:30ch}
+.sig{display:flex;justify-content:space-between;font-size:11px;
+  letter-spacing:.06em;color:rgba(255,235,220,.74)}
+.takeaways{display:flex;flex-direction:column;justify-content:center;
+  max-height:500px;overflow:hidden}
+.take-item{display:grid;grid-template-columns:auto 1fr;gap:24px;
+  align-items:start;padding:20px 0;border-bottom:1px solid var(--line)}
+.take-item:last-child{border-bottom:none}
+.take-item .num{font-family:var(--serif);font-size:52px;font-weight:300;
+  line-height:1;color:var(--accent-warm)}
+.take-item h3{font-family:var(--serif);font-size:22px;font-weight:500;
+  color:var(--text);margin-bottom:8px}
+.take-item p{font-size:13.5px;line-height:1.6;color:var(--text-2)}
+.foot{font-size:12px;font-weight:500;color:var(--accent-warm)}
+</style>
+</head>
+<body>
+
+<div id="canvas">
+
+  <!-- ===== persistent chrome (absolute children of the canvas) ===== -->
+  <div class="chrome-top"><span>新家装修方案 · 暖木自然</span><span>2026 · V1.0 提案稿</span></div>
+  <div class="chrome-bottom"><span>家庭装修提案 / 三居改造</span><span><b id="pnum">01</b> / 12</span></div>
+  <div id="nav"></div>
+
+  <!-- ============ 01 · Cover Hero ============ -->
+  <section class="slide s-cover-hero active"
+    style="background-image:url('https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=warm%20minimalist%20living%20room%20interior%2C%20light%20oak%20wood%20floor%2C%20cream%20linen%20sofa%2C%20floor%20to%20ceiling%20window%2C%20soft%20afternoon%20sunlight%2C%20beige%20warm%20neutral%20palette%2C%20editorial%20interior%20photography%2C%20no%20text&amp;image_size=landscape_16_9')">
+    <div class="cover-hero-content stagger">
+      <span class="kicker">2026 / 家庭装修提案</span>
+      <h1 class="h-display">新家<br>装修方案</h1>
+      <p class="lead">暖木自然 · 三居改造 · 预算 38.6 万 · 工期 12 周</p>
+    </div>
+    <div class="cover-hero-meta stagger">
+      <span>主案设计<strong>V1.0 提案稿</strong></span>
+      <span>提交日期<strong>2026.10</strong></span>
+      <span>决策人<strong>全家共议</strong></span>
+    </div>
+  </section>
+
+  <!-- ============ 02 · Agenda ============ -->
+  <section class="slide s-agenda">
+    <div class="stagger">
+      <span class="kicker">Contents / 目录</span>
+      <h2 class="h-1">今天要过的<br>五件事</h2>
+      <p class="lead">从风格到预算、再到时间表，最后留三个问题请大家拍板。</p>
+    </div>
+    <div class="agenda-list stagger">
+      <div class="agenda-item"><span class="idx">01</span><span class="name">整体风格定位</span><span class="en">Style Direction</span></div>
+      <div class="agenda-item"><span class="idx">02</span><span class="name">空间效果与材质</span><span class="en">Rooms &amp; Materials</span></div>
+      <div class="agenda-item"><span class="idx">03</span><span class="name">主材与家电预算</span><span class="en">Budget</span></div>
+      <div class="agenda-item"><span class="idx">04</span><span class="name">施工时间表</span><span class="en">Schedule</span></div>
+      <div class="agenda-item"><span class="idx">05</span><span class="name">待家人决策三问</span><span class="en">Decisions</span></div>
+    </div>
+  </section>
+
+  <!-- ============ 03 · Style direction (T10) ============ -->
+  <section class="slide s-feature">
+    <div class="feature-img stagger">
+      <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=flat%20lay%20of%20interior%20material%20samples%2C%20light%20oak%20veneer%2C%20beige%20linen%20fabric%2C%20warm%20travertine%20stone%2C%20off%20white%20paint%20swatch%2C%20soft%20daylight%2C%20minimal%20styling%2C%20top%20view%2C%20no%20text&amp;image_size=landscape_4_3"
+        alt="室内主材样板平铺：白橡木饰面、亚麻织物、暖米色石材与暖白涂料色板">
+    </div>
+    <div class="feature-text stagger">
+      <span class="kicker">01 / 风格定位</span>
+      <h1 class="h-1">暖木自然，<br>克制而不冷淡</h1>
+      <p class="lead">以暖白为底、原木为骨、织物为肤，用最少的设计动作换最大的生活弹性。</p>
+      <div class="feature-points">
+        <div class="feature-point">
+          <span class="idx">01</span>
+          <div><div class="h">底色 · 暖白</div>
+            <div class="d">墙面统一暖白，避开冷白带来的“出租屋感”，阴天也不发青。</div></div>
+        </div>
+        <div class="feature-point">
+          <span class="idx">02</span>
+          <div><div class="h">骨架 · 原木</div>
+            <div class="d">白橡为主、胡桃为辅，全屋木色统一在同一色阶内，不跳色。</div></div>
+        </div>
+        <div class="feature-point">
+          <span class="idx">03</span>
+          <div><div class="h">质感 · 织物</div>
+            <div class="d">亚麻、水洗棉、羊毛混纺，让触感承担“暖”，而不是靠颜色。</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 · Living room (T13) ============ -->
+  <section class="slide s-hero">
+    <div class="hero-img">
+      <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=warm%20wood%20living%20room%20interior%20design%2C%20light%20oak%20cabinetry%2C%20cream%20boucle%20sofa%2C%20large%20window%2C%20warm%20sunlight%2C%20minimalist%20warm%20home%2C%20architectural%20interior%20photography%2C%20no%20text&amp;image_size=landscape_16_9"
+        alt="客厅样板间效果：白橡木柜体、奶白色沙发、大面积落地窗与暖色阳光">
+    </div>
+    <div class="hero-bottom stagger">
+      <div>
+        <span class="kicker">02 / 客厅 · 26㎡</span>
+        <h1 class="h-1">客厅做减法，把光留给动线</h1>
+        <p class="lead">取消电视墙造型，改整墙收纳 + 留白；沙发前移 40cm，让出环形动线。</p>
+      </div>
+      <div class="hero-meta">
+        <span>主材<strong>白橡木饰面</strong></span>
+        <span>软装<strong>亚麻 · 圈绒</strong></span>
+        <span class="tagline">预算占比 25%</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 · Kitchen (T10 reverse) ============ -->
+  <section class="slide s-feature reverse">
+    <div class="feature-img stagger">
+      <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=warm%20minimal%20kitchen%20interior%2C%20light%20oak%20cabinets%2C%20white%20stone%20countertop%2C%20brass%20faucet%2C%20morning%20light%2C%20clean%20modern%20kitchen%2C%20architectural%20photography%2C%20no%20text&amp;image_size=landscape_4_3"
+        alt="开放式厨房效果：浅橡木橱柜、暖白岩板台面与中岛">
+    </div>
+    <div class="feature-text stagger">
+      <span class="kicker">03 / 厨房</span>
+      <h1 class="h-1">高频空间，<br>钱花在台面和五金</h1>
+      <p class="lead">开放式厨房 + 中岛。台面与五金不省，柜体内部保持基础配置。</p>
+      <div class="feature-points">
+        <div class="feature-point">
+          <span class="idx">01</span>
+          <div><div class="h">台面 · 暖米岩板</div>
+            <div class="d">耐污耐高温、可无缝拼接，比石英石更耐造，也不怕热锅直放。</div></div>
+        </div>
+        <div class="feature-point">
+          <span class="idx">02</span>
+          <div><div class="h">五金 · 全部升级</div>
+            <div class="d">阻尼铰链 + 抽屉导轨统一升级。每天开关 50 次的地方，不能省。</div></div>
+        </div>
+        <div class="feature-point">
+          <span class="idx">03</span>
+          <div><div class="h">收纳 · 中岛抽屉</div>
+            <div class="d">中岛下方做抽屉而非对开门，拿取路径最短，台面才留得住空。</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 · Bedroom (T24 Free Dual) ============ -->
+  <section class="slide s-free-dual">
+    <div class="free-head stagger">
+      <div>
+        <span class="kicker">04 / 卧室</span>
+        <h1 class="h-1">卧室只做两件事：睡好、收纳</h1>
+      </div>
+      <p class="lead">去掉所有装饰性照明，只保留三处光源；衣柜做通顶无拉手，墙面保持干净。</p>
+    </div>
+    <div class="free-body free-cols-2 stagger">
+      <div class="free-col">
+        <div class="bed-img">
+          <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=warm%20minimal%20bedroom%20interior%2C%20light%20oak%20headboard%2C%20beige%20linen%20bedding%2C%20soft%20warm%20lamp%20light%2C%20off%20white%20walls%2C%20cozy%20calm%20bedroom%2C%20interior%20photography%2C%20no%20text&amp;image_size=landscape_4_3"
+            alt="主卧效果：白橡木床头板、米色亚麻床品与暖色灯光">
+        </div>
+      </div>
+      <div class="free-col">
+        <div class="mat-card">
+          <span class="label">主卧材质清单 / Materials</span>
+          <div class="mat-row"><span class="mat-k">墙面</span><span class="mat-v">暖白微水泥<small>哑光 · 无味 · 可擦洗</small></span></div>
+          <div class="mat-row"><span class="mat-k">地面</span><span class="mat-v">白橡木三层实木地板<small>与客厅同色阶，通铺不做过门石</small></span></div>
+          <div class="mat-row"><span class="mat-k">床品</span><span class="mat-v">亚麻 + 水洗棉<small>可机洗，四季可换</small></span></div>
+          <div class="mat-row"><span class="mat-k">收纳</span><span class="mat-v">通顶衣柜 4.2m + 床头壁龛<small>无拉手设计，柜门与墙面齐平</small></span></div>
+          <div class="mat-row"><span class="mat-k">照明</span><span class="mat-v">无主灯 · 2700K 暖光<small>仅床头、衣柜、地面三处光源</small></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 07 · Materials (T09 Gallery) ============ -->
+  <section class="slide s-gallery">
+    <div class="gallery-head stagger">
+      <div>
+        <span class="kicker">05 / 材质与工艺</span>
+        <h1 class="h-1">暖色从哪里来</h1>
+      </div>
+      <p class="lead">四种主材定调，暖意来自材质本身，不靠刷漆堆色。</p>
+    </div>
+    <div class="gallery-grid stagger">
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=close%20up%20of%20light%20oak%20wood%20veneer%20panel%20texture%2C%20natural%20warm%20grain%2C%20soft%20directional%20light%2C%20material%20detail%20photography%2C%20no%20text&amp;image_size=landscape_4_3"
+            alt="白橡木饰面近景，天然暖色木纹">
+        </div>
+        <div class="gallery-cap"><span class="label">Wood</span><span class="title">木饰面 · 白橡木</span></div>
+      </div>
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=close%20up%20of%20warm%20beige%20travertine%20stone%20slab%20texture%2C%20soft%20veining%2C%20natural%20warm%20tone%2C%20material%20detail%20photography%2C%20no%20text&amp;image_size=landscape_4_3"
+            alt="暖米色石材近景，柔和纹理">
+        </div>
+        <div class="gallery-cap"><span class="label">Stone</span><span class="title">石材 · 暖米岩板</span></div>
+      </div>
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=close%20up%20of%20beige%20linen%20and%20boucle%20fabric%20texture%2C%20soft%20folds%2C%20warm%20light%2C%20textile%20material%20detail%20photography%2C%20no%20text&amp;image_size=landscape_4_3"
+            alt="米色亚麻与圈绒织物近景，柔软褶皱">
+        </div>
+        <div class="gallery-cap"><span class="label">Textile</span><span class="title">织物 · 亚麻与圈绒</span></div>
+      </div>
+      <div class="gallery-card">
+        <div class="gallery-img">
+          <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=close%20up%20of%20warm%20off%20white%20microcement%20wall%20texture%2C%20subtle%20trowel%20marks%2C%20soft%20daylight%2C%20material%20detail%20photography%2C%20no%20text&amp;image_size=landscape_4_3"
+            alt="暖白微水泥墙面近景，细腻抹痕">
+        </div>
+        <div class="gallery-cap"><span class="label">Paint</span><span class="title">涂料 · 暖白微水泥</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 08 · Palette A / B (T11 Duo) ============ -->
+  <section class="slide s-duo">
+    <div class="gallery-head stagger">
+      <div>
+        <span class="kicker">06 / 配色方案</span>
+        <h1 class="h-1">两版配色，请大家二选一</h1>
+      </div>
+      <p class="lead">两版都以暖色为底，差别在木色深浅与点缀色的浓度。</p>
+    </div>
+    <div class="duo-grid stagger">
+      <div class="duo-card">
+        <div class="duo-img">
+          <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=warm%20minimalist%20living%20room%20scheme%2C%20white%20oak%20wood%2C%20off%20white%20walls%2C%20light%20linen%20grey%20sofa%2C%20bright%20airy%20natural%20light%2C%20interior%20render%2C%20no%20text&amp;image_size=landscape_4_3"
+            alt="配色方案 A：暖白墙面、白橡木家具与浅亚麻灰沙发的明亮客厅">
+        </div>
+        <div class="duo-cap">
+          <span class="label">Scheme A</span>
+          <div class="title">方案 A · 暖白原木</div>
+          <div class="desc">白橡木 + 暖白墙 + 亚麻灰。明亮、显大、后期好搭配，适合采光一般的客厅。</div>
+          <div class="swatches"><span>暖白 #FAF8F4</span><span>白橡 #C9A87C</span><span>亚麻灰 #B9B3AA</span></div>
+        </div>
+      </div>
+      <div class="duo-card">
+        <div class="duo-img">
+          <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=warm%20cozy%20living%20room%20scheme%2C%20walnut%20wood%2C%20beige%20caramel%20walls%2C%20terracotta%20accents%2C%20warm%20evening%20light%2C%20interior%20render%2C%20no%20text&amp;image_size=landscape_4_3"
+            alt="配色方案 B：米杏墙面、胡桃木家具与焦糖色点缀的暖调客厅">
+        </div>
+        <div class="duo-cap">
+          <span class="label">Scheme B</span>
+          <div class="title">方案 B · 米杏焦糖</div>
+          <div class="desc">胡桃木 + 米杏墙 + 焦糖点缀。沉稳、包裹感强、更显“贵”，适合喜欢暗调的人。</div>
+          <div class="swatches"><span>米杏 #E8DCCB</span><span>胡桃 #6B4A32</span><span>焦糖 #B5713F</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 09 · Budget (T18 Dense Table) ============ -->
+  <section class="slide s-dense-table">
+    <div class="dense-head stagger">
+      <div>
+        <span class="kicker">07 / 主材与家电预算</span>
+        <h1 class="h-1">钱花在哪，一目了然</h1>
+      </div>
+      <p class="lead">硬装 + 主材 + 家电合计约 38.6 万，另留 3 万机动金（约 8%）。</p>
+    </div>
+    <div class="dense-table stagger">
+      <div class="dt-row dt-header">
+        <span>项目</span><span>内容</span><span>预算（万元）</span><span>占比</span><span>备注</span>
+      </div>
+      <div class="dt-row">
+        <span class="dt-label">硬装基础</span><span>水电 / 瓦工 / 木工 / 油漆</span>
+        <span class="dt-num">9.8</span><span>25%</span><span>含拆改与垃圾清运</span>
+      </div>
+      <div class="dt-row">
+        <span class="dt-label">主材</span><span>地板 / 瓷砖 / 岩板 / 木饰面</span>
+        <span class="dt-num">8.6</span><span>22%</span><span>木饰面为最大单项</span>
+      </div>
+      <div class="dt-row">
+        <span class="dt-label">定制柜体</span><span>衣柜 / 橱柜 / 玄关柜</span>
+        <span class="dt-num">7.2</span><span>19%</span><span>通顶衣柜 4.2m</span>
+      </div>
+      <div class="dt-row">
+        <span class="dt-label">门窗与五金</span><span>室内门 / 五金 / 淋浴房</span>
+        <span class="dt-num">3.4</span><span>9%</span><span>五金统一升级阻尼</span>
+      </div>
+      <div class="dt-row">
+        <span class="dt-label">家电</span><span>冰箱 / 洗烘 / 烟灶 / 洗碗机</span>
+        <span class="dt-num">6.4</span><span>17%</span><span>含洗碗机 + 洗烘套装</span>
+      </div>
+      <div class="dt-row">
+        <span class="dt-label">软装</span><span>沙发 / 床垫 / 窗帘 / 灯具</span>
+        <span class="dt-num">3.2</span><span>8%</span><span>分两批采购，可后补</span>
+      </div>
+      <div class="dt-row dt-total">
+        <span class="dt-label">合计</span><span>—</span>
+        <span class="dt-num">38.6</span><span>100%</span><span>另留机动金 3.0 万</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10 · Schedule (T23 Free Single / timeline) ============ -->
+  <section class="slide s-free-single">
+    <div class="free-head stagger">
+      <div>
+        <span class="kicker">08 / 施工时间表</span>
+        <h1 class="h-1">12 周交付，含 2 周缓冲</h1>
+      </div>
+      <p class="lead">每周一个节点。标绿的环节需要家人到场确认，其他由我们盯着。</p>
+    </div>
+    <div class="free-body stagger">
+      <div class="tl">
+        <div class="tl-item">
+          <span class="tl-week">W1–2</span><span class="tl-rail"><span class="tl-dot"></span></span>
+          <div class="tl-body"><span class="tl-h">拆改与水电</span><span class="tl-d">现场交底、点位确认、开槽布管</span></div>
+          <span class="tl-tag">—</span>
+        </div>
+        <div class="tl-item confirm">
+          <span class="tl-week">W3–4</span><span class="tl-rail"><span class="tl-dot"></span></span>
+          <div class="tl-body"><span class="tl-h">瓦工与防水</span><span class="tl-d">卫生间闭水试验，需到场确认</span></div>
+          <span class="tl-tag">需确认</span>
+        </div>
+        <div class="tl-item">
+          <span class="tl-week">W5–6</span><span class="tl-rail"><span class="tl-dot"></span></span>
+          <div class="tl-body"><span class="tl-h">木工与吊顶</span><span class="tl-d">柜体复尺、封板、无主灯预埋</span></div>
+          <span class="tl-tag">—</span>
+        </div>
+        <div class="tl-item">
+          <span class="tl-week">W7–8</span><span class="tl-rail"><span class="tl-dot"></span></span>
+          <div class="tl-body"><span class="tl-h">油漆与墙面</span><span class="tl-d">微水泥施工，全程通风</span></div>
+          <span class="tl-tag">—</span>
+        </div>
+        <div class="tl-item">
+          <span class="tl-week">W9–10</span><span class="tl-rail"><span class="tl-dot"></span></span>
+          <div class="tl-body"><span class="tl-h">主材安装</span><span class="tl-d">地板 / 门 / 橱柜 / 岩板台面</span></div>
+          <span class="tl-tag">—</span>
+        </div>
+        <div class="tl-item">
+          <span class="tl-week">W11</span><span class="tl-rail"><span class="tl-dot"></span></span>
+          <div class="tl-body"><span class="tl-h">家电与软装</span><span class="tl-d">家电进场、窗帘与灯具安装</span></div>
+          <span class="tl-tag">—</span>
+        </div>
+        <div class="tl-item confirm">
+          <span class="tl-week">W12</span><span class="tl-rail"><span class="tl-dot"></span></span>
+          <div class="tl-body"><span class="tl-h">保洁与验收</span><span class="tl-d">空气检测，需到场确认</span></div>
+          <span class="tl-tag">需确认</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 11 · Three decisions (T25 Free Triple) ============ -->
+  <section class="slide s-free-triple">
+    <div class="free-head stagger">
+      <div>
+        <span class="kicker">09 / 待家人决策</span>
+        <h1 class="h-1">三个问题，定了就能出图</h1>
+      </div>
+      <p class="lead">这三个选择会影响后面所有图纸和报价，今天定了，下周就能开工。</p>
+    </div>
+    <div class="free-body free-cols-3 stagger">
+      <div class="free-col">
+        <div class="card">
+          <span class="q-num">01</span>
+          <div class="q-title">配色选 A 还是 B？</div>
+          <div class="q-desc">A 更亮更显大，B 更沉更显“贵”。关键看客厅白天采光够不够——采光一般建议 A。</div>
+          <div class="q-opts"><span>A · 暖白原木</span><span>B · 米杏焦糖</span></div>
+        </div>
+      </div>
+      <div class="free-col">
+        <div class="card">
+          <span class="q-num">02</span>
+          <div class="q-title">厨房要不要开放式？</div>
+          <div class="q-desc">开放式显大、动线好，但要加大吸力油烟机并加装推拉门；封闭式好打理、油烟不串味。</div>
+          <div class="q-opts"><span>开放式 + 中岛</span><span>封闭式 + 移门</span></div>
+        </div>
+      </div>
+      <div class="free-col">
+        <div class="card">
+          <span class="q-num">03</span>
+          <div class="q-title">预算上限定在哪？</div>
+          <div class="q-desc">38.6 万含 3 万机动金。要保住洗碗机和洗烘套装，还是先砍软装、入住后再补？</div>
+          <div class="q-opts"><span>保家电 · 软装后补</span><span>按 38.6 万一次到位</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 12 · Closing (T08) ============ -->
+  <section class="slide s-close">
+    <div class="close-left">
+      <div class="chrome-min"><span>12</span><span>Closing</span></div>
+      <div class="manifesto stagger">
+        <div class="meta">下一步 / Next</div>
+        <h2>定了，<br>就开工。</h2>
+        <div class="sub">三问答完，本周出施工图与报价明细，下周进场拆改。</div>
+      </div>
+      <div class="sig"><span>新家装修方案 · V1.0</span><span>2026.10</span></div>
+    </div>
+    <div class="close-right">
+      <div class="chrome-min"><span>Takeaways</span><span>03 Points</span></div>
+      <div class="takeaways stagger">
+        <div class="take-item">
+          <div class="num">01</div>
+          <div><h3>风格</h3><p>暖木自然，克制而不冷淡；暖意来自材质，不靠刷漆堆色。</p></div>
+        </div>
+        <div class="take-item">
+          <div class="num">02</div>
+          <div><h3>预算</h3><p>38.6 万，其中 3 万机动金；木饰面与家电是两大头。</p></div>
+        </div>
+        <div class="take-item">
+          <div class="num">03</div>
+          <div><h3>工期</h3><p>12 周交付，含 2 周缓冲；两处节点需要家人到场确认。</p></div>
+        </div>
+      </div>
+      <div class="foot">→ 请在今天内回复三个问题的选择</div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var canvas  = document.getElementById('canvas');
+  var slides  = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var nav     = document.getElementById('nav');
+  var pnum    = document.getElementById('pnum');
+  var total   = slides.length;
+  var cur     = 0;
+  var lock    = 0;
+
+  /* ---- nav dots ---- */
+  var dots = slides.map(function(_, i){
+    var d = document.createElement('i');
+    d.addEventListener('click', function(){ go(i); });
+    nav.appendChild(d);
+    return d;
+  });
+
+  function go(i){
+    i = Math.max(0, Math.min(total - 1, i));
+    if (i === cur) return;
+    slides[cur].classList.remove('active');
+    cur = i;
+    slides[cur].classList.add('active');
+    dots.forEach(function(d, k){ d.classList.toggle('active', k === cur); });
+    pnum.textContent = ('0' + (cur + 1)).slice(-2);
+    canvas.classList.toggle('is-close', cur === total - 1);
+    canvas.classList.toggle('is-bookend', cur === 0 || cur === total - 1);
+  }
+
+  function next(){ go(cur + 1); }
+  function prev(){ go(cur - 1); }
+
+  /* ---- init ---- */
+  dots[0].classList.add('active');
+  canvas.classList.toggle('is-close', cur === total - 1);
+  canvas.classList.toggle('is-bookend', cur === 0 || cur === total - 1);
+
+  /* ---- keyboard ---- */
+  window.addEventListener('keydown', function(e){
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'ArrowDown' || k === ' ' || k === 'PageDown'){ e.preventDefault(); next(); }
+    else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp'){ e.preventDefault(); prev(); }
+    else if (k === 'Home'){ e.preventDefault(); go(0); }
+    else if (k === 'End'){ e.preventDefault(); go(total - 1); }
+  });
+
+  /* ---- wheel (throttled) ---- */
+  window.addEventListener('wheel', function(e){
+    var now = Date.now();
+    if (now - lock < 650) return;
+    if (Math.abs(e.deltaY) < 12) return;
+    lock = now;
+    if (e.deltaY > 0) next(); else prev();
+  }, { passive: true });
+
+  /* ---- touch ---- */
+  var tx = 0, ty = 0;
+  window.addEventListener('touchstart', function(e){
+    tx = e.touches[0].clientX; ty = e.touches[0].clientY;
+  }, { passive: true });
+  window.addEventListener('touchend', function(e){
+    var dx = e.changedTouches[0].clientX - tx;
+    var dy = e.changedTouches[0].clientY - ty;
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+    if (dx < 0) next(); else prev();
+  }, { passive: true });
+
+  /* ---- fit: single layer, keep translate(-50%,-50%) on every rewrite ---- */
+  function fit(){
+    var s = Math.min(window.innerWidth / 1280, window.innerHeight / 720) * 0.97;
+    canvas.style.transform = 'translate(-50%,-50%) scale(' + s + ')';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+})();
+</script>
+</body>
+</html>
