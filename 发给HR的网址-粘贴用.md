@@ -7,7 +7,7 @@ https://henryfone.github.io/ai-portfolio/
 ```
 
 > 这是你的**公开作品集展示页**，任何人（含 HR）用浏览器打开即可，不需要你本地开机、不需要装软件。
-> 2026-10-05 已实测：页面 HTTP 200、6 件作品与全部图片/视频素材均可正常访问。
+> 公开主页面展示 6 件精选作品，页面还链接到 `/projects/` 补充项目目录。
 
 ## 二、「描述」栏里再补一句（可选，建议写）
 
@@ -26,7 +26,7 @@ https://github.com/HenryFone
 
 ## 四、这个网址是怎么来的（你以后要改就照这个做）
 
-1. 本地目录：`D:\个人项目简历\作品集网站-ai-portfolio\`（入口文件已命名为 `index.html`）。
+1. 本地维护目录：你电脑上的 `ai-portfolio` 仓库目录（本机路径不对外展示，入口文件是 `index.html`）。
 2. 远程仓库：`https://github.com/HenryFone/ai-portfolio`（公开）。
 3. 发布方式：GitHub Pages，源分支 `main`、路径 `/`，构建状态 `built`。
 4. 改内容后只需：在本地目录执行 `git add -A` → `git commit -m "更新"` → `git push`，约 1 分钟后网址自动更新。
