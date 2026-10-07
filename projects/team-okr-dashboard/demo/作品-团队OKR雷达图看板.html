@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>团队 OKR 雷达图 · 多维度目标达成可视化</title>
+<style>
+  :root{
+    --bg:#0b0e14;
+    --card:#151923;
+    --card-2:#1a2029;
+    --border:#252a38;
+    --border-soft:#1e2431;
+    --text:#e6e8ef;
+    --dim:#8b90a4;
+    --dim-2:#5d6478;
+    --accent:#6c7bff;
+    --green:#3dd68c;
+    --yellow:#f0b849;
+    --red:#ef6868;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+    background:
+      radial-gradient(1100px 520px at 12% -12%, rgba(108,123,255,.10), transparent 62%),
+      radial-gradient(900px 460px at 96% 4%, rgba(61,214,140,.06), transparent 60%),
+      var(--bg);
+    background-attachment:fixed;
+    color:var(--text);
+    min-height:100vh;
+    padding:34px 32px 44px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1200px;margin:0 auto;}
+
+  /* ---------- header ---------- */
+  .header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px;}
+  .header h1{font-size:26px;font-weight:700;letter-spacing:-.4px;}
+  .header h1 em{font-style:normal;color:var(--accent);}
+  .header .sub{color:var(--dim);font-size:13.5px;margin-top:7px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+  .chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--dim);
+    background:var(--card);border:1px solid var(--border);border-radius:999px;padding:4px 11px;}
+
+  /* ---------- tabs ---------- */
+  .tabs{display:flex;gap:9px;margin:22px 0 18px;flex-wrap:wrap;}
+  .tab{
+    padding:9px 21px;border-radius:9px;border:1px solid var(--border);background:var(--card);
+    color:var(--dim);font-size:14px;font-family:inherit;cursor:pointer;transition:all .18s ease;
+  }
+  .tab:hover{border-color:rgba(108,123,255,.6);color:var(--text);transform:translateY(-1px);}
+  .tab:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .tab[aria-selected="true"]{
+    background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600;
+    box-shadow:0 6px 18px -8px rgba(108,123,255,.9);
+  }
+
+  /* ---------- layout ---------- */
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) 322px;gap:20px;align-items:start;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;}
+
+  /* ---------- chart ---------- */
+  .chart-card{padding:22px 22px 18px;display:flex;flex-direction:column;}
+  .chart-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:6px;}
+  .chart-head h2{font-size:15px;font-weight:600;letter-spacing:.2px;}
+  .chart-head h2 span{color:var(--dim);font-weight:500;font-size:13px;margin-left:8px;}
+  .status-legend{display:flex;gap:14px;flex-wrap:wrap;}
+  .sl{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--dim);}
+  .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .radar-box{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 0;}
+  .radar-svg{width:100%;max-width:540px;height:auto;display:block;overflow:visible;}
+
+  .legend{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:auto;padding-top:14px;border-top:1px solid var(--border-soft);}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--dim);}
+  .legend-line{width:26px;height:0;border-top:2px dashed var(--accent);opacity:.85;}
+  .legend-swatch{width:26px;height:12px;border-radius:3px;background:rgba(108,123,255,.24);border:2px solid var(--accent);}
+  .legend-dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--card);flex-shrink:0;}
+
+  /* ---------- sidebar ---------- */
+  .side{display:flex;flex-direction:column;gap:16px;}
+  .label{font-size:11.5px;color:var(--dim-2);letter-spacing:.7px;text-transform:uppercase;font-weight:600;margin-bottom:9px;}
+  .rate{font-size:40px;font-weight:700;line-height:1;letter-spacing:-1.4px;}
+  .rate span{font-size:19px;font-weight:600;margin-left:2px;letter-spacing:0;}
+  .bar{height:6px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden;margin:13px 0 9px;}
+  .bar i{display:block;height:100%;border-radius:99px;transition:width .5s cubic-bezier(.2,.8,.3,1);}
+  .sub{font-size:12.5px;color:var(--dim);}
+  .segs-row{margin-top:15px;padding-top:13px;border-top:1px solid var(--border-soft);}
+  .segs-row .k{font-size:12.5px;color:var(--dim);display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;}
+  .segs-row .k b{color:var(--text);font-size:13.5px;}
+  .segs{display:flex;gap:5px;}
+  .segs i{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.09);transition:background .4s ease;}
+
+  .card h3{font-size:12.5px;color:var(--dim-2);letter-spacing:.6px;text-transform:uppercase;font-weight:600;margin-bottom:13px;}
+
+  .kw{display:flex;align-items:center;gap:10px;padding:9px 0;}
+  .kw + .kw{border-top:1px solid var(--border-soft);}
+  .kw-tag{font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;flex-shrink:0;}
+  .kw-tag.best{color:var(--green);background:rgba(61,214,140,.12);}
+  .kw-tag.worst{color:var(--red);background:rgba(239,104,104,.12);}
+  .kw-name{font-size:14px;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .kw-score{font-size:12.5px;color:var(--dim);flex-shrink:0;}
+  .kw-score b{color:var(--text);}
+
+  .rows{display:flex;flex-direction:column;}
+  .row{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:9px;padding:8px 0;font-size:13.5px;}
+  .row + .row{border-top:1px solid var(--border-soft);}
+  .row .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .row .sc{font-size:12.5px;color:var(--dim);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .row .sc b{color:var(--text);font-size:13.5px;}
+  .pill{font-size:11.5px;font-weight:700;border-radius:6px;padding:3px 8px;min-width:52px;text-align:center;font-variant-numeric:tabular-nums;}
+
+  .trend-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;}
+  .trend-head h3{margin:0;}
+  .trend-head em{font-style:normal;font-size:11.5px;color:var(--dim-2);}
+  .delta{font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .delta.up{color:var(--green);}
+  .delta.down{color:var(--red);}
+  .delta.flat{color:var(--dim);}
+
+  .note{margin-top:18px;font-size:11.5px;color:var(--dim-2);line-height:1.75;}
+
+  /* ---------- animation ---------- */
+  @keyframes rise{from{opacity:0;transform:scale(.9);}to{opacity:1;transform:scale(1);}}
+  .anim{transform-box:fill-box;transform-origin:center;animation:rise .55s cubic-bezier(.2,.8,.3,1) both;}
+  .anim-b{transform-box:fill-box;transform-origin:center;animation:rise .55s cubic-bezier(.2,.8,.3,1) .08s both;}
+  @media (prefers-reduced-motion:reduce){.anim,.anim-b{animation:none;}}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:980px){
+    .layout{grid-template-columns:minmax(0,1fr);}
+    .side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}
+    .side > .card:first-child{grid-column:1 / -1;}
+  }
+  @media (max-width:640px){
+    body{padding:22px 16px 32px;}
+    .header h1{font-size:21px;}
+    .side{grid-template-columns:minmax(0,1fr);}
+    .card{padding:16px;border-radius:14px;}
+    .rate{font-size:34px;}
+    .tab{padding:8px 15px;font-size:13px;}
+    .chart-card{padding:16px 12px 14px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div>
+      <h1>团队 <em>OKR</em> 雷达图</h1>
+      <div class="sub">
+        <span>Q1 2026 · 六维度目标达成可视化</span>
+        <span class="chip">评分口径 0 – 100</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs" role="tablist" aria-label="团队切换"></div>
+
+  <div class="layout">
+
+    <section class="card chart-card">
+      <div class="chart-head">
+        <h2 id="chartTitle">产品团队<span>目标 vs 实际</span></h2>
+        <div class="status-legend">
+          <div class="sl"><i class="dot" style="background:var(--green)"></i>超额 ≥100%</div>
+          <div class="sl"><i class="dot" style="background:var(--yellow)"></i>接近 90–99%</div>
+          <div class="sl"><i class="dot" style="background:var(--red)"></i>不足 &lt;90%</div>
+        </div>
+      </div>
+      <div class="radar-box">
+        <svg class="radar-svg" id="radarSvg" viewBox="0 0 520 520" role="img" aria-label="团队 OKR 六维度目标与实际达成雷达图"></svg>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><span class="legend-line"></span>目标值（虚线）</div>
+        <div class="legend-item"><span class="legend-swatch"></span>实际值（填充）</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--green)"></span>达成情况按色区分</div>
+      </div>
+    </section>
+
+    <aside class="side" id="side"></aside>
+
+  </div>
+
+  <p class="note">
+    口径说明：完成率 = 实际分 ÷ 目标分；「各维度合计」为六维度等权简单相加，未做权重折算。
+    达成分档：≥100% 超额、90–99% 接近、&lt;90% 不足。环比为「本季度实际分 − 上季度实际分」。
+  </p>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ============ 数据 ============ */
+  var TEAMS = {
+    product: {
+      name: '产品团队',
+      dims: [
+        { name:'产品交付',   target:90, actual:85, prev:80 },
+        { name:'技术质量',   target:85, actual:92, prev:88 },
+        { name:'用户增长',   target:80, actual:68, prev:65 },
+        { name:'团队协作',   target:85, actual:88, prev:82 },
+        { name:'创新能力',   target:75, actual:72, prev:68 },
+        { name:'客户满意度', target:90, actual:86, prev:83 }
+      ]
+    },
+    tech: {
+      name: '技术团队',
+      dims: [
+        { name:'产品交付',   target:85, actual:88, prev:82 },
+        { name:'技术质量',   target:95, actual:96, prev:91 },
+        { name:'用户增长',   target:70, actual:62, prev:58 },
+        { name:'团队协作',   target:80, actual:85, prev:78 },
+        { name:'创新能力',   target:85, actual:90, prev:84 },
+        { name:'客户满意度', target:80, actual:78, prev:75 }
+      ]
+    },
+    design: {
+      name: '设计团队',
+      dims: [
+        { name:'产品交付',   target:85, actual:82, prev:78 },
+        { name:'技术质量',   target:75, actual:78, prev:72 },
+        { name:'用户增长',   target:85, actual:80, prev:76 },
+        { name:'团队协作',   target:90, actual:93, prev:88 },
+        { name:'创新能力',   target:90, actual:88, prev:82 },
+        { name:'客户满意度', target:85, actual:87, prev:84 }
+      ]
+    }
+  };
+
+  var P = {
+    accent:'#6c7bff', green:'#3dd68c', yellow:'#f0b849', red:'#ef6868',
+    text:'#e6e8ef', dim:'#8b90a4', dim2:'#5d6478', card:'#151923',
+    grid:'rgba(255,255,255,.075)', axis:'rgba(255,255,255,.11)'
+  };
+
+  /* ============ 几何常量（viewBox 520x520，留足标签空间） ============ */
+  var CX = 260, CY = 260, R = 164, LR = 186, N = 6, STEP = 360 / N;
+  var LEVELS = [0.2, 0.4, 0.6, 0.8, 1];
+
+  var active = 'product';
+
+  function polar(cx, cy, r, deg){
+    var rad = (deg - 90) * Math.PI / 180;
+    return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+  }
+
+  /* 达成分档：超额 / 接近 / 不足 */
+  function status(d){
+    var ratio = d.actual / d.target;
+    if (ratio >= 1)    return { key:'over', label:'超额', color:P.green  };
+    if (ratio >= 0.9)  return { key:'near', label:'接近', color:P.yellow };
+    return               { key:'bad',  label:'不足', color:P.red    };
+  }
+
+  function rateColor(pct){
+    if (pct >= 100) return P.green;
+    if (pct >= 90)  return P.yellow;
+    return P.red;
+  }
+
+  /* ============ 雷达图 ============ */
+  function buildRadar(key){
+    var svg = document.getElementById('radarSvg');
+    var d = TEAMS[key].dims;
+    var h = '';
+
+    /* 网格环 + 刻度 */
+    LEVELS.forEach(function(l){
+      var r = R * l, pts = [], i, p;
+      for (i = 0; i < N; i++){
+        p = polar(CX, CY, r, i * STEP);
+        pts.push(p.x.toFixed(1) + ',' + p.y.toFixed(1));
+      }
+      h += '<polygon points="' + pts.join(' ') + '" fill="none" stroke="' + P.grid + '" stroke-width="1"/>';
+      p = polar(CX, CY, r, -STEP / 2);   /* 刻度放在两轴之间的空隙处 */
+      h += '<text x="' + (p.x + 5).toFixed(1) + '" y="' + (p.y + 3).toFixed(1) +
+           '" fill="rgba(255,255,255,.26)" font-size="10">' + Math.round(l * 100) + '</text>';
+    });
+
+    /* 轴线 */
+    for (var i = 0; i < N; i++){
+      var e = polar(CX, CY, R, i * STEP);
+      h += '<line x1="' + CX + '" y1="' + CY + '" x2="' + e.x.toFixed(1) + '" y2="' + e.y.toFixed(1) +
+           '" stroke="' + P.axis + '" stroke-width="1"/>';
+    }
+
+    /* 目标 / 实际 多边形 */
+    var tPts = [], aPts = [];
+    d.forEach(function(v, i){
+      var tp = polar(CX, CY, (v.target / 100) * R, i * STEP);
+      var ap = polar(CX, CY, (v.actual / 100) * R, i * STEP);
+      tPts.push(tp.x.toFixed(1) + ',' + tp.y.toFixed(1));
+      aPts.push(ap.x.toFixed(1) + ',' + ap.y.toFixed(1));
+    });
+
+    h += '<g class="anim">';
+    h += '<polygon points="' + tPts.join(' ') + '" fill="rgba(108,123,255,.05)" stroke="' + P.accent +
+         '" stroke-width="2" stroke-dasharray="7 5" stroke-linejoin="round" opacity=".85"/>';
+    h += '</g>';
+    h += '<g class="anim-b">';
+    h += '<polygon points="' + aPts.join(' ') + '" fill="rgba(108,123,255,.22)" stroke="' + P.accent +
+         '" stroke-width="2.5" stroke-linejoin="round"/>';
+    /* 目标顶点小点 */
+    d.forEach(function(v, i){
+      var tp = polar(CX, CY, (v.target / 100) * R, i * STEP);
+      h += '<circle cx="' + tp.x.toFixed(1) + '" cy="' + tp.y.toFixed(1) + '" r="3.4" fill="' + P.accent + '" opacity=".55"/>';
+    });
+    /* 实际顶点按达成情况着色 */
+    d.forEach(function(v, i){
+      var st = status(v), ap = polar(CX, CY, (v.actual / 100) * R, i * STEP);
+      h += '<circle cx="' + ap.x.toFixed(1) + '" cy="' + ap.y.toFixed(1) + '" r="5.2" fill="' + st.color +
+           '" stroke="' + P.card + '" stroke-width="2"/>';
+    });
+    h += '</g>';
+
+    /* 轴标签：维度名 + 实际/目标 */
+    d.forEach(function(v, i){
+      var ang = i * STEP, st = status(v);
+      var lp = polar(CX, CY, LR, ang);
+      var anc = 'middle', ny = -10, vy = 10;
+      if (ang > 10 && ang < 170){ anc = 'start'; ny = -5; vy = 14; }
+      else if (ang > 190 && ang < 350){ anc = 'end'; ny = -5; vy = 14; }
+      else if (ang >= 170 && ang <= 190){ ny = 1; vy = 20; }
+
+      h += '<text x="' + lp.x.toFixed(1) + '" y="' + (lp.y + ny).toFixed(1) + '" text-anchor="' + anc +
+           '" fill="' + P.text + '" font-size="13" font-weight="600">' + v.name + '</text>';
+      h += '<text x="' + lp.x.toFixed(1) + '" y="' + (lp.y + vy).toFixed(1) + '" text-anchor="' + anc +
+           '" font-size="12.5" font-weight="700" fill="' + st.color + '">' + v.actual +
+           '<tspan fill="' + P.dim2 + '" font-weight="500" font-size="11.5"> / ' + v.target + '</tspan></text>';
+    });
+
+    svg.innerHTML = h;
+    document.getElementById('chartTitle').innerHTML =
+      TEAMS[key].name + '<span>目标 vs 实际</span>';
+  }
+
+  /* ============ 侧栏 ============ */
+  function buildSide(key){
+    var d = TEAMS[key].dims;
+    var tT = 0, tA = 0, hit = 0;
+    d.forEach(function(v){ tT += v.target; tA += v.actual; if (v.actual >= v.target) hit++; });
+
+    var rate = tA / tT * 100, rc = rateColor(rate);
+
+    var sorted = d.slice().sort(function(a, b){ return (b.actual / b.target) - (a.actual / a.target); });
+    var best = sorted[0], worst = sorted[sorted.length - 1];
+
+    var h = '';
+
+    /* 整体完成率 */
+    h += '<div class="card">' +
+           '<div class="label">整体完成率</div>' +
+           '<div class="rate" style="color:' + rc + '">' + rate.toFixed(1) + '<span>%</span></div>' +
+           '<div class="bar"><i style="width:' + Math.min(rate, 100).toFixed(1) + '%;background:' + rc + '"></i></div>' +
+           '<div class="sub">各维度合计 ' + tA + ' / ' + tT + '（等权）</div>' +
+           '<div class="segs-row">' +
+             '<div class="k"><span>达标维度（实际 ≥ 目标）</span><b>' + hit + ' / ' + d.length + '</b></div>' +
+             '<div class="segs">' +
+               d.map(function(v){
+                 var st = status(v);
+                 return '<i style="background:' + (v.actual >= v.target ? st.color : 'rgba(255,255,255,.09)') + '"></i>';
+               }).join('') +
+             '</div>' +
+           '</div>' +
+         '</div>';
+
+    /* 最强 / 最弱 */
+    h += '<div class="card">' +
+           '<h3>最强 / 最弱维度</h3>' +
+           '<div class="kw">' +
+             '<span class="kw-tag best">最强</span>' +
+             '<span class="kw-name">' + best.name + '</span>' +
+             '<span class="kw-score"><b>' + best.actual + '</b> / ' + best.target +
+               ' · ' + Math.round(best.actual / best.target * 100) + '%</span>' +
+           '</div>' +
+           '<div class="kw">' +
+             '<span class="kw-tag worst">最弱</span>' +
+             '<span class="kw-name">' + worst.name + '</span>' +
+             '<span class="kw-score"><b>' + worst.actual + '</b> / ' + worst.target +
+               ' · ' + Math.round(worst.actual / worst.target * 100) + '%</span>' +
+           '</div>' +
+         '</div>';
+
+    /* 各维度详情 */
+    h += '<div class="card"><h3>各维度详情</h3><div class="rows">' +
+         d.map(function(v){
+           var st = status(v), pct = Math.round(v.actual / v.target * 100);
+           return '<div class="row">' +
+                    '<i class="dot" style="background:' + st.color + '"></i>' +
+                    '<span class="nm">' + v.name + '</span>' +
+                    '<span class="sc"><b>' + v.actual + '</b> / ' + v.target + '</span>' +
+                    '<span class="pill" style="color:' + st.color + ';background:' + st.color + '1f">' + pct + '%</span>' +
+                  '</div>';
+         }).join('') +
+         '</div></div>';
+
+    /* 环比趋势 */
+    var up = 0;
+    d.forEach(function(v){ if (v.actual - v.prev >= 0) up++; });
+    h += '<div class="card">' +
+           '<div class="trend-head">' +
+             '<h3>环比趋势</h3>' +
+             '<em>vs 上季度 · ' + up + '/' + d.length + ' 项提升</em>' +
+           '</div>' +
+           '<div class="rows">' +
+             d.map(function(v){
+               var diff = v.actual - v.prev;
+               var cls = diff > 0 ? 'up' : (diff < 0 ? 'down' : 'flat');
+               var sign = diff > 0 ? '▲ +' : (diff < 0 ? '▼ ' : '— ');
+               return '<div class="row" style="grid-template-columns:minmax(0,1fr) auto">' +
+                        '<span class="nm">' + v.name + '</span>' +
+                        '<span class="delta ' + cls + '">' + sign + Math.abs(diff) + '</span>' +
+                      '</div>';
+             }).join('') +
+           '</div>' +
+         '</div>';
+
+    document.getElementById('side').innerHTML = h;
+  }
+
+  /* ============ 标签页 ============ */
+  function buildTabs(){
+    var el = document.getElementById('tabs');
+    el.innerHTML = Object.keys(TEAMS).map(function(k){
+      var on = k === active;
+      return '<button type="button" class="tab" role="tab" aria-selected="' + on + '" data-t="' + k + '">' +
+             TEAMS[k].name + '</button>';
+    }).join('');
+
+    Array.prototype.forEach.call(el.querySelectorAll('.tab'), function(b){
+      b.addEventListener('click', function(){
+        if (b.dataset.t === active) return;
+        active = b.dataset.t;
+        render();
+      });
+    });
+  }
+
+  function render(){
+    buildTabs();
+    buildRadar(active);
+    buildSide(active);
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

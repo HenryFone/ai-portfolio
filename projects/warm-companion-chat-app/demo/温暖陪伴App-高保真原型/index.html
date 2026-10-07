@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>温暖陪伴 · 阿澈 — 情感聊天 App 原型</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- 暖色治愈背景氛围光斑 -->
+  <div class="bg-aura" aria-hidden="true">
+    <i class="blob blob-1"></i>
+    <i class="blob blob-2"></i>
+    <i class="blob blob-3"></i>
+    <i class="blob blob-4"></i>
+    <div class="grain" aria-hidden="true"></div>
+  </div>
+
+  <!-- 顶部说明条（原型展示用，非 App 界面） -->
+  <header class="showcase-bar">
+    <span class="showcase-chip">HIGH-FI PROTOTYPE · 高保真交互原型</span>
+    <h1>温暖陪伴 · <em>阿澈</em></h1>
+    <p>阳光友善的暖男学长 · 日常问候 · 情绪疏导 · 鼓励打气。三栏布局：会话历史 / 聊天区 / 话题模板，均为 Mock 流式回复，不接真实后端。</p>
+  </header>
+
+  <!-- 外层装饰：SVG 手机外框（仅描边，不遮挡 UI） -->
+  <div class="phone-frame" aria-hidden="true">
+    <svg viewBox="0 0 1080 720" preserveAspectRatio="none" class="frame-svg">
+      <defs>
+        <linearGradient id="frameGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#F6B87E"/>
+          <stop offset=".55" stop-color="#F3A06B"/>
+          <stop offset="1" stop-color="#E98F5B"/>
+        </linearGradient>
+      </defs>
+      <!-- 手机外框：空心圆角描边 -->
+      <rect x="26" y="22" width="1028" height="676" rx="58" fill="none"
+            stroke="url(#frameGrad)" stroke-width="22" opacity=".9"/>
+      <rect x="40" y="35" width="1000" height="650" rx="46" fill="none"
+            stroke="#FFFFFF" stroke-width="6" opacity=".0"/>
+      <!-- 侧边按键 -->
+      <rect x="14" y="168" width="8" height="70" rx="4" fill="url(#frameGrad)"/>
+      <rect x="14" y="266" width="8" height="104" rx="4" fill="url(#frameGrad)"/>
+      <rect x="1058" y="210" width="8" height="88" rx="4" fill="url(#frameGrad)"/>
+      <!-- 顶部灵动岛 / 听筒 -->
+      <rect x="470" y="34" width="140" height="26" rx="13" fill="url(#frameGrad)"/>
+      <circle cx="584" cy="47" r="6" fill="#7BC09A"/>
+    </svg>
+  </div>
+
+  <!-- ==== 应用舞台：三栏布局 ==== -->
+  <main class="app-stage" aria-label="温暖陪伴 App 界面">
+
+    <!-- 左栏：会话历史列表 -->
+    <aside class="col col-history" id="colHistory">
+      <div class="panel-head history-head">
+        <div class="head-avatar" id="headAvatarSmall" aria-hidden="true"></div>
+        <div class="head-text">
+          <h2>阿澈 · 我的陪伴</h2>
+          <p id="historyCount" class="head-sub">共 6 段陪伴会话</p>
+        </div>
+      </div>
+      <ul class="session-list" id="sessionList"><!-- JS 渲染 --></ul>
+      <div class="history-foot">
+        <button class="ghost-btn" id="newChatBtn" type="button">
+          <span class="ic small" data-icon="plus"></span>开启新对话
+        </button>
+      </div>
+    </aside>
+
+    <!-- 中栏：聊天区 -->
+    <section class="col col-chat" id="colChat">
+      <div class="chat-head">
+        <div class="head-avatar chat-avatar" id="chatAvatar" aria-hidden="true"></div>
+        <div class="head-text">
+          <h2 id="chatName">阿澈</h2>
+          <span class="listening"><i class="live-dot"></i>在线倾听中</span>
+        </div>
+        <div class="head-actions">
+          <button class="icon-btn" id="toggleTopics" type="button" title="话题模板（折叠/展开）">
+            <span class="ic" data-icon="panel-right"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="messages" id="messages" aria-live="polite"><!-- JS 渲染 --></div>
+
+      <!-- 快速话题胶囊 -->
+      <div class="quick-chips" id="quickChips"><!-- JS 渲染 --></div>
+
+      <!-- 输入区 -->
+      <form class="composer" id="composer" autocomplete="off">
+        <button class="icon-btn soft" type="button" id="plusBtn" title="更多">
+          <span class="ic" data-icon="plus"></span>
+        </button>
+        <textarea id="composerInput" rows="1" placeholder="和阿澈聊聊你的心情吧…" aria-label="消息输入框"></textarea>
+        <button class="send-btn" id="sendBtn" type="submit" disabled>
+          <span class="ic" data-icon="send"></span>
+        </button>
+      </form>
+    </section>
+
+    <!-- 右栏：聊天话题模板（可折叠） -->
+    <aside class="col col-topics" id="colTopics">
+      <div class="panel-head topics-head">
+        <div class="head-text">
+          <h2>聊天话题模板</h2>
+          <p class="head-sub">一键发起暖心开场白</p>
+        </div>
+      </div>
+      <ul class="topic-list" id="topicList"><!-- JS 渲染 --></ul>
+      <div class="topics-hint">
+        <span class="ic small" data-icon="lightbulb"></span>
+        <p>点任一话题即可发送开场白，阿澈会顺势回应。</p>
+      </div>
+    </aside>
+  </main>
+
+  <script src="mock.js"></script>
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

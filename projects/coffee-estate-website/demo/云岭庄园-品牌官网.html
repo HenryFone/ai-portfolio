@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>云岭庄园 · 精品咖啡庄园 | 每一杯，都是一座山的风土</title>
+<meta name="description" content="云岭庄园 —— 云南保山高黎贡山南麓单一产地精品咖啡庄园。海拔 1,650 米，直采直烘，只做微批次。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* ---- 品牌色板（6 色）---- */
+  --cream:#F4EDE4;        /* 奶咖米白 · 页面主底 */
+  --card:#FBF7F1;         /* 浅卡片 */
+  --cocoa:#2B211A;        /* 深可可 · 主文字 */
+  --cocoa-deep:#241B15;   /* 更深 · 页脚 */
+  --cocoa-input:#3A2D24;  /* 输入框底 */
+  --caramel:#A6633C;      /* 焦糖棕 · 唯一主强调 */
+  --terracotta:#C8794B;   /* 陶土橙 · 点缀 */
+  --olive:#6B6B47;        /* 橄榄绿 · 点缀 */
+  --white:#FBF7F1;
+
+  /* ---- 栅格 ---- */
+  --maxw:1280px;
+  --gutter:80px;
+  --section-y:130px;
+
+  /* ---- 字体族 ---- */
+  --serif:"Source Han Serif CN","Noto Serif SC","Songti SC","STSong",serif;
+  --sans:"Source Han Sans CN","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --latin:"Cormorant","Times New Roman",serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  font-family:var(--sans);
+  background:var(--cream);
+  color:var(--cocoa);
+  line-height:1.75;
+  font-size:15px;
+  letter-spacing:0.02em;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+
+/* ---------- 通用容器 ---------- */
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);}
+
+/* ---------- 眉标（小标签 + 短线）---------- */
+.eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:26px;}
+.eyebrow .dash{width:34px;height:1px;background:var(--caramel);flex:none;}
+.eyebrow span{
+  font-size:11px;font-weight:500;letter-spacing:0.22em;
+  color:var(--caramel);text-transform:uppercase;
+}
+
+/* ---------- 标题 ---------- */
+.h-display{
+  font-family:var(--serif);font-weight:400;
+  font-size:92px;line-height:1.08;letter-spacing:0.03em;
+}
+.h-section{
+  font-family:var(--serif);font-weight:400;
+  font-size:41px;line-height:1.32;letter-spacing:0.02em;
+}
+.h-block{
+  font-family:var(--serif);font-weight:400;
+  font-size:37px;line-height:1.32;letter-spacing:0.02em;
+}
+
+/* ================= 导航栏 ================= */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(244,237,228,0.86);
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid rgba(43,33,26,0.10);
+  transition:border-color .3s ease, background .3s ease;
+}
+.nav.solid{background:rgba(244,237,228,0.97);border-bottom-color:rgba(43,33,26,0.16);}
+.nav-inner{
+  max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);
+  height:76px;display:flex;align-items:center;justify-content:space-between;gap:32px;
+}
+.brand{display:flex;flex-direction:column;gap:2px;}
+.brand-main{display:flex;align-items:center;gap:9px;}
+.brand-dot{width:9px;height:9px;border-radius:50%;background:var(--caramel);flex:none;}
+.brand-cn{font-family:var(--serif);font-size:21px;font-weight:600;letter-spacing:0.06em;line-height:1;}
+.brand-en{
+  font-family:var(--latin);font-size:9px;font-weight:600;
+  letter-spacing:0.20em;color:var(--caramel);padding-left:18px;
+}
+.nav-links{display:flex;align-items:center;gap:38px;}
+.nav-links a{
+  font-size:13.5px;position:relative;padding-bottom:3px;
+  transition:color .25s ease;
+}
+.nav-links a::after{
+  content:'';position:absolute;left:0;bottom:0;height:1px;width:0;
+  background:var(--caramel);transition:width .32s cubic-bezier(.4,0,.2,1);
+}
+.nav-links a:hover{color:var(--caramel);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{
+  display:inline-block;background:var(--cocoa);color:var(--white);
+  font-size:13px;font-weight:500;letter-spacing:0.06em;
+  padding:11px 24px;border-radius:100px;white-space:nowrap;
+  transition:background .3s ease, transform .3s ease;
+}
+.nav-cta:hover{background:var(--caramel);transform:translateY(-1px);}
+.nav-toggle{display:none;width:40px;height:40px;border:0;background:none;cursor:pointer;padding:0;}
+.nav-toggle span{display:block;width:22px;height:1.5px;background:var(--cocoa);margin:5px auto;transition:.3s;}
+
+/* ================= 首屏 Hero ================= */
+.hero{
+  position:relative;height:min(86vh,760px);min-height:560px;
+  overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background-image:url('assets/01-hero-terraces.png');
+  background-size:cover;background-position:center 42%;
+  transform:scale(1.06);
+  transition:transform 8s cubic-bezier(.2,0,.2,1);
+  will-change:transform;
+}
+.hero.loaded .hero-bg{transform:scale(1);}
+.hero::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,
+    rgba(30,22,17,0.42) 0%,
+    rgba(30,22,17,0.10) 32%,
+    rgba(30,22,17,0.30) 62%,
+    rgba(30,22,17,0.72) 100%);
+}
+.hero-top{
+  position:relative;z-index:2;
+  max-width:var(--maxw);width:100%;margin:0 auto;
+  padding:38px var(--gutter) 0;
+}
+.hero-top span{
+  font-size:10.5px;letter-spacing:0.24em;color:var(--white);
+  text-transform:uppercase;opacity:.9;
+}
+.hero-bottom{
+  position:relative;z-index:2;
+  max-width:var(--maxw);width:100%;margin:0 auto;
+  padding:0 var(--gutter) 46px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:40px;
+}
+.hero-copy{max-width:660px;}
+.hero-en{
+  font-family:var(--latin);font-style:italic;font-weight:300;
+  font-size:27px;color:var(--white);letter-spacing:0.03em;
+  margin-bottom:14px;display:block;
+}
+.hero-cn{
+  font-family:var(--serif);font-weight:400;font-size:92px;
+  line-height:1.05;color:var(--white);letter-spacing:0.10em;
+  margin-bottom:22px;
+}
+.hero-rule{width:76px;height:1px;background:var(--white);opacity:.85;margin-bottom:20px;}
+.hero-slogan{
+  font-family:var(--serif);font-weight:300;font-size:20px;
+  color:var(--white);letter-spacing:0.10em;opacity:.95;
+}
+.hero-side{
+  text-align:right;font-size:10.5px;line-height:2;
+  letter-spacing:0.14em;color:var(--white);opacity:.9;white-space:pre-line;
+}
+
+/* 首屏入场动效 */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity 1s ease,transform 1s cubic-bezier(.2,.7,.3,1);}
+.reveal.in{opacity:1;transform:none;}
+
+/* ================= 品牌理念区 ================= */
+.philosophy{padding:var(--section-y) 0 0;background:var(--cream);}
+.philo-grid{
+  display:grid;grid-template-columns:1fr 1.06fr;gap:70px;align-items:start;
+}
+.philo-copy .h-section{margin-bottom:30px;}
+.philo-rule{width:64px;height:1px;background:var(--caramel);margin-bottom:30px;}
+.philo-body p{
+  font-size:15px;line-height:1.95;color:rgba(43,33,26,0.78);
+  margin-bottom:20px;max-width:470px;
+}
+.philo-sign{
+  font-family:var(--serif);font-size:12.5px;color:var(--caramel);
+  letter-spacing:0.10em;margin-top:8px;
+}
+.philo-fig{position:relative;}
+.philo-fig .frame{overflow:hidden;border-radius:2px;background:var(--card);}
+.philo-fig img{
+  width:100%;height:520px;object-fit:cover;
+  transition:transform 1.4s cubic-bezier(.2,.7,.3,1);
+}
+.philo-fig:hover img{transform:scale(1.045);}
+.philo-cap{
+  font-size:11.5px;color:rgba(43,33,26,0.60);
+  margin-top:14px;letter-spacing:0.05em;
+}
+
+/* ---- 数据徽章 ---- */
+.badges{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+  margin-top:76px;
+}
+.badge{
+  background:var(--card);border-radius:2px;
+  padding:34px 32px 30px;position:relative;
+  border:1px solid rgba(43,33,26,0.05);
+  transition:transform .45s cubic-bezier(.2,.7,.3,1),box-shadow .45s ease;
+}
+.badge:hover{transform:translateY(-5px);box-shadow:0 16px 38px -22px rgba(43,33,26,0.34);}
+.badge-idx{
+  position:absolute;top:26px;right:30px;
+  font-family:var(--latin);font-size:11px;font-weight:600;
+  color:var(--caramel);letter-spacing:0.1em;
+}
+.badge-val{
+  font-family:var(--latin);font-size:33px;font-weight:500;
+  letter-spacing:0.01em;line-height:1.15;margin-bottom:8px;
+}
+.badge-val.accent{color:var(--caramel);}
+.badge-lbl{font-size:12.5px;color:rgba(43,33,26,0.72);letter-spacing:0.05em;}
+
+/* ================= 精选豆单区 ================= */
+.beans{padding:var(--section-y) 0;background:var(--card);margin-top:var(--section-y);}
+.beans-head{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  gap:48px;margin-bottom:54px;
+}
+.beans-head .h-block{margin-top:0;}
+.beans-note{
+  font-size:13.5px;line-height:1.85;color:rgba(43,33,26,0.72);
+  text-align:right;white-space:pre-line;flex:none;
+}
+.bean-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.bean-card{
+  background:#fff;border-radius:2px;overflow:hidden;
+  border:1px solid rgba(43,33,26,0.07);
+  display:flex;flex-direction:column;
+  transition:transform .5s cubic-bezier(.2,.7,.3,1),box-shadow .5s ease;
+}
+.bean-card:hover{transform:translateY(-7px);box-shadow:0 22px 46px -26px rgba(43,33,26,0.40);}
+.bean-media{overflow:hidden;height:232px;background:var(--cream);}
+.bean-media img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 1.3s cubic-bezier(.2,.7,.3,1);
+}
+.bean-card:hover .bean-media img{transform:scale(1.07);}
+.bean-body{padding:26px 26px 28px;display:flex;flex-direction:column;flex:1;}
+.bean-meta{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-bottom:12px;
+}
+.bean-lot{
+  font-family:var(--latin);font-size:10px;font-weight:600;
+  letter-spacing:0.16em;color:var(--caramel);text-transform:uppercase;
+}
+.bean-sca{font-family:var(--latin);font-size:10.5px;font-weight:500;letter-spacing:0.08em;}
+.bean-name{
+  font-family:var(--serif);font-size:26px;font-weight:400;
+  letter-spacing:0.04em;line-height:1.3;margin-bottom:9px;
+}
+.bean-origin{
+  font-size:11.5px;color:rgba(43,33,26,0.68);
+  letter-spacing:0.04em;margin-bottom:16px;
+}
+.bean-divider{height:1px;background:rgba(43,33,26,0.10);margin-bottom:16px;}
+.bean-process{font-size:13px;margin-bottom:16px;letter-spacing:0.03em;}
+.bean-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+.bean-tag{
+  background:var(--cream);border-radius:100px;
+  font-size:11.5px;padding:6px 15px;letter-spacing:0.06em;
+  color:rgba(43,33,26,0.86);
+  transition:background .3s ease;
+}
+.bean-card:hover .bean-tag{background:#EFE6DA;}
+.bean-foot{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin-top:auto;padding-top:20px;border-top:1px solid rgba(43,33,26,0.07);
+}
+.bean-price{
+  font-family:var(--latin);font-size:21px;font-weight:600;
+  color:var(--caramel);letter-spacing:0.02em;
+}
+.bean-spec{font-size:11.5px;color:rgba(43,33,26,0.66);}
+.beans-footnote{
+  display:flex;align-items:center;gap:14px;margin-top:56px;
+  padding-top:26px;border-top:1px solid rgba(43,33,26,0.10);
+}
+.beans-footnote .dash{width:30px;height:1px;background:var(--caramel);flex:none;}
+.beans-footnote p{
+  font-size:12px;color:rgba(43,33,26,0.68);letter-spacing:0.03em;line-height:1.7;
+}
+
+/* ================= 风土溯源区 ================= */
+.trace{padding:var(--section-y) 0;background:var(--cream);}
+.trace-head{text-align:left;margin-bottom:54px;}
+.trace-head .h-block{margin-bottom:16px;}
+.trace-sub{font-size:13.5px;color:rgba(43,33,26,0.72);}
+.trace-fig{overflow:hidden;border-radius:2px;margin-bottom:16px;background:var(--card);}
+.trace-fig img{
+  width:100%;height:460px;object-fit:cover;object-position:center 46%;
+  transition:transform 1.5s cubic-bezier(.2,.7,.3,1);
+}
+.trace-fig:hover img{transform:scale(1.04);}
+.trace-cap{font-size:11.5px;color:rgba(43,33,26,0.60);letter-spacing:0.05em;margin-bottom:74px;}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+.step{
+  padding:0 30px;position:relative;
+  border-left:1px solid rgba(43,33,26,0.10);
+  transition:transform .5s cubic-bezier(.2,.7,.3,1);
+}
+.step:first-child{border-left:0;padding-left:0;}
+.step:hover{transform:translateY(-4px);}
+.step-top{display:flex;align-items:baseline;gap:12px;margin-bottom:18px;}
+.step-num{font-family:var(--latin);font-size:30px;font-weight:500;line-height:1;}
+.step-en{
+  font-family:var(--latin);font-size:10px;font-weight:600;
+  letter-spacing:0.20em;color:rgba(43,33,26,0.62);text-transform:uppercase;
+}
+.step-rule{height:1px;background:rgba(43,33,26,0.12);margin-bottom:18px;}
+.step-title{
+  font-family:var(--serif);font-size:18px;font-weight:500;
+  letter-spacing:0.03em;margin-bottom:12px;
+}
+.step-desc{font-size:12.5px;line-height:1.9;color:rgba(43,33,26,0.72);}
+/* 四步序号各自配色 */
+.step:nth-child(1) .step-num{color:var(--caramel);}
+.step:nth-child(2) .step-num{color:var(--terracotta);}
+.step:nth-child(3) .step-num{color:var(--olive);}
+.step:nth-child(4) .step-num{color:var(--caramel);}
+
+/* ================= 订阅区 ================= */
+.subscribe{
+  background:var(--cocoa);padding:118px 0;
+  position:relative;overflow:hidden;
+}
+.subscribe::before{
+  content:'';position:absolute;right:-160px;top:-160px;
+  width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(166,99,60,0.20) 0%,rgba(166,99,60,0) 68%);
+  pointer-events:none;
+}
+.sub-grid{
+  display:grid;grid-template-columns:1.15fr 1fr;gap:80px;align-items:center;
+  position:relative;z-index:2;
+}
+.sub-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:26px;}
+.sub-eyebrow .dash{width:34px;height:1px;background:var(--terracotta);flex:none;}
+.sub-eyebrow span{
+  font-size:11px;font-weight:500;letter-spacing:0.22em;
+  color:var(--terracotta);text-transform:uppercase;
+}
+.sub-title{
+  font-family:var(--serif);font-weight:400;font-size:42px;
+  color:var(--white);letter-spacing:0.05em;line-height:1.35;margin-bottom:26px;
+}
+.sub-rule{width:60px;height:1px;background:var(--terracotta);margin-bottom:24px;}
+.sub-desc{
+  font-size:14px;color:rgba(251,247,241,0.86);
+  line-height:1.9;letter-spacing:0.03em;max-width:420px;
+}
+.sub-form{display:flex;flex-direction:column;gap:16px;}
+.sub-input{
+  background:var(--cocoa-input);
+  border:1px solid rgba(251,247,241,0.14);
+  border-radius:2px;color:var(--white);
+  font-family:var(--sans);font-size:13.5px;letter-spacing:0.04em;
+  padding:18px 22px;width:100%;
+  transition:border-color .3s ease, background .3s ease;
+}
+.sub-input::placeholder{color:rgba(251,247,241,0.52);}
+.sub-input:focus{
+  outline:none;border-color:var(--terracotta);
+  background:#443629;
+}
+.sub-btn{
+  background:var(--caramel);color:var(--white);border:0;border-radius:2px;
+  font-family:var(--sans);font-size:14px;font-weight:500;letter-spacing:0.08em;
+  padding:18px 22px;cursor:pointer;width:100%;
+  transition:background .3s ease, transform .3s ease;
+}
+.sub-btn:hover{background:#B97048;transform:translateY(-1px);}
+.sub-btn:active{transform:translateY(0);}
+.sub-note{
+  font-size:11.5px;color:rgba(251,247,241,0.62);
+  letter-spacing:0.03em;line-height:1.7;margin-top:4px;
+}
+.sub-ok{
+  display:none;font-size:13px;color:var(--terracotta);
+  letter-spacing:0.04em;margin-top:4px;
+}
+.sub-form.done .sub-ok{display:block;}
+.sub-form.done .sub-input,.sub-form.done .sub-btn{opacity:.45;pointer-events:none;}
+
+/* ================= 页脚 ================= */
+.footer{background:var(--cocoa-deep);padding:88px 0 0;color:var(--white);}
+.footer-main{
+  display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:56px;
+  padding-bottom:64px;
+}
+.f-brand-name{
+  font-family:var(--serif);font-size:22px;font-weight:400;
+  letter-spacing:0.08em;margin-bottom:8px;
+}
+.f-brand-en{
+  font-family:var(--latin);font-size:10px;font-weight:600;
+  letter-spacing:0.20em;color:var(--terracotta);margin-bottom:22px;
+}
+.f-brand-desc{
+  font-size:12px;line-height:1.95;color:rgba(251,247,241,0.76);
+  letter-spacing:0.03em;max-width:280px;
+}
+.f-col-title{
+  font-size:12px;font-weight:500;letter-spacing:0.14em;
+  margin-bottom:22px;color:var(--white);
+}
+.f-links{display:flex;flex-direction:column;gap:13px;}
+.f-links a{
+  font-size:12.5px;color:rgba(251,247,241,0.76);
+  letter-spacing:0.04em;width:fit-content;
+  transition:color .28s ease, transform .28s ease;
+}
+.f-links a:hover{color:var(--terracotta);transform:translateX(3px);}
+.f-mail{
+  font-family:var(--latin);font-size:12.5px;font-weight:500;
+  color:var(--terracotta) !important;letter-spacing:0.03em;
+}
+.footer-rule{height:1px;background:rgba(251,247,241,0.10);}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;gap:24px;
+  padding:26px 0 30px;
+}
+.footer-copy{font-size:11px;color:rgba(251,247,241,0.62);letter-spacing:0.05em;}
+.f-legal{display:flex;gap:28px;}
+.f-legal a{
+  font-size:11px;color:rgba(251,247,241,0.62);letter-spacing:0.05em;
+  transition:color .28s ease;
+}
+.f-legal a:hover{color:var(--terracotta);}
+
+/* ---------- 滚动显现 ---------- */
+.fade{opacity:0;transform:translateY(30px);transition:opacity .95s ease,transform .95s cubic-bezier(.2,.7,.3,1);}
+.fade.in{opacity:1;transform:none;}
+
+/* ================= 响应式 ================= */
+@media (max-width:1180px){
+  :root{--gutter:56px;}
+  .hero-cn{font-size:76px;}
+  .philo-grid{gap:52px;}
+}
+@media (max-width:980px){
+  :root{--gutter:40px;--section-y:92px;}
+  .nav-links{
+    position:fixed;inset:76px 0 auto;background:rgba(244,237,228,0.99);
+    flex-direction:column;align-items:flex-start;gap:0;
+    padding:8px var(--gutter) 22px;
+    border-bottom:1px solid rgba(43,33,26,0.12);
+    transform:translateY(-130%);transition:transform .42s cubic-bezier(.4,0,.2,1);
+    backdrop-filter:blur(14px);
+  }
+  .nav-links.open{transform:translateY(0);}
+  .nav-links a{width:100%;padding:15px 0;border-bottom:1px solid rgba(43,33,26,0.07);}
+  .nav-toggle{display:block;}
+  .h-display,.hero-cn{font-size:60px;}
+  .h-section{font-size:34px;}
+  .h-block{font-size:30px;}
+  .philo-grid{grid-template-columns:1fr;gap:44px;}
+  .philo-fig img{height:400px;}
+  .badges{grid-template-columns:1fr;gap:16px;margin-top:52px;}
+  .badge{padding:28px 26px;display:flex;justify-content:space-between;align-items:center;}
+  .badge-idx{position:static;}
+  .beans-head{flex-direction:column;align-items:flex-start;gap:20px;}
+  .beans-note{text-align:left;}
+  .bean-grid{grid-template-columns:1fr;gap:20px;}
+  .bean-media{height:260px;}
+  .steps{grid-template-columns:1fr 1fr;row-gap:44px;}
+  .step:nth-child(3){border-left:0;padding-left:0;}
+  .step{padding:0 24px;}
+  .trace-fig img{height:340px;}
+  .sub-grid{grid-template-columns:1fr;gap:44px;}
+  .footer-main{grid-template-columns:1fr 1fr;gap:44px;}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:16px;}
+}
+@media (max-width:640px){
+  :root{--gutter:24px;--section-y:72px;}
+  body{font-size:14px;}
+  .nav-inner{height:66px;}
+  .nav-links{inset:66px 0 auto;}
+  .brand-cn{font-size:18px;}
+  .nav-cta{padding:9px 18px;font-size:12px;}
+  .h-display,.hero-cn{font-size:44px;letter-spacing:0.06em;}
+  .hero{min-height:520px;height:78vh;}
+  .hero-en{font-size:20px;}
+  .hero-slogan{font-size:16px;}
+  .hero-bottom{flex-direction:column;align-items:flex-start;gap:22px;padding-bottom:34px;}
+  .hero-side{text-align:left;}
+  .h-section{font-size:27px;}
+  .h-block{font-size:24px;}
+  .philo-fig img{height:300px;}
+  .badge{flex-direction:column;align-items:flex-start;gap:6px;position:relative;}
+  .badge-idx{position:absolute;top:24px;right:24px;}
+  .bean-media{height:220px;}
+  .bean-name{font-size:23px;}
+  .steps{grid-template-columns:1fr;row-gap:38px;}
+  .step,.step:first-child{border-left:0;padding:0 0 0 20px;border-left:1px solid rgba(43,33,26,0.10);}
+  .step:first-child{padding-left:0;border-left:0;}
+  .trace-fig img{height:250px;}
+  .sub-title{font-size:30px;}
+  .subscribe{padding:76px 0;}
+  .footer-main{grid-template-columns:1fr;gap:38px;}
+  .footer{padding-top:64px;}
+}
+
+/* 尊重用户的减少动效偏好 */
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important;}
+  .reveal,.fade{opacity:1;transform:none;}
+  html{scroll-behavior:auto;}
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== 导航栏 ==================== -->
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand" aria-label="云岭庄园首页">
+      <span class="brand-main">
+        <span class="brand-dot"></span>
+        <span class="brand-cn">云岭庄园</span>
+      </span>
+      <span class="brand-en">YUNLING COFFEE ESTATE · YUNNAN</span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#philosophy">品牌理念</a>
+      <a href="#beans">精选豆单</a>
+      <a href="#trace">风土溯源</a>
+      <a href="#story">庄园纪事</a>
+    </nav>
+    <a href="#subscribe" class="nav-cta">订阅新产季</a>
+    <button class="nav-toggle" id="navToggle" aria-label="展开导航菜单" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ==================== 首屏 Hero ==================== -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+
+  <div class="hero-top reveal">
+    <span>EST. 2016 · 直采直烘</span>
+  </div>
+
+  <div class="hero-bottom">
+    <div class="hero-copy">
+      <span class="hero-en reveal">Taste of the Mountain</span>
+      <h1 class="hero-cn reveal">云岭庄园</h1>
+      <div class="hero-rule reveal"></div>
+      <p class="hero-slogan reveal">每一杯，都是一座山的风土</p>
+    </div>
+    <div class="hero-side reveal">YUNNAN · BAOSHAN
+1,650 M · SCA 88.5</div>
+  </div>
+</section>
+
+<!-- ==================== 品牌理念区 ==================== -->
+<section class="philosophy" id="philosophy">
+  <div class="wrap">
+    <div class="eyebrow fade">
+      <span class="dash"></span>
+      <span>品牌理念 · OUR PHILOSOPHY</span>
+    </div>
+
+    <div class="philo-grid">
+      <div class="philo-copy fade">
+        <h2 class="h-section">山把风味写进果实，<br>我们只负责把它留住。</h2>
+        <div class="philo-rule"></div>
+        <div class="philo-body">
+          <p>云岭庄园坐落于云南保山高黎贡山南麓，海拔 1,650 米。我们只做一件事：在同一片山坡上，种出可以被清晰辨认的风味。</p>
+          <p>从花期管理到厌氧发酵槽间的每一次翻动，都由庄主与农人共同定夺。不追求产量，只保留风味。</p>
+        </div>
+        <p class="philo-sign">庄主 · 林知远</p>
+      </div>
+
+      <figure class="philo-fig fade">
+        <div class="frame">
+          <img src="assets/02-philosophy-terraces.png" alt="高黎贡山南麓晨雾中的咖啡梯田" loading="lazy" onerror="this.parentNode.parentNode.style.display='none'">
+        </div>
+        <figcaption class="philo-cap">高黎贡山南麓 · 晨雾中的梯田</figcaption>
+      </figure>
+    </div>
+
+    <!-- 数据徽章 -->
+    <div class="badges">
+      <div class="badge fade">
+        <span class="badge-idx">01</span>
+        <div>
+          <div class="badge-val">1,650 M</div>
+          <div class="badge-lbl">平均种植海拔</div>
+        </div>
+      </div>
+      <div class="badge fade">
+        <span class="badge-idx">02</span>
+        <div>
+          <div class="badge-val accent">88.5</div>
+          <div class="badge-lbl">SCA 常年均分</div>
+        </div>
+      </div>
+      <div class="badge fade">
+        <span class="badge-idx">03</span>
+        <div>
+          <div class="badge-val">38 户</div>
+          <div class="badge-lbl">直接贸易合作农户</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 精选豆单区 ==================== -->
+<section class="beans" id="beans">
+  <div class="wrap">
+    <div class="beans-head">
+      <div class="fade">
+        <div class="eyebrow">
+          <span class="dash"></span>
+          <span>精选豆单 · THIS SEASON</span>
+        </div>
+        <h2 class="h-block">2026 产季 · 微批次甄选</h2>
+      </div>
+      <p class="beans-note fade">全部批次均为单一庄园、单一处理法
+SCA 杯测 87 分以上，限量发售</p>
+    </div>
+
+    <div class="bean-grid">
+      <!-- 翡翠坡庄园 -->
+      <article class="bean-card fade">
+        <div class="bean-media">
+          <img src="assets/04-bean-geisha.png" alt="翡翠坡庄园 瑰夏 生豆" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div class="bean-body">
+          <div class="bean-meta">
+            <span class="bean-lot">MICRO LOT · 微批次</span>
+            <span class="bean-sca">SCA 88.5</span>
+          </div>
+          <h3 class="bean-name">翡翠坡庄园</h3>
+          <p class="bean-origin">保山 高黎贡山 · 1,720 M · 瑰夏 Geisha</p>
+          <div class="bean-divider"></div>
+          <p class="bean-process">厌氧日晒 · 14 天慢干</p>
+          <div class="bean-tags">
+            <span class="bean-tag">白桃</span>
+            <span class="bean-tag">茉莉</span>
+            <span class="bean-tag">柑橘</span>
+          </div>
+          <div class="bean-foot">
+            <span class="bean-price">¥ 168</span>
+            <span class="bean-spec">150g / 浅烘</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 花蜜坡庄园 -->
+      <article class="bean-card fade">
+        <div class="bean-media">
+          <img src="assets/05-bean-bourbon.png" alt="花蜜坡庄园 波旁 熟豆" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div class="bean-body">
+          <div class="bean-meta">
+            <span class="bean-lot">MICRO LOT · 微批次</span>
+            <span class="bean-sca">SCA 87.5</span>
+          </div>
+          <h3 class="bean-name">花蜜坡庄园</h3>
+          <p class="bean-origin">普洱 孟连 · 1,480 M · 波旁 Bourbon</p>
+          <div class="bean-divider"></div>
+          <p class="bean-process">酒桶发酵 · 蜜处理</p>
+          <div class="bean-tags">
+            <span class="bean-tag">红糖</span>
+            <span class="bean-tag">熟果</span>
+            <span class="bean-tag">可可</span>
+          </div>
+          <div class="bean-foot">
+            <span class="bean-price">¥ 138</span>
+            <span class="bean-spec">150g / 中烘</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 栗原庄园 -->
+      <article class="bean-card fade">
+        <div class="bean-media">
+          <img src="assets/06-bean-typica.png" alt="栗原庄园 铁皮卡 深烘熟豆" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <div class="bean-body">
+          <div class="bean-meta">
+            <span class="bean-lot">MICRO LOT · 微批次</span>
+            <span class="bean-sca">SCA 86.5</span>
+          </div>
+          <h3 class="bean-name">栗原庄园</h3>
+          <p class="bean-origin">临沧 邦东 · 1,560 M · 铁皮卡 Typica</p>
+          <div class="bean-divider"></div>
+          <p class="bean-process">传统日晒 · 庄园水洗</p>
+          <div class="bean-tags">
+            <span class="bean-tag">焦糖</span>
+            <span class="bean-tag">坚果</span>
+            <span class="bean-tag">黑巧</span>
+          </div>
+          <div class="bean-foot">
+            <span class="bean-price">¥ 118</span>
+            <span class="bean-spec">150g / 深烘</span>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="beans-footnote fade">
+      <span class="dash"></span>
+      <p>SCA 80 分以上即为精品咖啡 · 87–89 分为微批次 · 90 分以上为纳米批次（Nano Lot），每年不足 30 公斤</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 风土溯源区 ==================== -->
+<section class="trace" id="trace">
+  <div class="wrap">
+    <div class="trace-head fade">
+      <div class="eyebrow">
+        <span class="dash"></span>
+        <span>风土溯源 · FROM SEED TO CUP</span>
+      </div>
+      <h2 class="h-block">一杯咖啡，四段山路</h2>
+      <p class="trace-sub">从海拔 1,650 米的枝头，到你手中的这一杯，中间只有四个环节</p>
+    </div>
+
+    <figure class="trace-fig fade">
+      <img src="assets/03-farmer-hands-cherries.png" alt="咖啡农双手捧着刚采摘的全红果" loading="lazy" onerror="this.parentNode.style.display='none'">
+    </figure>
+    <p class="trace-cap fade">每年 11 月至次年 1 月，全红果人工采摘</p>
+
+    <div class="steps">
+      <div class="step fade">
+        <div class="step-top">
+          <span class="step-num">01</span>
+          <span class="step-en">Harvest</span>
+        </div>
+        <div class="step-rule"></div>
+        <h3 class="step-title">全红果手摘</h3>
+        <p class="step-desc">只采糖度达标的成熟果，48 小时内运抵处理厂，避免任何后熟发酵偏差。</p>
+      </div>
+
+      <div class="step fade">
+        <div class="step-top">
+          <span class="step-num">02</span>
+          <span class="step-en">Process</span>
+        </div>
+        <div class="step-rule"></div>
+        <h3 class="step-title">厌氧恒温发酵</h3>
+        <p class="step-desc">不锈钢槽内控温 18℃，厌氧 72 小时后转日晒慢干 14 天，逐日翻动。</p>
+      </div>
+
+      <div class="step fade">
+        <div class="step-top">
+          <span class="step-num">03</span>
+          <span class="step-en">Cupping</span>
+        </div>
+        <div class="step-rule"></div>
+        <h3 class="step-title">SCA 杯测评分</h3>
+        <p class="step-desc">由 Q Grader 按 SCA 标准杯测，85 分以下不进入微批次序列。</p>
+      </div>
+
+      <div class="step fade">
+        <div class="step-top">
+          <span class="step-num">04</span>
+          <span class="step-en">Roast</span>
+        </div>
+        <div class="step-rule"></div>
+        <h3 class="step-title">小批量直烘</h3>
+        <p class="step-desc">庄园自有 12 公斤烘焙机，接单后现烘，7 日内发货，风味曲线存档留样。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 订阅区 ==================== -->
+<section class="subscribe" id="subscribe">
+  <div class="wrap">
+    <div class="sub-grid">
+      <div class="fade">
+        <div class="sub-eyebrow">
+          <span class="dash"></span>
+          <span>订阅 · SUBSCRIPTION</span>
+        </div>
+        <h2 class="sub-title">每个产季，一封信。</h2>
+        <div class="sub-rule"></div>
+        <p class="sub-desc">新豆上架、杯测笔记、庄园当月天气。不发促销，只发风味。</p>
+      </div>
+
+      <form class="sub-form fade" id="subForm" novalidate>
+        <input type="email" class="sub-input" id="subEmail" placeholder="你的邮箱地址" aria-label="你的邮箱地址" required>
+        <button type="submit" class="sub-btn">订阅产季通讯</button>
+        <p class="sub-note">每月一封，随时退订。我们不会把你的地址交给第三方。</p>
+        <p class="sub-ok">已收到 —— 感谢订阅，下一封信会在新产季开始时寄出。</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 页脚 ==================== -->
+<footer class="footer" id="story">
+  <div class="wrap">
+    <div class="footer-main">
+      <div class="fade">
+        <div class="f-brand-name">云岭庄园</div>
+        <div class="f-brand-en">YUNLING COFFEE ESTATE</div>
+        <p class="f-brand-desc">云南保山高黎贡山南麓单一产地庄园。直采直烘，只做微批次。</p>
+      </div>
+
+      <div class="fade">
+        <div class="f-col-title">庄园</div>
+        <div class="f-links">
+          <a href="#philosophy">品牌理念</a>
+          <a href="#trace">风土溯源</a>
+          <a href="#story">庄园纪事</a>
+        </div>
+      </div>
+
+      <div class="fade">
+        <div class="f-col-title">选购</div>
+        <div class="f-links">
+          <a href="#beans">本季豆单</a>
+          <a href="#subscribe">订阅制</a>
+          <a href="#beans">企业礼盒</a>
+        </div>
+      </div>
+
+      <div class="fade">
+        <div class="f-col-title">联系</div>
+        <div class="f-links">
+          <a href="#subscribe">到访预约</a>
+          <a href="#trace">杯测课程</a>
+          <a href="mailto:hello@yunling.coffee" class="f-mail">hello@yunling.coffee</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-rule"></div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 云岭咖啡庄园 · Yunnan, China</span>
+      <div class="f-legal">
+        <a href="#story">隐私政策</a>
+        <a href="#story">配送说明</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---------- 导航：滚动实心化 ---------- */
+  var nav = document.getElementById('nav');
+  function onScroll(){
+    if(window.scrollY > 24){ nav.classList.add('solid'); }
+    else { nav.classList.remove('solid'); }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ---------- 移动端菜单 ---------- */
+  var toggle = document.getElementById('navToggle');
+  var links  = document.getElementById('navLinks');
+  function closeMenu(){
+    links.classList.remove('open');
+    toggle.setAttribute('aria-expanded','false');
+  }
+  toggle.addEventListener('click', function(){
+    var open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  links.addEventListener('click', function(e){
+    if(e.target.tagName === 'A'){ closeMenu(); }
+  });
+
+  /* ---------- Hero 图片缩放入场 ---------- */
+  var hero = document.querySelector('.hero');
+  requestAnimationFrame(function(){
+    setTimeout(function(){ hero.classList.add('loaded'); }, 60);
+  });
+
+  /* ---------- 滚动显现（IntersectionObserver，带降级）---------- */
+  var targets = document.querySelectorAll('.reveal, .fade');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          en.target.classList.add('in');
+          io.unobserve(en.target);
+        }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    targets.forEach(function(el){ io.observe(el); });
+  } else {
+    targets.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---------- Hero 首屏错峰入场 ---------- */
+  var heroReveals = document.querySelectorAll('.hero .reveal');
+  heroReveals.forEach(function(el, i){
+    setTimeout(function(){ el.classList.add('in'); }, 140 + i * 130);
+  });
+
+  /* ---------- 订阅表单（前端演示，不发起真实请求）---------- */
+  var form  = document.getElementById('subForm');
+  var email = document.getElementById('subEmail');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = (email.value || '').trim();
+    var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    if(!ok){
+      email.style.borderColor = '#C8794B';
+      email.focus();
+      email.placeholder = '请填写有效的邮箱地址';
+      return;
+    }
+    form.classList.add('done');
+  });
+  email.addEventListener('input', function(){
+    email.style.borderColor = '';
+  });
+
+  /* ---------- 平滑锚点（兼容不支持 scroll-behavior 的浏览器）---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if(id.length < 2) return;
+      var el = document.querySelector(id);
+      if(!el) return;
+      e.preventDefault();
+      var top = el.getBoundingClientRect().top + window.scrollY - (nav.offsetHeight + 8);
+      window.scrollTo({
+        top: Math.max(top, 0),
+        behavior: 'smooth'
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
