@@ -1,0 +1,19 @@
+# Local/private or source files that must not enter the public portfolio repository
+.env
+.env.*
+*.doc
+*.docx
+*.ppt
+*.pptx
+*.pdf
+*.zip
+*.exe
+*.py
+*.pem
+*.key
+*.p12
+*.pfx
+*backup*
+*.before*
+Thumbs.db
+.DS_Store
