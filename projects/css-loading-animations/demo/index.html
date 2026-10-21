@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark" />
+<meta name="theme-color" content="#0B0E14" />
+<meta name="description" content="8 种生产级纯 CSS 加载动画合集：旋转圆环、脉冲圆点、弹跳柱条、波纹圆圈、渐变锥形旋转器、打字指示器、骨架屏微光、DNA 双螺旋。仅使用 transform 与 opacity，零外部依赖，点击即可复制完整 CSS。" />
+<title>CSS 加载动画合集 · 8 种纯 CSS 加载动画</title>
+
+<!-- ============================================================
+     页面框架样式 · 仅服务于本展示页，不属于任何动画，不会被复制
+     ============================================================ -->
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --bg: #0B0E14;
+  --surface-1: rgba(255, 255, 255, 0.025);
+  --surface-2: rgba(255, 255, 255, 0.05);
+  --border-1: rgba(255, 255, 255, 0.08);
+  --border-2: rgba(255, 255, 255, 0.14);
+  --text-1: #E9EDF4;
+  --text-2: #99A2B4;
+  --text-3: #6A7488;
+  --accent: #7C8CFF;
+  --accent-2: #2DD4BF;
+  --ok: #34D399;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --font-cn: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", sans-serif;
+  --font-mono: "Cascadia Code", "JetBrains Mono", "SF Mono", Consolas, "Liberation Mono", "Courier New", monospace;
+  --tempo: 1; /* 全局动画节奏：1 = 常速，数值越大越慢（由页面速度控件驱动） */
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-cn);
+  background: var(--bg);
+  color: var(--text-1);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: rgba(124, 140, 255, 0.4); color: #FFFFFF; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 99px; border: 2px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.18); }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+[hidden] { display: none !important; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- 背景装饰 ---------- */
+.bg-decor { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.bg-decor::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(760px 440px at 10% -8%, rgba(124, 140, 255, 0.15), transparent 62%),
+    radial-gradient(860px 500px at 92% 6%, rgba(45, 212, 191, 0.07), transparent 60%),
+    radial-gradient(1000px 620px at 50% 112%, rgba(192, 132, 252, 0.07), transparent 60%);
+}
+.bg-decor::after {
+  content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(ellipse 92% 58% at 50% 0%, #000 18%, transparent 78%);
+  mask-image: radial-gradient(ellipse 92% 58% at 50% 0%, #000 18%, transparent 78%);
+}
+
+.wrap { position: relative; z-index: 1; max-width: 1220px; margin: 0 auto; padding: clamp(34px, 6vw, 66px) clamp(16px, 4vw, 34px) 60px; }
+
+/* ---------- 头部 ---------- */
+.hero-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 7px 15px; border-radius: 999px;
+  border: 1px solid var(--border-1); background: var(--surface-1);
+  font-size: 12px; font-weight: 600; letter-spacing: 0.16em; color: var(--text-2);
+}
+.badge .dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent-2); box-shadow: 0 0 12px var(--accent-2);
+  animation: badge-pulse 2.4s ease-in-out infinite;
+}
+@keyframes badge-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.78); }
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 12px; border-radius: 999px;
+  border: 1px solid var(--border-1); background: var(--surface-1);
+  font-size: 12px; color: var(--text-2); white-space: nowrap;
+}
+.chip b { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--text-1); }
+
+.hero-title {
+  margin: 28px 0 14px;
+  font-size: clamp(30px, 4.6vw, 52px);
+  line-height: 1.16; font-weight: 800; letter-spacing: -0.02em;
+  background: linear-gradient(112deg, #FFFFFF 22%, #B9C3FF 58%, #7FE8DA 92%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.hero-sub { margin: 0; max-width: 780px; font-size: clamp(14px, 1.6vw, 16px); color: var(--text-2); }
+.hero-sub strong { color: var(--text-1); font-weight: 600; }
+
+/* ---------- 控制条 ---------- */
+.controls { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+
+.ctrl-btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 9px 16px; border-radius: var(--radius-md);
+  border: 1px solid var(--border-1); background: var(--surface-1);
+  color: var(--text-1); font: 600 13px / 1 var(--font-cn);
+  cursor: pointer; transition: border-color 0.2s, background 0.2s, transform 0.15s;
+}
+.ctrl-btn:hover { border-color: var(--border-2); background: var(--surface-2); }
+.ctrl-btn:active { transform: scale(0.97); }
+.ctrl-btn svg { width: 13px; height: 13px; flex: none; }
+
+.seg {
+  display: inline-flex; align-items: center; gap: 3px; padding: 4px;
+  border-radius: var(--radius-md); border: 1px solid var(--border-1); background: var(--surface-1);
+}
+.seg-label { padding: 0 8px 0 7px; font: 600 12px / 1 var(--font-mono); color: var(--text-3); }
+.seg button {
+  appearance: none; border: 0; background: transparent;
+  color: var(--text-2); font: 600 12.5px / 1 var(--font-mono);
+  padding: 8px 11px; border-radius: 9px; cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.seg button:hover { color: var(--text-1); }
+.seg button.active { background: var(--surface-2); color: var(--text-1); box-shadow: inset 0 0 0 1px var(--border-2); }
+
+/* ---------- 卡片网格 ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 38px;
+}
+
+.card {
+  position: relative;
+  display: flex; flex-direction: column;
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.014));
+  overflow: hidden;
+  animation: card-in 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  animation-delay: calc(var(--stagger, 0) * 70ms);
+  transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.3, 1), border-color 0.28s, box-shadow 0.28s;
+}
+.card::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; z-index: 2;
+  background: linear-gradient(90deg, transparent, var(--ca, var(--accent)), transparent);
+  opacity: 0; transition: opacity 0.28s;
+}
+.card:hover {
+  transform: translateY(-5px);
+  border-color: var(--ca-soft, var(--border-2));
+  box-shadow: 0 24px 60px -22px rgba(0, 0, 0, 0.75), 0 0 34px -16px var(--ca, var(--accent));
+}
+.card:hover::before { opacity: 0.9; }
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(16px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---------- 预览区 ---------- */
+.card-preview {
+  position: relative; height: 178px;
+  display: grid; place-items: center;
+  border-bottom: 1px solid var(--border-1);
+  background:
+    radial-gradient(150px 95px at 50% 50%, var(--ca-glow, rgba(124, 140, 255, 0.15)), transparent 74%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.022), rgba(255, 255, 255, 0.006));
+}
+.card-preview::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(180px 115px at 50% 50%, var(--ca-glow-strong, var(--ca-glow, rgba(124, 140, 255, 0.25))), transparent 74%);
+  opacity: 0; transition: opacity 0.3s ease;
+}
+.card:hover .card-preview::before { opacity: 1; }
+.card-preview::after {
+  content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 14px 14px;
+  -webkit-mask-image: radial-gradient(72% 72% at 50% 50%, #000, transparent 100%);
+  mask-image: radial-gradient(72% 72% at 50% 50%, #000, transparent 100%);
+  pointer-events: none;
+}
+.preview-label {
+  position: absolute; right: 12px; bottom: 10px;
+  font: 600 9.5px / 1 var(--font-mono); letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.22); pointer-events: none;
+}
+
+/* ---------- 卡片内容 ---------- */
+.card-body { display: flex; flex-direction: column; gap: 10px; flex: 1; padding: 18px 20px; }
+.card-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.card-title { margin: 0; font-size: 17px; font-weight: 700; letter-spacing: 0.01em; }
+.card-index { font: 600 11.5px / 1 var(--font-mono); color: var(--text-3); }
+.card-desc { margin: 0; font-size: 13.5px; line-height: 1.7; color: var(--text-2); }
+.card-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-top: auto; padding-top: 15px;
+  border-top: 1px dashed var(--border-1);
+}
+.card-tag {
+  font: 500 11px / 1 var(--font-mono); color: var(--text-3);
+  border: 1px solid var(--border-1); border-radius: 6px;
+  padding: 5px 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* ---------- 复制按钮 ---------- */
+.copy-btn {
+  display: inline-flex; align-items: center; gap: 7px; flex: none;
+  padding: 8px 14px; border-radius: 10px;
+  border: 1px solid var(--border-2); background: var(--surface-1);
+  color: var(--text-1); font: 600 13px / 1 var(--font-cn);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.15s;
+}
+.copy-btn:hover { background: var(--surface-2); border-color: var(--ca, var(--accent)); }
+.copy-btn:active { transform: scale(0.96); }
+.copy-btn svg { width: 14px; height: 14px; flex: none; }
+.copy-btn .ic-check { display: none; }
+.copy-btn.copied {
+  border-color: rgba(52, 211, 153, 0.55);
+  background: rgba(52, 211, 153, 0.12);
+  color: #6EE7B7;
+  animation: btn-pop 0.28s ease;
+}
+.copy-btn.copied .ic-check { display: block; }
+.copy-btn.copied .ic-copy { display: none; }
+@keyframes btn-pop { 50% { transform: scale(0.93); } }
+
+/* ---------- 页脚 ---------- */
+.site-footer {
+  margin-top: 54px; padding-top: 24px;
+  border-top: 1px solid var(--border-1);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 10px 24px;
+  font-size: 12.5px; color: var(--text-3);
+}
+.site-footer p { margin: 0; }
+.site-footer code {
+  font-family: var(--font-mono); font-size: 0.92em;
+  padding: 2px 6px; border-radius: 6px;
+  background: var(--surface-2); border: 1px solid var(--border-1); color: var(--text-2);
+}
+.noscript-tip { margin-top: 18px; font-size: 12.5px; color: var(--text-3); }
+
+/* ---------- 全局暂停（播放 / 暂停控件） ---------- */
+.motion-paused *, .motion-paused *::before, .motion-paused *::after {
+  animation-play-state: paused !important;
+}
+
+/* ---------- 全局降级：系统开启「减弱动态效果」 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- 移动端：单列 ---------- */
+@media (max-width: 680px) {
+  .grid { grid-template-columns: 1fr; }
+  .card-preview { height: 160px; }
+  .hero-top { align-items: flex-start; }
+}
+</style>
+
+<!-- ============================================================
+     以下 8 个样式块各自完全独立（含 keyframes / 变量 / 降级方案），
+     点击对应卡片的「复制 CSS」按钮即可完整复制，可直接粘贴复用
+     ============================================================ -->
+
+<!-- 01 · 旋转圆环 -->
+<style data-copy="ring">
+/* ============================================================
+   旋转圆环 · Spinning Ring
+   经典加载指示器：一段圆弧绕圆心匀速旋转
+   仅使用 transform / opacity · 零依赖 · 支持 prefers-reduced-motion
+   用法：<div class="anim-ring"></div>
+   ============================================================ */
+
+.anim-ring {
+  /* ---- 可调参数 ---- */
+  --ring-size: 46px;                            /* 圆环直径 */
+  --ring-thickness: 4px;                        /* 描边粗细 */
+  --ring-color: #6C8CFF;                        /* 旋转弧颜色 */
+  --ring-track: rgba(108, 140, 255, 0.15);      /* 轨道颜色 */
+  --ring-duration: 0.9s;                        /* 单圈时长 */
+
+  box-sizing: border-box;
+  width: var(--ring-size);
+  height: var(--ring-size);
+  border-radius: 50%;
+  border: var(--ring-thickness) solid var(--ring-track);
+  border-top-color: var(--ring-color);
+  box-shadow: 0 0 16px rgba(108, 140, 255, 0.25);
+  /* --tempo 为可选全局调速乘数（默认 1，越大越慢）；删除 var(--tempo, 1) 后按默认速度运行 */
+  animation: ring-spin calc(var(--ring-duration) * var(--tempo, 1)) linear infinite;
+  will-change: transform;
+}
+
+@keyframes ring-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 系统开启「减弱动态效果」时，降级为静止的半圆弧 */
+@media (prefers-reduced-motion: reduce) {
+  .anim-ring {
+    animation: none;
+    transform: rotate(45deg);
+  }
+}
+</style>
+
+<!-- 02 · 脉冲圆点 -->
+<style data-copy="pulse">
+/* ============================================================
+   脉冲圆点 · Pulsing Dot
+   圆点呼吸缩放 + 双层涟漪向外扩散，适合在线状态与实时提示
+   仅使用 transform / opacity · 零依赖 · 支持 prefers-reduced-motion
+   用法：<div class="anim-pulse"><span class="halo"></span><span class="halo"></span><span class="dot"></span></div>
+   ============================================================ */
+
+.anim-pulse {
+  /* ---- 可调参数 ---- */
+  --pulse-size: 18px;          /* 圆点直径 */
+  --pulse-color: #2DD4BF;      /* 主色 */
+  --pulse-duration: 1.6s;      /* 单次循环时长 */
+
+  position: relative;
+  width: var(--pulse-size);
+  height: var(--pulse-size);
+}
+
+/* 中心圆点：呼吸缩放 */
+.anim-pulse .dot {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--pulse-color);
+  box-shadow: 0 0 14px rgba(45, 212, 191, 0.55);
+  animation: pulse-beat calc(var(--pulse-duration) * var(--tempo, 1)) ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* 双层扩散涟漪：错峰半周期 */
+.anim-pulse .halo {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--pulse-color);
+  opacity: 0;
+  animation: pulse-ripple calc(var(--pulse-duration) * var(--tempo, 1)) ease-out infinite;
+  will-change: transform, opacity;
+}
+.anim-pulse .halo:nth-child(2) {
+  animation-delay: calc(var(--pulse-duration) * 0.5 * var(--tempo, 1));
+}
+
+@keyframes pulse-beat {
+  0%, 100% { transform: scale(0.82); opacity: 0.85; }
+  50% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse-ripple {
+  0% { transform: scale(1); opacity: 0.45; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
+/* 系统开启「减弱动态效果」时，降级为静态圆点 + 两圈静止涟漪 */
+@media (prefers-reduced-motion: reduce) {
+  .anim-pulse .dot { animation: none; transform: scale(1); opacity: 1; }
+  .anim-pulse .halo { animation: none; }
+  .anim-pulse .halo:nth-child(1) { transform: scale(1.6); opacity: 0.25; }
+  .anim-pulse .halo:nth-child(2) { transform: scale(2.2); opacity: 0.12; }
+}
+</style>
+
+<!-- 03 · 弹跳柱条 -->
+<style data-copy="bars">
+/* ============================================================
+   弹跳柱条 · Bouncing Bars
+   五根柱条错峰上下弹跳，音频均衡器风格，适合数据处理场景
+   仅使用 transform / opacity · 零依赖 · 支持 prefers-reduced-motion
+   用法：<div class="anim-bars"><span></span><span></span><span></span><span></span><span></span></div>
+   ============================================================ */
+
+.anim-bars {
+  /* ---- 可调参数 ---- */
+  --bar-width: 5px;        /* 柱条宽度 */
+  --bar-height: 42px;      /* 柱条高度 */
+  --bar-gap: 5px;          /* 柱条间距 */
+  --bar-radius: 3px;       /* 圆角 */
+  --bar-color: #FBBF24;    /* 主色 */
+  --bar-duration: 1s;      /* 单次弹跳时长 */
+
+  display: inline-flex;
+  align-items: flex-end;
+  gap: var(--bar-gap);
+  height: var(--bar-height);
+}
+
+.anim-bars span {
+  width: var(--bar-width);
+  height: 100%;
+  border-radius: var(--bar-radius);
+  background: linear-gradient(180deg, #FCD34D, var(--bar-color));
+  transform-origin: bottom center;
+  animation: bars-bounce calc(var(--bar-duration) * var(--tempo, 1)) ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* 错峰延迟：依次延迟 12% 循环时长 */
+.anim-bars span:nth-child(2) { animation-delay: calc(var(--bar-duration) * 0.12 * var(--tempo, 1)); }
+.anim-bars span:nth-child(3) { animation-delay: calc(var(--bar-duration) * 0.24 * var(--tempo, 1)); }
+.anim-bars span:nth-child(4) { animation-delay: calc(var(--bar-duration) * 0.36 * var(--tempo, 1)); }
+.anim-bars span:nth-child(5) { animation-delay: calc(var(--bar-duration) * 0.48 * var(--tempo, 1)); }
+
+@keyframes bars-bounce {
+  0%, 100% { transform: scaleY(0.28); opacity: 0.55; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+/* 系统开启「减弱动态效果」时，降级为静止的均衡器形态 */
+@media (prefers-reduced-motion: reduce) {
+  .anim-bars span { animation: none; }
+  .anim-bars span:nth-child(1) { transform: scaleY(0.45); }
+  .anim-bars span:nth-child(2) { transform: scaleY(0.85); }
+  .anim-bars span:nth-child(3) { transform: scaleY(1); }
+  .anim-bars span:nth-child(4) { transform: scaleY(0.7); }
+  .anim-bars span:nth-child(5) { transform: scaleY(0.5); }
+}
+</style>
+
+<!-- 04 · 波纹圆圈 -->
+<style data-copy="ripple">
+/* ============================================================
+   波纹圆圈 · Ripple Circles
+   圆环由内向外扩散淡出，声纳式反馈，适合定位扫描与连接等待
+   仅使用 transform / opacity · 零依赖 · 支持 prefers-reduced-motion
+   用法：<div class="anim-ripple"><span></span><span></span><span></span><i class="dot"></i></div>
+   ============================================================ */
+
+.anim-ripple {
+  /* ---- 可调参数 ---- */
+  --ripple-size: 52px;        /* 整体直径 */
+  --ripple-color: #38BDF8;    /* 主色 */
+  --ripple-duration: 1.8s;    /* 单次扩散时长 */
+
+  position: relative;
+  width: var(--ripple-size);
+  height: var(--ripple-size);
+}
+
+.anim-ripple span {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--ripple-color);
+  border-radius: 50%;
+  opacity: 0;
+  animation: ripple-expand calc(var(--ripple-duration) * var(--tempo, 1)) cubic-bezier(0.21, 0.53, 0.56, 0.8) infinite;
+  will-change: transform, opacity;
+}
+
+/* 三层错峰：间隔 1/3 循环时长 */
+.anim-ripple span:nth-child(2) { animation-delay: calc(var(--ripple-duration) * 0.33 * var(--tempo, 1)); }
+.anim-ripple span:nth-child(3) { animation-delay: calc(var(--ripple-duration) * 0.66 * var(--tempo, 1)); }
+
+/* 中心圆点 */
+.anim-ripple .dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: var(--ripple-color);
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.6);
+}
+
+@keyframes ripple-expand {
+  0% { transform: scale(0.25); opacity: 0; }
+  15% { opacity: 0.9; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+/* 系统开启「减弱动态效果」时，降级为三层静止同心圆 */
+@media (prefers-reduced-motion: reduce) {
+  .anim-ripple span { animation: none; }
+  .anim-ripple span:nth-child(1) { transform: scale(0.55); opacity: 0.5; }
+  .anim-ripple span:nth-child(2) { transform: scale(0.78); opacity: 0.32; }
+  .anim-ripple span:nth-child(3) { transform: scale(1); opacity: 0.16; }
+}
+</style>
+
+<!-- 05 · 渐变锥形旋转器 -->
+<style data-copy="conic">
+/* ============================================================
+   渐变锥形旋转器 · Gradient Conic Spinner
+   conic-gradient 渐变描边圆环高速旋转，现代质感，适合首屏加载
+   仅使用 transform · 零依赖 · 支持 prefers-reduced-motion
+   用法：<div class="anim-conic"></div>
+   ============================================================ */
+
+.anim-conic {
+  /* ---- 可调参数 ---- */
+  --conic-size: 48px;          /* 直径 */
+  --conic-thickness: 5px;      /* 描边粗细 */
+  --conic-from: #A78BFA;       /* 渐变起点色 */
+  --conic-to: #F0ABFC;         /* 渐变终点色 */
+  --conic-duration: 0.9s;      /* 单圈时长 */
+
+  width: var(--conic-size);
+  height: var(--conic-size);
+  border-radius: 50%;
+  background: conic-gradient(from 0.75turn,
+              rgba(167, 139, 250, 0) 0%,
+              var(--conic-from) 55%,
+              var(--conic-to) 100%);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - var(--conic-thickness)), #000 calc(100% - var(--conic-thickness) + 0.5px));
+  mask: radial-gradient(farthest-side, #0000 calc(100% - var(--conic-thickness)), #000 calc(100% - var(--conic-thickness) + 0.5px));
+  filter: drop-shadow(0 0 12px rgba(192, 132, 252, 0.35));
+  animation: conic-rotate calc(var(--conic-duration) * var(--tempo, 1)) linear infinite;
+  will-change: transform;
+}
+
+@keyframes conic-rotate {
+  to { transform: rotate(360deg); }
+}
+
+/* 系统开启「减弱动态效果」时，保留渐变圆环本身（本身可见），仅停止旋转 */
+@media (prefers-reduced-motion: reduce) {
+  .anim-conic { animation: none; }
+}
+</style>
+
+<!-- 06 · 打字指示器 -->
+<style data-copy="typing">
+/* ============================================================
+   打字指示器 · Typing Indicator
+   对话气泡内三点依次起伏，「对方正在输入」的标配状态
+   仅使用 transform / opacity · 零依赖 · 支持 prefers-reduced-motion
+   用法：<div class="anim-typing"><span></span><span></span><span></span></div>
+   ============================================================ */
+
+.anim-typing {
+  /* ---- 可调参数 ---- */
+  --typing-dot: 8px;        /* 圆点直径 */
+  --typing-gap: 7px;        /* 圆点间距 */
+  --typing-color: #FB7185;  /* 主色 */
+  --typing-duration: 1.3s;  /* 单次循环时长 */
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--typing-gap);
+  padding: 12px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+/* 气泡小尾巴 */
+.anim-typing::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  bottom: -5px;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  transform: rotate(45deg);
+}
+
+.anim-typing span {
+  width: var(--typing-dot);
+  height: var(--typing-dot);
+  border-radius: 50%;
+  background: var(--typing-color);
+  animation: typing-blink calc(var(--typing-duration) * var(--tempo, 1)) ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* 三点依次起伏：间隔 16% 循环时长 */
+.anim-typing span:nth-child(2) { animation-delay: calc(var(--typing-duration) * 0.16 * var(--tempo, 1)); }
+.anim-typing span:nth-child(3) { animation-delay: calc(var(--typing-duration) * 0.32 * var(--tempo, 1)); }
+
+@keyframes typing-blink {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
+  30% { transform: translateY(-7px); opacity: 1; }
+}
+
+/* 系统开启「减弱动态效果」时，降级为静止的暗色三点 */
+@media (prefers-reduced-motion: reduce) {
+  .anim-typing span { animation: none; opacity: 0.7; }
+}
+</style>
+
+<!-- 07 · 骨架屏微光 -->
+<style data-copy="skel">
+/* ============================================================
+   骨架屏微光 · Skeleton Shimmer
+   占位块上周期性掠过一道高光，缓解等待焦虑，适合内容流加载
+   仅使用 transform · 零依赖 · 支持 prefers-reduced-motion
+   用法：<div class="anim-skel">
+           <span class="sk-avatar"></span>
+           <span class="sk-lines"><i></i><i class="short"></i></span>
+           <span class="sk-shine"></span>
+         </div>
+   ============================================================ */
+
+.anim-skel {
+  /* ---- 可调参数 ---- */
+  --skel-width: 220px;      /* 骨架块宽度 */
+  --skel-duration: 1.8s;    /* 高光扫过一次的时长 */
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  width: var(--skel-width);
+  padding: 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.anim-skel .sk-avatar {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.anim-skel .sk-lines {
+  flex: 1;
+  display: grid;
+  gap: 10px;
+}
+
+.anim-skel .sk-lines i {
+  height: 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.anim-skel .sk-lines i.short { width: 62%; }
+
+/* 高光层：整体平移扫过，不触发重绘 */
+.anim-skel .sk-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg,
+              transparent 25%,
+              rgba(255, 255, 255, 0.10) 50%,
+              transparent 75%);
+  transform: translateX(-100%);
+  animation: skel-shine calc(var(--skel-duration) * var(--tempo, 1)) ease-in-out infinite;
+  will-change: transform;
+  pointer-events: none;
+}
+
+@keyframes skel-shine {
+  0%, 15% { transform: translateX(-100%); }
+  85%, 100% { transform: translateX(100%); }
+}
+
+/* 系统开启「减弱动态效果」时，隐藏高光，保留静态骨架结构 */
+@media (prefers-reduced-motion: reduce) {
+  .anim-skel .sk-shine { animation: none; opacity: 0; }
+}
+</style>
+
+<!-- 08 · DNA 双螺旋 -->
+<style data-copy="dna">
+/* ============================================================
+   DNA 双螺旋 · DNA Double Helix
+   双色小球沿螺旋轨迹下落交织，科技感强，适合数据解析场景
+   仅使用 transform / opacity · 零依赖 · 支持 prefers-reduced-motion
+   用法：<div class="anim-dna"><span></span> × 8</div>
+   ============================================================ */
+
+.anim-dna {
+  /* ---- 可调参数 ---- */
+  --dna-dot: 9px;         /* 小球直径 */
+  --dna-span: 16px;       /* 左右摆幅 */
+  --dna-duration: 2.2s;   /* 小球走完一圈的时长 */
+
+  position: relative;
+  width: calc(var(--dna-dot) + var(--dna-span));
+  height: 64px;
+}
+
+.anim-dna span {
+  position: absolute;
+  left: 50%;
+  width: var(--dna-dot);
+  height: var(--dna-dot);
+  margin-left: calc(var(--dna-dot) / -2);
+  border-radius: 50%;
+  animation: dna-fall calc(var(--dna-duration) * var(--tempo, 1)) linear infinite;
+  will-change: transform, opacity;
+}
+
+/* 双链配色 */
+.anim-dna span:nth-child(odd)  { background: #22D3EE; box-shadow: 0 0 10px rgba(34, 211, 238, 0.55); }
+.anim-dna span:nth-child(even) { background: #A78BFA; box-shadow: 0 0 10px rgba(167, 139, 250, 0.55); }
+
+/* 纵向排布 + 错峰延迟：8 球均分循环周期，形成连续下落流 */
+.anim-dna span:nth-child(1) { top: 0px;  animation-delay: calc(var(--dna-duration) * 0.000 * var(--tempo, 1)); }
+.anim-dna span:nth-child(2) { top: 8px;  animation-delay: calc(var(--dna-duration) * 0.125 * var(--tempo, 1)); }
+.anim-dna span:nth-child(3) { top: 16px; animation-delay: calc(var(--dna-duration) * 0.250 * var(--tempo, 1)); }
+.anim-dna span:nth-child(4) { top: 24px; animation-delay: calc(var(--dna-duration) * 0.375 * var(--tempo, 1)); }
+.anim-dna span:nth-child(5) { top: 32px; animation-delay: calc(var(--dna-duration) * 0.500 * var(--tempo, 1)); }
+.anim-dna span:nth-child(6) { top: 40px; animation-delay: calc(var(--dna-duration) * 0.625 * var(--tempo, 1)); }
+.anim-dna span:nth-child(7) { top: 48px; animation-delay: calc(var(--dna-duration) * 0.750 * var(--tempo, 1)); }
+.anim-dna span:nth-child(8) { top: 56px; animation-delay: calc(var(--dna-duration) * 0.875 * var(--tempo, 1)); }
+
+@keyframes dna-fall {
+  0%   { transform: translate(0, -14px) scale(1); opacity: 0; }
+  10%  { opacity: 1; }
+  25%  { transform: translate(var(--dna-span), 0) scale(0.5); opacity: 0.45; }
+  50%  { transform: translate(0, 14px) scale(1); opacity: 1; }
+  75%  { transform: translate(calc(var(--dna-span) * -1), 0) scale(0.5); opacity: 0.45; }
+  90%  { opacity: 1; }
+  100% { transform: translate(0, 28px) scale(1); opacity: 0; }
+}
+
+/* 系统开启「减弱动态效果」时，降级为静止的螺旋切片形态 */
+@media (prefers-reduced-motion: reduce) {
+  .anim-dna span { animation: none; opacity: 1; }
+  .anim-dna span:nth-child(odd)  { transform: translate(calc(var(--dna-span) * -0.5), 0) scale(0.75); }
+  .anim-dna span:nth-child(even) { transform: translate(calc(var(--dna-span) * 0.5), 0) scale(0.75); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 背景装饰层 -->
+<div class="bg-decor" aria-hidden="true"></div>
+
+<div class="wrap">
+
+  <!-- ================= 头部 ================= -->
+  <header class="site-header">
+    <div class="hero-top">
+      <span class="badge"><span class="dot" aria-hidden="true"></span>PURE CSS · ZERO DEPENDENCY</span>
+      <div class="chips" aria-label="页面特性">
+        <span class="chip"><b>08</b> 种动画</span>
+        <span class="chip">纯 CSS · 零依赖</span>
+        <span class="chip">transform / opacity</span>
+        <span class="chip">复制即用</span>
+      </div>
+    </div>
+
+    <h1 class="hero-title">CSS 加载动画合集</h1>
+
+    <p class="hero-sub">
+      精选 8 种生产级加载动画，全部由 <strong>@keyframes</strong> 驱动，仅使用 <strong>transform</strong> 与 <strong>opacity</strong>，不触发重排与重绘；不引用任何外部依赖。点击卡片中的按钮，即可复制该动画的完整 CSS，直接粘贴进你的项目使用。
+    </p>
+
+    <div class="controls">
+      <button class="ctrl-btn" id="motionToggle" type="button" aria-label="暂停或播放全部动画">
+        <svg class="ic-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="4" width="4" height="16" rx="1.2"></rect><rect x="14" y="4" width="4" height="16" rx="1.2"></rect></svg>
+        <svg class="ic-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><path d="M8 5v14l11-7z"></path></svg>
+        <span id="motionLabel">暂停全部动画</span>
+      </button>
+      <div class="seg" role="group" aria-label="动画播放速度">
+        <span class="seg-label">速度</span>
+        <button type="button" data-speed="0.5">0.5×</button>
+        <button type="button" data-speed="1" class="active">1×</button>
+        <button type="button" data-speed="1.5">1.5×</button>
+        <button type="button" data-speed="2">2×</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= 动画卡片网格 ================= -->
+  <main class="grid">
+
+    <!-- 01 · 旋转圆环 -->
+    <article class="card" style="--stagger:0; --ca:#6C8CFF; --ca-soft:rgba(108,140,255,.5); --ca-glow:rgba(108,140,255,.15); --ca-glow-strong:rgba(108,140,255,.27);">
+      <div class="card-preview" role="img" aria-label="旋转圆环加载动画实时预览">
+        <div class="anim-ring" aria-hidden="true"></div>
+        <span class="preview-label" aria-hidden="true">LIVE PREVIEW</span>
+      </div>
+      <div class="card-body">
+        <div class="card-head">
+          <h2 class="card-title">旋转圆环</h2>
+          <span class="card-index">01 / 08</span>
+        </div>
+        <p class="card-desc">最经典的加载语义：一段圆弧绕圆心匀速旋转，适合按钮内联、卡片与页面级等待场景。</p>
+        <div class="card-foot">
+          <span class="card-tag">transform · rotate</span>
+          <button class="copy-btn" type="button" data-anim="ring" aria-label="复制「旋转圆环」的 CSS 代码">
+            <svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span class="btn-label">复制 CSS</span>
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 02 · 脉冲圆点 -->
+    <article class="card" style="--stagger:1; --ca:#2DD4BF; --ca-soft:rgba(45,212,191,.5); --ca-glow:rgba(45,212,191,.14); --ca-glow-strong:rgba(45,212,191,.26);">
+      <div class="card-preview" role="img" aria-label="脉冲圆点加载动画实时预览">
+        <div class="anim-pulse" aria-hidden="true"><span class="halo"></span><span class="halo"></span><span class="dot"></span></div>
+        <span class="preview-label" aria-hidden="true">LIVE PREVIEW</span>
+      </div>
+      <div class="card-body">
+        <div class="card-head">
+          <h2 class="card-title">脉冲圆点</h2>
+          <span class="card-index">02 / 08</span>
+        </div>
+        <p class="card-desc">圆点呼吸缩放并向外扩散双层涟漪，常用于在线状态与语音唤醒类实时提示。</p>
+        <div class="card-foot">
+          <span class="card-tag">transform · scale</span>
+          <button class="copy-btn" type="button" data-anim="pulse" aria-label="复制「脉冲圆点」的 CSS 代码">
+            <svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span class="btn-label">复制 CSS</span>
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 03 · 弹跳柱条 -->
+    <article class="card" style="--stagger:2; --ca:#FBBF24; --ca-soft:rgba(251,191,36,.5); --ca-glow:rgba(251,191,36,.13); --ca-glow-strong:rgba(251,191,36,.24);">
+      <div class="card-preview" role="img" aria-label="弹跳柱条加载动画实时预览">
+        <div class="anim-bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+        <span class="preview-label" aria-hidden="true">LIVE PREVIEW</span>
+      </div>
+      <div class="card-body">
+        <div class="card-head">
+          <h2 class="card-title">弹跳柱条</h2>
+          <span class="card-index">03 / 08</span>
+        </div>
+        <p class="card-desc">五根柱条错峰上下弹跳，形似音频均衡器，适合数据处理与音乐播放场景。</p>
+        <div class="card-foot">
+          <span class="card-tag">transform · scaleY</span>
+          <button class="copy-btn" type="button" data-anim="bars" aria-label="复制「弹跳柱条」的 CSS 代码">
+            <svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span class="btn-label">复制 CSS</span>
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 04 · 波纹圆圈 -->
+    <article class="card" style="--stagger:3; --ca:#38BDF8; --ca-soft:rgba(56,189,248,.5); --ca-glow:rgba(56,189,248,.14); --ca-glow-strong:rgba(56,189,248,.26);">
+      <div class="card-preview" role="img" aria-label="波纹圆圈加载动画实时预览">
+        <div class="anim-ripple" aria-hidden="true"><span></span><span></span><span></span><i class="dot"></i></div>
+        <span class="preview-label" aria-hidden="true">LIVE PREVIEW</span>
+      </div>
+      <div class="card-body">
+        <div class="card-head">
+          <h2 class="card-title">波纹圆圈</h2>
+          <span class="card-index">04 / 08</span>
+        </div>
+        <p class="card-desc">圆环由内向外扩散淡出，声纳式反馈，适合定位扫描与设备连接等待。</p>
+        <div class="card-foot">
+          <span class="card-tag">transform · scale</span>
+          <button class="copy-btn" type="button" data-anim="ripple" aria-label="复制「波纹圆圈」的 CSS 代码">
+            <svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span class="btn-label">复制 CSS</span>
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 05 · 渐变锥形旋转器 -->
+    <article class="card" style="--stagger:4; --ca:#C084FC; --ca-soft:rgba(192,132,252,.5); --ca-glow:rgba(192,132,252,.15); --ca-glow-strong:rgba(192,132,252,.27);">
+      <div class="card-preview" role="img" aria-label="渐变锥形旋转器加载动画实时预览">
+        <div class="anim-conic" aria-hidden="true"></div>
+        <span class="preview-label" aria-hidden="true">LIVE PREVIEW</span>
+      </div>
+      <div class="card-body">
+        <div class="card-head">
+          <h2 class="card-title">渐变锥形旋转器</h2>
+          <span class="card-index">05 / 08</span>
+        </div>
+        <p class="card-desc">锥形渐变描边圆环高速旋转，质感现代，适合首屏加载与全局阻塞态。</p>
+        <div class="card-foot">
+          <span class="card-tag">conic-gradient · mask</span>
+          <button class="copy-btn" type="button" data-anim="conic" aria-label="复制「渐变锥形旋转器」的 CSS 代码">
+            <svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span class="btn-label">复制 CSS</span>
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 06 · 打字指示器 -->
+    <article class="card" style="--stagger:5; --ca:#FB7185; --ca-soft:rgba(251,113,133,.5); --ca-glow:rgba(251,113,133,.14); --ca-glow-strong:rgba(251,113,133,.26);">
+      <div class="card-preview" role="img" aria-label="打字指示器加载动画实时预览">
+        <div class="anim-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+        <span class="preview-label" aria-hidden="true">LIVE PREVIEW</span>
+      </div>
+      <div class="card-body">
+        <div class="card-head">
+          <h2 class="card-title">打字指示器</h2>
+          <span class="card-index">06 / 08</span>
+        </div>
+        <p class="card-desc">对话气泡内三点依次起伏，是聊天应用中「对方正在输入」的标配状态。</p>
+        <div class="card-foot">
+          <span class="card-tag">transform · translateY</span>
+          <button class="copy-btn" type="button" data-anim="typing" aria-label="复制「打字指示器」的 CSS 代码">
+            <svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span class="btn-label">复制 CSS</span>
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 07 · 骨架屏微光 -->
+    <article class="card" style="--stagger:6; --ca:#94A3B8; --ca-soft:rgba(148,163,184,.5); --ca-glow:rgba(148,163,184,.13); --ca-glow-strong:rgba(148,163,184,.24);">
+      <div class="card-preview" role="img" aria-label="骨架屏微光加载动画实时预览">
+        <div class="anim-skel" aria-hidden="true">
+          <span class="sk-avatar"></span>
+          <span class="sk-lines"><i></i><i class="short"></i></span>
+          <span class="sk-shine"></span>
+        </div>
+        <span class="preview-label" aria-hidden="true">LIVE PREVIEW</span>
+      </div>
+      <div class="card-body">
+        <div class="card-head">
+          <h2 class="card-title">骨架屏微光</h2>
+          <span class="card-index">07 / 08</span>
+        </div>
+        <p class="card-desc">灰色占位块上周期性掠过一道高光，缓解等待焦虑，适合内容流加载。</p>
+        <div class="card-foot">
+          <span class="card-tag">transform · translateX</span>
+          <button class="copy-btn" type="button" data-anim="skel" aria-label="复制「骨架屏微光」的 CSS 代码">
+            <svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span class="btn-label">复制 CSS</span>
+          </button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 08 · DNA 双螺旋 -->
+    <article class="card" style="--stagger:7; --ca:#34D399; --ca-soft:rgba(52,211,153,.5); --ca-glow:rgba(52,211,153,.14); --ca-glow-strong:rgba(52,211,153,.26);">
+      <div class="card-preview" role="img" aria-label="DNA 双螺旋加载动画实时预览">
+        <div class="anim-dna" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <span class="preview-label" aria-hidden="true">LIVE PREVIEW</span>
+      </div>
+      <div class="card-body">
+        <div class="card-head">
+          <h2 class="card-title">DNA 双螺旋</h2>
+          <span class="card-index">08 / 08</span>
+        </div>
+        <p class="card-desc">双色小球沿螺旋轨迹下落交织，科技感强，适合基因计算与数据解析场景。</p>
+        <div class="card-foot">
+          <span class="card-tag">transform · 组合</span>
+          <button class="copy-btn" type="button" data-anim="dna" aria-label="复制「DNA 双螺旋」的 CSS 代码">
+            <svg class="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span class="btn-label">复制 CSS</span>
+          </button>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- ================= 页脚 ================= -->
+  <footer class="site-footer">
+    <p>所有动画均由纯 CSS <code>@keyframes</code> 驱动，仅使用 <code>transform</code> / <code>opacity</code>，GPU 友好，无重排重绘。</p>
+    <p>遵循 <code>prefers-reduced-motion</code>：系统开启「减弱动态效果」时自动降级为静态状态。</p>
+  </footer>
+
+  <noscript><p class="noscript-tip">提示：当前浏览器未启用 JavaScript，「复制 CSS / 暂停 / 调速」控件不可用，动画预览不受影响。</p></noscript>
+
+</div>
+
+<!-- 无障碍：状态播报区 -->
+<div class="sr-only" id="liveRegion" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var root = document.documentElement;
+  var live = document.getElementById("liveRegion");
+
+  function announce(msg) {
+    if (!live) { return; }
+    live.textContent = "";
+    setTimeout(function () { live.textContent = msg; }, 30);
+  }
+
+  /* ---------- 播放 / 暂停全部动画 ---------- */
+  var motionBtn = document.getElementById("motionToggle");
+  var motionLabel = document.getElementById("motionLabel");
+  var icPause = motionBtn.querySelector(".ic-pause");
+  var icPlay = motionBtn.querySelector(".ic-play");
+  var paused = false;
+
+  motionBtn.addEventListener("click", function () {
+    paused = !paused;
+    root.classList.toggle("motion-paused", paused);
+    icPause.hidden = paused;
+    icPlay.hidden = !paused;
+    motionLabel.textContent = paused ? "播放全部动画" : "暂停全部动画";
+    announce(paused ? "已暂停全部动画" : "已恢复播放全部动画");
+  });
+
+  /* ---------- 全局调速（--tempo：数值越大越慢） ---------- */
+  var speedBtns = Array.prototype.slice.call(document.querySelectorAll("[data-speed]"));
+  speedBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      speedBtns.forEach(function (b) { b.classList.remove("active"); });
+      btn.classList.add("active");
+      var speed = parseFloat(btn.getAttribute("data-speed"));
+      var tempo = Math.round((1 / speed) * 1000) / 1000;
+      root.style.setProperty("--tempo", String(tempo));
+      announce("动画速度已调整为 " + btn.textContent.trim());
+    });
+  });
+
+  /* ---------- 复制 CSS ---------- */
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return Promise.reject(new Error("clipboard-unavailable"));
+  }
+
+  /* 降级方案：临时 textarea + execCommand */
+  function legacyCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.top = "-9999px";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    var ok = false;
+    try {
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      ok = document.execCommand("copy");
+    } catch (e) {
+      ok = false;
+    }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".copy-btn"), function (btn) {
+    btn.addEventListener("click", function () {
+      var key = btn.getAttribute("data-anim");
+      var styleEl = document.querySelector('style[data-copy="' + key + '"]');
+      if (!styleEl) { return; }
+
+      var css = styleEl.textContent.replace(/^\s+/, "").replace(/\s+$/, "");
+      var label = btn.querySelector(".btn-label");
+
+      function reset() {
+        btn.classList.remove("copied");
+        if (label) { label.textContent = "复制 CSS"; }
+      }
+      function success() {
+        btn.classList.add("copied");
+        if (label) { label.textContent = "已复制"; }
+        announce("CSS 代码已复制到剪贴板");
+        clearTimeout(btn._timer);
+        btn._timer = setTimeout(reset, 1800);
+      }
+      function fail() {
+        if (label) { label.textContent = "复制失败"; }
+        announce("复制失败，请手动选择复制");
+        clearTimeout(btn._timer);
+        btn._timer = setTimeout(reset, 1800);
+      }
+
+      Promise.resolve()
+        .then(function () { return copyText(css); })
+        .then(success)
+        .catch(function () {
+          if (legacyCopy(css)) { success(); } else { fail(); }
+        });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1600px; height:1000px; overflow:hidden; background:#0A1018; }
+  .kv {
+    position:relative; width:1600px; height:1000px;
+    background:#0A1018; overflow:hidden;
+    font-family:'Montserrat','Noto Sans SC','Source Han Sans SC','Microsoft YaHei',sans-serif;
+  }
+  /* ── 满幅主视觉 ── */
+  .bg {
+    position:absolute; inset:0;
+    background:url('bg.png') center/cover no-repeat;
+  }
+  /* ── 中央径向暗化遮罩（保证白字可读）── */
+  .vignette {
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 46% 34% at 50% 44%, rgba(4,8,14,.62) 0%, rgba(4,8,14,.42) 46%, rgba(4,8,14,0) 100%),
+      linear-gradient(to top, rgba(6,10,17,.88) 0%, rgba(6,10,17,.35) 16%, rgba(6,10,17,0) 30%);
+  }
+  /* ── 中央字标 ── */
+  .center-mark {
+    position:absolute; left:0; top:0; width:1600px;
+    text-align:center; top:330px;
+  }
+  .eyebrow {
+    font-family:'Montserrat',sans-serif; font-weight:300;
+    font-size:15px; letter-spacing:.62em; text-indent:.62em;
+    color:#C9A86A; margin-bottom:34px;
+  }
+  .eyebrow-rule {
+    width:52px; height:1px; margin:0 auto 26px auto;
+    background:linear-gradient(90deg, transparent, #C9A86A, transparent);
+  }
+  .wordmark {
+    font-family:'Montserrat',sans-serif; font-weight:300;
+    font-size:120px; line-height:1; letter-spacing:.34em; text-indent:.34em;
+    color:#FFFFFF;
+    text-shadow:0 2px 40px rgba(0,0,0,.55);
+  }
+  .subline {
+    margin-top:36px;
+    font-family:'Noto Sans SC','Source Han Sans SC','Microsoft YaHei',sans-serif;
+    font-weight:300; font-size:21px; letter-spacing:.5em; text-indent:.5em;
+    color:rgba(143,168,200,.92);
+  }
+  .subline b { color:#FFFFFF; font-weight:400; }
+  /* ── 底部信息条 ── */
+  .infobar {
+    position:absolute; left:0; right:0; bottom:0; height:96px;
+    background:rgba(8,13,22,.72);
+    backdrop-filter:blur(6px);
+    border-top:1px solid rgba(143,168,200,.18);
+    display:flex; align-items:center;
+    padding:0 64px;
+  }
+  .col { display:flex; align-items:center; gap:18px; }
+  .col-1 { flex:0 0 auto; }
+  .col-2 { flex:1; justify-content:center; gap:12px; }
+  .col-3 { flex:0 0 auto; flex-direction:column; align-items:flex-end; gap:6px; }
+  .divider { width:1px; height:44px; background:rgba(143,168,200,.22); margin:0 44px; }
+  .logo-mark { display:flex; align-items:center; gap:14px; }
+  .logo-name {
+    font-family:'Montserrat',sans-serif; font-weight:300;
+    font-size:22px; letter-spacing:.3em; color:#FFFFFF;
+  }
+  .logo-cn {
+    font-family:'Noto Sans SC',sans-serif; font-weight:300;
+    font-size:11px; letter-spacing:.32em; color:rgba(143,168,200,.75); margin-top:3px;
+  }
+  .swatch-label {
+    font-family:'Montserrat',sans-serif; font-weight:300;
+    font-size:10px; letter-spacing:.28em; color:rgba(143,168,200,.65); margin-right:14px;
+  }
+  .swatch { display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .chip { width:38px; height:26px; border-radius:3px; border:1px solid rgba(255,255,255,.14); }
+  .chip-val {
+    font-family:'Montserrat',sans-serif; font-weight:300;
+    font-size:8.5px; letter-spacing:.06em; color:rgba(143,168,200,.6);
+  }
+  .type-spec { text-align:right; }
+  .type-spec .l1 {
+    font-family:'Montserrat',sans-serif; font-weight:300;
+    font-size:11px; letter-spacing:.22em; color:#FFFFFF;
+  }
+  .type-spec .l2 {
+    font-family:'Noto Sans SC',sans-serif; font-weight:300;
+    font-size:10.5px; letter-spacing:.18em; color:rgba(143,168,200,.72); margin-top:4px;
+  }
+</style>
+</head>
+<body>
+<div class="kv">
+  <div class="bg"></div>
+  <div class="vignette"></div>
+
+  <div class="center-mark">
+    <div class="eyebrow">LIQUID&nbsp;INTELLIGENCE</div>
+    <div class="eyebrow-rule"></div>
+    <div class="wordmark">NOVA</div>
+    <div class="subline">拟生智能&nbsp;·&nbsp;让智能<b>如光流动</b></div>
+  </div>
+
+  <div class="infobar">
+    <div class="col col-1">
+      <div class="logo-mark">
+        <svg width="30" height="30" viewBox="0 0 30 30">
+          <path d="M15 1 L17.2 12.8 L29 15 L17.2 17.2 L15 29 L12.8 17.2 L1 15 L12.8 12.8 Z" fill="#C9A86A"/>
+        </svg>
+        <div>
+          <div class="logo-name">NOVA</div>
+          <div class="logo-cn">拟生智能</div>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="col col-2">
+      <span class="swatch-label">PALETTE</span>
+      <div class="swatch"><div class="chip" style="background:#0A1018"></div><div class="chip-val">#0A1018</div></div>
+      <div class="swatch"><div class="chip" style="background:#141E2E"></div><div class="chip-val">#141E2E</div></div>
+      <div class="swatch"><div class="chip" style="background:#8FA8C8"></div><div class="chip-val">#8FA8C8</div></div>
+      <div class="swatch"><div class="chip" style="background:#C9A86A"></div><div class="chip-val">#C9A86A</div></div>
+    </div>
+    <div class="divider"></div>
+    <div class="col col-3">
+      <div class="type-spec">
+        <div class="l1">MONTSERRAT&nbsp;LIGHT</div>
+        <div class="l2">中文&nbsp;·&nbsp;思源黑体</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

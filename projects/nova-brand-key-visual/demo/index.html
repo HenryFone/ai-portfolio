@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NOVA — Liquid Intelligence | 品牌 Key Visual 系统</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&family=Noto+Sans+SC:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/kv.css">
+<link rel="stylesheet" href="assets/kv2.css">
+</head>
+<body>
+
+<!-- ═══ 自定义光标 ═══ -->
+<div class="cursor" id="cursor"><div class="cursor-dot"></div><div class="cursor-ring"><span class="cursor-label"></span></div></div>
+
+<!-- ═══ 滚动进度 ═══ -->
+<div class="progress" id="progress"></div>
+
+<!-- ═══ 顶栏 ═══ -->
+<header class="nav" id="nav">
+  <a class="nav-brand" href="#top">
+    <svg class="star" viewBox="0 0 30 30" aria-hidden="true">
+      <path d="M15 1 L17.2 12.8 L29 15 L17.2 17.2 L15 29 L12.8 17.2 L1 15 L12.8 12.8 Z"/>
+    </svg>
+    <span class="nav-name">NOVA</span>
+  </a>
+  <nav class="nav-links">
+    <a href="#kv">Key Visual</a>
+    <a href="#variants">变体</a>
+    <a href="#material">材质</a>
+    <a href="#color">色彩</a>
+    <a href="#type">字体</a>
+    <a href="#motion">动效</a>
+    <a href="#application">应用</a>
+  </nav>
+  <div class="nav-cta">
+    <span class="nav-meta">1600 × 1000</span>
+    <button class="btn-ghost" data-copy="NOVA — Liquid Intelligence Key Visual, 1600×1000">
+      <span>复制规范</span>
+    </button>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <div class="hero-bg-img"></div>
+    <div class="hero-bg-veil"></div>
+  </div>
+  <div class="hero-grid">
+
+    <!-- 左：KV 板 -->
+    <div class="hero-stage reveal" data-r="1">
+      <div class="kv-frame tilt" id="kvFrame" data-tilt>
+        <div class="kv-screen">
+          <img src="bg.png" alt="NOVA Key Visual 主视觉">
+          <div class="kv-overlay">
+            <div class="kv-eyebrow">LIQUID INTELLIGENCE</div>
+            <div class="kv-rule"></div>
+            <div class="kv-word">NOVA</div>
+            <div class="kv-sub">拟生智能&nbsp;·&nbsp;让智能如光流动</div>
+          </div>
+          <div class="kv-bar">
+            <div class="kv-bar-l">
+              <svg class="star sm" viewBox="0 0 30 30"><path d="M15 1 L17.2 12.8 L29 15 L17.2 17.2 L15 29 L12.8 17.2 L1 15 L12.8 12.8 Z"/></svg>
+              <div><div class="kv-bar-name">NOVA</div><div class="kv-bar-cn">拟生智能</div></div>
+            </div>
+            <div class="kv-bar-c" id="kvPalette"></div>
+            <div class="kv-bar-r">
+              <div class="kv-bar-f1">MONTSERRAT LIGHT</div>
+              <div class="kv-bar-f2">中文 · 思源黑体</div>
+            </div>
+          </div>
+          <div class="kv-sheen"></div>
+          <div class="kv-corners"><i></i><i></i><i></i><i></i></div>
+          <div class="kv-hud">
+            <span class="hud-tag hud-tl">LAYOUT · layout:none</span>
+            <span class="hud-tag hud-tr">1600 × 1000</span>
+            <span class="hud-tag hud-bl">KV—001 / MASTER</span>
+            <span class="hud-tag hud-br">AIGC VISUAL BASE</span>
+          </div>
+        </div>
+      </div>
+      <div class="stage-hint">
+        <span class="hint-line"></span>
+        <span class="hint-txt">移动鼠标 · 视差与高光跟随</span>
+      </div>
+    </div>
+
+    <!-- 右：文案 -->
+    <div class="hero-copy">
+      <div class="hero-tag reveal" data-r="2">
+        <span class="dot"></span>
+        <span>BRAND KEY VISUAL SYSTEM · 2026</span>
+      </div>
+      <h1 class="hero-h1 reveal" data-r="3">
+        <span class="l1">LIQUID</span>
+        <span class="l2">INTELLIGENCE</span>
+      </h1>
+      <p class="hero-p reveal" data-r="4">
+        以「流动的玻璃」作为品牌母题——深蓝近黑为底，金色光在曲面间折射。
+        一整套可延展的视觉系统：主视觉、动态变体、材质语言、色彩与字体规范、落地应用。
+      </p>
+      <div class="hero-stats reveal" data-r="5">
+        <div class="stat"><div class="stat-n" data-count="1600" data-suffix="">0</div><div class="stat-l">画布宽 PX</div></div>
+        <div class="stat"><div class="stat-n" data-count="1000" data-suffix="">0</div><div class="stat-l">画布高 PX</div></div>
+        <div class="stat"><div class="stat-n" data-count="5" data-suffix="">0</div><div class="stat-l">色彩角色</div></div>
+        <div class="stat"><div class="stat-n" data-count="4" data-suffix="">0</div><div class="stat-l">动态变体</div></div>
+      </div>
+      <div class="hero-btns reveal" data-r="6">
+        <button class="btn-primary" data-scroll="#kv">
+          <span>查看完整系统</span>
+          <svg viewBox="0 0 16 16"><path d="M8 1v13M3 9l5 5 5-5" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+        </button>
+        <button class="btn-line" data-scroll="#variants"><span>切换氛围变体</span></button>
+      </div>
+      <div class="hero-index reveal" data-r="7">
+        <span class="ix-n">NO.</span><span class="ix-v" data-count="1" data-suffix="">1</span><span class="ix-s">/</span><span class="ix-t">MASTER KEY VISUAL</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-marquee">
+    <div class="mq-track" id="mqTrack"></div>
+  </div>
+</section>
+
+<!-- ═══ 01 KEY VISUAL 规格 ═══ -->
+<section class="sec" id="kv">
+  <div class="sec-head reveal">
+    <div class="sec-num">01</div>
+    <div class="sec-titles">
+      <h2 class="sec-h2">主视觉规格</h2>
+      <p class="sec-p">满幅 AI 玻璃液态主视觉铺底，中央径向暗化留白保证字标可读，底部信息条承载品牌规范。</p>
+    </div>
+  </div>
+
+  <div class="spec-wrap reveal">
+    <div class="spec-board" id="specBoard">
+      <img src="bg.png" alt="主视觉底图">
+      <div class="spec-veil"></div>
+      <div class="spec-center">
+        <div class="spec-eyebrow">LIQUID INTELLIGENCE</div>
+        <div class="spec-rule"></div>
+        <div class="spec-word">NOVA</div>
+        <div class="spec-sub">拟生智能&nbsp;·&nbsp;让智能如光流动</div>
+      </div>
+      <div class="spec-bar">
+        <div class="sp-l"><svg class="star sm" viewBox="0 0 30 30"><path d="M15 1 L17.2 12.8 L29 15 L17.2 17.2 L15 29 L12.8 17.2 L1 15 L12.8 12.8 Z"/></svg>
+          <div><div class="sp-name">NOVA</div><div class="sp-cn">拟生智能</div></div></div>
+        <div class="sp-c" id="specPalette"></div>
+        <div class="sp-r"><div class="sp-f1">MONTSERRAT LIGHT</div><div class="sp-f2">中文 · 思源黑体</div></div>
+      </div>
+      <!-- 标注引线 -->
+      <div class="anno" data-anno="1">
+        <span class="anno-n">01</span>
+        <span class="anno-t">中央留白区 · 径向暗化遮罩</span>
+        <span class="anno-d">ELLIPSE 46%×34% @ 50% 44% · RGBA(4,8,14,.62)</span>
+      </div>
+      <div class="anno anno-b" data-anno="2">
+        <span class="anno-n">02</span>
+        <span class="anno-t">玻璃液态曲面 · 焦散折射</span>
+        <span class="anno-d">左右对称构图 · 中央负空间 640 PX</span>
+      </div>
+      <div class="anno anno-c" data-anno="3">
+        <span class="anno-n">03</span>
+        <span class="anno-t">底部信息条 · 三栏规范</span>
+        <span class="anno-d">H 96 PX · 底色 RGBA(8,13,22,.72) + BLUR 6</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="spec-grid">
+    <div class="scard reveal"><div class="scard-n">A</div><h3>留白优先</h3><p>中央 640×420 区域不布置任何高对比元素，字标始终压在暗部之上。</p><div class="scard-m">留白比 40%</div></div>
+    <div class="scard reveal"><div class="scard-n">B</div><h3>金色克制</h3><p>暖金只出现在小标、徽标与焦点折射，全图金色像素占比 &lt; 6%。</p><div class="scard-m">金色占比 5.8%</div></div>
+    <div class="scard reveal"><div class="scard-n">C</div><h3>信息可读</h3><p>字标与背景对比度 ≥ 12:1，远超 WCAG AAA 正文标准。</p><div class="scard-m">对比 13.4:1</div></div>
+    <div class="scard reveal"><div class="scard-n">D</div><h3>可延展</h3><p>同一底图支持横版、竖版、方版裁切，焦点始终落在中央黄金分割。</p><div class="scard-m">3 种比例</div></div>
+  </div>
+</section>
+
+<!-- ═══ 02 变体 ═══ -->
+<section class="sec" id="variants">
+  <div class="sec-head reveal">
+    <div class="sec-num">02</div>
+    <div class="sec-titles">
+      <h2 class="sec-h2">氛围变体</h2>
+      <p class="sec-p">同一底图，通过色调重映射与遮罩强度调节，衍生四套发布会级氛围。</p>
+    </div>
+  </div>
+
+  <div class="var-stage reveal">
+    <div class="var-display tilt" id="varDisplay" data-tilt data-tilt-soft>
+      <img src="bg.png" alt="变体预览" id="varImg">
+      <div class="var-grade" id="varGrade"></div>
+      <div class="var-overlay">
+        <div class="var-eyebrow" id="varEyebrow">LIQUID INTELLIGENCE</div>
+        <div class="var-word" id="varWord">NOVA</div>
+        <div class="var-sub" id="varSub">拟生智能 · 让智能如光流动</div>
+      </div>
+      <div class="kv-sheen"></div>
+    </div>
+    <div class="var-panel" id="varPanel"></div>
+  </div>
+</section>
+
+<!-- ═══ 03 材质实验室 ═══ -->
+<section class="sec" id="material">
+  <div class="sec-head reveal">
+    <div class="sec-num">03</div>
+    <div class="sec-titles">
+      <h2 class="sec-h2">材质实验室</h2>
+      <p class="sec-p">玻璃是本系统的核心介质。拖拽或移动指针，观察液态形变与光晕折射。</p>
+    </div>
+  </div>
+
+  <div class="mat-lab reveal">
+    <div class="blob-stage" id="blobStage">
+      <svg class="goo" aria-hidden="true"><filter id="gooFilter"><feGaussianBlur in="SourceGraphic" stdDeviation="18"/><feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -12"/></filter></svg>
+      <div class="blob blob-a"></div>
+      <div class="blob blob-b"></div>
+      <div class="blob blob-c"></div>
+      <div class="blob blob-d"></div>
+      <div class="blob-core" id="blobCore"></div>
+      <div class="blob-label">
+        <div class="bl-k">LIQUID GLASS</div>
+        <div class="bl-v" id="blobVal">REFRACTION 1.00</div>
+      </div>
+    </div>
+
+    <div class="mat-side">
+      <div class="mat-item reveal">
+        <div class="mat-head"><span class="mat-idx">M—01</span><h3>通透基底</h3></div>
+        <p>透明度 18%–34% 的玻璃层，边缘保持高光锐度，内部保留极低噪声。</p>
+        <div class="mat-meter"><i data-w="26"></i></div>
+        <div class="mat-val">ALPHA 26%</div>
+      </div>
+      <div class="mat-item reveal">
+        <div class="mat-head"><span class="mat-idx">M—02</span><h3>金色焦散</h3></div>
+        <p>暖金光透过曲面聚焦，在暗部形成细碎光斑，是品牌高级感的来源。</p>
+        <div class="mat-meter"><i data-w="58"></i></div>
+        <div class="mat-val">CAUSTICS 58%</div>
+      </div>
+      <div class="mat-item reveal">
+        <div class="mat-head"><span class="mat-idx">M—03</span><h3>径向暗化</h3></div>
+        <p>中心椭圆遮罩压暗 62%，使白色字标在任何子图上都保持可读。</p>
+        <div class="mat-meter"><i data-w="62"></i></div>
+        <div class="mat-val">DARKEN 62%</div>
+      </div>
+      <div class="mat-item reveal">
+        <div class="mat-head"><span class="mat-idx">M—04</span><h3>冷峻高光</h3></div>
+        <p>玻璃银蓝描边 1px，模拟环境光在曲面上的镜面反射，克制而清晰。</p>
+        <div class="mat-meter"><i data-w="41"></i></div>
+        <div class="mat-val">SPEC 41%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 04 色彩系统 ═══ -->
+<section class="sec" id="color">
+  <div class="sec-head reveal">
+    <div class="sec-num">04</div>
+    <div class="sec-titles">
+      <h2 class="sec-h2">色彩系统</h2>
+      <p class="sec-p">五色构成全部视觉层级。点击任意色块复制 HEX 值。</p>
+    </div>
+  </div>
+  <div class="color-grid" id="colorGrid"></div>
+  <div class="color-usage reveal">
+    <div class="cu-card"><div class="cu-k">层级比例</div><div class="cu-bar" id="cuBar"></div></div>
+    <div class="cu-card"><div class="cu-k">明度曲线</div><div class="cu-ramp" id="cuRamp"></div></div>
+    <div class="cu-card"><div class="cu-k">禁用规则</div><div class="cu-list"><span>× 纯黑 #000</span><span>× 高饱和暖色</span><span>× 中间调灰蓝</span></div></div>
+  </div>
+</section>
+
+<!-- ═══ 05 字体系统 ═══ -->
+<section class="sec" id="type">
+  <div class="sec-head reveal">
+    <div class="sec-num">05</div>
+    <div class="sec-titles">
+      <h2 class="sec-h2">字体规范</h2>
+      <p class="sec-p">西文 Montserrat Light 大字距建立科技冷感，中文思源黑体承担阅读与说明。</p>
+    </div>
+  </div>
+  <div class="type-grid">
+    <div class="type-demo reveal">
+      <div class="td-spec">LATIN · Montserrat Light</div>
+      <div class="td-big">Aa</div>
+      <div class="td-sc">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789 — LIQUID</div>
+      <div class="td-rows" id="tdRows"></div>
+    </div>
+    <div class="type-demo reveal">
+      <div class="td-spec">CHINESE · 思源黑体 Source Han Sans SC</div>
+      <div class="td-big cn">永</div>
+      <div class="td-sc cn">智能是一种流动<br>让每一次思考都如光般自然</div>
+      <div class="td-rows" id="tdRowsCn"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 06 动效规范 ═══ -->
+<section class="sec" id="motion">
+  <div class="sec-head reveal">
+    <div class="sec-num">06</div>
+    <div class="sec-titles">
+      <h2 class="sec-h2">动效规范</h2>
+      <p class="sec-p">缓动统一为「快进慢出」，让品牌在屏幕上始终保持液态的惯性感。</p>
+    </div>
+  </div>
+  <div class="motion-grid" id="motionGrid"></div>
+</section>
+
+<!-- ═══ 07 应用场景 ═══ -->
+<section class="sec" id="application">
+  <div class="sec-head reveal">
+    <div class="sec-num">07</div>
+    <div class="sec-titles">
+      <h2 class="sec-h2">落地应用</h2>
+      <p class="sec-p">同一套系统的四种真实投放形态，可直接进入设计与开发流程。</p>
+    </div>
+  </div>
+  <div class="app-grid" id="appGrid"></div>
+</section>
+
+<!-- ═══ 页脚 ═══ -->
+<footer class="footer">
+  <div class="ft-top">
+    <div class="ft-brand">
+      <svg class="star lg" viewBox="0 0 30 30"><path d="M15 1 L17.2 12.8 L29 15 L17.2 17.2 L15 29 L12.8 17.2 L1 15 L12.8 12.8 Z"/></svg>
+      <div class="ft-name">NOVA</div>
+      <div class="ft-cn">拟生智能 · Liquid Intelligence</div>
+    </div>
+    <div class="ft-cols">
+      <div class="ft-col"><div class="ft-k">视觉</div><a href="#kv">主视觉</a><a href="#variants">变体</a><a href="#material">材质</a></div>
+      <div class="ft-col"><div class="ft-k">规范</div><a href="#color">色彩</a><a href="#type">字体</a><a href="#motion">动效</a></div>
+      <div class="ft-col"><div class="ft-k">规格</div><div class="ft-v">1600 × 1000 PX</div><div class="ft-v">RGB / sRGB</div><div class="ft-v">AIGC VISUAL BASE</div></div>
+    </div>
+  </div>
+  <div class="ft-bot">
+    <span>© 2026 NOVA BRAND SYSTEM</span>
+    <span class="ft-mid">KEY VISUAL MASTER · KV—001</span>
+    <span>DESIGNED IN DARK · BUILT WITH PRECISION</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast"><span class="toast-i">✓</span><span class="toast-t"></span></div>
+
+<script src="assets/kv.js"></script>
+</body>
+</html>

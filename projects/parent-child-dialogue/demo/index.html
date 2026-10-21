@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>开口三句就呛？先在这儿练一遍｜心晴 · 亲子对话演练页</title>
+<meta name="description" content="四步开口练习：目标澄清、角色扮演、复盘点评。和孩子说不通之前，先和安全模拟的孩子练一遍。">
+<style>
+/* ============================================================
+   心晴 · 亲子对话演练页 · 商业级版
+   定调：自然有机 × 编辑感 —— 暖米纸底、赤陶橘强调、衬线标题
+   记忆点：心门仪表（一扇随对话开合的门，门后藏一颗会跳的心）
+   ============================================================ */
+:root{
+  /* 色彩令牌：亮色暖纸体系 */
+  --bg:#F4EEE2;            /* 暖米纸底 */
+  --bg-deep:#EDE3D0;       /* 深一档的纸 */
+  --surface:#FFFDF7;       /* 瓷白卡片 */
+  --surface-2:#F8F1E3;     /* 卡片内浅凹 */
+  --ink:#2F2B24;           /* 暖墨（主文字） */
+  --ink-2:#6B6255;         /* 次级文字 */
+  --ink-3:#978D7E;         /* 弱文字 */
+  --line:#E3D8C4;          /* 发丝线 */
+  --line-2:#D6C9AF;        /* 强一档线 */
+  --accent:#C4632C;        /* 赤陶橘（主强调） */
+  --accent-deep:#B85A26;   /* 橘·文字/按钮深阶 */
+  --accent-soft:#F6E3D3;   /* 橘·浅底 */
+  --sage:#4E6E58;          /* 开门·文字 */
+  --sage-mid:#5F7D68;      /* 开门·图形 */
+  --sage-soft:#E4EBE2;     /* 开门·浅底 */
+  --clay:#9C4634;          /* 关门·文字 */
+  --clay-mid:#B0523C;      /* 关门·图形 */
+  --clay-soft:#F5DFD8;     /* 关门·浅底 */
+  --gold:#A87B2F;          /* 点缀金 */
+  /* 字体 */
+  --serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --sans:-apple-system,"PingFang SC","HarmonyOS Sans SC","MiSans","Microsoft YaHei","Noto Sans SC",sans-serif;
+  /* 圆角 / 阴影 / 动效 */
+  --r-s:10px; --r-m:16px; --r-l:24px; --r-xl:32px;
+  --sh-1:0 2px 8px rgba(74,58,30,.08);
+  --sh-2:0 10px 30px rgba(74,58,30,.12);
+  --sh-3:0 24px 60px rgba(74,58,30,.16);
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease-back:cubic-bezier(.34,1.56,.64,1);
+  --dur-f:160ms; --dur-b:320ms; --dur-s:640ms;
+  /* 字阶 */
+  --fs-xs:12px; --fs-sm:13px; --fs-md:14.5px; --fs-lg:16px; --fs-xl:18.5px;
+  --fs-2xl:22px; --fs-3xl:26px; --fs-4xl:clamp(34px,4.6vw,56px);
+  /* 间距 */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:20px;
+  --sp-6:24px; --sp-7:32px; --sp-8:48px; --sp-9:64px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.75;
+  letter-spacing:.02em;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+/* 氛围层：暖光渐变 + 纸纹颗粒 */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(46rem 34rem at 8% -6%, rgba(196,99,44,.10), transparent 62%),
+    radial-gradient(40rem 30rem at 96% 4%, rgba(94,125,104,.10), transparent 60%),
+    radial-gradient(52rem 40rem at 50% 108%, rgba(168,123,47,.08), transparent 62%);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
+}
+::selection{background:var(--accent-soft);color:var(--ink)}
+h1,h2,h3{font-family:var(--serif);line-height:1.25;letter-spacing:.01em}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:4px}
+.wrap{max-width:980px;margin:0 auto;padding:0 24px}
+
+/* ---------- 顶栏 ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(10px);
+  background:rgba(244,238,226,.82);
+  border-bottom:1px solid var(--line);
+}
+.topbar-in{max-width:980px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:700;font-size:18px}
+.brand small{font-family:var(--sans);font-weight:500;font-size:11px;color:var(--ink-3);letter-spacing:.18em;margin-left:-4px}
+.brand-mark{width:30px;height:30px;flex:none}
+.top-actions{display:flex;align-items:center;gap:10px}
+.btn-ghost{
+  font-size:13.5px;color:var(--ink-2);padding:8px 16px;border-radius:99px;
+  border:1.5px solid var(--line-2);background:var(--surface);
+  transition:all var(--dur-f) var(--ease);
+}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-1px)}
+.icon-btn{
+  width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:none;
+  border:1.5px solid var(--line-2);background:var(--surface);color:var(--ink-2);
+  font-size:16px;line-height:1;
+  transition:all var(--dur-f) var(--ease);
+}
+.icon-btn:hover{border-color:var(--accent);color:var(--accent-deep);transform:translateY(-1px)}
+.icon-btn[aria-pressed="true"]{background:var(--accent-soft);border-color:#EBC9AC;color:var(--accent-deep)}
+
+/* ---------- 首屏 ---------- */
+.hero{padding:72px 0 40px}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12.5px;letter-spacing:.14em;color:var(--accent-deep);
+  background:var(--accent-soft);border:1px solid #EBC9AC;
+  padding:6px 14px;border-radius:99px;margin-bottom:22px;
+}
+.hero h1{font-size:var(--fs-4xl);font-weight:700;letter-spacing:-.01em;margin-bottom:18px}
+.hero h1 em{font-style:normal;color:var(--accent-deep);position:relative;white-space:nowrap}
+.hero h1 em::after{
+  content:"";position:absolute;left:0;right:0;bottom:6px;height:10px;
+  background:var(--accent-soft);z-index:-1;border-radius:3px;
+}
+.hero-sub{font-size:16.5px;color:var(--ink-2);max-width:34em;margin-bottom:30px}
+.hero-cta{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.btn-primary{
+  background:var(--accent);color:#FFFDF7;font-size:15.5px;font-weight:600;
+  padding:13px 30px;border-radius:99px;letter-spacing:.04em;
+  box-shadow:0 8px 22px rgba(196,99,44,.32);
+  transition:all var(--dur-b) var(--ease);
+}
+.btn-primary:hover{background:var(--accent-deep);transform:translateY(-2px);box-shadow:0 12px 28px rgba(196,99,44,.38)}
+.btn-primary:disabled{opacity:.5;pointer-events:none}
+.hero-meta{font-size:13px;color:var(--ink-3)}
+.hero-art{position:relative;will-change:transform}
+.hero-art svg{width:100%;height:auto;display:block}
+.hero-art .float-a{animation:floaty 5s ease-in-out infinite}
+.hero-art .float-b{animation:floaty 6.4s ease-in-out -2s infinite}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* ---------- 数字带 ---------- */
+.metrics{padding:8px 0 44px}
+.metrics-in{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-l);
+  box-shadow:var(--sh-1);overflow:hidden;
+}
+.metric{padding:22px 16px;text-align:center;position:relative}
+.metric + .metric::before{content:"";position:absolute;left:0;top:22%;bottom:22%;width:1px;background:var(--line)}
+.metric b{font-family:var(--serif);font-size:32px;font-weight:700;color:var(--accent-deep);display:block;line-height:1.15}
+.metric b i{font-style:normal;font-size:18px;color:var(--gold)}
+.metric span{font-size:12.5px;color:var(--ink-2)}
+
+/* ---------- 特性带 ---------- */
+.feature{padding:0 0 52px}
+.feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.feature-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);
+  padding:20px 18px;box-shadow:var(--sh-1);
+  opacity:0;transform:translateY(20px);
+  transition:opacity 560ms var(--ease), transform 560ms var(--ease);
+}
+.feature-card.in{opacity:1;transform:none}
+.feature-card .ic{
+  width:38px;height:38px;border-radius:12px;display:grid;place-items:center;margin-bottom:12px;
+  background:var(--accent-soft);color:var(--accent-deep);
+}
+.feature-card h3{font-size:15.5px;margin-bottom:6px}
+.feature-card p{font-size:13px;color:var(--ink-2);line-height:1.65}
+
+/* ---------- 步骤轨 ---------- */
+.rail{position:sticky;top:63px;z-index:40;background:rgba(244,238,226,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 0}
+.rail-in{max-width:980px;margin:0 auto;padding:0 24px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.rail-in::-webkit-scrollbar{display:none}
+.rail-item{
+  display:flex;align-items:center;gap:8px;flex:none;
+  font-size:13px;color:var(--ink-3);padding:7px 14px;border-radius:99px;
+  border:1px solid transparent;transition:all var(--dur-b) var(--ease);
+}
+.rail-item .n{
+  width:20px;height:20px;border-radius:50%;display:grid;place-items:center;
+  font-size:11px;font-weight:700;background:var(--bg-deep);color:var(--ink-3);
+  font-family:var(--serif);transition:all var(--dur-b) var(--ease);
+}
+.rail-item.active{color:var(--accent-deep);border-color:#EBC9AC;background:var(--surface);font-weight:600}
+.rail-item.active .n{background:var(--accent);color:#FFFDF7}
+.rail-item.done{color:var(--sage)}
+.rail-item.done .n{background:var(--sage-mid);color:#FFFDF7}
+
+/* ---------- 步骤卡片通用 ---------- */
+main{padding:44px 0 24px}
+.step{display:none;animation:stepIn var(--dur-s) var(--ease) both}
+.step.on{display:block}
+@keyframes stepIn{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-l);
+  box-shadow:var(--sh-2);padding:38px 40px;position:relative;overflow:hidden;
+}
+.card + .card{margin-top:26px}
+.step-no{
+  position:absolute;top:22px;right:30px;font-family:var(--serif);
+  font-size:15px;color:var(--ink-3);letter-spacing:.2em;
+}
+.card h2{font-size:26px;font-weight:700;margin-bottom:8px}
+.card .lead{color:var(--ink-2);font-size:15px;margin-bottom:26px;max-width:46em}
+.kicker{
+  display:inline-block;font-size:12px;letter-spacing:.22em;color:var(--accent-deep);
+  font-weight:700;margin-bottom:12px;
+}
+.kicker::before{content:"—— "}
+
+/* ---------- 步骤 0：设置 ---------- */
+.field{margin-bottom:28px}
+.field-label{display:flex;align-items:baseline;gap:10px;margin-bottom:14px}
+.field-label b{font-size:16px;font-family:var(--serif)}
+.field-label span{font-size:12.5px;color:var(--ink-3)}
+.opt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.opt{
+  border:1.5px solid var(--line-2);border-radius:var(--r-m);background:var(--surface-2);
+  padding:14px 10px;text-align:center;font-size:14px;color:var(--ink-2);font-weight:500;
+  transition:all var(--dur-f) var(--ease);position:relative;
+}
+.opt:hover{border-color:var(--accent);transform:translateY(-2px)}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-deep);font-weight:700}
+.opt.sel::after{
+  content:"";position:absolute;top:8px;right:8px;width:8px;height:8px;border-radius:50%;
+  background:var(--accent);
+}
+.opt .emo{display:block;font-size:20px;margin-bottom:4px}
+.opt small{display:block;font-size:11px;color:var(--ink-3);font-weight:400;margin-top:3px;line-height:1.4}
+.opt.sel small{color:var(--accent-deep);opacity:.75}
+.custom-row{display:none;margin-top:12px}
+.custom-row.on{display:block}
+.custom-row input{
+  width:100%;max-width:420px;padding:11px 16px;font-size:14.5px;font-family:inherit;
+  border:1.5px solid var(--line-2);border-radius:var(--r-s);background:var(--surface);color:var(--ink);
+}
+.custom-row input:focus{outline:none;border-color:var(--accent)}
+.start-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:8px}
+.hint{font-size:13px;color:var(--ink-3)}
+
+/* ---------- 步骤 1：目标澄清 ---------- */
+.goal-hero{
+  background:linear-gradient(135deg,var(--surface-2),#FDF8EE);
+  border:1.5px dashed var(--line-2);border-radius:var(--r-m);
+  padding:22px 26px;margin-bottom:26px;
+}
+.goal-hero .k{font-size:12.5px;letter-spacing:.16em;color:var(--gold);font-weight:700;margin-bottom:6px}
+.goal-hero p{font-family:var(--serif);font-size:18.5px;font-weight:700;line-height:1.6}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:26px}
+.want-box{border-radius:var(--r-m);padding:20px 22px;border:1px solid var(--line)}
+.want-box.mine{background:var(--accent-soft);border-color:#EBC9AC}
+.want-box.kid{background:var(--sage-soft);border-color:#CBDBCC}
+.want-box h3{font-size:15.5px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.want-box h3 .dot{width:9px;height:9px;border-radius:50%;flex:none}
+.want-box.mine h3 .dot{background:var(--accent)}
+.want-box.kid h3 .dot{background:var(--sage-mid)}
+.want-box ul{list-style:none}
+.want-box li{font-size:14px;color:var(--ink-2);padding:7px 0 7px 18px;position:relative;border-bottom:1px dashed rgba(120,105,80,.18)}
+.want-box li:last-child{border-bottom:none}
+.want-box li::before{content:"";position:absolute;left:2px;top:15px;width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.45}
+.gap-box{
+  border-radius:var(--r-m);padding:22px 26px;background:#FBF3E4;border:1px solid #EAD9B8;
+}
+.gap-box h3{font-size:15.5px;margin-bottom:12px;display:flex;align-items:center;gap:8px;color:#8A6420}
+.gap-box ol{list-style:none;counter-reset:gap}
+.gap-box li{
+  counter-increment:gap;font-size:14.5px;color:var(--ink-2);padding:8px 0 8px 34px;position:relative;
+}
+.gap-box li::before{
+  content:counter(gap);position:absolute;left:0;top:9px;width:22px;height:22px;border-radius:50%;
+  background:#EAD9B8;color:#8A6420;font-size:12px;font-weight:700;display:grid;place-items:center;
+  font-family:var(--serif);
+}
+.step-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:30px}
+
+/* ---------- 步骤 2：角色扮演 ---------- */
+.chat-card{padding:0;display:flex;flex-direction:column;min-height:560px}
+.chat-head{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding:18px 26px;border-bottom:1px solid var(--line);background:var(--surface-2);
+  border-radius:var(--r-l) var(--r-l) 0 0;
+}
+.who{display:flex;align-items:center;gap:12px}
+.who .avatar{width:46px;height:46px;flex:none}
+.who b{font-size:15px;display:block;line-height:1.3}
+.who span{font-size:12.5px;color:var(--ink-3)}
+.chat-scene{
+  padding:12px 26px;font-size:13.5px;color:var(--ink-2);
+  background:#FBF6EA;border-bottom:1px solid var(--line);
+}
+.chat-scene b{color:var(--accent-deep)}
+/* 心门仪表 */
+.door-meter{display:flex;align-items:center;gap:12px}
+.door{position:relative;width:44px;height:56px;border-radius:9px 9px 5px 5px;background:var(--surface);
+  border:2.5px solid var(--ink);overflow:hidden;flex:none;transition:transform var(--dur-b) var(--ease)}
+.door.pop{animation:doorPop var(--dur-s) var(--ease)}
+@keyframes doorPop{0%{transform:scale(1)}40%{transform:scale(1.14)}100%{transform:scale(1)}}
+.door-heart{position:absolute;right:7px;top:19px;width:17px;height:17px;z-index:0}
+.door-panel{position:absolute;inset:0;z-index:1;transform-origin:left center;
+  background:linear-gradient(160deg,#EDBA92,#DFA171);
+  border-right:2.5px solid var(--ink);border-radius:0 5px 5px 0;
+  transition:transform .75s var(--ease)}
+.door[data-state="shut"] .door-panel{transform:rotate(0deg)}
+.door[data-state="half"] .door-panel{transform:rotate(-47deg)}
+.door[data-state="open"] .door-panel{transform:rotate(-86deg)}
+/* 心门敞开：心跳 + 暖光 */
+#doorGraphic[data-state="open"]{box-shadow:0 0 22px rgba(196,99,44,.5)}
+#doorGraphic[data-state="open"] .door-heart{animation:beat 1.6s ease-in-out infinite;transform-origin:center}
+@keyframes beat{0%,100%{transform:scale(1)}14%{transform:scale(1.22)}28%{transform:scale(1)}42%{transform:scale(1.16)}56%{transform:scale(1)}}
+.door-meta b{font-size:13.5px;display:block;line-height:1.4}
+.door-meta span{font-size:11.5px;color:var(--ink-3)}
+.door[data-state="shut"] ~ .door-meta b{color:var(--clay)}
+.door[data-state="half"] ~ .door-meta b{color:var(--gold)}
+.door[data-state="open"] ~ .door-meta b{color:var(--sage)}
+/* 聊天区 */
+.chat-body{flex:1;padding:24px 26px;display:flex;flex-direction:column;gap:14px;overflow-y:auto;max-height:520px}
+.msg{display:flex;gap:10px;align-items:flex-end;animation:msgIn var(--dur-b) var(--ease) both}
+@keyframes msgIn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+.msg .avatar{width:36px;height:36px;flex:none}
+.msg .bubble{
+  max-width:78%;padding:11px 16px;font-size:14.5px;line-height:1.7;border-radius:16px;
+  background:var(--surface);border:1.5px solid var(--line);border-bottom-left-radius:4px;
+  box-shadow:var(--sh-1);
+}
+.msg.me{flex-direction:row-reverse}
+.msg.me .bubble{
+  background:var(--accent);color:#FFFDF7;border-color:var(--accent);
+  border-bottom-left-radius:16px;border-bottom-right-radius:4px;font-weight:500;
+}
+.msg .who-tag{font-size:11px;color:var(--ink-3);margin-bottom:2px;flex:none;padding-bottom:2px}
+.msg.me .who-tag{text-align:right}
+.typing{display:inline-flex;gap:5px;padding:14px 18px}
+.typing span{width:7px;height:7px;border-radius:50%;background:var(--ink-3);animation:blink 1s infinite}
+.typing span:nth-child(2){animation-delay:.18s}
+.typing span:nth-child(3){animation-delay:.36s}
+@keyframes blink{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.delta{
+  align-self:center;font-size:12px;font-weight:700;padding:3px 12px;border-radius:99px;
+  animation:msgIn var(--dur-b) var(--ease) both;
+}
+.delta.up{background:var(--sage-soft);color:var(--sage)}
+.delta.down{background:var(--clay-soft);color:var(--clay)}
+.delta.mid{background:#F3EAD3;color:var(--gold)}
+/* 回合进度 */
+.round-pill{
+  align-self:center;font-size:12px;letter-spacing:.14em;color:var(--ink-3);
+  border:1px solid var(--line-2);border-radius:99px;padding:3px 14px;background:var(--surface);
+}
+/* 选项区 */
+.choices{padding:20px 26px 26px;border-top:1px dashed var(--line-2);background:#FBF8F0}
+.choices-label{font-size:13px;color:var(--ink-2);margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.choices-label::before{content:"";width:16px;height:1.5px;background:var(--accent)}
+.kbd-hint{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--ink-3);margin-left:auto}
+.kbd{
+  display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;
+  border:1.5px solid var(--line-2);border-bottom-width:2.5px;border-radius:5px;
+  background:var(--surface);font-size:11px;font-weight:700;color:var(--ink-2);font-family:var(--serif);
+}
+.choice{
+  display:block;width:100%;text-align:left;font-size:14.5px;line-height:1.65;color:var(--ink);
+  background:var(--surface);border:1.5px solid var(--line-2);border-radius:var(--r-m);
+  padding:13px 18px 13px 46px;margin-bottom:10px;transition:all var(--dur-f) var(--ease);position:relative;
+}
+.choice:last-child{margin-bottom:0}
+.choice:hover{border-color:var(--accent);transform:translateX(4px);box-shadow:var(--sh-1)}
+.choice::before{
+  content:attr(data-idx);position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  width:20px;height:20px;border-radius:50%;background:var(--bg-deep);color:var(--ink-2);
+  font-size:11px;font-weight:700;display:grid;place-items:center;font-family:var(--serif);
+}
+.choice:hover::before{background:var(--accent);color:#FFFDF7}
+.choice:disabled{cursor:default}
+/* 心门终局 + 行动建议 */
+.final-door{
+  margin:0 26px 22px;padding:18px 22px;border-radius:var(--r-m);border:1.5px solid var(--line-2);
+  background:var(--surface-2);display:flex;align-items:center;gap:18px;animation:msgIn var(--dur-s) var(--ease) both;
+}
+.final-door .door{width:52px;height:66px}
+.final-door .door-panel{border-radius:0 6px 6px 0}
+.final-door b{font-family:var(--serif);font-size:17px;display:block;margin-bottom:2px}
+.final-door p{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.final-door[data-state="open"]{background:var(--sage-soft);border-color:#CBDBCC}
+.final-door[data-state="open"] b{color:var(--sage)}
+.final-door[data-state="shut"]{background:var(--clay-soft);border-color:#E8C4BC}
+.final-door[data-state="shut"] b{color:var(--clay)}
+.final-door[data-state="half"]{background:#FBF3E4;border-color:#EAD9B8}
+.final-door[data-state="half"] b{color:#8A6420}
+.advice-card{
+  margin:0 26px 22px;padding:16px 20px;border-radius:var(--r-m);border:1.5px solid var(--line-2);
+  background:var(--surface-2);animation:msgIn var(--dur-s) var(--ease-back) both;
+}
+.advice-card .advice-tag{font-size:12px;font-weight:700;letter-spacing:.14em;margin-bottom:6px}
+.advice-card p{font-size:14px;color:var(--ink-2);line-height:1.7}
+.advice-card[data-state="open"]{background:var(--sage-soft);border-color:#CBDBCC}
+.advice-card[data-state="open"] .advice-tag{color:var(--sage)}
+.advice-card[data-state="half"]{background:#FBF3E4;border-color:#EAD9B8}
+.advice-card[data-state="half"] .advice-tag{color:#8A6420}
+.advice-card[data-state="shut"]{background:var(--clay-soft);border-color:#E8C4BC}
+.advice-card[data-state="shut"] .advice-tag{color:var(--clay)}
+
+/* ---------- 步骤 3：复盘 ---------- */
+.review-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px}
+.stat{border-radius:var(--r-m);padding:16px 18px;border:1px solid var(--line);background:var(--surface-2)}
+.stat b{font-family:var(--serif);font-size:26px;display:block;line-height:1.2}
+.stat span{font-size:12.5px;color:var(--ink-2)}
+.stat.good b{color:var(--sage)}
+.stat.mid b{color:var(--gold)}
+.stat.bad b{color:var(--clay)}
+.traj{
+  display:flex;align-items:center;gap:0;margin:6px 0 30px;padding:18px 20px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-m);overflow-x:auto;
+}
+.traj-node{display:flex;flex-direction:column;align-items:center;gap:7px;flex:none}
+.traj-node .door{width:30px;height:38px;border-width:2px}
+.traj-node .door-panel{border-right-width:2px}
+.traj-node .door-heart{width:11px;height:11px;right:5px;top:13px}
+.traj-node small{font-size:11px;color:var(--ink-3)}
+.traj-line{flex:1;min-width:26px;height:2px;background:repeating-linear-gradient(90deg,var(--line-2) 0 6px,transparent 6px 11px);margin:0 6px 22px}
+.rev-item{
+  border:1px solid var(--line);border-radius:var(--r-m);background:var(--surface);
+  padding:20px 24px;margin-bottom:14px;border-left:5px solid var(--line-2);
+}
+.rev-item.good{border-left-color:var(--sage-mid)}
+.rev-item.mid{border-left-color:var(--gold)}
+.rev-item.bad{border-left-color:var(--clay-mid)}
+.rev-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.rev-round{font-size:11.5px;letter-spacing:.14em;color:var(--ink-3);font-weight:700}
+.rev-type{font-size:11.5px;font-weight:700;padding:2px 10px;border-radius:99px}
+.rev-type.good{background:var(--sage-soft);color:var(--sage)}
+.rev-type.mid{background:#F3EAD3;color:#8A6420}
+.rev-type.bad{background:var(--clay-soft);color:var(--clay)}
+.rev-effect{font-size:11.5px;font-weight:700;margin-left:auto}
+.rev-item.good .rev-effect{color:var(--sage)}
+.rev-item.mid .rev-effect{color:var(--gold)}
+.rev-item.bad .rev-effect{color:var(--clay)}
+.rev-quote{
+  font-size:14.5px;color:var(--ink);background:var(--surface-2);border-radius:var(--r-s);
+  padding:10px 16px;margin-bottom:12px;border:1px dashed var(--line-2);
+}
+.rev-quote::before{content:"「"}
+.rev-quote::after{content:"」"}
+.rev-why{font-size:14px;color:var(--ink-2);margin-bottom:8px}
+.rev-defense{font-size:13.5px;color:var(--clay);background:var(--clay-soft);border-radius:var(--r-s);padding:9px 14px;margin-bottom:10px}
+.rev-fix{margin-top:6px}
+.rev-fix .t{font-size:12.5px;font-weight:700;color:var(--sage);margin-bottom:6px;letter-spacing:.08em}
+.rev-fix li{
+  list-style:none;font-size:14px;color:var(--ink);background:var(--sage-soft);
+  border-radius:var(--r-s);padding:9px 14px;margin-bottom:6px;border-left:3px solid var(--sage-mid);
+}
+.rev-fix li::before{content:"↳ "}
+.principles{margin-top:26px;background:linear-gradient(135deg,#2F2B24,#453E33);color:#F5EFE2;border-radius:var(--r-l);padding:30px 34px}
+.principles h3{font-size:19px;margin-bottom:16px;color:#FFFDF7}
+.principles ol{list-style:none;counter-reset:pr}
+.principles li{counter-increment:pr;font-size:14.5px;line-height:1.7;padding:9px 0 9px 38px;position:relative;color:#E8DFCC}
+.principles li::before{
+  content:counter(pr);position:absolute;left:0;top:10px;width:24px;height:24px;border-radius:50%;
+  border:1.5px solid rgba(245,239,226,.4);color:#E9B48C;font-size:12.5px;font-weight:700;
+  display:grid;place-items:center;font-family:var(--serif);
+}
+.principles li b{color:#FFFDF7}
+/* 报告卡 */
+.report-card{
+  margin-top:26px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  border:1.5px dashed var(--line-2);border-radius:var(--r-l);padding:24px 28px;background:#FBF8F0;
+}
+.report-card .rc-info{flex:1;min-width:220px}
+.report-card h3{font-size:17px;margin-bottom:6px}
+.report-card p{font-size:13.5px;color:var(--ink-2);line-height:1.65}
+#reportCanvas{display:none;max-width:100%;margin-top:22px;border:1px solid var(--line);border-radius:var(--r-m);box-shadow:var(--sh-2)}
+
+/* ---------- 步骤 4：免责 ---------- */
+.disclaimer{
+  border:1.5px solid #EAD9B8;background:#FBF3E4;border-radius:var(--r-l);padding:26px 30px;
+  display:flex;gap:16px;align-items:flex-start;
+}
+.disclaimer .ic{flex:none;width:34px;height:34px;margin-top:2px}
+.disclaimer h3{font-size:16.5px;margin-bottom:8px;color:#8A6420}
+.disclaimer p{font-size:13.5px;color:#7A6535;line-height:1.75}
+.disclaimer p + p{margin-top:6px}
+
+/* ---------- FAQ ---------- */
+.faq{padding:52px 0 8px}
+.faq h2{font-size:24px;margin-bottom:6px}
+.faq .lead{font-size:14px;color:var(--ink-2);margin-bottom:22px}
+.faq details{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);
+  margin-bottom:10px;overflow:hidden;transition:border-color var(--dur-f) var(--ease);
+}
+.faq details[open]{border-color:#EBC9AC;box-shadow:var(--sh-1)}
+.faq summary{
+  cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;
+  padding:15px 20px;font-size:15px;font-weight:600;font-family:var(--serif);
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"+";margin-left:auto;font-size:20px;font-weight:400;color:var(--accent-deep);
+  transition:transform var(--dur-b) var(--ease);flex:none;
+}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details .a{padding:0 20px 16px;font-size:14px;color:var(--ink-2);line-height:1.75}
+
+footer{border-top:1px solid var(--line);margin-top:56px;padding:30px 0 40px}
+.foot-in{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.foot-in p{font-size:12.5px;color:var(--ink-3);max-width:44em;line-height:1.7}
+.foot-brand{font-family:var(--serif);font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px}
+
+/* ---------- 指南模态框 ---------- */
+.modal-mask{
+  position:fixed;inset:0;z-index:100;display:none;place-items:center;padding:24px;
+  background:rgba(47,43,36,.5);backdrop-filter:blur(4px);
+}
+.modal-mask.on{display:grid;animation:fadeIn var(--dur-f) var(--ease) both}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{
+  position:relative;width:100%;max-width:600px;max-height:86vh;overflow-y:auto;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-l);
+  box-shadow:var(--sh-3);padding:34px 36px;
+  animation:modalIn var(--dur-b) var(--ease-back) both;
+}
+@keyframes modalIn{from{opacity:0;transform:translateY(26px) scale(.96)}to{opacity:1;transform:none}}
+.modal h2{font-size:22px;margin-bottom:4px}
+.modal .modal-sub{font-size:13px;color:var(--ink-3);margin-bottom:22px}
+.modal-x{
+  position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;
+  display:grid;place-items:center;font-size:20px;color:var(--ink-2);
+  border:1.5px solid var(--line-2);background:var(--surface-2);
+  transition:all var(--dur-f) var(--ease);
+}
+.modal-x:hover{border-color:var(--accent);color:var(--accent-deep)}
+.guide-sec{margin-bottom:20px}
+.guide-sec h3{font-size:15.5px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.guide-sec h3 .gn{
+  width:22px;height:22px;border-radius:50%;background:var(--accent-soft);color:var(--accent-deep);
+  font-size:12px;font-weight:700;display:grid;place-items:center;font-family:var(--serif);flex:none;
+}
+.guide-sec p, .guide-sec li{font-size:13.5px;color:var(--ink-2);line-height:1.7}
+.guide-sec ul{list-style:none}
+.guide-sec li{padding:4px 0 4px 16px;position:relative}
+.guide-sec li::before{content:"";position:absolute;left:2px;top:13px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.guide-sec .kbd-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:860px){
+  .hero{padding:48px 0 28px}
+  .hero-grid{grid-template-columns:1fr;gap:28px}
+  .hero-art{max-width:420px;margin:0 auto}
+  .metrics-in{grid-template-columns:repeat(2,1fr)}
+  .metric:nth-child(3)::before{display:none}
+  .metric:nth-child(n+3){border-top:1px solid var(--line)}
+  .feature-grid{grid-template-columns:repeat(2,1fr)}
+  .opt-grid{grid-template-columns:repeat(2,1fr)}
+  .two-col{grid-template-columns:1fr}
+  .review-stats{grid-template-columns:1fr}
+  .card{padding:28px 22px}
+  .step-no{display:none}
+  .rail{top:59px}
+  .msg .bubble{max-width:88%}
+  .kbd-hint{display:none}
+}
+@media (max-width:480px){
+  .topbar-in{padding:10px 16px}
+  .brand{font-size:16px}
+  .brand small{display:none}
+  .top-actions{gap:6px}
+  .btn-ghost{padding:7px 10px;font-size:12px}
+  .icon-btn{width:34px;height:34px;font-size:14px}
+  .hero-cta .btn-primary{width:100%;text-align:center}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .feature-card{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= 顶栏 ================= -->
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="14" fill="#F6E3D3" stroke="#2F2B24" stroke-width="2"/>
+        <path d="M16 23.5C11 19.5 8 17 8 13.5 8 11 9.8 9.2 12.2 9.2c1.4 0 2.7.7 3.8 2 1.1-1.3 2.4-2 3.8-2 2.4 0 4.2 1.8 4.2 4.3 0 3.5-3 6-8 10.3z" fill="#C4632C" stroke="#2F2B24" stroke-width="1.6" stroke-linejoin="round"/>
+        <circle cx="10" cy="9" r="1.4" fill="#A87B2F"/>
+      </svg>
+      心晴<small>XINQING</small>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" id="soundBtn" aria-pressed="false" title="音效开关" aria-label="音效开关">🔇</button>
+      <button class="btn-ghost" id="guideBtn">练习指南</button>
+      <button class="btn-ghost" id="restartBtn">重新开始</button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= 首屏 ================= -->
+<section class="hero wrap" aria-labelledby="heroTitle">
+  <div class="hero-grid">
+    <div>
+      <span class="hero-badge">
+        <svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5l1.8 4 4.2.4-3.2 2.8 1 4.1L8 10.7 3.2 12.8l1-4.1L1 5.9l4.2-.4z" fill="#C4632C"/></svg>
+        沟通练习 · 四步开口演练
+      </span>
+      <h1 id="heroTitle">开口三句就呛？<br>先在这儿<em>练一遍</em>怎么聊。</h1>
+      <p class="hero-sub">写作业、玩手机、成绩——那些一谈就炸的题，挑一个，和安全模拟的「孩子」对练四轮。看看你哪句话让门开大了，哪句话让孩子关上了门。</p>
+      <div class="hero-cta">
+        <button class="btn-primary" id="heroStart">开始开口练习</button>
+        <span class="hero-meta">约 5 分钟 · 无需登录 · 内容仅保存在本页</span>
+      </div>
+    </div>
+    <div class="hero-art" id="heroArt" aria-hidden="true">
+      <svg viewBox="0 0 520 440">
+        <!-- 柔光背景 -->
+        <circle cx="290" cy="190" r="158" fill="#F6E3D3"/>
+        <circle cx="352" cy="262" r="112" fill="#E4EBE2" opacity=".75"/>
+        <!-- 心门 -->
+        <g transform="translate(168,128)">
+          <rect x="-72" y="-92" width="144" height="208" rx="15" fill="#FFFDF7" stroke="#2F2B24" stroke-width="3.5"/>
+          <path d="M0 34C-19 11-40 21-31 44c6 17 23 27 31 36 8-9 25-19 31-36 9-23-12-33-31-10z" fill="#C4632C"/>
+          <g transform="rotate(-26)">
+            <rect x="-72" y="-92" width="144" height="208" rx="15" fill="#EDBA92" stroke="#2F2B24" stroke-width="3.5"/>
+            <circle cx="48" cy="8" r="5.5" fill="#2F2B24"/>
+          </g>
+        </g>
+        <!-- 气泡 · 家长 -->
+        <g class="float-a">
+          <rect x="288" y="52" width="186" height="70" rx="22" fill="#FFFDF7" stroke="#2F2B24" stroke-width="3.5"/>
+          <path d="M316 122l2 24 22-24z" fill="#FFFDF7" stroke="#2F2B24" stroke-width="3.5" stroke-linejoin="round"/>
+          <rect x="308" y="74" width="104" height="9" rx="4.5" fill="#E3D8C4"/>
+          <rect x="308" y="92" width="66" height="9" rx="4.5" fill="#E3D8C4"/>
+        </g>
+        <!-- 气泡 · 孩子 -->
+        <g class="float-b">
+          <rect x="262" y="158" width="164" height="64" rx="20" fill="#C4632C"/>
+          <path d="M412 222l-2 22-22-22z" fill="#C4632C"/>
+          <rect x="282" y="180" width="92" height="9" rx="4.5" fill="#F6E3D3"/>
+          <rect x="282" y="198" width="58" height="9" rx="4.5" fill="#F6E3D3"/>
+        </g>
+        <!-- 星光 -->
+        <path d="M96 66l6.5 15 15 6.5-15 6.5-6.5 15-6.5-15-15-6.5 15-6.5z" fill="#A87B2F"/>
+        <path d="M446 316l5 11.5 11.5 5-11.5 5-5 11.5-5-11.5-11.5-5 11.5-5z" fill="#C4632C" opacity=".8"/>
+        <circle cx="110" cy="330" r="7" fill="#5F7D68" opacity=".55"/>
+        <circle cx="470" cy="120" r="5" fill="#C4632C" opacity=".55"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 数字带 ================= -->
+<section class="metrics wrap" aria-label="练习概览">
+  <div class="metrics-in">
+    <div class="metric"><b data-count="4">0</b><span>步开口练习流程</span></div>
+    <div class="metric"><b data-count="5">0</b><span>类回应原型解析</span></div>
+    <div class="metric"><b data-count="24">0<i>+</i></b><span>句可直接替换的说法</span></div>
+    <div class="metric"><b data-count="0">0</b><span>上传 · 内容只在本页</span></div>
+  </div>
+</section>
+
+<!-- ================= 特性带 ================= -->
+<section class="feature wrap" aria-label="页面特色">
+  <div class="feature-grid">
+    <div class="feature-card" data-reveal>
+      <span class="ic"><svg width="19" height="19" viewBox="0 0 20 20"><path d="M3 4.5C3 3.7 3.7 3 4.5 3H9v14H4.5C3.7 17 3 16.3 3 15.5zM17 4.5C17 3.7 16.3 3 15.5 3H11v14h4.5c.8 0 1.5-.7 1.5-1.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+      <h3>目标先于开口</h3>
+      <p>分清「你想达成的」和「孩子能接受的」，错位找到了，火就下去一半。</p>
+    </div>
+    <div class="feature-card" data-reveal>
+      <span class="ic"><svg width="19" height="19" viewBox="0 0 20 20"><path d="M10 17.5C5.5 14 3 11.8 3 8.9 3 6.7 4.7 5 6.8 5c1.2 0 2.3.6 3.2 1.7C10.9 5.6 12 5 13.2 5 15.3 5 17 6.7 17 8.9c0 2.9-2.5 5.1-7 8.6z" fill="currentColor"/></svg></span>
+      <h3>心门仪表</h3>
+      <p>每句话都让那扇门开一点或关一点——敷衍、顶嘴、沉默，反应都按年龄分层。</p>
+    </div>
+    <div class="feature-card" data-reveal>
+      <span class="ic"><svg width="19" height="19" viewBox="0 0 20 20"><path d="M4 17h12M6 17v-6m4 6V6m4 11v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+      <h3>逐句复盘</h3>
+      <p>哪句有效、哪句触发了防御、换成什么——点评精确到回合，报告卡可存图。</p>
+    </div>
+    <div class="feature-card" data-reveal>
+      <span class="ic"><svg width="19" height="19" viewBox="0 0 20 20"><rect x="4" y="8.5" width="12" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M7 8.5V6a3 3 0 0 1 6 0v2.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+      <h3>本页即隐私</h3>
+      <p>无需登录，内容不离开这个页面。年级、场景偏好存在你自己的浏览器里。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 步骤轨 ================= -->
+<nav class="rail" aria-label="练习步骤">
+  <div class="rail-in" id="rail">
+    <button class="rail-item active" data-step="0"><span class="n">0</span>练习设置</button>
+    <button class="rail-item" data-step="1"><span class="n">1</span>目标澄清</button>
+    <button class="rail-item" data-step="2"><span class="n">2</span>角色扮演</button>
+    <button class="rail-item" data-step="3"><span class="n">3</span>复盘点评</button>
+    <button class="rail-item" data-step="4"><span class="n">4</span>练习说明</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= 步骤 0：练习设置 ================= -->
+<section class="step on" id="step0" aria-labelledby="s0t">
+  <div class="card">
+    <span class="step-no">STEP 00</span>
+    <span class="kicker">开始之前</span>
+    <h2 id="s0t">选一个最像你家的场景</h2>
+    <p class="lead">年级决定「孩子」的语气，场景决定冲突的内容。选完就进入第一步：澄清这场对话真正想要什么。</p>
+
+    <div class="field">
+      <div class="field-label"><b>孩子现在几年级</b><span>决定说话的语气和反应方式</span></div>
+      <div class="opt-grid" id="gradeGrid" role="radiogroup" aria-label="孩子年级"></div>
+    </div>
+
+    <div class="field">
+      <div class="field-label"><b>最近的冲突场景</b><span>选一个最常吵的</span></div>
+      <div class="opt-grid" id="sceneGrid" role="radiogroup" aria-label="冲突场景"></div>
+      <div class="custom-row" id="customRow">
+        <input type="text" id="customInput" maxlength="12" placeholder="输入这件事，如：收拾房间 / 练琴 / 零花钱（最多12字）">
+      </div>
+    </div>
+
+    <div class="start-row">
+      <button class="btn-primary" id="startBtn">进入第一步：目标澄清</button>
+      <span class="hint" id="setupHint">先选年级和场景</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 步骤 1：目标澄清 ================= -->
+<section class="step" id="step1" aria-labelledby="s1t">
+  <div class="card">
+    <span class="step-no">STEP 01</span>
+    <span class="kicker">目标澄清</span>
+    <h2 id="s1t">先理清：这场对话你真正想要什么</h2>
+    <p class="lead">开口之前，先分清两件事——你想达成的，和孩子能接受的。两者的差距，就是每次吵起来的根源。</p>
+
+    <div class="goal-hero">
+      <div class="k">这场对话真正想达成的是</div>
+      <p id="goalReal"></p>
+    </div>
+
+    <div class="two-col">
+      <div class="want-box mine">
+        <h3><span class="dot"></span>我想达成的</h3>
+        <ul id="goalWant"></ul>
+      </div>
+      <div class="want-box kid">
+        <h3><span class="dot"></span>孩子能接受的</h3>
+        <ul id="goalAccept"></ul>
+      </div>
+    </div>
+
+    <div class="gap-box">
+      <h3>
+        <svg width="17" height="17" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.8 18.5 17H1.5z" fill="none" stroke="#8A6420" stroke-width="2" stroke-linejoin="round"/><path d="M10 7.5v4.2" stroke="#8A6420" stroke-width="2" stroke-linecap="round"/><circle cx="10" cy="14.2" r="1.2" fill="#8A6420"/></svg>
+        可能存在的错位
+      </h3>
+      <ol id="goalGap"></ol>
+    </div>
+
+    <div class="step-actions">
+      <button class="btn-primary" id="toRoleplay">进入第二步：和孩子对练</button>
+      <span class="hint">接下来你会扮演家长，「孩子」由脚本模拟</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 步骤 2：角色扮演 ================= -->
+<section class="step" id="step2" aria-labelledby="s2t">
+  <div class="card chat-card">
+    <div class="chat-head">
+      <div class="who">
+        <span class="avatar" id="chatAvatar" aria-hidden="true"></span>
+        <div>
+          <b id="chatKidName">模拟孩子</b>
+          <span id="chatKidSub"></span>
+        </div>
+      </div>
+      <div class="door-meter" id="doorMeter" aria-live="polite">
+        <div class="door" id="doorGraphic" data-state="half">
+          <svg class="door-heart" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17.5C5.5 14 3 11.8 3 8.9 3 6.7 4.7 5 6.8 5c1.2 0 2.3.6 3.2 1.7C10.9 5.6 12 5 13.2 5 15.3 5 17 6.7 17 8.9c0 2.9-2.5 5.1-7 8.6z" fill="#C4632C"/></svg>
+          <span class="door-panel"></span>
+        </div>
+        <div class="door-meta">
+          <b id="doorLabel">心门 · 半掩</b>
+          <span id="doorHint">你每说一句，门就动一点</span>
+        </div>
+      </div>
+    </div>
+    <div class="chat-scene" id="chatScene"></div>
+
+    <div class="chat-body" id="chatBody" aria-live="polite"></div>
+
+    <div class="choices" id="choicesBox">
+      <div class="choices-label">你想怎么回应？选一句最像你会说的话
+        <span class="kbd-hint">按 <span class="kbd">1</span><span class="kbd">2</span><span class="kbd">3</span> 快速选句</span>
+      </div>
+      <div id="choiceList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 步骤 3：复盘点评 ================= -->
+<section class="step" id="step3" aria-labelledby="s3t">
+  <div class="card">
+    <span class="step-no">STEP 03</span>
+    <span class="kicker">复盘点评</span>
+    <h2 id="s3t">逐句看看：哪句让门开了，哪句让孩子关上了</h2>
+    <p class="lead">没有「标准答案」，但有规律。每一句的影响，都藏在下面这张复盘表里。</p>
+
+    <div class="review-stats" id="reviewStats"></div>
+
+    <div class="traj" id="traj" aria-label="心门变化轨迹"></div>
+
+    <div id="reviewList"></div>
+
+    <div class="principles">
+      <h3>三个可以带走的原则</h3>
+      <ol>
+        <li><b>先接情绪，再谈事情</b>——门没开，道理进不去。孩子感觉被理解时，大脑才从「防御模式」切到「解决问题模式」。</li>
+        <li><b>把「你怎么又……」换成「我看到……我担心……」再加一个真问题</b>——评判推开人，具体的问题拉近人。</li>
+        <li><b>给孩子一个有台阶的选择</b>——哪怕方案是你引导出来的，孩子自己点头的执行率，远高于你下的命令。</li>
+      </ol>
+    </div>
+
+    <div class="report-card">
+      <div class="rc-info">
+        <h3>保存这一轮的练习报告</h3>
+        <p>把心门轨迹、逐句要点和今晚能试的一件事，生成一张 PNG 图，随时回看或分享给伴侣。</p>
+      </div>
+      <button class="btn-primary" id="reportBtn">生成 PNG 报告卡</button>
+    </div>
+    <canvas id="reportCanvas" width="640" height="860" aria-label="练习报告卡"></canvas>
+
+    <div class="step-actions">
+      <button class="btn-primary" id="againBtn">换个场景再练一轮</button>
+      <span class="hint">真实孩子千人千面，这里练的是「你的表达方式」</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 步骤 4：练习说明（免责，常驻页面底部） ================= -->
+<section id="step4" aria-labelledby="s4t">
+  <div class="disclaimer">
+    <svg class="ic" viewBox="0 0 36 36" aria-hidden="true">
+      <circle cx="18" cy="18" r="16" fill="#F3E4C6" stroke="#8A6420" stroke-width="2.2"/>
+      <path d="M18 9v10" stroke="#8A6420" stroke-width="2.6" stroke-linecap="round"/>
+      <circle cx="18" cy="25" r="1.6" fill="#8A6420"/>
+    </svg>
+    <div>
+      <h3 id="s4t">练习说明与免责</h3>
+      <p>本页内容为亲子<b>沟通练习与教育建议</b>，不替代专业心理咨询或家庭治疗。页内「孩子」的反应为预设脚本，依据常见亲子沟通模式编写，用于帮助家长觉察自己的表达方式，并非对任何真实孩子的预测。</p>
+      <p>如果亲子冲突频繁激烈，或孩子持续情绪低落、失眠、自我伤害，请及时寻求专业心理医生或家庭治疗师的帮助。练习中如有不适，可随时点击右上角「重新开始」。</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= FAQ ================= -->
+<section class="faq wrap" aria-labelledby="faqT">
+  <h2 id="faqT">常见问题</h2>
+  <p class="lead">关于这个练习，家长们问得最多的几件事。</p>
+  <details>
+    <summary>在这个页面练对话，真的有用吗？</summary>
+    <div class="a">练的不是「话术模板」，是反应速度。真实冲突里你只有几秒钟——提前把「先接情绪」练成肌肉记忆，现场才用得出来。建议同一场景连练三轮，换不同的说法组合，对比心门轨迹的差别。</div>
+  </details>
+  <details>
+    <summary>「孩子」的反应是真实的吗？</summary>
+    <div class="a">不是。反应来自常见亲子沟通模式的脚本库：敷衍、顶嘴、沉默、转移话题、情绪反弹，并按四种年龄段的语气分层编写。它帮你预演「你这句话下去，通常会激起什么」，但不能预测某个具体的孩子。</div>
+  </details>
+  <details>
+    <summary>我的内容会被上传吗？</summary>
+    <div class="a">不会。所有练习内容只在本页内存中处理，刷新即清空。年级、场景等偏好只存在你自己浏览器的 localStorage 里，点「重新开始」即可清除。</div>
+  </details>
+  <details>
+    <summary>心门分数是怎么算的？</summary>
+    <div class="a">共情 +2、提问 +1、说教 −2、命令 −3、回避 −1。四回合累计：≥3 分门开，1–2 分半掩，≤0 分关上。分数是面镜子，不是判决——它只是把你的表达习惯翻译成了看得见的轨迹。</div>
+  </details>
+  <details>
+    <summary>练完还是很困扰，怎么办？</summary>
+    <div class="a">如果冲突频繁激烈，或孩子持续情绪低落、失眠、有自我伤害倾向，请寻求专业心理医生或家庭治疗师——这个页面替代不了他们。平时可以把它当作复盘工具：每次谈崩之后，回来把对话重演一遍。</div>
+  </details>
+</section>
+
+<footer>
+  <div class="foot-in wrap">
+    <div class="foot-brand">
+      <svg width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="#F6E3D3" stroke="#2F2B24" stroke-width="2"/><path d="M16 23.5C11 19.5 8 17 8 13.5 8 11 9.8 9.2 12.2 9.2c1.4 0 2.7.7 3.8 2 1.1-1.3 2.4-2 3.8-2 2.4 0 4.2 1.8 4.2 4.3 0 3.5-3 6-8 10.3z" fill="#C4632C" stroke="#2F2B24" stroke-width="1.6" stroke-linejoin="round"/></svg>
+      心晴 · 亲子对话演练页
+    </div>
+    <p>本工具仅提供沟通练习与教育建议，不替代专业心理咨询或家庭治疗。所有练习内容仅在本页处理，不上传、不保存。</p>
+  </div>
+</footer>
+
+<!-- ================= 指南模态框 ================= -->
+<div class="modal-mask" id="guideModal" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+  <div class="modal">
+    <button class="modal-x" id="guideClose" aria-label="关闭">×</button>
+    <h2 id="guideTitle">练习指南</h2>
+    <p class="modal-sub">四步流程、计分规则和快捷键，一分钟看完。</p>
+
+    <div class="guide-sec">
+      <h3><span class="gn">0</span>练习设置</h3>
+      <p>选孩子的年级和最近的冲突场景。「其他事」可以输入最多 12 字的自定义场景，如「练琴」。</p>
+    </div>
+    <div class="guide-sec">
+      <h3><span class="gn">1</span>目标澄清</h3>
+      <p>先分清「你想达成的」与「孩子能接受的」，看清错位再开口。</p>
+    </div>
+    <div class="guide-sec">
+      <h3><span class="gn">2</span>角色扮演</h3>
+      <p>你扮演家长，从三个说法里选一句最像你的。「孩子」的反应按年龄段分层：敷衍、顶嘴、沉默、转移话题、情绪反弹，都可能出现。</p>
+      <div class="kbd-row">
+        <span>快捷键：</span><span class="kbd">1</span><span class="kbd">2</span><span class="kbd">3</span><span>选句</span><span class="kbd">Esc</span><span>关闭弹窗</span>
+      </div>
+    </div>
+    <div class="guide-sec">
+      <h3><span class="gn">3</span>复盘点评</h3>
+      <p>逐句看哪句有效、哪句触发了防御、可以换成什么。心门分数：共情 +2 / 提问 +1 / 说教 −2 / 命令 −3 / 回避 −1，累计 ≥3 分开、1–2 半掩、≤0 关。</p>
+    </div>
+    <div class="guide-sec">
+      <h3><span class="gn">!</span>说明</h3>
+      <p>本页内容仅为沟通练习与教育建议，不替代专业心理咨询或家庭治疗。所有内容仅在本页处理，不上传、不保存。</p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   数据层：年级语气 × 冲突场景 × 回合脚本
+   语气层：t1 小学低年级 / t2 小学高年级 / t3 初中 / t4 高中
+   ============================================================ */
+var GRADES = [
+  {id:'g1', label:'小学 1–3 年级', tier:'t1', kid:'7 岁 · 低年级',   hair:'bangs',  emoji:'🧒', tone:'情绪全写在脸上'},
+  {id:'g2', label:'小学 4–6 年级', tier:'t2', kid:'11 岁 · 高年级',  hair:'short',  emoji:'🙂', tone:'爱顶嘴，讲面子'},
+  {id:'g3', label:'初中',           tier:'t3', kid:'初二 · 少年',     hair:'messy',  emoji:'😑', tone:'话少，嫌你管'},
+  {id:'g4', label:'高中',           tier:'t4', kid:'高二 · 少女',     hair:'glasses',emoji:'🎧', tone:'讲逻辑，吃软不吃硬'}
+];
+
+var SCENES = [
+  {id:'homework', label:'写作业', icon:'book'},
+  {id:'phone',    label:'玩手机 / 游戏', icon:'phone'},
+  {id:'grades',   label:'考试成绩', icon:'chart'},
+  {id:'other',    label:'其他事', icon:'plus'}
+];
+
+var ICONS = {
+  book:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M3 4.5C3 3.7 3.7 3 4.5 3H9v14H4.5C3.7 17 3 16.3 3 15.5zM17 4.5C17 3.7 16.3 3 15.5 3H11v14h4.5c.8 0 1.5-.7 1.5-1.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+  phone:'<svg width="20" height="20" viewBox="0 0 20 20"><rect x="5.5" y="2.5" width="9" height="15" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9 15.2h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
+  chart:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M3 17h14M6 17V9m4 8V5m4 12v-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  plus:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 4v12M4 10h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+};
+
+/* 五种回应 archetype 的元信息 */
+var TYPES = {
+  A:{name:'共情联结', sub:'先接住情绪',   effect:'good'},
+  B:{name:'好奇提问', sub:'把麦克风递给他', effect:'mid'},
+  C:{name:'说教评判', sub:'翻旧账 + 贴标签', effect:'bad'},
+  D:{name:'命令控制', sub:'权力争夺',      effect:'bad'},
+  E:{name:'回避妥协', sub:'赌气式放权',    effect:'bad'}
+};
+var DELTA = {A:2, B:1, C:-2, D:-3, E:-1};
+
+/* ---------- 场景一：写作业 ---------- */
+var SC_HOMEWORK = {
+  id:'homework', name:'写作业',
+  scene:'晚上八点，作业摊在桌上二十分钟了，一个字没动。你压着火开口了。',
+  clarify:{
+    real:'不是「今晚必须写完」，而是让孩子对「开始写作业」这件事的抗拒小一点——下次还愿意坐下来。',
+    want:['作业不用催，按时完成','孩子坐得住，专心一会儿','「自己的事自己负责」慢慢成真'],
+    accept:['被理解「作业很烦、很想玩」的心情','有商量的余地（先玩二十分钟再写）','写完有段自己能支配的时间'],
+    gap:[
+      '你要的是「立刻开始」，孩子能给的往往是「等一会儿」——把「等一会儿」当对抗，第一句就谈崩。',
+      '你想谈「习惯和责任」，孩子听到的是「我又不行、都是我的错」。',
+      '你盯着「写完没有」的结果，孩子只感受到「过程被监控」。'
+    ]
+  },
+  opener:{t1:'我不写！写字好累，我想先看会儿绘本……',t2:'等会儿再写！这题太烦了，我不会。',t3:'知道了，别催了，我自己会写。（笔没动）',t4:'我在想了。想题不算时间吗？'},
+  /* 第 1 回合：回应孩子的开场白 */
+  openerChoices:[
+    {type:'A',text:'我看你在这儿坐了挺久，一个字还没动——是不是一想到写就头大？'},
+    {type:'B',text:'是不想写，还是遇到不会的题了？'},
+    {type:'C',text:'又来了。我每天上班回来还得盯着你写作业，你怎么就不能自觉一点？'}],
+  react:{
+    A:{t1:'……嗯。（声音小了）数学上有道题我不会。',t2:'你怎么知道……（嘟囔）反正就是不想写。',t3:'……（沉默几秒）也不是不想写，就是不知道从哪开始。',t4:'算是吧。坐那儿发呆比写还累。'},
+    B:{t1:'我不会……（抠橡皮）',t2:'都有点吧。英语单词太多了。',t3:'说了你也不懂。就是不想写。',t4:'不想写。很难吗？（挑眉）'},
+    C:{t1:'哇——（哭了）你凶我！',t2:'催催催！你们大人就知道催！（把笔摔在桌上）',t3:'又来了。说不过就开始翻旧账。（戴上一半耳机）',t4:'所以我是为你学习的，对吧？（冷笑）'},
+    D:{t1:'就不！！（笔一扔，哭出来）',t2:'你越这样我越不写！（把作业本合上）',t3:'别管我行不行！（砰地关上门）',t4:'你这是在训练狗，不是在养孩子。（揉眉心）'},
+    E:{t1:'真的吗？！（瞬间跑走，作业抛在脑后）',t2:'哦。（应了一声，手又摸向手机）',t3:'……随你。（反正他也不信你会真不管）',t4:'你不觉得这样说很幼稚吗？'}
+  },
+  rounds:[
+    {child:{t1:'可是作业好多……我写到几点都写不完。',t2:'反正写完了你还会加作业，写那么快干嘛。',t3:'我们同学写到十一点的都有，我才多少。',t4:'写完了然后呢？明天还有明天的。永远写不完。'},
+     choices:[
+      {type:'B',text:'写到十一点？那是有点多。你希望我怎么帮你？'},
+      {type:'C',text:'别人能写完你怎么写不完？别找借口，这就是效率问题。'},
+      {type:'D',text:'别废话，现在马上开始写，九点前必须写完前两科。'}]},
+    {child:{t1:'那……我能先玩十分钟再写吗？就十分钟！',t2:'那我先玩二十分钟，到了你叫我。',t3:'让我自己待会儿行不行？你出去我自己写。',t4:'我需要一个不被人盯着的时间。这很过分吗？'},
+     choices:[
+      {type:'A',text:'听起来你需要的不是「被催」，而是「被信任」。我听到了。'},
+      {type:'D',text:'少来这套。先写后玩，没商量。现在坐下。'},
+      {type:'E',text:'行行行，那你玩吧，爱写不写，反正明天老师找的是你。'}]},
+    {child:{t1:'我真的会写的！你帮我倒计时好不好？',t2:'那我开始了。你不许中途进来抽查。',t3:'说好了啊，十点前别进我房间。',t4:'十一点半，我写完手上的就睡。这是底线。'},
+     choices:[
+      {type:'B',text:'你来定：这四科，想先从哪科开始？需要我帮什么？'},
+      {type:'D',text:'我最后说一遍：现在开始，不许讨价还价。'},
+      {type:'E',text:'随你便吧，我不管了，你爱怎样怎样。'}]}
+  ],
+  wrap:{
+    open:{t1:'那我现在写啦！你一会儿进来给我听写，不许骗人！',t2:'说定了啊，我到点交卷，你不许加码。',t3:'十点前别进来。写完了我叫你。',t4:'十一点半。这是我的底线，也是承诺。'},
+    half:{t1:'那……我现在写总行了吧。（不情愿地拿起笔）',t2:'写就写嘛，别盯着我。',t3:'知道了。你先出去。',t4:'我写我的。别吵我。'},
+    shut:{t1:'我不想跟你说话了！（抱着枕头躲进被子）',t2:'懒得理你。（门关上了）',t3:'砰！（门关了，还反锁了）',t4:'……（回房，轻轻带上门——比摔门更远）'}
+  },
+  advice:{
+    open:'趁热打铁：把「几点开始、先写哪科、谁能进房间」写成三条，贴在书桌前。孩子参与定的规则，他才认。',
+    half:'别再追问「你到底写不写」。改成具体支持：「需要我帮你把书整理出来吗？我倒杯水，你开始。」',
+    shut:'现在闭嘴比开口有用。离开房间，做你自己的事。二十分钟后递一杯水进去，什么都不说。'
+  },
+  review:{
+    A:{why:'先接住情绪，再谈事情。孩子感到被理解时，大脑才从「防御模式」切到「解决问题模式」——这是唯一能让门打开的句式。',up:['共情之后紧跟一个选择：「那我们看看，从哪一科开始你会舒服点？」']},
+    B:{why:'提问给了孩子表达的空间，是安全开场。但只问不接，孩子说两句就会试探你会不会变脸——问完，要接住他的回答。',up:['问完之后补一句「不管哪种，我们先把它变小一点」——把「被询问」变成「一起面对」。']},
+    C:{why:'「翻旧账 + 对比 + 定性（你就是不自觉）」——孩子听到的不是作业，而是「我又让你失望了」。',def:'触发防御：对抗（顶嘴）或放弃（哭 / 趴桌）——都是在保护自尊，不是针对你。',fix:['我看你坐了很久没动笔，是卡在哪一科了吗？','作业确实多。我们先看看哪科最难，一起把它拆小？']},
+    D:{why:'「马上、必须、没商量」把对话变成权力争夺。孩子要么臣服（心里不服），要么夺回控制权（顶嘴 / 摔门）。',def:'触发防御：权力争夺——初中以后，命令几乎必然触发对抗。',fix:['关于什么时候开始，我想听听你的想法——你来定个时间，定了就按这个来。','我需要你十点前开始。这之前的时间你自己安排，可以吗？']},
+    E:{why:'赌气式放权不是尊重，是放弃。孩子收到的是「你不在乎了」——要么趁机放松，要么确认「果然没人管我」。',def:'触发防御：不安与试探——问题没解决，只是被延后了。',fix:['好，那你说写到几点？定了之后你自己收尾，我相信你。','我可以不管你写到几点，但作业是你的任务。需要我支持，随时叫我。']}
+  }
+};
+
+/* ---------- 场景二：玩手机 ---------- */
+var SC_PHONE = {
+  id:'phone', name:'玩手机',
+  scene:'说好了玩三十分钟。时间到了，手机还在孩子手里，你伸手去要——',
+  clarify:{
+    real:'让「到点交还手机」从一场争夺，变成一个可预期的规则，孩子愿意遵守，而不是想方设法钻空子。',
+    want:['约定好玩手机时长，到点就停','保护视力、睡眠和学习','孩子自控，不用我盯着'],
+    accept:['游戏正打到一半，「突然被叫停」最难受','时长可以商量，但要说话算数','大人也少刷手机，规则对等'],
+    gap:[
+      '你要「马上放下」，孩子卡在「这局没打完」——规则没预留收尾时间，每次收手机都像抢东西。',
+      '你说「我是为你好」，孩子听到的是「你不被信任」。',
+      '你没收手机是「惩罚」，孩子体验到的是「我的东西被抢走了」。'
+    ]
+  },
+  opener:{t1:'我还没玩够！动画片还没看完呢！',t2:'这局还没打完！你不能现在收！',t3:'说了半小时！这局没结束你让我怎么退？',t4:'我在跟队友语音。现在退了他们怎么办？'},
+  /* 第 1 回合：回应孩子的开场白 */
+  openerChoices:[
+    {type:'A',text:'正打到一半被叫停，确实最难受。这个我理解。'},
+    {type:'B',text:'这局大概还要多久？你估个时间。'},
+    {type:'C',text:'说好的半小时呢？次次都要我来收，你怎么说话不算话？'}],
+  react:{
+    A:{t1:'那……那我再看一集，就一集！（讨价还价开始）',t2:'……（手指没停）五分钟！这局真的五分钟！',t3:'嗯……（语气软了点）这局真的走不开。',t4:'……（沉默，看了你一眼）'},
+    B:{t1:'十集！啊不，一集！',t2:'五分钟！真的！',t3:'说不准，十分钟吧。',t4:'语音局，说不好。十五分钟吧。'},
+    C:{t1:'哇——你抢手机！（哭，护住手机）',t2:'抢什么抢！烦死了！（把手机揣兜里）',t3:'说了这局没打完！你除了收手机会什么？',t4:'你们大人刷短视频怎么不说自己？（冷笑）'},
+    D:{t1:'不给！！（哭喊着护住，像护宝贝）',t2:'抢啊！你抢啊！（把手机举高，场面升级）',t3:'你敢收一个试试。（眼神对抗）',t4:'你可以试试。试完我们就没什么好谈的了。'},
+    E:{t1:'诶？！可以吗？！（难以置信，抱着手机滚走了）',t2:'真的？（愣了，然后心安理得继续）',t3:'……（不说话，继续玩，心里记你一笔）',t4:'……（看了你一眼，什么都没说，继续打）'}
+  },
+  rounds:[
+    {child:{t1:'好不好嘛，就一集，求你了！',t2:'我们同学都能玩到十点！就我特殊！',t3:'手机是家里人给我买的，凭什么你说收就收？',t4:'规则是你们定的。定规则的时候，问过我吗？'},
+     choices:[
+      {type:'B',text:'跟我说说，你们班同学一般玩到几点？你觉得几点合理？'},
+      {type:'C',text:'别人玩到十点，别人还考前十呢！你怎么不学？'},
+      {type:'D',text:'少废话，现在交出来。再不交，这周都别想了。'}]},
+    {child:{t1:'那我会主动给你的！拉钩！',t2:'说好了啊，九点半，到点我自己放桌上。',t3:'那这局打完，打完我就放下来。',t4:'十五分钟。说完就十五分钟。'},
+     choices:[
+      {type:'A',text:'好，我听到了。你来定个时间，定了我们就按这个来。'},
+      {type:'D',text:'现在、立刻、马上。我说到三……'},
+      {type:'E',text:'算了算了，给你给你，玩通宵也没人管你。'}]},
+    {child:{t1:'我说话算话！拉钩了！',t2:'到点我会放的。你要相信我。',t3:'打完这波团我就下线。',t4:'还有十分钟。我自己看着时间。'},
+     choices:[
+      {type:'B',text:'你来定个交手机的时间。到点你怎么提醒自己？'},
+      {type:'D',text:'我数三声，三、二……'},
+      {type:'E',text:'行行行，你看着办，我以后再也不管你了。'}]}
+  ],
+  wrap:{
+    open:{t1:'拉钩！我到点就给你！',t2:'九点半。闹钟定好了，说话算话。',t3:'九点。打完这局我就放桌上。',t4:'十点。定了。'},
+    half:{t1:'……那好吧。（不情愿地按了暂停）',t2:'知道了，九点半嘛。',t3:'嗯，打完这波就放。',t4:'……行。'},
+    shut:{t1:'你是坏妈妈 / 坏爸爸！（哭着跑回房）',t2:'懒得跟你说。（门砰地关上）',t3:'……（回房，反锁）',t4:'……（回房，轻轻带上门）'}
+  },
+  advice:{
+    open:'把「收尾时间」落到闹钟或纸面：以后每局结束前五分钟提醒一次，到点他自己放桌上。执行过一次，规则才算立住。',
+    half:'接受「这局打完」的让步，但把交换条件说清楚：「这局打完放桌上，下次到点我提前五分钟提醒你。」',
+    shut:'停止收手机的动作，后退一步：「我们先不收了。等你打完这局，我们来定个双方都同意的规则。」'
+  },
+  review:{
+    A:{why:'先承认「被打断很烦」，对抗就卸了一半力。情绪被接住，规则才有可能被谈起。',up:['接住情绪后立刻接上规则：「那我们来定个收尾时间，以后都按这个来？」']},
+    B:{why:'让孩子自己报时间、参与定规则，是在归还「控制感」——有控制感的孩子，才守得住规则。',up:['让他报时间之后，加一个「到点你怎么提醒自己？闹钟还是我叫你？」——参与感就是执行率。']},
+    C:{why:'「说话不算话」是定性指责，孩子立刻进入自辩模式（找理由、比同学），不再听规则。',def:'触发防御：合理化的对抗——他要证明「错不在我」。',fix:['时间到了，这局没结束确实难受。我们来定个「收尾时间」，以后都按这个来？','我相信你不是故意的。留几分钟收尾，你觉得几分钟合理？']},
+    D:{why:'抢手机、数三声，是把「规则问题」升级成「权力战争」。孩子会为夺回控制权而战——交手机变成屈服，口服心不服。',def:'触发防御：权力争夺——手机是「我的东西」，被抢 = 被侵犯。',fix:['手机我先放桌上，这局打完你自己送过来，可以吗？','我们按定好的来。你需要我提醒，还是自己定闹钟？']},
+    E:{why:'赌气放手 = 放弃管教。孩子要么放纵，要么恐慌「爸妈不管我了」——两种都通向不了自律。',def:'触发防御：不安与放纵——他在试探你的底线还在不在。',fix:['我不管方式，但到点要收，这是底线。我们可以商量怎么提醒。','我生气归生气，规则不变。你来定怎么收场，我配合。']}
+  }
+};
+
+/* ---------- 场景三：考试成绩 ---------- */
+var SC_GRADES = {
+  id:'grades', name:'考试成绩',
+  scene:'月考成绩出来了，比上次退了一大截。试卷还压在孩子书包里，他刚进门。',
+  clarify:{
+    real:'让孩子考砸之后，还愿意跟你说「下次我想怎么试试」——而不是把试卷藏起来，对你关上房门。',
+    want:['分数提上来，排名往前走','孩子自己着急、自己想办法','考试后家里不鸡飞狗跳'],
+    accept:['先接受「我已经很难过了」，再谈分析','被看见努力的部分，而不只被看见排名','有人陪着一起看「哪里能补」，而不是独自挨训'],
+    gap:[
+      '你先问「为什么又粗心」，孩子先听到的是「问责」——防御一上来，后面说什么都进不去。',
+      '你要的是「上进心」，孩子此刻只有「羞耻感和害怕」。',
+      '你一开口就是「别人家的孩子」，孩子确认的是「我怎么做你都不满意」。'
+    ]
+  },
+  opener:{t1:'别看我试卷……（把书包藏在身后）',t2:'这次的题真的很难！全班都没考好。',t3:'成绩出来了吗……我先回房。',t4:'嗯，年级两百多名。你们打算怎么说？'},
+  /* 第 1 回合：回应孩子的开场白 */
+  openerChoices:[
+    {type:'A',text:'没考好，你心里现在肯定也不好受。'},
+    {type:'B',text:'跟我说说，这次是哪科拖后腿了？'},
+    {type:'C',text:'我就知道。平时让你多刷题你不听，现在知道了吧？'}],
+  react:{
+    A:{t1:'……嗯。（眼圈红了，钻进你怀里）',t2:'……（低头，捏着衣角）',t3:'……（沉默很久）嗯。',t4:'……（别过脸，耳根有点红）'},
+    B:{t1:'数学……应用题全不会。（带着哭腔）',t2:'数学和英语。英语听力根本没听懂。',t3:'数学。后面三道大题空白。',t4:'数学。最后两道大题没时间做。'},
+    C:{t1:'哇——！！（大哭，跑回房间锁门）',t2:'我就知道你会说这个！（吼完冲进房）',t3:'……（脸沉下来）所以现在全是我的错，对吧。（回房）',t4:'……（笑了一下，很冷）说吧，这次骂多久。'},
+    D:{t1:'不要——！！（哭着把试卷撕了）',t2:'加加加！你们就知道加！（爆发）',t3:'……（眼神暗下去，不吵了，也不说话了）',t4:'……（起身）你们继续。我回房了。（关门很轻）'},
+    E:{t1:'可是我还是很难过……（并没有被安慰到）',t2:'你不懂。（情绪被跳过，更孤单了）',t3:'……（轻声）不是一顿饭能解决的。',t4:'……（笑了笑，没说话）'}
+  },
+  rounds:[
+    {child:{t1:'我真的有在学……可是我就是不会。',t2:'我也每天写到十一点，你们根本看不到。',t3:'我已经很努力了，但排名就是掉。我也没办法。',t4:'努力这件事，我从不缺。缺的是方法，还有耳根清净。'},
+     choices:[
+      {type:'B',text:'你觉得问题出在「不会」还是「时间不够」？想不想一起看看卷子？'},
+      {type:'C',text:'努力？努力会越考越差？别自己骗自己了。'},
+      {type:'D',text:'从今天起，每天加一张卷子，周末不许出门。'}]},
+    {child:{t1:'那……你会教我吗？像上学期那样。',t2:'你别光说，你帮我问问老师嘛。',t3:'能不能……帮我找个补习？我不好意思跟你们开口。',t4:'我需要的是有人帮我看方法，不是有人给我加量。'},
+     choices:[
+      {type:'A',text:'这次先不骂你。我们一起把卷子拆开看看：哪些是粗心，哪些是真不会——好吗？'},
+      {type:'D',text:'哭什么哭，考砸了就给我憋回去，去刷题。'},
+      {type:'E',text:'一次考试而已，没事，开心点，去吃好吃的吧。'}]},
+    {child:{t1:'我们从数学开始好不好？从第一道应用题。',t2:'先看粗心的。粗心最亏了。',t3:'先看时间分配。我后面大题都没时间。',t4:'先看最后两道。我想知道标准解法。'},
+     choices:[
+      {type:'B',text:'你想先从哪科开始？需要我做点什么？'},
+      {type:'D',text:'今晚必须把错题整理完，整理不完不许睡。'},
+      {type:'E',text:'行，你自己看着办吧，我也累了。'}]}
+  ],
+  wrap:{
+    open:{t1:'我们一起看好不好？从我最不会的那道题开始！',t2:'那你帮我问问老师……谢谢你。',t3:'那，从数学卷开始？你坐。',t4:'坐吧。数学最后两道，一道一道来。'},
+    half:{t1:'那……我们一起看吧。（小声）',t2:'嗯。先别骂我。',t3:'……好。你看吧。',t4:'……嗯。拆吧。'},
+    shut:{t1:'别管我！（哭着回房锁门）',t2:'我的事不用你们管。（摔门）',t3:'……（回房，反锁）',t4:'……（回房，轻轻带上门）'}
+  },
+  advice:{
+    open:'趁他愿意开口，今晚就一起拆卷子：粗心的归粗心，不会的归不会。一次只解决一类，拆完就收工。',
+    half:'把「分析卷子」降级成「陪他坐一会儿」：「今天不分析，我就坐这儿陪陪你。想说了随时说。」',
+    shut:'分数今晚封口不谈。递点吃的，或者一句「我知道你也不好受」就够。等他主动提，你再接。'
+  },
+  review:{
+    A:{why:'考砸后孩子最先需要的不是分析，是「你没有不要我」。先处理心情，事情才有机会被处理。',up:['共情之后给一个具体的下一步：「等你缓过来，我们一起看看哪几道题是真的不会？」']},
+    B:{why:'问「哪科拖后腿」而不是「为什么考砸」——前者指向具体问题，后者指向人格审判。',up:['问完哪科拖后腿，紧跟一句「需要我做什么，你说」——孩子要的是后援，不是监工。']},
+    C:{why:'「我早就知道 + 翻旧账」等于在伤口上撒盐。羞耻感会让孩子把试卷藏得更深——不是怕考试，是怕你看到分数时的表情。',def:'触发防御：自我辩护（找理由）/ 自我放弃（沉默回房）。',fix:['没考好，你比我们更难受。我们先不吵，等你愿意说了，我随时在。','分数先放一边。我好奇的是：哪几道题你是真的不会？']},
+    D:{why:'情绪没处理就上措施（加卷子、禁足），孩子记住的不是「要努力」，是「考差 = 被罚」。下次他做的第一件事：藏分数。',def:'触发防御：回避与隐瞒——他怕的不是考试，是你的反应。',fix:['我们先一起看看卷子，看看问题出在哪，再定下一步，好吗？','不加量也行。但我想知道你需要什么支持——你说，我来做。']},
+    E:{why:'「没事」是跳过情绪。孩子确认「说了也没用」，从此报喜不报忧。',def:'触发防御：情感隔离——他学会了不向你展示脆弱。',fix:['我知道你嘴上说没事，心里挺难受的。想聊聊吗？不想聊我就先陪着你。','难过就难过一会儿，我陪你坐一会儿。想分析的时候，我们再分析。']}
+  }
+};
+
+/* ---------- 场景四：其他（自定义，{场景}占位） ---------- */
+var SC_OTHER = {
+  id:'other', name:'这件事',
+  scene:'最近只要一提到「{场景}」，家里的气氛就会突然紧张起来。今晚，又开始了。',
+  clarify:{
+    real:'不是争出「谁听谁的」，而是让「{场景}」这件事，从一提就炸，变成能坐下来商量。',
+    want:['事情按我希望的方向走','孩子配合、不顶嘴','不用每次都发火收场'],
+    accept:['我的想法被听完，而不是被审问','有商量的余地，哪怕只有一点','被尊重，而不是被定罪'],
+    gap:[
+      '你要的是「结果」，孩子在守「感受」——顺序反了，门就关了。',
+      '你一开口先定性（「你就是……」），孩子立刻进入防守模式。',
+      '你觉得「商量 = 讨价还价」，孩子觉得「不商量 = 不在乎我」。'
+    ]
+  },
+  opener:{t1:'我不要！我不管！',t2:'知道了知道了！又说这个！',t3:'……能不能先别说这个。',t4:'我知道你要说什么。不用说了。'},
+  /* 第 1 回合：回应孩子的开场白 */
+  openerChoices:[
+    {type:'A',text:'我知道一聊这个你就不自在。今天我们不吵，就说说看，好吗？'},
+    {type:'B',text:'关于「{场景}」，你自己到底是怎么想的？'},
+    {type:'C',text:'每次一说这个你就是这个态度！这家里还有没有规矩了？'}],
+  react:{
+    A:{t1:'……嗯。（小声，不吵了）',t2:'……哦。（警惕，但没顶嘴）',t3:'……（沉默几秒，眼神没那么硬了）',t4:'……（停了很久）行，你说。'},
+    B:{t1:'我想……（掰着手指头说）',t2:'我想想啊……',t3:'我想想。',t4:'你真想听？'},
+    C:{t1:'哇——！你又凶我！',t2:'你们就会翻旧账！',t3:'又来了。不说了。',t4:'……这样谈没意义。'},
+    D:{t1:'就不！！',t2:'凭什么都是你们说了算！',t3:'……（起身回房，关门）',t4:'……（起身回房，关门，很轻）'},
+    E:{t1:'诶？真的吗……（半信半疑地走开）',t2:'不管拉倒。（嘴硬，原地没动）',t3:'……（回房）',t4:'……（回房）'}
+  },
+  rounds:[
+    {child:{t1:'我就不！你烦死了！',t2:'又来了又来了，耳朵要起茧了！',t3:'说来说去就那几句。',t4:'同样的话，你们准备说几遍？'},
+     choices:[
+      {type:'A',text:'我知道一聊这个你就不自在。今天我们不吵，就说说看，好吗？'},
+      {type:'B',text:'关于「{场景}」，你自己到底是怎么想的？'},
+      {type:'C',text:'每次一说这个你就是这个态度！这家里还有没有规矩了？'}]},
+    {child:{t1:'说就说！那你先答应我！',t2:'说有什么用，最后不都是你们说了算。',t3:'说了你们也不听。听了也不改。',t4:'我的想法重要吗？你们问过吗？'},
+     choices:[
+      {type:'B',text:'那你说说，你希望这件事最后怎么收场？'},
+      {type:'C',text:'你还有理了？我养你这么大，就养出个顶嘴的？'},
+      {type:'D',text:'没得商量。按我说的做，今晚就改。'}]},
+    {child:{t1:'那你答应我……拉钩！',t2:'那我要提条件！',t3:'……真的可以商量？',t4:'可以。但你们得说话算话。'},
+     choices:[
+      {type:'A',text:'我听到了。你来提个方案，合理的我们就按这个来。'},
+      {type:'D',text:'少来。现在就改，别跟我谈条件。'},
+      {type:'E',text:'行行行，你爱咋样咋样，我以后再也不管了。'}]}
+  ],
+  wrap:{
+    open:{t1:'拉钩！我会做到的！',t2:'说好了！谁也不许反悔！',t3:'……嗯。这周先这样试。',t4:'好。一周后见分晓。'},
+    half:{t1:'……那好吧。',t2:'知道了。',t3:'……行。',t4:'……嗯。'},
+    shut:{t1:'哇——！坏爸爸 / 坏妈妈！',t2:'懒得理你们！',t3:'……',t4:'……'}
+  },
+  advice:{
+    open:'把刚才商量出来的方案复述一遍确认：「所以我们说好了，这周先这样试，对吧？」——口头约定落成一句话，才算数。',
+    half:'给他留一个出口：「今天先说到这。你想好了，随时找我，我认真听。」',
+    shut:'停止讲道理，撤离冲突：「我们不吵了。等你想说的时候，我随时在。」'
+  },
+  review:{
+    A:{why:'先承认「一聊这个你就不自在」，对抗就卸了一半力。孩子感到安全，才愿意把想法拿出来。',up:['接住情绪后立刻递台阶：「不吵。我就想听听，你自己想怎么收场？」']},
+    B:{why:'「你自己到底怎么想的」是在归还话语权——被问到的孩子，才第一次有机会「被自己的答案说服」。',up:['问完「你怎么想的」，加一句「你今天愿意说，我就认真听」——话语权给了，门才开。']},
+    C:{why:'「翻旧账 + 定性质问」让孩子进入自辩模式：他要证明「错不在我」，而不是解决问题。',def:'触发防御：对抗（顶嘴）或冷处理（沉默、回房）。',fix:['我知道一提到这事你就紧张。我们今天不吵，就说说看，好吗？','我想知道的是：你自己希望这件事最后怎么样？']},
+    D:{why:'「没得商量、按我说的做」把对话变成权力争夺。孩子要么屈服（心里记账），要么用更硬的方式夺回控制权。',def:'触发防御：权力争夺——他争的不是事，是「我说了不算」这口气。',fix:['这事我想听听你的方案。你提一个，合理的我们就按你的来。','我可以让步到这一步，剩下的我们各让一步，好吗？']},
+    E:{why:'「再也不管了」是赌气式弃权。孩子收到的是「你放弃我了」——要么放纵，要么不安。',def:'触发防御：不安与试探——他在确认你的底线还在不在。',fix:['我可以不管你做到多少，但底线在这：{场景}不能无限期拖。','我生气归生气，这事我们还得解决。你来定第一步，我配合。']}
+  }
+};
+
+var SCENE_MAP = {homework:SC_HOMEWORK, phone:SC_PHONE, grades:SC_GRADES, other:SC_OTHER};
+
+/* ============================================================
+   状态与工具
+   ============================================================ */
+var state = {grade:null, scene:'homework', custom:'', tier:'t1', round:0, score:0,
+             history:[], doors:['half'], busy:false, finished:false, reached:0};
+
+function $(s){return document.querySelector(s);}
+function fill(s){ return s.split('{场景}').join(state.scene==='other' ? (state.custom||'这事') : SCENE_MAP[state.scene].name); }
+function scnName(){ return state.scene==='other' ? (state.custom||'这事') : SCENE_MAP[state.scene].name; }
+function doorState(score){ return score>=3 ? 'open' : (score>=1 ? 'half' : 'shut'); }
+var DOOR_TEXT = {open:'心门 · 敞开', half:'心门 · 半掩', shut:'心门 · 紧闭'};
+var DOOR_HINT = {open:'他说的话变多了，趁这个感觉把约定定下来', half:'他没完全关上，但也在观望——别急着推进', shut:'此刻说什么都进不去。先离开冲突现场，等情绪降温'};
+function nowStr(){
+  var d = new Date();
+  return ('0'+d.getHours()).slice(-2) + ':' + ('0'+d.getMinutes()).slice(-2);
+}
+
+/* ---------- 音效（WebAudio 合成，默认关，localStorage 记忆） ---------- */
+var Sound = (function(){
+  var ctx = null, on = false;
+  function ac(){
+    if(!ctx){ try{ ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return null; } }
+    if(ctx && ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+  function tone(freq, dur, type, gain, delay){
+    if(!on) return;
+    var c = ac(); if(!c) return;
+    var t = c.currentTime + (delay||0);
+    var o = c.createOscillator(), g = c.createGain();
+    o.type = type || 'sine';
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(gain || 0.06, t + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g); g.connect(c.destination);
+    o.start(t); o.stop(t + dur + 0.05);
+  }
+  return {
+    isOn: function(){ return on; },
+    set: function(v){ on = !!v; },
+    toggle: function(){
+      on = !on;
+      if(on){ tone(660, .08, 'sine', .05, 0); tone(880, .1, 'sine', .04, .09); }
+      savePrefs();
+      return on;
+    },
+    click:  function(){ tone(520, .06, 'triangle', .04, 0); },
+    msg:    function(){ tone(440, .07, 'sine', .045, 0); tone(560, .09, 'sine', .04, .07); },
+    doorOpen: function(){ tone(392, .1, 'sine', .05, 0); tone(523, .12, 'sine', .045, .1); tone(659, .16, 'sine', .04, .2); },
+    doorShut: function(){ tone(220, .12, 'sine', .05, 0); tone(165, .18, 'sine', .045, .1); },
+    done:   function(){ tone(523, .1, 'sine', .045, 0); tone(659, .1, 'sine', .045, .1); tone(784, .2, 'sine', .04, .2); }
+  };
+})();
+
+/* ---------- 偏好持久化 ---------- */
+function savePrefs(){
+  try{
+    localStorage.setItem('xq_pcd_prefs', JSON.stringify({
+      grade: state.grade, scene: state.scene, custom: state.custom, sound: Sound.isOn()
+    }));
+  }catch(e){}
+}
+function loadPrefs(){
+  try{
+    var p = JSON.parse(localStorage.getItem('xq_pcd_prefs') || '{}');
+    if(p.grade) state.grade = p.grade;
+    if(p.scene) state.scene = p.scene;
+    if(typeof p.custom === 'string') state.custom = p.custom;
+    if(typeof p.sound === 'boolean') Sound.set(p.sound);
+  }catch(e){}
+}
+
+/* ---------- 数字滚动（setTimeout 驱动，兼容降级环境） ---------- */
+function countUp(el, target, dur){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ el.firstChild ? (el.firstChild.nodeValue = target) : (el.textContent = target); return; }
+  var start = null;
+  dur = dur || 900;
+  (function tick(){
+    var now = Date.now();
+    if(start === null) start = now;
+    var p = Math.min((now - start) / dur, 1);
+    var e = 1 - Math.pow(1 - p, 3);
+    var v = Math.round(target * e);
+    if(el.firstChild && el.firstChild.nodeType === 3) el.firstChild.nodeValue = v;
+    else el.textContent = v;
+    if(p < 1) setTimeout(tick, 16);
+  })();
+}
+
+/* 孩子头像 SVG：语气层 + 心情 */
+function avatarSVG(tier, mood){
+  mood = mood || 'flat';
+  var bg = {t1:'#F6E3D3', t2:'#F3E9C8', t3:'#E4EBE2', t4:'#EFE0CD'}[tier];
+  var hair = {t1:'bangs', t2:'short', t3:'messy', t4:'glasses'}[tier];
+  var mouth = mood==='happy' ? '<path d="M25 39 Q32 45 39 39" fill="none" stroke="#2F2B24" stroke-width="2.4" stroke-linecap="round"/>'
+            : mood==='upset' ? '<path d="M25 43 Q32 37 39 43" fill="none" stroke="#2F2B24" stroke-width="2.4" stroke-linecap="round"/>'
+            : '<path d="M26 41 L38 41" stroke="#2F2B24" stroke-width="2.4" stroke-linecap="round"/>';
+  var brows = mood==='upset'
+    ? '<path d="M22 25 L28 28 M42 25 L36 28" stroke="#2F2B24" stroke-width="2" stroke-linecap="round"/>'
+    : (mood==='happy' ? '<path d="M22 27 Q25 24.6 28 27 M36 27 Q39 24.6 42 27" fill="none" stroke="#2F2B24" stroke-width="2" stroke-linecap="round"/>' : '');
+  var hairs = '';
+  if(hair==='bangs') hairs = '<path d="M8 24 Q8 8 32 8 Q56 8 56 24 Q50 15 44 17 Q40 10 32 11 Q22 12 18 19 Q12 16 8 24Z" fill="#4A3428"/><circle cx="9" cy="27" r="6" fill="#4A3428"/><circle cx="55" cy="27" r="6" fill="#4A3428"/>';
+  if(hair==='short') hairs = '<path d="M9 26 Q9 9 32 9 Q55 9 55 26 Q52 16 44 16 Q38 11 32 12 Q24 13 19 19 Q13 17 9 26Z" fill="#3A2E24"/>';
+  if(hair==='messy') hairs = '<path d="M9 27 Q8 9 32 9 Q56 9 55 27 L50 15 L45 22 L40 13 L35 21 L30 12 L25 20 L20 12 L14 20 Z" fill="#2F2B24"/>';
+  if(hair==='glasses') hairs = '<path d="M9 27 Q9 9 32 9 Q55 9 55 27 Q51 16 44 16 Q38 11 32 12 Q24 13 19 19 Q13 17 9 27Z" fill="#3A2E24"/>';
+  var glasses = hair==='glasses' ? '<g fill="none" stroke="#2F2B24" stroke-width="2"><circle cx="25" cy="31" r="6.5"/><circle cx="39" cy="31" r="6.5"/><path d="M31.5 31 H32.5"/><path d="M18.5 30 L14 28 M45.5 30 L50 28"/></g>' : '';
+  return '<svg viewBox="0 0 64 64" width="100%" height="100%">'
+    + '<circle cx="32" cy="32" r="30" fill="'+bg+'"/>'
+    + '<circle cx="32" cy="33" r="21" fill="#F2CFA8"/>'
+    + hairs
+    + '<circle cx="25" cy="31" r="2.4" fill="#2F2B24"/><circle cx="39" cy="31" r="2.4" fill="#2F2B24"/>'
+    + brows + mouth + glasses
+    + '</svg>';
+}
+
+/* 心门仪表 */
+function setDoor(stateName, silent){
+  var d = $('#doorGraphic');
+  d.dataset.state = stateName;
+  $('#doorLabel').textContent = DOOR_TEXT[stateName];
+  $('#doorHint').textContent = DOOR_HINT[stateName];
+  if(!silent){
+    d.classList.remove('pop'); void d.offsetWidth; d.classList.add('pop');
+    setTimeout(function(){ d.classList.remove('pop'); }, 700);
+  }
+}
+
+/* 步骤切换 */
+function goStep(n){
+  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('on');});
+  var target = $('#step'+n);
+  if(target && target.classList.contains('step')) target.classList.add('on');
+  if(n > state.reached && n <= 3) state.reached = n;
+  document.querySelectorAll('.rail-item').forEach(function(r){
+    var i = +r.dataset.step;
+    r.classList.toggle('active', i===n);
+    r.classList.toggle('done', i<n);
+  });
+  var y = target ? target.getBoundingClientRect().top + window.scrollY - 120 : 0;
+  window.scrollTo({top:y, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+}
+
+/* ============================================================
+   步骤 0：设置
+   ============================================================ */
+function buildSetup(){
+  var g = $('#gradeGrid'); g.innerHTML = '';
+  GRADES.forEach(function(gr){
+    var b = document.createElement('button');
+    b.className = 'opt' + (state.grade===gr.id ? ' sel' : '');
+    b.innerHTML = '<span class="emo">'+gr.emoji+'</span>'+gr.label+'<small>'+gr.tone+'</small>';
+    b.setAttribute('role','radio');
+    b.setAttribute('aria-checked', state.grade===gr.id);
+    b.onclick = function(){
+      Sound.click();
+      state.grade = gr.id; state.tier = gr.tier;
+      buildSetup(); refreshStart(); savePrefs();
+    };
+    g.appendChild(b);
+  });
+  var s = $('#sceneGrid'); s.innerHTML = '';
+  SCENES.forEach(function(sc){
+    var b = document.createElement('button');
+    b.className = 'opt' + (state.scene===sc.id ? ' sel' : '');
+    b.innerHTML = '<span class="emo" style="color:var(--accent-deep)">'+ICONS[sc.icon]+'</span>'+sc.label;
+    b.setAttribute('role','radio');
+    b.setAttribute('aria-checked', state.scene===sc.id);
+    b.onclick = function(){
+      Sound.click();
+      state.scene = sc.id;
+      buildSetup();
+      $('#customRow').classList.toggle('on', sc.id==='other');
+      if(sc.id === 'other') $('#customInput').value = state.custom;
+      refreshStart(); savePrefs();
+    };
+    s.appendChild(b);
+  });
+  $('#customRow').classList.toggle('on', state.scene === 'other');
+}
+
+function refreshStart(){
+  var ok = state.grade && (state.scene!=='other' || $('#customInput').value.trim());
+  $('#setupHint').textContent = ok ? '准备好了' : (state.grade ? '再选一个场景' : '先选年级和场景');
+  $('#startBtn').disabled = !ok;
+}
+
+/* ============================================================
+   步骤 1：目标澄清
+   ============================================================ */
+function renderClarify(){
+  var sc = SCENE_MAP[state.scene];
+  $('#goalReal').textContent = fill(sc.clarify.real);
+  var w = $('#goalWant'); w.innerHTML = '';
+  sc.clarify.want.forEach(function(t){ var li=document.createElement('li'); li.textContent = t; w.appendChild(li); });
+  var a = $('#goalAccept'); a.innerHTML = '';
+  sc.clarify.accept.forEach(function(t){ var li=document.createElement('li'); li.textContent = t; a.appendChild(li); });
+  var gp = $('#goalGap'); gp.innerHTML = '';
+  sc.clarify.gap.forEach(function(t){ var li=document.createElement('li'); li.textContent = fill(t); gp.appendChild(li); });
+}
+
+/* ============================================================
+   步骤 2：角色扮演引擎
+   ============================================================ */
+function childBubble(text, mood, done){
+  var body = $('#chatBody');
+  var typing = document.createElement('div');
+  typing.className = 'msg';
+  typing.innerHTML = '<span class="avatar">'+avatarSVG(state.tier,'flat')+'</span><div class="bubble typing"><span></span><span></span><span></span></div>';
+  body.appendChild(typing);
+  body.scrollTop = body.scrollHeight;
+  setTimeout(function(){
+    typing.remove();
+    var m = document.createElement('div');
+    m.className = 'msg';
+    m.innerHTML = '<span class="who-tag">孩子 · '+nowStr()+'</span>'
+      + '<span class="avatar">'+avatarSVG(state.tier, mood)+'</span><div class="bubble"></div>';
+    m.querySelector('.bubble').textContent = text;
+    body.appendChild(m);
+    body.scrollTop = body.scrollHeight;
+    Sound.msg();
+    if(done) done();
+  }, 850 + Math.random()*450);
+}
+
+function deltaChip(delta){
+  var body = $('#chatBody');
+  var c = document.createElement('div');
+  var cls = delta>0 ? 'up' : (delta<0 ? 'down' : 'mid');
+  c.className = 'delta '+cls;
+  c.textContent = (delta>0?'心门 +'+delta : delta<0?'心门 '+delta : '心门没有变化');
+  body.appendChild(c);
+  body.scrollTop = body.scrollHeight;
+}
+
+function roundPill(){
+  var body = $('#chatBody');
+  var p = document.createElement('div');
+  p.className = 'round-pill';
+  p.textContent = '第 ' + (state.round+1) + ' 回合 / 共 ' + (SCENE_MAP[state.scene].rounds.length + 1) + ' 回合';
+  body.appendChild(p);
+}
+
+/* choices：传入本回合的三个选项 */
+function showChoices(choices){
+  var list = $('#choiceList');
+  list.innerHTML = '';
+  choices.forEach(function(ch, i){
+    var b = document.createElement('button');
+    b.className = 'choice';
+    b.dataset.idx = String(i+1);
+    b.textContent = fill(ch.text);
+    b.onclick = function(){ pick(ch, b); };
+    list.appendChild(b);
+  });
+  $('#choicesBox').style.display = 'block';
+  $('#choicesBox').scrollIntoView({block:'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+}
+
+function pick(ch, btn){
+  if(state.busy) return;
+  state.busy = true;
+  Sound.click();
+  var sc = SCENE_MAP[state.scene];
+  var list = $('#choiceList');
+  Array.prototype.forEach.call(list.children, function(b){ b.disabled = true; b.style.opacity = .45; b.style.pointerEvents='none'; });
+  btn.style.opacity = 1;
+  // 家长发言
+  var body = $('#chatBody');
+  var m = document.createElement('div');
+  m.className = 'msg me';
+  m.innerHTML = '<span class="who-tag">我 · '+nowStr()+'</span>'
+    + '<span class="avatar" style="background:var(--accent-soft);border-radius:50%;display:grid;place-items:center;font-family:var(--serif);font-weight:700;color:var(--accent-deep);font-size:13px;border:1.5px solid #EBC9AC">我</span><div class="bubble"></div>';
+  m.querySelector('.bubble').textContent = fill(ch.text);
+  body.appendChild(m);
+  body.scrollTop = body.scrollHeight;
+  $('#choicesBox').style.display = 'none';
+  // 记录
+  var delta = DELTA[ch.type];
+  state.score += delta;
+  var st = doorState(state.score);
+  state.history.push({round:state.round, type:ch.type, text:fill(ch.text), delta:delta, door:st});
+  // 孩子反应
+  var mood = (ch.type==='A'||ch.type==='B') ? (ch.type==='A' ? 'happy' : 'flat') : 'upset';
+  childBubble(sc.react[ch.type][state.tier], mood, function(){
+    deltaChip(delta);
+    setDoor(st);
+    if(delta > 0) Sound.doorOpen(); else if(delta < 0) Sound.doorShut();
+    state.doors.push(st);
+    state.round++;
+    setTimeout(nextStep, 700);
+  });
+}
+
+function nextStep(){
+  var sc = SCENE_MAP[state.scene];
+  /* state.round = 已完成的回合数；第 k 回合（k≥2）的台词与选项在 rounds[k-2] */
+  if(state.round < sc.rounds.length + 1){
+    var rd = sc.rounds[state.round - 1];
+    roundPill();
+    childBubble(rd.child[state.tier], 'flat', function(){
+      state.busy = false;
+      showChoices(rd.choices);
+    });
+  } else {
+    finishRoleplay();
+  }
+}
+
+function finishRoleplay(){
+  var sc = SCENE_MAP[state.scene];
+  var st = doorState(state.score);
+  childBubble(sc.wrap[st][state.tier], st==='open'?'happy':(st==='half'?'flat':'upset'), function(){
+    state.busy = false;
+    state.finished = true;
+    Sound.done();
+    var box = $('#choicesBox');
+    var interp = st==='open' ? '门开了——他说的话变多了。趁这个感觉，把约定轻轻地定下来。'
+      : st==='half' ? '门半掩——他没完全关上，但也在观望。别急着推进，先稳住这个温度。'
+      : '门关上了——此刻说什么都进不去。先离开冲突现场，等情绪降温，再找时机。';
+    box.innerHTML = '<div class="final-door" data-state="'+st+'">'
+      + '<div class="door" data-state="'+st+'"><svg class="door-heart" viewBox="0 0 20 20"><path d="M10 17.5C5.5 14 3 11.8 3 8.9 3 6.7 4.7 5 6.8 5c1.2 0 2.3.6 3.2 1.7C10.9 5.6 12 5 13.2 5 15.3 5 17 6.7 17 8.9c0 2.9-2.5 5.1-7 8.6z" fill="#C4632C"/></svg><span class="door-panel"></span></div>'
+      + '<div><b>这一轮，心门最终：'+DOOR_TEXT[st].replace('心门 · ','')+'</b><p>'+interp+'</p></div>'
+      + '</div>'
+      + '<div class="advice-card" data-state="'+st+'"><div class="advice-tag">今晚可以试的一件事</div><p>'+fill(sc.advice[st])+'</p></div>'
+      + '<div class="choices-label" style="margin-top:16px">四回合结束，去看看逐句复盘——</div>'
+      + '<button class="btn-primary" id="toReview" style="margin-top:12px">进入第三步：复盘点评</button>';
+    box.style.display = 'block';
+    $('#toReview').onclick = function(){ Sound.click(); renderReview(); goStep(3); };
+    box.scrollIntoView({block:'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  });
+}
+
+/* ============================================================
+   步骤 3：复盘点评
+   ============================================================ */
+function renderReview(){
+  var sc = SCENE_MAP[state.scene];
+  // 统计
+  var good=0, mid=0, bad=0;
+  state.history.forEach(function(h){ if(h.type==='A') good++; else if(h.type==='B') mid++; else bad++; });
+  $('#reviewStats').innerHTML =
+    '<div class="stat good"><b>0</b><span>句让心门开大（共情）</span></div>'
+    + '<div class="stat mid"><b>0</b><span>句中规中矩（提问，要接住回答）</span></div>'
+    + '<div class="stat bad"><b>0</b><span>句让心门关上（说教 / 命令 / 赌气）</span></div>';
+  var statEls = document.querySelectorAll('#reviewStats .stat b');
+  countUp(statEls[0], good); countUp(statEls[1], mid); countUp(statEls[2], bad);
+  // 心门轨迹
+  var labels = ['开场'].concat(state.history.map(function(h){return '回合 '+(h.round+1);}));
+  var tj = $('#traj'); tj.innerHTML = '';
+  state.doors.forEach(function(st, i){
+    var n = document.createElement('div');
+    n.className = 'traj-node';
+    n.innerHTML = '<div class="door" data-state="'+st+'"><svg class="door-heart" viewBox="0 0 20 20"><path d="M10 17.5C5.5 14 3 11.8 3 8.9 3 6.7 4.7 5 6.8 5c1.2 0 2.3.6 3.2 1.7C10.9 5.6 12 5 13.2 5 15.3 5 17 6.7 17 8.9c0 2.9-2.5 5.1-7 8.6z" fill="#C4632C"/></svg><span class="door-panel"></span></div><small>'+labels[i]+'</small>';
+    tj.appendChild(n);
+    if(i < state.doors.length-1){
+      var line = document.createElement('div');
+      line.className = 'traj-line';
+      tj.appendChild(line);
+    }
+  });
+  // 逐句点评
+  var list = $('#reviewList'); list.innerHTML = '';
+  state.history.forEach(function(h){
+    var t = TYPES[h.type];
+    var rv = sc.review[h.type];
+    var eff = h.type==='A' ? '✓ 有效（心门 +2）' : h.type==='B' ? '◐ 基本有效（心门 +1）' : (h.delta<0 ? '✗ 让心门关上（心门 '+h.delta+'）' : '△ 需调整');
+    var item = document.createElement('div');
+    item.className = 'rev-item ' + t.effect;
+    var html = '<div class="rev-head"><span class="rev-round">回合 '+(h.round+1)+'</span>'
+      + '<span class="rev-type '+t.effect+'">'+t.name+' · '+t.sub+'</span>'
+      + '<span class="rev-effect">'+eff+'</span></div>'
+      + '<div class="rev-quote">'+h.text+'</div>'
+      + '<p class="rev-why">'+rv.why+'</p>';
+    if(rv.def) html += '<div class="rev-defense"><b>防御触发：</b>'+rv.def.replace('触发防御：','')+'</div>';
+    if(rv.fix && rv.fix.length){
+      html += '<div class="rev-fix"><div class="t">可以换成——</div><ul>'
+        + rv.fix.map(function(f){return '<li>'+fill(f)+'</li>';}).join('') + '</ul></div>';
+    }
+    if(rv.up && rv.up.length){
+      html += '<div class="rev-fix"><div class="t">还能更好——</div><ul>'
+        + rv.up.map(function(f){return '<li>'+fill(f)+'</li>';}).join('') + '</ul></div>';
+    }
+    item.innerHTML = html;
+    list.appendChild(item);
+  });
+}
+
+/* ============================================================
+   Canvas PNG 报告卡
+   ============================================================ */
+function rr(c, x, y, w, h, r){
+  c.beginPath();
+  c.moveTo(x+r, y);
+  c.arcTo(x+w, y, x+w, y+h, r);
+  c.arcTo(x+w, y+h, x, y+h, r);
+  c.arcTo(x, y+h, x, y, r);
+  c.arcTo(x, y, x+w, y, r);
+  c.closePath();
+}
+function heartPath(c, cx, cy, s){
+  c.save(); c.translate(cx, cy); c.scale(s/16, s/16);
+  c.beginPath();
+  c.moveTo(0, 6);
+  c.bezierCurveTo(-8, 0, -6, -6, 0, -2);
+  c.bezierCurveTo(6, -6, 8, 0, 0, 6);
+  c.closePath(); c.fill();
+  c.restore();
+}
+function miniDoor(c, cx, cy, st, s){
+  var w = 30*s, h = 38*s;
+  c.save(); c.translate(cx, cy);
+  c.fillStyle = '#FFFDF7'; c.strokeStyle = '#2F2B24'; c.lineWidth = 2*s;
+  rr(c, -w/2, -h/2, w, h, 4*s); c.fill(); c.stroke();
+  c.fillStyle = '#C4632C';
+  heartPath(c, w*0.14, h*0.02, 9*s);
+  var ang = st==='open' ? -86*Math.PI/180 : st==='half' ? -47*Math.PI/180 : 0;
+  c.save(); c.translate(-w/2, 0); c.rotate(ang);
+  var g = c.createLinearGradient(0, -h/2, 0, h/2);
+  g.addColorStop(0, '#EDBA92'); g.addColorStop(1, '#DFA171');
+  c.fillStyle = g; c.strokeStyle = '#2F2B24'; c.lineWidth = 2*s;
+  rr(c, 0, -h/2, w, h, 4*s); c.fill(); c.stroke();
+  c.restore();
+  c.restore();
+}
+function wrapText(c, text, x, y, maxW, lh){
+  var line = '', lines = [];
+  for(var i=0; i<text.length; i++){
+    var ch = text[i];
+    if(c.measureText(line + ch).width > maxW && line){ lines.push(line); line = ch; }
+    else line += ch;
+  }
+  if(line) lines.push(line);
+  lines.forEach(function(l, i2){ c.fillText(l, x, y + i2*lh); });
+  return y + lines.length * lh;
+}
+function drawReport(){
+  var cv = $('#reportCanvas');
+  var c = cv.getContext('2d');
+  var W = cv.width, H = cv.height;
+  var sc = SCENE_MAP[state.scene];
+  var st = doorState(state.score);
+  var good=0, mid=0, bad=0;
+  state.history.forEach(function(h){ if(h.type==='A') good++; else if(h.type==='B') mid++; else bad++; });
+  // 背景
+  c.fillStyle = '#F4EEE2'; c.fillRect(0, 0, W, H);
+  var glow = c.createRadialGradient(W*0.15, -H*0.05, 10, W*0.15, -H*0.05, W*0.8);
+  glow.addColorStop(0, 'rgba(196,99,44,.12)'); glow.addColorStop(1, 'rgba(196,99,44,0)');
+  c.fillStyle = glow; c.fillRect(0, 0, W, H);
+  var glow2 = c.createRadialGradient(W*0.9, H*0.95, 10, W*0.9, H*0.95, W*0.7);
+  glow2.addColorStop(0, 'rgba(168,123,47,.10)'); glow2.addColorStop(1, 'rgba(168,123,47,0)');
+  c.fillStyle = glow2; c.fillRect(0, 0, W, H);
+  // 内边框
+  c.strokeStyle = '#E3D8C4'; c.lineWidth = 1.5;
+  rr(c, 16, 16, W-32, H-32, 18); c.stroke();
+  // 品牌行
+  c.fillStyle = '#C4632C';
+  heartPath(c, 46, 52, 22);
+  c.fillStyle = '#2F2B24';
+  c.font = '700 21px "Noto Serif SC","Songti SC",serif';
+  c.textAlign = 'left'; c.textBaseline = 'alphabetic';
+  c.fillText('心晴 · 亲子对话演练报告', 66, 59);
+  c.fillStyle = '#978D7E';
+  c.font = '12px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  c.textAlign = 'right';
+  c.fillText(nowStr(), W-48, 59);
+  // 分隔线
+  c.strokeStyle = '#E3D8C4'; c.lineWidth = 1;
+  c.beginPath(); c.moveTo(40, 78); c.lineTo(W-40, 78); c.stroke();
+  // 信息行
+  c.textAlign = 'left';
+  c.fillStyle = '#6B6255';
+  c.font = '13.5px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  var gr = GRADES.filter(function(g){return g.id===state.grade;})[0] || GRADES[0];
+  c.fillText('场景：' + fill(sc.scene), 40, 104);
+  c.fillText('对象：' + gr.kid + '（' + gr.label + '）　回合：4', 40, 128);
+  // 统计块
+  var bx = 40, by = 148, bw = (W-80-24)/3, bh = 84;
+  var stats = [
+    {n: good, label: '让心门开大', color: '#4E6E58'},
+    {n: mid,  label: '中规中矩',   color: '#A87B2F'},
+    {n: bad,  label: '让心门关上', color: '#9C4634'}
+  ];
+  stats.forEach(function(s2, i){
+    var x = bx + i*(bw+12);
+    c.fillStyle = '#FFFDF7'; c.strokeStyle = '#E3D8C4'; c.lineWidth = 1;
+    rr(c, x, by, bw, bh, 12); c.fill(); c.stroke();
+    c.fillStyle = s2.color;
+    c.font = '700 30px "Noto Serif SC","Songti SC",serif';
+    c.textAlign = 'center';
+    c.fillText(String(s2.n), x + bw/2, by + 40);
+    c.fillStyle = '#6B6255';
+    c.font = '12px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    c.fillText(s2.label, x + bw/2, by + 62);
+  });
+  // 心门轨迹
+  c.textAlign = 'center';
+  c.fillStyle = '#978D7E';
+  c.font = '12px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  c.fillText('— 心门轨迹 —', W/2, by + bh + 36);
+  var labels = ['开场'].concat(state.history.map(function(h){return 'R'+(h.round+1);}));
+  var n = state.doors.length;
+  var span = W - 160;
+  var step = n > 1 ? span/(n-1) : 0;
+  var ty = by + bh + 88;
+  state.doors.forEach(function(d, i){
+    var x = 80 + (n>1 ? i*step : (W-160)/2);
+    miniDoor(c, x, ty, d, 0.9);
+    c.fillStyle = '#978D7E';
+    c.font = '11px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+    c.fillText(labels[i], x, ty + 42);
+    if(i < n-1){
+      c.strokeStyle = '#D6C9AF'; c.lineWidth = 2;
+      c.setLineDash([6, 5]);
+      c.beginPath(); c.moveTo(x + 18, ty); c.lineTo(x + step - 18, ty); c.stroke();
+      c.setLineDash([]);
+    }
+  });
+  // 最终横幅
+  var fy = ty + 76;
+  var bannerBg = st==='open' ? '#E4EBE2' : st==='half' ? '#FBF3E4' : '#F5DFD8';
+  var bannerBd = st==='open' ? '#CBDBCC' : st==='half' ? '#EAD9B8' : '#E8C4BC';
+  var bannerTx = st==='open' ? '#4E6E58' : st==='half' ? '#8A6420' : '#9C4634';
+  c.fillStyle = bannerBg; c.strokeStyle = bannerBd; c.lineWidth = 1.5;
+  rr(c, 40, fy, W-80, 58, 14); c.fill(); c.stroke();
+  c.fillStyle = bannerTx;
+  c.font = '700 17px "Noto Serif SC","Songti SC",serif';
+  c.textAlign = 'center';
+  c.fillText('心门最终 · ' + DOOR_TEXT[st].replace('心门 · ',''), W/2, fy + 36);
+  // 行动建议
+  var ay = fy + 88;
+  c.textAlign = 'left';
+  c.fillStyle = '#A87B2F';
+  c.font = '700 12.5px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  c.fillText('今晚可以试的一件事', 40, ay);
+  c.fillStyle = '#6B6255';
+  c.font = '13.5px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  ay = wrapText(c, fill(sc.advice[st]), 40, ay + 26, W-80, 24) + 18;
+  // 金句
+  c.fillStyle = '#2F2B24';
+  c.font = '700 15px "Noto Serif SC","Songti SC",serif';
+  var quote = '「先接情绪，再谈事情——门没开，道理进不去。」';
+  ay = wrapText(c, quote, 40, ay + 6, W-80, 26) + 18;
+  // 声明（紧随内容）
+  c.strokeStyle = '#E3D8C4'; c.lineWidth = 1;
+  c.beginPath(); c.moveTo(40, ay); c.lineTo(W-40, ay); c.stroke();
+  c.fillStyle = '#978D7E';
+  c.font = '11px -apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+  wrapText(c, '本报告为沟通练习与教育建议，不替代专业心理咨询或家庭治疗。内容仅在本页生成，未上传。', 40, ay + 24, W-80, 17);
+  // 输出
+  cv.style.display = 'block';
+  cv.scrollIntoView({block:'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  cv.toBlob(function(blob){
+    if(!blob) return;
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = '心晴练习报告-' + nowStr().replace(':','') + '.png';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); }, 2000);
+  }, 'image/png');
+}
+
+/* ============================================================
+   指南模态框
+   ============================================================ */
+function openGuide(){
+  $('#guideModal').classList.add('on');
+  $('#guideClose').focus();
+}
+function closeGuide(){
+  $('#guideModal').classList.remove('on');
+}
+
+/* ============================================================
+   氛围：入场 / 视差 / 滚动显现
+   ============================================================ */
+function initAtmosphere(){
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // 首屏错峰入场
+  document.querySelectorAll('.hero-badge, .hero h1, .hero-sub, .hero-cta, .hero-art').forEach(function(el, i){
+    el.style.opacity = 0;
+    el.style.transform = 'translateY(22px)';
+    el.style.transition = 'opacity 620ms cubic-bezier(.16,1,.3,1) '+(i*90)+'ms, transform 620ms cubic-bezier(.16,1,.3,1) '+(i*90)+'ms';
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      el.style.opacity = 1; el.style.transform = 'none';
+    });});
+  });
+  // 滚动显现
+  var cards = document.querySelectorAll('[data-reveal]');
+  if('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e, i){
+        if(e.isIntersecting){
+          setTimeout(function(){ e.target.classList.add('in'); }, i*90);
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold:.15});
+    cards.forEach(function(el){ io.observe(el); });
+  } else {
+    cards.forEach(function(el){ el.classList.add('in'); });
+  }
+  // 数字带滚动（首屏附近，加载后直接触发，不依赖滚动事件）
+  var nums = document.querySelectorAll('.metric b[data-count]');
+  function runCounters(){
+    nums.forEach(function(el){ countUp(el, +el.dataset.count, 1100); });
+  }
+  setTimeout(runCounters, 600);
+  // 首屏插画视差
+  var art = $('#heroArt');
+  if(art && !reduce){
+    var raf = null;
+    window.addEventListener('scroll', function(){
+      if(raf) return;
+      raf = requestAnimationFrame(function(){
+        art.style.transform = 'translateY(' + (window.scrollY * 0.05).toFixed(1) + 'px)';
+        raf = null;
+      });
+    }, {passive:true});
+  }
+}
+
+/* ============================================================
+   启动角色扮演
+   ============================================================ */
+function startRoleplay(){
+  state.round = 0; state.score = 0; state.history = []; state.doors = ['half'];
+  state.busy = true; state.finished = false;
+  var sc = SCENE_MAP[state.scene];
+  var gr = GRADES.filter(function(g){return g.id===state.grade;})[0] || GRADES[0];
+  $('#chatKidName').textContent = '模拟孩子 · ' + (state.scene==='other' ? gr.kid.split(' · ')[0] : gr.kid);
+  $('#chatKidSub').textContent = '对练对象 · 反应由脚本模拟';
+  $('#chatScene').innerHTML = '<b>场景：</b>' + fill(sc.scene);
+  $('#chatAvatar').innerHTML = avatarSVG(state.tier, 'flat');
+  $('#chatBody').innerHTML = '';
+  $('#choicesBox').style.display = 'none';
+  $('#choicesBox').innerHTML = '<div class="choices-label">你想怎么回应？选一句最像你会说的话'
+    + '<span class="kbd-hint">按 <span class="kbd">1</span><span class="kbd">2</span><span class="kbd">3</span> 快速选句</span></div>'
+    + '<div id="choiceList"></div>';
+  setDoor('half', true);
+  goStep(2);
+  roundPill();
+  childBubble(sc.opener[state.tier], 'flat', function(){
+    state.busy = false;
+    showChoices(sc.openerChoices);
+  });
+}
+
+/* ============================================================
+   事件绑定
+   ============================================================ */
+$('#heroStart').onclick = function(){
+  Sound.click();
+  var cur = document.querySelector('.step.on') || $('#step0');
+  var y = cur.getBoundingClientRect().top + window.scrollY - 130;
+  window.scrollTo({top:y, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+};
+$('#startBtn').onclick = function(){
+  Sound.click();
+  renderClarify();
+  goStep(1);
+};
+$('#toRoleplay').onclick = function(){
+  Sound.click();
+  startRoleplay();
+};
+$('#againBtn').onclick = function(){
+  Sound.click();
+  buildSetup();
+  goStep(0);
+};
+$('#restartBtn').onclick = function(){
+  Sound.click();
+  state.grade = null; state.scene = 'homework'; state.custom = '';
+  $('#customInput').value = '';
+  $('#customRow').classList.remove('on');
+  buildSetup(); refreshStart(); savePrefs();
+  goStep(0);
+};
+$('#customInput').addEventListener('input', function(){
+  state.custom = this.value.trim();
+  refreshStart(); savePrefs();
+});
+document.querySelectorAll('.rail-item').forEach(function(r){
+  r.onclick = function(){
+    var n = +r.dataset.step;
+    /* 只允许跳到已到达的步骤；说明（4）随时可看 */
+    if(n > state.reached && n !== 4) return;
+    Sound.click();
+    goStep(n);
+  };
+});
+$('#soundBtn').onclick = function(){
+  var on = Sound.toggle();
+  this.textContent = on ? '🔊' : '🔇';
+  this.setAttribute('aria-pressed', on ? 'true' : 'false');
+};
+$('#guideBtn').onclick = function(){ Sound.click(); openGuide(); };
+$('#guideClose').onclick = function(){ closeGuide(); };
+$('#guideModal').addEventListener('click', function(e){
+  if(e.target === this) closeGuide();
+});
+$('#reportBtn').onclick = function(){ Sound.click(); drawReport(); };
+
+/* 键盘：1/2/3 选句，Esc 关模态框 */
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){ closeGuide(); return; }
+  if($('#guideModal').classList.contains('on')) return;
+  if(!$('#step2').classList.contains('on') || state.busy) return;
+  var idx = ['1','2','3'].indexOf(e.key);
+  if(idx > -1){
+    var b = document.querySelectorAll('#choiceList .choice')[idx];
+    if(b && !b.disabled){ e.preventDefault(); b.click(); }
+  }
+});
+
+/* ---------- 初始化 ---------- */
+loadPrefs();
+buildSetup();
+refreshStart();
+if(state.grade){
+  var gr0 = GRADES.filter(function(g){return g.id===state.grade;})[0];
+  if(gr0) state.tier = gr0.tier;
+}
+$('#soundBtn').textContent = Sound.isOn() ? '🔊' : '🔇';
+$('#soundBtn').setAttribute('aria-pressed', Sound.isOn() ? 'true' : 'false');
+initAtmosphere();
+</script>
+</body>
+</html>

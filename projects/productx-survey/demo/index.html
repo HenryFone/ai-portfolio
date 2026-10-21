@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="ProductX 用户满意度调查 2025 —— 单文件交互式问卷演示">
+<meta name="theme-color" content="#4F46E5">
+<title>ProductX 用户满意度调查 2025</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234F46E5'/%3E%3Cstop offset='1' stop-color='%237C3AED'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='url(%23g)'/%3E%3Cpath d='M17.5 6l-8 10h5.5l-1.5 10 8-11h-5.5l1.5-9z' fill='%23fff'/%3E%3C/svg%3E">
+<style>
+/* ============ 设计令牌 ============ */
+:root{
+  --bg:#F5F6FB;
+  --surface:#FFFFFF;
+  --ink:#0F172A;
+  --ink-2:#334155;
+  --ink-3:#64748B;
+  --muted:#94A3B8;
+  --line:#E6E9F2;
+  --line-soft:#F1F5F9;
+  --brand:#4F46E5;
+  --brand-2:#7C3AED;
+  --brand-deep:#4338CA;
+  --brand-soft:#EEF2FF;
+  --brand-tint:#E0E7FF;
+  --ok:#059669;
+  --ok-soft:#ECFDF5;
+  --warn:#D97706;
+  --warn-soft:#FFFBEB;
+  --danger:#E11D48;
+  --danger-soft:#FFF1F2;
+  --nps-bad:#FB7185;
+  --nps-mid:#F59E0B;
+  --nps-good:#10B981;
+  --radius-lg:22px;
+  --radius-md:14px;
+  --radius-sm:10px;
+  --shadow-card:0 32px 80px -32px rgba(15,23,42,.22),0 4px 16px rgba(15,23,42,.05);
+  --shadow-pop:0 10px 24px -10px rgba(79,70,229,.4);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--ink);
+  min-height:100vh;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+::selection{background:var(--brand-tint);color:var(--brand-deep)}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px}
+:focus:not(:focus-visible){outline:none}
+
+/* ============ 背景氛围 ============ */
+.bg-wash{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(900px 480px at 12% -6%, rgba(124,58,237,.10), transparent 62%),
+    radial-gradient(820px 460px at 96% 8%, rgba(79,70,229,.09), transparent 60%),
+    radial-gradient(760px 520px at 50% 112%, rgba(16,185,129,.06), transparent 62%),
+    var(--bg);
+}
+
+/* ============ 顶栏 ============ */
+.topbar{
+  position:sticky;top:0;z-index:20;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  background:rgba(245,246,251,.78);
+  border-bottom:1px solid rgba(230,233,242,.7);
+}
+.topbar-in{
+  max-width:760px;margin:0 auto;padding:12px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand-mark{
+  width:32px;height:32px;flex:none;border-radius:9px;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  display:grid;place-items:center;color:#fff;
+  box-shadow:0 6px 14px -6px rgba(79,70,229,.55);
+}
+.brand-mark svg{width:17px;height:17px}
+.brand-name{font-weight:800;font-size:15.5px;letter-spacing:-.01em;white-space:nowrap}
+.brand-tag{
+  font-size:12px;font-weight:700;color:var(--brand);
+  background:var(--brand-soft);border-radius:999px;padding:3px 10px;
+  white-space:nowrap;
+}
+.topbar-right{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--ink-3);white-space:nowrap}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--nps-good);box-shadow:0 0 0 0 rgba(16,185,129,.4);animation:livePulse 2.2s infinite}
+@keyframes livePulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.45)}70%{box-shadow:0 0 0 7px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
+
+/* ============ 主区 ============ */
+.app{max-width:760px;margin:0 auto;padding:36px 20px 56px}
+
+/* ============ 卡片 ============ */
+.card{
+  background:var(--surface);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-card);
+  border:1px solid rgba(230,233,242,.8);
+  overflow:hidden;
+  animation:cardIn .6s var(--ease) both;
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px) scale(.985)}to{opacity:1;transform:none}}
+
+/* 进度条 */
+.progress{height:4px;background:var(--line-soft);position:relative;overflow:hidden}
+.progress-fill{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--brand),var(--brand-2));
+  border-radius:0 4px 4px 0;
+  transition:width .5s var(--ease);
+  position:relative;
+}
+.progress-fill::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);
+  transform:translateX(-100%);
+  animation:shimmer 2.4s ease-in-out infinite;
+}
+@keyframes shimmer{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
+.progress-meta{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:13px 28px 0;font-size:12px;font-weight:700;color:var(--muted);
+  letter-spacing:.04em;
+}
+.progress-meta .pct{color:var(--brand);font-variant-numeric:tabular-nums}
+
+/* 舞台与分屏 */
+.stage{position:relative;--pad-x:28px;--pad-y:26px;padding:var(--pad-y) var(--pad-x) 8px;transition:height .34s var(--ease)}
+.screen{display:none}
+.screen.is-active{display:block;animation:screenIn .44s var(--ease) both}
+.screen.is-leaving{display:block;position:absolute;inset:var(--pad-y) var(--pad-x) auto;pointer-events:none;animation:screenOut .17s ease both}
+@keyframes screenIn{from{opacity:0;transform:translateX(var(--sx,26px))}to{opacity:1;transform:none}}
+@keyframes screenOut{from{opacity:1;transform:none}to{opacity:0;transform:translateX(calc(var(--sx,26px) * -.55))}}
+
+.card-foot{
+  padding:14px 28px 18px;font-size:11.5px;color:var(--muted);
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  border-top:1px solid var(--line-soft);margin-top:10px;
+}
+.card-foot svg{width:13px;height:13px;flex:none}
+
+/* 键盘提示 */
+.kbd-hint{
+  margin:16px auto 0;text-align:center;font-size:12px;color:var(--muted);
+  display:none;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;
+}
+.kbd-hint kbd{
+  font-family:var(--sans);font-size:11px;font-weight:700;color:var(--ink-3);
+  background:#fff;border:1px solid var(--line);border-bottom-width:2px;
+  border-radius:6px;padding:2px 7px;
+}
+@media (hover:hover) and (min-width:900px){.kbd-hint{display:flex}}
+
+/* ============ 通用元素 ============ */
+.q-chip{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11.5px;font-weight:800;letter-spacing:.06em;
+  color:var(--brand);background:var(--brand-soft);
+  border-radius:999px;padding:5px 12px;margin-bottom:14px;
+}
+.q-chip .ic{width:13px;height:13px}
+.q-chip .req{font-style:normal;color:var(--danger);background:var(--danger-soft);border-radius:999px;padding:1px 8px;letter-spacing:.02em}
+.q-chip .opt-tag{font-style:normal;color:var(--ink-3);background:var(--line-soft);border-radius:999px;padding:1px 8px;letter-spacing:.02em}
+h1{font-size:clamp(22px,4.6vw,30px);font-weight:900;letter-spacing:-.02em;line-height:1.28}
+h2{font-size:clamp(18px,3.4vw,21px);font-weight:800;letter-spacing:-.01em;line-height:1.42;margin-bottom:8px}
+h2:focus{outline:none}
+.q-sub{font-size:14px;color:var(--ink-3);margin-bottom:22px;max-width:56ch}
+.q-head{margin-bottom:6px}
+
+/* 按钮 */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-size:14px;font-weight:700;line-height:1;
+  border-radius:12px;padding:13px 22px;border:1.5px solid transparent;
+  cursor:pointer;touch-action:manipulation;
+  transition:transform .18s var(--ease),box-shadow .18s,border-color .18s,background .18s,color .18s,opacity .18s;
+}
+.btn .ic{width:16px;height:16px;flex:none}
+.btn.primary{
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;
+  box-shadow:0 10px 24px -10px rgba(79,70,229,.5);
+}
+.btn.primary:hover{transform:translateY(-1.5px);box-shadow:0 14px 28px -10px rgba(79,70,229,.58)}
+.btn.primary:active{transform:translateY(0) scale(.98)}
+.btn.ghost{background:#fff;border-color:var(--line);color:var(--ink-2)}
+.btn.ghost:hover{border-color:var(--brand-tint);color:var(--brand);background:#FBFBFF}
+.btn.ghost:active{transform:scale(.98)}
+.btn:disabled,.btn[aria-disabled="true"]{cursor:not-allowed}
+.btn.primary:disabled,.btn.primary[aria-disabled="true"]{
+  background:#EDF0F6;color:#A6B0C2;box-shadow:none;transform:none;
+}
+.btn.ghost:disabled,.btn.ghost[aria-disabled="true"]{opacity:.45;transform:none}
+.btn.is-armed{animation:armedPulse 1.15s ease-in-out infinite}
+@keyframes armedPulse{
+  0%,100%{box-shadow:0 10px 24px -10px rgba(79,70,229,.5)}
+  50%{box-shadow:0 10px 24px -6px rgba(79,70,229,.75),0 0 0 5px rgba(79,70,229,.13)}
+}
+.spin{width:15px;height:15px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;flex:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ============ 欢迎页 ============ */
+.hero-art{
+  border-radius:16px;overflow:hidden;margin-bottom:26px;
+  background:linear-gradient(135deg,#EEF2FF,#F5F3FF 55%,#FDF2F8);
+  border:1px solid var(--line);
+}
+.hero-art svg{display:block;width:100%;height:auto}
+.welcome-meta{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 26px}
+.meta-chip{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:13px;font-weight:700;color:var(--ink-2);
+  background:var(--line-soft);border-radius:999px;padding:8px 14px;
+}
+.meta-chip .ic{width:15px;height:15px;color:var(--brand)}
+.welcome-lead{font-size:15px;color:var(--ink-2);margin:14px 0 4px;max-width:58ch}
+.welcome-note{font-size:12.5px;color:var(--muted);margin-top:16px;display:flex;align-items:center;gap:6px}
+.welcome-note .ic{width:14px;height:14px}
+.resume-box{
+  display:none;margin-top:18px;padding:14px 16px;border-radius:14px;
+  background:var(--brand-soft);border:1px solid #DFE4FF;
+  align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+.resume-box.show{display:flex;animation:screenIn .4s var(--ease) both}
+.resume-box p{font-size:13px;font-weight:700;color:var(--brand-deep)}
+.resume-box .row{display:flex;gap:8px;flex-wrap:wrap}
+.btn.sm{padding:9px 15px;font-size:13px;border-radius:10px}
+
+/* ============ 选项卡片 ============ */
+.opts{display:grid;gap:10px;margin-bottom:8px}
+.opts.cols2{grid-template-columns:1fr 1fr}
+.opt{
+  position:relative;display:flex;align-items:center;gap:12px;
+  padding:13px 14px;border:1.5px solid var(--line);border-radius:var(--radius-md);
+  background:#fff;cursor:pointer;user-select:none;
+  transition:border-color .16s,background .16s,transform .16s var(--ease),box-shadow .16s;
+}
+.opt:hover{border-color:var(--brand-tint);background:#FBFBFF;transform:translateY(-1px)}
+.opt:active{transform:translateY(0) scale(.99)}
+.opt.selected{border-color:var(--brand);background:var(--brand-soft);box-shadow:0 8px 18px -12px rgba(79,70,229,.4)}
+.opt:focus-within{border-color:var(--brand-tint);background:#FBFBFF}
+.opt:has(input:focus-visible){border-color:var(--brand);box-shadow:0 0 0 3px rgba(79,70,229,.16)}
+.opt-ic{
+  flex:none;width:36px;height:36px;border-radius:10px;
+  display:grid;place-items:center;background:var(--line-soft);color:var(--ink-3);
+  transition:background .16s,color .16s,transform .16s var(--ease);
+}
+.opt-ic .ic{width:17px;height:17px}
+.opt.selected .opt-ic{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;transform:scale(1.05)}
+.opt-body{flex:1;min-width:0}
+.opt-t{display:block;font-size:14.5px;font-weight:700;color:var(--ink);letter-spacing:-.005em}
+.opt-h{display:block;font-size:12px;color:var(--muted);margin-top:1px;line-height:1.5}
+.opt .ind{
+  flex:none;width:20px;height:20px;border:1.5px solid #CBD5E1;border-radius:50%;
+  display:grid;place-items:center;background:#fff;
+  transition:border-color .16s,background .16s,transform .16s var(--ease);
+}
+.opt.cb .ind{border-radius:6px}
+.opt .ind svg{width:11px;height:11px;color:#fff;opacity:0;transform:scale(.4);transition:opacity .16s,transform .18s var(--ease)}
+.opt.cb.selected .ind{border-color:var(--brand);background:var(--brand)}
+.opt.cb.selected .ind svg{opacity:1;transform:scale(1)}
+.opt.radio.selected .ind{border-color:var(--brand);background:var(--brand);transform:scale(1.05)}
+.opt.radio.selected .ind::after{content:"";width:8px;height:8px;border-radius:50%;background:#fff;animation:dotIn .2s var(--ease)}
+@keyframes dotIn{from{transform:scale(0)}to{transform:scale(1)}}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.multi-count{
+  display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
+  color:var(--ink-3);margin:2px 0 10px;
+}
+.multi-count b{color:var(--brand);font-variant-numeric:tabular-nums}
+.auto-hint{
+  display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);
+  margin:4px 0 8px;
+}
+.auto-hint .ic{width:13px;height:13px}
+
+/* ============ NPS ============ */
+.nps{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.nps-btn{
+  width:46px;height:46px;border-radius:12px;border:1.5px solid var(--line);
+  background:#fff;font-size:15px;font-weight:800;color:var(--ink-2);
+  cursor:pointer;font-variant-numeric:tabular-nums;
+  transition:transform .16s var(--ease),border-color .16s,background .16s,color .16s,box-shadow .16s;
+}
+.nps-btn:hover{border-color:var(--brand-tint);transform:translateY(-2px)}
+.nps-btn:active{transform:translateY(0) scale(.94)}
+.nps-btn.selected{color:#fff;border-color:transparent;transform:translateY(-2px) scale(1.06);box-shadow:var(--shadow-pop)}
+.nps-btn.selected.bad{background:linear-gradient(135deg,#FB7185,#F43F5E)}
+.nps-btn.selected.mid{background:linear-gradient(135deg,#FBBF24,#F59E0B)}
+.nps-btn.selected.good{background:linear-gradient(135deg,#34D399,#10B981)}
+.nps-scale{display:flex;justify-content:space-between;font-size:11.5px;font-weight:700;color:var(--muted);margin-bottom:12px}
+.nps-status{
+  display:flex;align-items:center;gap:9px;font-size:13px;font-weight:700;
+  padding:11px 14px;border-radius:12px;background:var(--line-soft);color:var(--ink-3);
+  transition:background .2s,color .2s;
+}
+.nps-status .badge{border-radius:999px;padding:2px 10px;font-size:12px;font-weight:800}
+.nps-status.bad{background:var(--danger-soft);color:var(--danger)}
+.nps-status.mid{background:var(--warn-soft);color:var(--warn)}
+.nps-status.good{background:var(--ok-soft);color:var(--ok)}
+.nps-status .badge{background:rgba(255,255,255,.65)}
+.nps-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:11.5px;color:var(--muted);font-weight:600}
+.nps-legend i{font-style:normal;display:inline-flex;align-items:center;gap:5px}
+.nps-legend i::before{content:"";width:8px;height:8px;border-radius:3px}
+
+/* ============ 满意度矩阵 ============ */
+.mx{display:grid;gap:10px}
+.mx-row{
+  display:grid;grid-template-columns:160px 1fr 52px;align-items:center;gap:14px;
+  padding:12px 16px;border:1.5px solid var(--line);border-radius:var(--radius-md);background:#fff;
+  transition:border-color .2s,background .2s;
+}
+.mx-row.warn{border-color:#FDA4AF;background:#FFF7F8;animation:shake .45s var(--ease)}
+.mx-label{font-size:14.5px;font-weight:700;color:var(--ink)}
+.mx-val{font-size:13px;font-weight:800;color:var(--brand);text-align:right;font-variant-numeric:tabular-nums;min-height:20px}
+.stars{display:inline-flex;gap:3px}
+.star-btn{
+  width:34px;height:34px;display:grid;place-items:center;border:none;background:none;
+  cursor:pointer;padding:0;border-radius:8px;
+}
+.star-btn svg{width:26px;height:26px;fill:#E2E8F0;transition:fill .15s,transform .18s var(--ease)}
+.star-btn.lit svg{fill:#F59E0B}
+.star-btn:hover svg{transform:scale(1.16)}
+.star-btn.pop svg{animation:starPop .38s var(--ease)}
+@keyframes starPop{0%{transform:scale(1)}45%{transform:scale(1.4)}100%{transform:scale(1)}}
+.mx-avg{
+  display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;color:var(--ink-3);
+  background:var(--line-soft);border-radius:999px;padding:6px 13px;margin-bottom:14px;
+}
+.mx-avg b{color:var(--brand);font-variant-numeric:tabular-nums}
+
+/* ============ 开放问答 ============ */
+.ta-wrap{position:relative}
+textarea,.sel-wrap{position:relative;display:block}
+textarea{
+  width:100%;min-height:148px;resize:vertical;
+  border:1.5px solid var(--line);border-radius:var(--radius-md);
+  padding:14px 16px;font-family:inherit;font-size:14.5px;line-height:1.7;color:var(--ink);
+  background:#fff;transition:border-color .18s,box-shadow .18s;
+}
+textarea::placeholder{color:var(--muted)}
+textarea:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px rgba(79,70,229,.12)}
+.ta-foot{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:12px;color:var(--muted)}
+.ta-foot .count{font-variant-numeric:tabular-nums;font-weight:700}
+.ta-foot .count.warn{color:var(--warn)}
+
+/* ============ 下拉 ============ */
+.sel-wrap select{
+  width:100%;appearance:none;-webkit-appearance:none;
+  border:1.5px solid var(--line);border-radius:var(--radius-md);
+  padding:14px 44px 14px 16px;font-family:inherit;font-size:14.5px;font-weight:600;color:var(--ink);
+  background:#fff;cursor:pointer;transition:border-color .18s,box-shadow .18s;
+}
+.sel-wrap select:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 4px rgba(79,70,229,.12)}
+.sel-wrap::after{
+  content:"";position:absolute;right:18px;top:50%;width:9px;height:9px;
+  border-right:2px solid var(--ink-3);border-bottom:2px solid var(--ink-3);
+  transform:translateY(-70%) rotate(45deg);pointer-events:none;
+}
+.sel-wrap select:invalid{color:var(--muted)}
+
+/* ============ 是否题 ============ */
+.seg{display:flex;gap:12px;margin-bottom:4px}
+.seg-btn{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:16px 12px;border:1.5px solid var(--line);border-radius:var(--radius-md);
+  background:#fff;font-size:15px;font-weight:700;color:var(--ink-2);cursor:pointer;
+  transition:border-color .18s,background .18s,color .18s,transform .16s var(--ease),box-shadow .18s;
+}
+.seg-btn .ic{width:18px;height:18px}
+.seg-btn:hover{transform:translateY(-1px);border-color:var(--brand-tint)}
+.seg-btn.selected[data-v="yes"]{border-color:var(--ok);background:var(--ok-soft);color:#047857;box-shadow:0 8px 18px -12px rgba(5,150,105,.45)}
+.seg-btn.selected[data-v="no"]{border-color:var(--brand);background:var(--brand-soft);color:var(--brand-deep);box-shadow:0 8px 18px -12px rgba(79,70,229,.45)}
+.seg-btn:active{transform:scale(.98)}
+
+/* 条件追问折叠面板 */
+.collapsible{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease)}
+.collapsible>.coll-inner{overflow:hidden;min-height:0}
+.collapsible.open{grid-template-rows:1fr}
+.followup{
+  margin-top:14px;padding:18px;border-radius:var(--radius-md);
+  border:1.5px dashed #C7D2FE;background:linear-gradient(180deg,#FBFBFF,#fff);
+}
+.followup-tag{
+  display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:800;
+  color:var(--brand);background:#fff;border:1px solid var(--brand-tint);
+  border-radius:999px;padding:3px 10px;margin-bottom:10px;letter-spacing:.04em;
+}
+.followup-tag .ic{width:12px;height:12px}
+.followup h3{font-size:14.5px;font-weight:800;margin-bottom:4px}
+.followup .q-sub{font-size:12.5px;margin-bottom:14px}
+
+/* ============ 底部导航 ============ */
+.nav{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  margin-top:26px;padding-top:20px;border-top:1px solid var(--line-soft);
+}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-hint{
+  font-size:12px;font-weight:700;color:var(--danger);
+  display:inline-flex;align-items:center;gap:5px;
+  animation:hintIn .3s var(--ease);
+}
+.nav-hint .ic{width:13px;height:13px;flex:none}
+@keyframes hintIn{from{opacity:0;transform:translateX(6px)}to{opacity:1;transform:none}}
+.shake{animation:shake .45s var(--ease)}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  18%{transform:translateX(-7px)}36%{transform:translateX(6px)}
+  54%{transform:translateX(-4px)}72%{transform:translateX(3px)}
+}
+
+/* ============ 完成页 ============ */
+.done-hero{text-align:center;padding-top:6px}
+.check-ring{width:78px;height:78px;margin:6px auto 20px;position:relative}
+.check-ring svg{width:100%;height:100%;display:block}
+.check-ring .ring{fill:none;stroke:var(--brand);stroke-width:3;opacity:.22;stroke-dasharray:146;stroke-dashoffset:146;animation:ringDraw .75s var(--ease) forwards}
+.check-ring .tick{fill:none;stroke:var(--brand);stroke-width:4.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:34;stroke-dashoffset:34;animation:tickDraw .45s var(--ease) .5s forwards}
+@keyframes ringDraw{to{stroke-dashoffset:0}}
+@keyframes tickDraw{to{stroke-dashoffset:0}}
+.check-ring::after{
+  content:"";position:absolute;inset:-2px;border-radius:50%;
+  border:2px solid var(--brand);opacity:0;
+  animation:pulseRing 1.3s ease-out .4s;
+}
+@keyframes pulseRing{0%{transform:scale(.65);opacity:.5}100%{transform:scale(1.65);opacity:0}}
+.done-hero .q-sub{margin:10px auto 0;text-align:center}
+.done-stats{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.stat{
+  display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:700;color:var(--ink-2);
+  background:var(--line-soft);border-radius:999px;padding:8px 14px;
+}
+.stat .ic{width:14px;height:14px;color:var(--brand)}
+.stat b{color:var(--brand);font-variant-numeric:tabular-nums}
+.summary{margin-top:24px;border:1.5px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+.summary-head{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:13px 18px;background:var(--line-soft);border-bottom:1px solid var(--line);
+}
+.summary-title{font-size:13px;font-weight:800;color:var(--ink-2);display:inline-flex;align-items:center;gap:7px}
+.summary-title .ic{width:15px;height:15px;color:var(--brand)}
+.summary-note{font-size:11.5px;color:var(--muted);font-weight:600}
+.sum-row{display:grid;grid-template-columns:150px 1fr;gap:14px;padding:13px 18px;border-bottom:1px solid var(--line-soft);align-items:start}
+.sum-row:last-child{border-bottom:none}
+.sum-k{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;color:var(--ink-3);padding-top:2px}
+.sum-k .ic{width:15px;height:15px;color:var(--brand);flex:none}
+.sum-v{font-size:14px;color:var(--ink);font-weight:600;line-height:1.75;word-break:break-word}
+.sum-v .muted{color:var(--muted);font-weight:600}
+.chip{
+  display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:999px;
+  background:var(--brand-soft);color:var(--brand-deep);font-size:12.5px;font-weight:700;
+  margin:2px 5px 2px 0;
+}
+.chip .ic{width:11px;height:11px}
+.badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:3px 11px;font-size:12.5px;font-weight:800}
+.badge.good{background:var(--ok-soft);color:var(--ok)}
+.badge.mid{background:var(--warn-soft);color:var(--warn)}
+.badge.bad{background:var(--danger-soft);color:var(--danger)}
+.mini-stars{display:inline-flex;gap:2px;vertical-align:-3px;margin-right:7px}
+.mini-stars svg{width:14px;height:14px}
+.mini-stars .on{fill:#F59E0B}
+.mini-stars .off{fill:#E2E8F0}
+.quote{
+  display:block;border-left:3px solid var(--brand-tint);border-radius:0 8px 8px 0;
+  background:#FBFBFF;padding:9px 13px;font-size:13.5px;color:var(--ink-2);line-height:1.7;
+}
+.done-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.copy-ok{color:var(--ok)!important}
+.json-pre{
+  margin-top:14px;max-height:220px;overflow:auto;font-size:11.5px;line-height:1.6;
+  background:#0F172A;color:#A5B4FC;border-radius:12px;padding:14px 16px;
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre;
+}
+
+/* ============ 彩带 ============ */
+.confetti-layer{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+.confetti-piece{position:absolute;top:30%;left:50%;width:9px;height:14px;border-radius:3px;will-change:transform,opacity}
+
+/* 无障碍 */
+.live-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ============ 响应式 ============ */
+@media (max-width:640px){
+  .app{padding:20px 12px 44px}
+  .card{border-radius:18px}
+  .stage{--pad-x:18px;--pad-y:20px;padding:var(--pad-y) var(--pad-x) 4px}
+  .screen.is-leaving{inset:20px 18px auto}
+  .progress-meta{padding:12px 18px 0}
+  .card-foot{padding:12px 18px 16px}
+  .opts.cols2{grid-template-columns:1fr}
+  .opt{padding:12px}
+  .nps{gap:6px}
+  .nps-btn{width:calc((100% - 30px)/6);height:44px;font-size:14px}
+  .mx-row{grid-template-columns:1fr auto;grid-template-areas:"label val" "stars stars";gap:8px 10px;padding:12px 14px}
+  .mx-label{grid-area:label}
+  .mx-val{grid-area:val}
+  .mx-row .stars{grid-area:stars}
+  .nav{flex-direction:column-reverse;align-items:stretch;gap:10px}
+  .nav-right{flex-direction:column;align-items:stretch;gap:8px}
+  .nav .btn{width:100%}
+  .nav-hint{justify-content:center}
+  .sum-row{grid-template-columns:1fr;gap:5px;padding:12px 14px}
+  .done-actions .btn{flex:1}
+  .hero-art{margin-bottom:20px}
+  .topbar-in{padding:10px 14px}
+  .brand-tag{display:none}
+}
+
+/* ============ 减少动效 ============ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+<div class="bg-wash" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h8l-1 8 11-14h-8l0-6z"/></svg>
+      </span>
+      <span class="brand-name">ProductX</span>
+      <span class="brand-tag">用户体验调研</span>
+    </div>
+    <div class="topbar-right"><span class="live-dot" aria-hidden="true"></span>2025 年度调研</div>
+  </div>
+</header>
+
+<main class="app">
+  <section class="card" id="card" aria-label="ProductX 用户满意度调查">
+    <div class="progress" id="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="答题进度">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-meta">
+      <span id="stepLabel">准备开始</span>
+      <span class="pct" id="pctLabel">0%</span>
+    </div>
+
+    <div class="stage" id="stage">
+
+      <!-- ================= 欢迎页 ================= -->
+      <section class="screen is-active" id="screen-welcome" data-screen="welcome">
+        <div class="hero-art" aria-hidden="true">
+          <svg viewBox="0 0 640 168" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="hg1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#4F46E5"/><stop offset="1" stop-color="#7C3AED"/>
+              </linearGradient>
+              <linearGradient id="hg2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#818CF8"/><stop offset="1" stop-color="#4F46E5"/>
+              </linearGradient>
+            </defs>
+            <!-- 装饰斑点 -->
+            <circle cx="592" cy="26" r="5" fill="#C7D2FE"/>
+            <circle cx="46" cy="140" r="4" fill="#DDD6FE"/>
+            <circle cx="612" cy="132" r="7" fill="#EEF2FF"/>
+            <!-- 主评分卡 -->
+            <g transform="rotate(-4 210 84)">
+              <rect x="120" y="34" width="190" height="102" rx="16" fill="#fff" stroke="#E6E9F2" stroke-width="1.5"/>
+              <rect x="138" y="54" width="72" height="10" rx="5" fill="#EEF2FF"/>
+              <rect x="138" y="72" width="108" height="7" rx="3.5" fill="#F1F5F9"/>
+              <g fill="#F59E0B">
+                <path transform="translate(138 92) scale(1.15)" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                <path transform="translate(162 92) scale(1.15)" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                <path transform="translate(186 92) scale(1.15)" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                <path transform="translate(210 92) scale(1.15)" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                <path transform="translate(234 92) scale(1.15)" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+              </g>
+            </g>
+            <!-- 图表卡 -->
+            <g transform="rotate(3 430 88)">
+              <rect x="352" y="30" width="176" height="112" rx="16" fill="#fff" stroke="#E6E9F2" stroke-width="1.5"/>
+              <rect x="370" y="50" width="52" height="9" rx="4.5" fill="#F1F5F9"/>
+              <rect x="370" y="92" width="20" height="34" rx="6" fill="url(#hg2)" opacity=".55"/>
+              <rect x="398" y="78" width="20" height="48" rx="6" fill="url(#hg2)" opacity=".75"/>
+              <rect x="426" y="64" width="20" height="62" rx="6" fill="url(#hg1)"/>
+              <rect x="454" y="86" width="20" height="40" rx="6" fill="url(#hg2)" opacity=".55"/>
+              <rect x="482" y="72" width="20" height="54" rx="6" fill="url(#hg2)" opacity=".8"/>
+              <line x1="368" y1="128" x2="510" y2="128" stroke="#E6E9F2" stroke-width="1.5"/>
+            </g>
+            <!-- 聊天气泡 -->
+            <g transform="translate(452 138)">
+              <rect x="0" y="0" width="118" height="34" rx="17" fill="#EDE9FE"/>
+              <circle cx="24" cy="17" r="4" fill="#7C3AED"/>
+              <circle cx="42" cy="17" r="4" fill="#A78BFA"/>
+              <circle cx="60" cy="17" r="4" fill="#DDD6FE"/>
+            </g>
+            <!-- 闪光 -->
+            <path d="M330 34l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" fill="#F59E0B" opacity=".9"/>
+            <path d="M96 30l2.6 6.6 6.6 2.6-6.6 2.6L96 48l-2.6-6.2-6.6-2.6 6.6-2.6z" fill="#818CF8" opacity=".8"/>
+          </svg>
+        </div>
+        <span class="q-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3 8-10V5l-8-3-8 3v7c0 7 8 10 8 10z"/></svg>匿名调研</span>
+        <h1>ProductX 用户满意度调查 2025</h1>
+        <p class="welcome-lead">感谢您成为 ProductX 的用户。本次调研围绕您的真实使用体验展开，涵盖产品功能、稳定性与服务的方方面面。您的每一条回答，都会直接进入下一个版本的决策清单。</p>
+        <div class="welcome-meta">
+          <span class="meta-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>预计用时 5 分钟</span>
+          <span class="meta-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg>共 7 道题</span>
+          <span class="meta-chip"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3 8-10V5l-8-3-8 3v7c0 7 8 10 8 10z"/></svg>完全匿名</span>
+        </div>
+        <button class="btn primary" id="startBtn">
+          开始问卷
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+        <div class="resume-box" id="resumeBox">
+          <p>检测到上次未完成的作答</p>
+          <div class="row">
+            <button class="btn primary sm" id="resumeBtn">继续作答</button>
+            <button class="btn ghost sm" id="freshBtn">重新开始</button>
+          </div>
+        </div>
+        <p class="welcome-note">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16v-4M12 8h.01"/></svg>
+          作答过程中可随时返回上一题修改，提交后不可更改。
+        </p>
+      </section>
+
+      <!-- ================= 完成页 ================= -->
+      <section class="screen" id="screen-done" data-screen="done">
+        <div class="done-hero">
+          <div class="check-ring" aria-hidden="true">
+            <svg viewBox="0 0 52 52">
+              <circle class="ring" cx="26" cy="26" r="23"/>
+              <path class="tick" d="M15.5 27l7 7L37 19"/>
+            </svg>
+          </div>
+          <span class="q-chip" style="background:var(--ok-soft);color:var(--ok)">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>提交成功
+          </span>
+          <h2 tabindex="-1">感谢您的反馈</h2>
+          <p class="q-sub">我们已收到您的全部回答。ProductX 团队会在 2026 · 05 版本中认真评估每一条建议，改进上线后会第一时间同步给您。</p>
+          <div class="done-stats" id="doneStats"></div>
+        </div>
+        <div class="summary">
+          <div class="summary-head">
+            <span class="summary-title">
+              <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
+              作答摘要
+            </span>
+            <span class="summary-note" id="sumTime"></span>
+          </div>
+          <div class="summary-body" id="summaryBody"></div>
+        </div>
+        <div class="done-actions">
+          <button class="btn primary" id="copyBtn">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            <span id="copyBtnText">复制结果 JSON</span>
+          </button>
+          <button class="btn ghost" id="restartBtn">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0114.9-3.4L23 10M1 14l4.6 4.4A9 9 0 0020.5 15"/></svg>
+            再次填写
+          </button>
+        </div>
+        <p class="welcome-note" id="copyFallback" hidden style="justify-content:center;margin-top:14px">自动复制不可用，请手动复制下方内容：</p>
+        <pre class="json-pre" id="jsonPre" hidden></pre>
+      </section>
+
+    </div>
+
+    <footer class="card-foot">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3 8-10V5l-8-3-8 3v7c0 7 8 10 8 10z"/></svg>
+      ProductX · 用户体验团队 · 本页面为演示用途，所有数据仅保存在本地浏览器中
+    </footer>
+  </section>
+
+  <p class="kbd-hint">
+    <kbd>Enter</kbd> 下一题 <kbd>←</kbd> 上一题 <kbd>0</kbd>–<kbd>9</kbd> NPS 快速评分 <kbd>Tab</kbd> 切换焦点
+  </p>
+</main>
+
+<div class="live-sr" id="live" aria-live="polite"></div>
+<div class="confetti-layer" id="confetti" aria-hidden="true"></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ================= 工具 ================= */
+var $ = function(s, c){ return (c || document).querySelector(s); };
+var $$ = function(s, c){ return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var STORE_KEY = 'productx-survey-2025';
+
+var ICONS = {
+  search:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/>',
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/>',
+  users:'<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>',
+  file:'<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>',
+  dots:'<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>',
+  chart:'<path d="M3 3v18h18"/><path d="M8 17v-5M13 17V8M18 17v-3"/>',
+  layers:'<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>',
+  zap:'<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>',
+  sparkles:'<path d="M12 3l1.8 4.7L18.5 9.5 13.8 11.3 12 16l-1.8-4.7L5.5 9.5l4.7-1.8L12 3z"/><path d="M19 3l.8 2.2L22 6l-2.2.8L19 9l-.8-2.2L16 6l2.2-.8L19 3z"/>',
+  plug:'<path d="M9 2v6M15 2v6M6 8h12v4a6 6 0 01-12 0V8zM12 18v4"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  folder:'<path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>',
+  phone:'<rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/>',
+  arrowRight:'<path d="M5 12h14M13 5l7 7-7 7"/>',
+  check:'<path d="M20 6L9 17l-5-5"/>',
+  copy:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>',
+  msg:'<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>',
+  case:'<path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>',
+  call:'<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/>',
+  thumb:'<path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/>',
+  grid:'<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/>',
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4"/>',
+  toggle:'<rect x="2" y="7" width="20" height="10" rx="5"/><circle cx="16" cy="12" r="3.2"/>',
+  alert:'<path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>'
+};
+function icon(name, size){
+  return '<svg class="ic" viewBox="0 0 24 24" width="' + (size || 16) + '" height="' + (size || 16) +
+    '" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+    (ICONS[name] || '') + '</svg>';
+}
+var STAR_PATH = 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z';
+function starSvg(){ return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="' + STAR_PATH + '"/></svg>'; }
+
+/* ================= 数据模型 ================= */
+var QUESTIONS = [
+  {
+    id:'q1', type:'single', required:true, icon:'target', typeName:'单选', autoAdvance:true,
+    title:'您是如何了解到 ProductX 的？',
+    subtitle:'选择最接近的一个渠道。',
+    options:[
+      {value:'search',    label:'搜索引擎',          hint:'百度 / Google / Bing', icon:'search'},
+      {value:'social',    label:'社交媒体',          hint:'微信 / 微博 / 小红书 / 抖音', icon:'globe'},
+      {value:'word',      label:'朋友或同事推荐',    hint:'口碑介绍', icon:'users'},
+      {value:'media',     label:'媒体报道',          hint:'科技媒体 / 行业文章', icon:'file'},
+      {value:'other',     label:'其他渠道',          hint:'线下活动 / 广告等', icon:'dots'}
+    ]
+  },
+  {
+    id:'q2', type:'multi', required:true, icon:'list', typeName:'多选',
+    title:'您平时常用 ProductX 的哪些功能？',
+    subtitle:'可多选，我们将据此判断功能优先级。',
+    options:[
+      {value:'dashboard', label:'数据看板',       hint:'实时业务指标一屏掌握', icon:'chart'},
+      {value:'collab',    label:'项目协作',       hint:'任务、文档与讨论', icon:'layers'},
+      {value:'automation',label:'工作流自动化',   hint:'规则触发，无需人工', icon:'zap'},
+      {value:'ai',        label:'AI 智能助手',    hint:'总结、问答与内容生成', icon:'sparkles'},
+      {value:'api',       label:'API 与集成',     hint:'连接您现有的系统', icon:'plug'},
+      {value:'report',    label:'定时报告',       hint:'自动推送周报 / 月报', icon:'clock'},
+      {value:'space',     label:'团队空间',       hint:'成员、权限与配置', icon:'folder'},
+      {value:'mobile',    label:'移动端 App',     hint:'随时随地处理事务', icon:'phone'}
+    ]
+  },
+  {
+    id:'q3', type:'nps', required:true, icon:'thumb', typeName:'NPS 评分',
+    title:'您有多大可能将 ProductX 推荐给朋友或同事？',
+    subtitle:'0 表示完全不会推荐，10 表示一定会推荐。'
+  },
+  {
+    id:'q4', type:'matrix', required:true, icon:'grid', typeName:'满意度矩阵',
+    title:'请为以下方面的使用感受打分',
+    subtitle:'1 星为非常不满意，5 星为非常满意。',
+    rows:[
+      {key:'feature',   label:'功能完整度'},
+      {key:'usability', label:'使用易用性'},
+      {key:'stability', label:'系统稳定性'},
+      {key:'support',   label:'客户支持'},
+      {key:'price',     label:'性价比'}
+    ]
+  },
+  {
+    id:'q5', type:'open', required:false, icon:'msg', typeName:'开放问答',
+    title:'您最希望 ProductX 下一步在哪方面做改进？',
+    subtitle:'欢迎说得具体一些，哪怕只是一个小细节。',
+    placeholder:'例如：希望移动端支持手写备注；希望 AI 助手可以自动生成每周汇报……',
+    maxLength:500
+  },
+  {
+    id:'q6', type:'select', required:true, icon:'case', typeName:'下拉单选', autoAdvance:true,
+    title:'您当前的职位是？',
+    subtitle:'用于交叉分析不同角色的满意度差异。',
+    options:[
+      {value:'pm',      label:'产品经理'},
+      {value:'design',  label:'设计师 · UI / UX'},
+      {value:'dev',     label:'研发工程师'},
+      {value:'data',    label:'数据分析师'},
+      {value:'ops',     label:'运营 / 市场'},
+      {value:'exec',    label:'管理者 / 创始人'},
+      {value:'student', label:'学生'},
+      {value:'other',   label:'其他'}
+    ]
+  },
+  {
+    id:'q7', type:'boolean', required:true, icon:'call', typeName:'是否题',
+    title:'您是否愿意参加后续的用户访谈？',
+    subtitle:'参加访谈的用户将获得 200 元感谢礼金以及新版抢先体验资格。',
+    followUp:{
+      when:'no', required:true,
+      title:'方便告知主要原因吗？',
+      subtitle:'可多选，帮助我们改进访谈体验。',
+      options:[
+        {value:'time',     label:'近期时间不便'},
+        {value:'topic',    label:'对访谈主题不太感兴趣'},
+        {value:'written',  label:'更习惯书面反馈'},
+        {value:'privacy',  label:'隐私方面的顾虑'},
+        {value:'other',    label:'其他原因'}
+      ],
+      otherText:{ label:'其他补充（选填）', placeholder:'简单描述几句，让我们更了解您的想法……', maxLength:200 }
+    }
+  }
+];
+var TOTAL = QUESTIONS.length;
+var TYPE_LABELS = { single:'单选', multi:'多选', nps:'NPS 评分', matrix:'满意度矩阵', open:'开放问答', select:'下拉单选', boolean:'是否题' };
+
+function emptyAnswers(){
+  return { q1:null, q2:[], q3:null, q4:{}, q5:'', q6:'', q7:null, q7_reason:[], q7_reason_text:'' };
+}
+var state = {
+  answers: emptyAnswers(),
+  curIdx: 0,            // 0=welcome, 1..7=q1..q7, 8=done
+  dir: 1,
+  busy: false,
+  touched: {},
+  startedAt: null,
+  submittedAt: null,
+  submitted: false,
+  result: null
+};
+
+/* ================= 持久化 ================= */
+function save(){
+  try{
+    sessionStorage.setItem(STORE_KEY, JSON.stringify({
+      answers: state.answers, curIdx: state.curIdx,
+      startedAt: state.startedAt, submitted: state.submitted, result: state.result
+    }));
+  }catch(e){}
+}
+function load(){
+  try{
+    var raw = sessionStorage.getItem(STORE_KEY);
+    if(!raw) return null;
+    var d = JSON.parse(raw);
+    if(!d || typeof d !== 'object') return null;
+    return d;
+  }catch(e){ return null; }
+}
+function clearSave(){ try{ sessionStorage.removeItem(STORE_KEY); }catch(e){} }
+var saveTimer = null;
+function saveSoon(){ clearTimeout(saveTimer); saveTimer = setTimeout(save, 180); }
+
+/* ================= 渲染：题干屏幕 ================= */
+var stage = $('#stage');
+
+function chipHtml(q, idx){
+  var tag = q.required
+    ? '<em class="req">必答</em>'
+    : '<em class="opt-tag">选答</em>';
+  return '<span class="q-chip">' + icon(q.icon, 13) + '第 ' + idx + ' 题 · ' + q.typeName + tag + '</span>';
+}
+function navHtml(q){
+  var isLast = (q.id === QUESTIONS[TOTAL - 1].id);
+  return '<div class="nav">' +
+    '<button class="btn ghost" data-nav="prev" type="button">' +
+      '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 19l-7-7 7-7"/></svg>上一题</button>' +
+    '<div class="nav-right">' +
+      '<span class="nav-hint" data-hint hidden>' + icon('alert', 13) + '还有必答题未完成</span>' +
+      '<button class="btn primary" data-nav="next" type="button">' +
+        '<span data-next-text>' + (isLast ? '提交问卷' : '下一题') + '</span>' +
+        (isLast
+          ? '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>'
+          : '<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>') +
+      '</button>' +
+    '</div></div>';
+}
+function optionHtml(o, kind, name){
+  return '<label class="opt ' + (kind === 'multi' ? 'cb' : 'radio') + '" data-act="pick-' + kind + '" data-v="' + o.value + '">' +
+    '<span class="opt-ic">' + icon(o.icon, 17) + '</span>' +
+    '<span class="opt-body"><span class="opt-t">' + o.label + '</span>' +
+    (o.hint ? '<span class="opt-h">' + o.hint + '</span>' : '') + '</span>' +
+    '<span class="ind">' + (kind === 'multi'
+      ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>'
+      : '') + '</span>' +
+    '<input type="' + (kind === 'multi' ? 'checkbox' : 'radio') + '" name="' + name + '" value="' + o.value + '">' +
+  '</label>';
+}
+function buildScreen(q, idx){
+  var sec = document.createElement('section');
+  sec.className = 'screen';
+  sec.id = 'screen-' + q.id;
+  sec.setAttribute('data-screen', q.id);
+  var html = '<div class="q-head">' + chipHtml(q, idx) +
+    '<h2 tabindex="-1">' + q.title + '</h2>' +
+    (q.subtitle ? '<p class="q-sub">' + q.subtitle + '</p>' : '') + '</div><div class="q-body">';
+
+  if(q.type === 'single'){
+    html += '<div class="opts" role="radiogroup" aria-label="' + q.title + '">' +
+      q.options.map(function(o){ return optionHtml(o, 'single', q.id); }).join('') + '</div>';
+    if(q.autoAdvance) html += '<p class="auto-hint">' + icon('arrowRight', 13) + '选择后将自动进入下一题</p>';
+  }
+  else if(q.type === 'multi'){
+    html += '<p class="multi-count">已选 <b data-count="0">0</b> / ' + q.options.length + ' 项</p>' +
+      '<div class="opts cols2" role="group" aria-label="' + q.title + '">' +
+      q.options.map(function(o){ return optionHtml(o, 'multi', q.id); }).join('') + '</div>';
+  }
+  else if(q.type === 'nps'){
+    html += '<div class="nps" role="group" aria-label="0 到 10 分，请为推荐意愿打分"></div>' +
+      '<div class="nps-scale"><span>完全不会推荐</span><span>一定会推荐</span></div>' +
+      '<div class="nps-status" data-nps-status>请选择一个分数</div>' +
+      '<div class="nps-legend">' +
+        '<i style="color:var(--nps-bad)">0–6 贬损者</i>' +
+        '<i style="color:var(--nps-mid)">7–8 中立者</i>' +
+        '<i style="color:var(--nps-good)">9–10 推荐者</i></div>';
+  }
+  else if(q.type === 'matrix'){
+    html += '<span class="mx-avg">' + icon('chart', 14) + '当前均分 <b data-mx-avg>—</b></span>' +
+      '<div class="mx" role="group" aria-label="' + q.title + '">' +
+      q.rows.map(function(r){
+        return '<div class="mx-row" data-row="' + r.key + '">' +
+          '<span class="mx-label">' + r.label + '</span>' +
+          '<span class="stars" role="radiogroup" aria-label="' + r.label + '，1 到 5 星" data-stars="' + r.key + '"></span>' +
+          '<span class="mx-val" data-mx-val="' + r.key + '"></span></div>';
+      }).join('') + '</div>';
+  }
+  else if(q.type === 'open'){
+    html += '<div class="ta-wrap"><textarea id="ta-' + q.id + '" data-ta="' + q.id + '" maxlength="' + q.maxLength +
+      '" placeholder="' + q.placeholder + '" aria-label="' + q.title + '"></textarea></div>' +
+      '<div class="ta-foot"><span>选答 · 不多于 ' + q.maxLength + ' 字</span><span class="count" data-ta-count>0 / ' + q.maxLength + '</span></div>';
+  }
+  else if(q.type === 'select'){
+    html += '<div class="sel-wrap"><select data-sel="' + q.id + '" aria-label="' + q.title + '" required>' +
+      '<option value="" selected disabled>请选择您的职位</option>' +
+      q.options.map(function(o){ return '<option value="' + o.value + '">' + o.label + '</option>'; }).join('') +
+      '</select></div>';
+    if(q.autoAdvance) html += '<p class="auto-hint">' + icon('arrowRight', 13) + '选择后将自动进入下一题</p>';
+  }
+  else if(q.type === 'boolean'){
+    html += '<div class="seg" role="group" aria-label="' + q.title + '">' +
+      '<button type="button" class="seg-btn" data-act="seg" data-v="yes">' + icon('check', 18) + '愿意参加</button>' +
+      '<button type="button" class="seg-btn" data-act="seg" data-v="no">' + icon('dots', 18) + '暂不参加</button></div>';
+    if(q.followUp){
+      var f = q.followUp;
+      html += '<div class="collapsible" data-followup>' +
+        '<div class="coll-inner"><div class="followup">' +
+        '<span class="followup-tag">' + icon('alert', 12) + '条件追问</span>' +
+        '<h3>' + f.title + '</h3>' +
+        (f.subtitle ? '<p class="q-sub">' + f.subtitle + '</p>' : '') +
+        '<div class="opts cols2" role="group" aria-label="' + f.title + '">' +
+        f.options.map(function(o){ return optionHtml(o, 'multi', q.id + '_reason'); }).join('') + '</div>' +
+        '<div class="ta-wrap" style="margin-top:12px"><textarea data-ta-other="' + q.id + '" maxlength="' + f.otherText.maxLength +
+          '" placeholder="' + f.otherText.placeholder + '" aria-label="' + f.otherText.label + '" style="min-height:76px"></textarea></div>' +
+        '<div class="ta-foot"><span>' + f.otherText.label + '</span><span class="count" data-ta-other-count>0 / ' + f.otherText.maxLength + '</span></div>' +
+        '</div></div></div>';
+    }
+  }
+  html += '</div>' + navHtml(q);
+  sec.innerHTML = html;
+  return sec;
+}
+
+/* ================= 构建动态控件 ================= */
+function buildControls(){
+  var nps = $('#screen-q3 .nps');
+  for(var i = 0; i <= 10; i++){
+    (function(v){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'nps-btn'; b.textContent = v;
+      b.setAttribute('data-act', 'nps'); b.setAttribute('data-v', v);
+      b.setAttribute('aria-label', v + ' 分');
+      b.setAttribute('aria-pressed', 'false');
+      nps.appendChild(b);
+    })(i);
+  }
+  $$('#screen-q4 .stars').forEach(function(row){
+    var key = row.getAttribute('data-stars');
+    for(var s = 1; s <= 5; s++){
+      (function(v){
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'star-btn';
+        b.innerHTML = starSvg();
+        b.setAttribute('data-act', 'star'); b.setAttribute('data-v', v);
+        b.setAttribute('aria-label', v + ' 星');
+        b.setAttribute('aria-pressed', 'false');
+        row.appendChild(b);
+      })(s);
+    }
+  });
+}
+
+/* ================= 校验 ================= */
+function q4Rated(){
+  var a = state.answers.q4 || {};
+  return QUESTIONS[3].rows.filter(function(r){ return a[r.key] > 0; }).length;
+}
+function isAnswered(q){
+  var a = state.answers;
+  switch(q.id){
+    case 'q1': return !!a.q1;
+    case 'q2': return a.q2.length > 0;
+    case 'q3': return a.q3 !== null;
+    case 'q4': return q4Rated() === QUESTIONS[3].rows.length;
+    case 'q5': return true;
+    case 'q6': return !!a.q6;
+    case 'q7':
+      if(!a.q7) return false;
+      if(a.q7 === 'no' && QUESTIONS[6].followUp.required) return a.q7_reason.length > 0;
+      return true;
+  }
+  return true;
+}
+function currentQuestion(){
+  var i = state.curIdx;
+  if(i >= 1 && i <= TOTAL) return QUESTIONS[i - 1];
+  return null;
+}
+
+/* ================= 同步 UI ================= */
+function syncScreen(q){
+  var sec = $('#screen-' + q.id);
+  if(!sec) return;
+  var a = state.answers;
+
+  if(q.type === 'single'){
+    $$('.opt', sec).forEach(function(el){
+      var on = el.getAttribute('data-v') === a[q.id];
+      el.classList.toggle('selected', on);
+      var input = $('input', el); if(input) input.checked = on;
+    });
+  }
+  else if(q.type === 'multi'){
+    $$('.opt', sec).forEach(function(el){
+      var on = (a[q.id] || []).indexOf(el.getAttribute('data-v')) > -1;
+      el.classList.toggle('selected', on);
+      var input = $('input', el); if(input) input.checked = on;
+    });
+    var c = $('[data-count]', sec); if(c) c.textContent = (a[q.id] || []).length;
+  }
+  else if(q.type === 'nps'){
+    $$('.nps-btn', sec).forEach(function(b){
+      var on = String(a.q3) === b.getAttribute('data-v');
+      b.classList.toggle('selected', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.classList.remove('bad', 'mid', 'good');
+      if(on) b.classList.add(npsClass(a.q3));
+    });
+    updateNpsStatus();
+  }
+  else if(q.type === 'matrix'){
+    QUESTIONS[3].rows.forEach(function(r){
+      var row = $('[data-row="' + r.key + '"]', sec);
+      var v = a.q4[r.key] || 0;
+      $$('.star-btn', row).forEach(function(b){
+        var lit = Number(b.getAttribute('data-v')) <= v;
+        b.classList.toggle('lit', lit);
+        b.setAttribute('aria-pressed', String(Number(b.getAttribute('data-v')) === v));
+      });
+      var val = $('[data-mx-val="' + r.key + '"]', row);
+      val.textContent = v ? v + ' 星' : '';
+      row.classList.remove('warn');
+    });
+    updateMxAvg();
+  }
+  else if(q.type === 'open'){
+    var ta = $('[data-ta]', sec);
+    if(ta && ta.value !== a.q5){ ta.value = a.q5 || ''; }
+    var cnt = $('[data-ta-count]', sec);
+    if(cnt){
+      var n = (a.q5 || '').length;
+      cnt.textContent = n + ' / ' + q.maxLength;
+      cnt.classList.toggle('warn', n > q.maxLength - 50);
+    }
+  }
+  else if(q.type === 'select'){
+    var sel = $('[data-sel]', sec);
+    if(sel) sel.value = a.q6 || '';
+  }
+  else if(q.type === 'boolean'){
+    $$('.seg-btn', sec).forEach(function(b){
+      b.classList.toggle('selected', b.getAttribute('data-v') === a.q7);
+    });
+    var fw = $('[data-followup]', sec);
+    if(fw){
+      var open = a.q7 === q.followUp.when;
+      fw.classList.toggle('open', open);
+      var inner = $('.coll-inner', fw);
+      if(inner){
+        if(open){ inner.removeAttribute('inert'); inner.removeAttribute('aria-hidden'); }
+        else{ inner.setAttribute('inert', ''); inner.setAttribute('aria-hidden', 'true'); }
+      }
+      if(open){
+        $$('.opt', fw).forEach(function(el){
+          var on = (a.q7_reason || []).indexOf(el.getAttribute('data-v')) > -1;
+          el.classList.toggle('selected', on);
+          var input = $('input', el); if(input) input.checked = on;
+        });
+        var t2 = $('[data-ta-other]', fw);
+        if(t2 && t2.value !== (a.q7_reason_text || '')) t2.value = a.q7_reason_text || '';
+        var c2 = $('[data-ta-other-count]', fw);
+        if(c2) c2.textContent = (a.q7_reason_text || '').length + ' / ' + q.followUp.otherText.maxLength;
+      }
+    }
+  }
+  updateNav(q);
+}
+function npsClass(v){
+  if(v <= 6) return 'bad';
+  if(v <= 8) return 'mid';
+  return 'good';
+}
+function npsCategory(v){
+  if(v <= 6) return { name:'贬损者', cls:'bad', desc:'我们会认真对待您的批评' };
+  if(v <= 8) return { name:'中立者', cls:'mid', desc:'感谢中立评价，仍有进步空间' };
+  return { name:'推荐者', cls:'good', desc:'很高兴您愿意推荐我们' };
+}
+function updateNpsStatus(){
+  var sec = $('#screen-q3');
+  var box = $('[data-nps-status]', sec);
+  if(!box) return;
+  var v = state.answers.q3;
+  box.classList.remove('bad', 'mid', 'good');
+  if(v === null){
+    box.textContent = '请选择一个分数';
+  }else{
+    var cat = npsCategory(v);
+    box.classList.add(cat.cls);
+    box.innerHTML = '当前 <b style="font-variant-numeric:tabular-nums;margin:0 2px">' + v + '</b> 分 · ' +
+      '<span class="badge ' + cat.cls + '">' + cat.name + '</span> ' + cat.desc;
+  }
+}
+function updateMxAvg(){
+  var sec = $('#screen-q4');
+  var el = $('[data-mx-avg]', sec);
+  if(!el) return;
+  var vs = QUESTIONS[3].rows.map(function(r){ return state.answers.q4[r.key] || 0; }).filter(function(x){ return x > 0; });
+  el.textContent = vs.length ? (vs.reduce(function(x, y){ return x + y; }, 0) / vs.length).toFixed(1) + ' / 5' : '—';
+}
+function updateNav(q){
+  var sec = $('#screen-' + q.id);
+  if(!sec) return;
+  var ok = isAnswered(q);
+  var next = $('[data-nav="next"]', sec);
+  var prev = $('[data-nav="prev"]', sec);
+  var hint = $('[data-hint]', sec);
+  next.disabled = !ok;
+  next.setAttribute('aria-disabled', ok ? 'false' : 'true');
+  prev.disabled = state.curIdx <= 1;
+  prev.setAttribute('aria-disabled', prev.disabled ? 'true' : 'false');
+  if(hint){
+    var partial = q.id === 'q4' && q4Rated() > 0 && !ok;
+    var showHint = !ok && (state.touched[q.id] || partial);
+    hint.hidden = !showHint;
+  }
+  var isLast = q.id === QUESTIONS[TOTAL - 1].id;
+  next.classList.toggle('is-armed', !!q.autoAdvance && ok && !isLast);
+}
+
+/* ================= 导航与过渡 ================= */
+var live = $('#live');
+var progressFill = $('#progressFill');
+var stepLabel = $('#stepLabel');
+var pctLabel = $('#pctLabel');
+var progressBar = $('#progress');
+
+function screenEl(id){ return $('#screen-' + id); }
+function screenIdAt(i){ return i === 0 ? 'welcome' : (i === TOTAL + 1 ? 'done' : QUESTIONS[i - 1].id); }
+
+function announce(msg){ live.textContent = ''; setTimeout(function(){ live.textContent = msg; }, 60); }
+
+function updateChrome(){
+  var i = state.curIdx;
+  var pct = i === 0 ? 0 : Math.round((i / TOTAL) * 100);
+  if(i === TOTAL + 1) pct = 100;
+  progressFill.style.width = pct + '%';
+  progressBar.setAttribute('aria-valuenow', String(pct));
+  pctLabel.textContent = pct + '%';
+  stepLabel.textContent = i === 0 ? '准备开始' : (i === TOTAL + 1 ? '已完成 · 感谢参与' : '第 ' + i + ' 题 / 共 ' + TOTAL + ' 题');
+  var q = currentQuestion();
+  announce(i === 0 ? '欢迎页' : (i === TOTAL + 1 ? '问卷已提交' : '第 ' + i + ' 题，共 ' + TOTAL + ' 题，' + q.typeName + (q.required ? '，必答' : '，选答')));
+}
+
+function setActiveScreen(el){
+  $$('.screen', stage).forEach(function(s){
+    var on = s === el;
+    s.classList.toggle('is-active', on);
+    if(on){ s.removeAttribute('inert'); s.removeAttribute('aria-hidden'); }
+    else{ s.setAttribute('inert', ''); s.setAttribute('aria-hidden', 'true'); }
+  });
+}
+
+function goTo(idx, opts){
+  opts = opts || {};
+  if(state.busy) return;
+  idx = Math.max(0, Math.min(TOTAL + 1, idx));
+  if(idx === state.curIdx) return;
+  var dir = opts.dir || (idx > state.curIdx ? 1 : -1);
+  var fromId = screenIdAt(state.curIdx), toId = screenIdAt(idx);
+  var fromEl = screenEl(fromId), toEl = screenEl(toId);
+  if(!fromEl || !toEl) return;
+
+  state.busy = true;
+  state.dir = dir;
+  stage.style.setProperty('--sx', (dir > 0 ? 26 : -26) + 'px');
+
+  var h0 = stage.offsetHeight;
+  stage.style.height = h0 + 'px';
+  fromEl.classList.remove('is-active');
+  fromEl.classList.add('is-leaving');
+  fromEl.setAttribute('inert', '');
+  fromEl.setAttribute('aria-hidden', 'true');
+
+  var swap = function(){
+    fromEl.classList.remove('is-leaving');
+    toEl.classList.add('is-active');
+    toEl.removeAttribute('inert');
+    toEl.removeAttribute('aria-hidden');
+    state.curIdx = idx;
+    updateChrome();
+    var q = currentQuestion();
+    if(q) syncScreen(q);
+
+    var h1 = toEl.offsetHeight;
+    if(!RM && h0 && Math.abs(h1 - h0) > 2){
+      void stage.offsetWidth;
+      stage.style.height = h1 + 'px';
+      var clear = function(){
+        stage.style.height = '';
+        stage.removeEventListener('transitionend', clear);
+      };
+      stage.addEventListener('transitionend', clear);
+      setTimeout(clear, 520);
+    }else{
+      stage.style.height = '';
+    }
+
+    var focusTarget = toEl.querySelector('h2');
+    if(focusTarget && opts.focus !== false) focusTarget.focus({ preventScroll:true });
+    state.busy = false;
+    saveSoon();
+    if(!opts.silentHash){
+      try{ history.replaceState(null, '', '#/' + toId); }catch(e){}
+    }
+  };
+  if(RM) swap(); else setTimeout(swap, 175);
+}
+
+/* ================= 交互处理 ================= */
+var autoTimer = null;
+var autoFromIdx = -1;
+function clearAuto(){
+  clearTimeout(autoTimer); autoTimer = null; autoFromIdx = -1;
+  $$('.btn.is-armed').forEach(function(b){ b.classList.remove('is-armed'); });
+}
+
+function setAnswer(q, value, opts){
+  opts = opts || {};
+  var a = state.answers;
+  a[q.id] = value;
+  state.touched[q.id] = true;
+  clearAuto();
+  syncScreen(q);
+  saveSoon();
+  if(q.autoAdvance && isAnswered(q) && state.curIdx < TOTAL){
+    var btn = $('[data-nav="next"]', $('#screen-' + q.id));
+    if(btn && !btn.disabled) btn.classList.add('is-armed');
+    autoFromIdx = state.curIdx;
+    autoTimer = setTimeout(function(){
+      autoTimer = null;
+      if(state.curIdx === autoFromIdx && isAnswered(q) && state.curIdx < TOTAL) goTo(state.curIdx + 1);
+    }, 1400);
+  }
+}
+
+function shakeEl(el){
+  if(!el || RM) return;
+  el.classList.remove('shake');
+  void el.offsetWidth;
+  el.classList.add('shake');
+  setTimeout(function(){ el.classList.remove('shake'); }, 500);
+}
+
+function failValidation(q){
+  state.touched[q.id] = true;
+  var sec = $('#screen-' + q.id);
+  var targets = [];
+  if(q.id === 'q4'){
+    QUESTIONS[3].rows.forEach(function(r){
+      if(!(state.answers.q4[r.key] > 0)){
+        var row = $('[data-row="' + r.key + '"]', sec);
+        if(row){ row.classList.add('warn'); targets.push(row); }
+      }
+    });
+  }else if(q.id === 'q7'){
+    if(!state.answers.q7) targets.push($('.seg', sec));
+    else if(state.answers.q7 === 'no' && state.answers.q7_reason.length === 0) targets.push($('[data-followup] .opts', sec));
+  }else if(q.id === 'q2' || q.id === 'q1'){
+    targets.push($('.opts', sec));
+  }else if(q.id === 'q6'){
+    targets.push($('[data-sel]', sec));
+  }else if(q.id === 'q3'){
+    targets.push($('.nps', sec));
+  }
+  if(!targets.length) targets.push(sec.querySelector('.q-body'));
+  targets.filter(Boolean).forEach(function(t){ shakeEl(t); });
+  updateNav(q);
+  announce('还有必答题未完成，请先作答');
+  var first = sec.querySelector('.opt, .nps-btn, .star-btn, select, .seg-btn');
+  if(first) first.focus({ preventScroll:true });
+}
+
+/* 事件委托：点击 */
+stage.addEventListener('click', function(e){
+  var t = e.target;
+  var navBtn = t.closest ? t.closest('[data-nav]') : null;
+  if(navBtn){
+    var q = currentQuestion();
+    if(!q) return;
+    if(navBtn.getAttribute('data-nav') === 'prev'){
+      clearAuto(); goTo(state.curIdx - 1);
+    }else{
+      if(!isAnswered(q)){ failValidation(q); return; }
+      clearAuto();
+      if(q.id === QUESTIONS[TOTAL - 1].id) submitSurvey(navBtn);
+      else goTo(state.curIdx + 1);
+    }
+    return;
+  }
+  var actEl = t.closest ? t.closest('[data-act]') : null;
+  if(!actEl) return;
+  /* pick-single / pick-multi 由原生 change 事件处理，避免 label→input 合成点击双触发 */
+  var act = actEl.getAttribute('data-act');
+  if(act !== 'nps' && act !== 'star' && act !== 'seg') return;
+  var q = currentQuestion();
+  if(!q) return;
+  var v = actEl.getAttribute('data-v');
+
+  if(act === 'nps'){
+    setAnswer(q, Number(v));
+  }else if(act === 'star'){
+    var key = actEl.closest('[data-stars]').getAttribute('data-stars');
+    var val = Number(v);
+    var m = {};
+    QUESTIONS[3].rows.forEach(function(r){ m[r.key] = state.answers.q4[r.key] || 0; });
+    m[key] = val;
+    state.answers.q4 = m;
+    state.touched.q4 = true;
+    clearAuto();
+    syncScreen(q);
+    actEl.classList.remove('pop'); void actEl.offsetWidth; actEl.classList.add('pop');
+    saveSoon();
+  }else if(act === 'seg'){
+    var fw = $('[data-followup]', $('#screen-' + q.id));
+    if(v === 'yes' && fw && fw.classList.contains('open')){
+      fw.classList.remove('open');
+      setTimeout(function(){ setAnswer(q, 'yes'); }, 10);
+    }else{
+      setAnswer(q, v);
+    }
+  }
+});
+
+/* 事件委托：原生表单控件（radio / checkbox / select 的 change 每次激活只触发一次） */
+stage.addEventListener('change', function(e){
+  var t = e.target;
+  var q = currentQuestion();
+  if(!q) return;
+  if(t.matches('input[type="radio"]') || t.matches('input[type="checkbox"]')){
+    var label = t.closest('.opt');
+    if(!label) return;
+    var kind = label.getAttribute('data-act');
+    var name = t.name || '';
+    var isFollow = name.indexOf('_reason') > -1;
+    if(kind === 'pick-single'){
+      setAnswer(q, t.value);
+    }else if(kind === 'pick-multi'){
+      var checked = $$('input[name="' + name + '"]', document)
+        .filter(function(i){ return i.checked; })
+        .map(function(i){ return i.value; });
+      if(isFollow){
+        /* 条件追问的选项写入 q7_reason，不能覆盖布尔题答案 a.q7 */
+        state.answers.q7_reason = checked;
+        state.touched.q7 = true;
+        clearAuto();
+        syncScreen(q);
+        saveSoon();
+      }else{
+        setAnswer(q, checked);
+      }
+    }
+  }else if(t.matches('[data-sel]')){
+    setAnswer(q, t.value);
+  }
+});
+
+/* 事件委托：输入 */
+stage.addEventListener('input', function(e){
+  var t = e.target;
+  var q = currentQuestion();
+  if(!q) return;
+  if(t.hasAttribute('data-ta')){
+    state.answers.q5 = t.value;
+    state.touched.q5 = true;
+    var cnt = $('[data-ta-count]', $('#screen-' + q.id));
+    if(cnt){
+      cnt.textContent = t.value.length + ' / ' + q.maxLength;
+      cnt.classList.toggle('warn', t.value.length > q.maxLength - 50);
+    }
+    saveSoon();
+  }else if(t.hasAttribute('data-ta-other')){
+    state.answers.q7_reason_text = t.value;
+    var c2 = $('[data-ta-other-count]', $('#screen-' + q.id));
+    if(c2) c2.textContent = t.value.length + ' / ' + q.followUp.otherText.maxLength;
+    saveSoon();
+  }
+});
+
+/* 键盘 */
+document.addEventListener('keydown', function(e){
+  var tag = (e.target.tagName || '').toLowerCase();
+  var isForm = tag === 'textarea' || tag === 'select' || (tag === 'input' && ['text','email','search'].indexOf(e.target.type) > -1);
+  var q = currentQuestion();
+
+  if(e.key === 'Enter'){
+    if(tag === 'button') return;
+    if(isForm) return;
+    e.preventDefault();
+    if(state.curIdx === 0){ startSurvey(); }
+    else if(q){
+      if(!isAnswered(q)){ failValidation(q); return; }
+      if(q.id === QUESTIONS[TOTAL - 1].id) submitSurvey($('[data-nav="next"]', $('#screen-' + q.id)));
+      else goTo(state.curIdx + 1);
+    }
+    return;
+  }
+  if(q && q.id === 'q3'){
+    if(e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
+      e.preventDefault();
+      var cur = state.answers.q3 === null ? -1 : state.answers.q3;
+      var nv = e.key === 'ArrowLeft' ? Math.max(0, cur - 1) : Math.min(10, cur + 1);
+      if(cur === -1) nv = e.key === 'ArrowLeft' ? 10 : 0;
+      setAnswer(q, nv);
+      var btn = $('#screen-q3 .nps-btn[data-v="' + nv + '"]');
+      if(btn) btn.focus({ preventScroll:true });
+      return;
+    }
+    if(/^[0-9]$/.test(e.key) && !isForm){
+      e.preventDefault();
+      setAnswer(q, Number(e.key));
+      var b2 = $('#screen-q3 .nps-btn[data-v="' + e.key + '"]');
+      if(b2) b2.focus({ preventScroll:true });
+      return;
+    }
+  }
+  if(!isForm && tag !== 'button'){
+    if(e.key === 'ArrowRight' || e.key === 'PageDown'){
+      e.preventDefault();
+      if(q && isAnswered(q)){
+        if(q.id === QUESTIONS[TOTAL - 1].id) submitSurvey($('[data-nav="next"]', $('#screen-' + q.id)));
+        else goTo(state.curIdx + 1);
+      }else if(q){ failValidation(q); }
+      else if(state.curIdx === 0){ startSurvey(); }
+    }else if(e.key === 'ArrowLeft' || e.key === 'PageUp'){
+      e.preventDefault();
+      if(state.curIdx > 0) goTo(state.curIdx - 1);
+    }
+  }
+});
+
+/* ================= 开始 / 提交 ================= */
+function startSurvey(){
+  if(!state.startedAt) state.startedAt = Date.now();
+  clearAuto();
+  goTo(1);
+}
+
+function buildResult(){
+  var a = state.answers;
+  var optLabel = function(qid, v){
+    var q = QUESTIONS.filter(function(x){ return x.id === qid; })[0];
+    var pool = (q && (q.options || (q.followUp && q.followUp.options))) || [];
+    var o = pool.filter(function(x){ return x.value === v; })[0];
+    return o ? o.label : v;
+  };
+  var rows = QUESTIONS[3].rows;
+  var mx = {};
+  rows.forEach(function(r){ mx[r.key] = a.q4[r.key] || 0; });
+  var vals = rows.map(function(r){ return mx[r.key]; }).filter(function(x){ return x > 0; });
+  var avg = vals.length ? Math.round((vals.reduce(function(x, y){ return x + y; }, 0) / vals.length) * 10) / 10 : 0;
+  var dur = state.startedAt ? Math.max(0, Math.round((Date.now() - state.startedAt) / 1000)) : 0;
+
+  return {
+    survey_id: 'productx-satisfaction-2025',
+    title: 'ProductX 用户满意度调查 2025',
+    submitted_at: new Date().toISOString(),
+    duration_seconds: dur,
+    answers: {
+      q1_channel: a.q1,
+      q2_features: a.q2,
+      q3_nps: a.q3,
+      q4_satisfaction: mx,
+      q5_improvement: a.q5 || '',
+      q6_role: a.q6,
+      q7_interview: a.q7,
+      q7_reason: a.q7 === 'no' ? a.q7_reason : [],
+      q7_reason_text: a.q7 === 'no' ? (a.q7_reason_text || '') : ''
+    },
+    labels: {
+      q1_channel: a.q1 ? optLabel('q1', a.q1) : null,
+      q2_features: a.q2.map(function(v){ return optLabel('q2', v); }),
+      q3_nps_category: a.q3 === null ? null : npsCategory(a.q3).name,
+      q4_satisfaction: rows.map(function(r){ return r.label + ':' + mx[r.key] + '星'; }),
+      q6_role: a.q6 ? optLabel('q6', a.q6) : null,
+      q7_interview: a.q7 === 'yes' ? '愿意参加' : (a.q7 === 'no' ? '暂不参加' : null),
+      q7_reason: a.q7 === 'no' ? a.q7_reason.map(function(v){ return optLabel('q7', v); }) : []
+    },
+    summary: {
+      nps: a.q3,
+      nps_category: a.q3 === null ? null : npsCategory(a.q3).name,
+      satisfaction_avg: avg,
+      features_selected: a.q2.length,
+      answered_fields: ['q1','q2','q3','q4','q5','q6','q7'].filter(function(k){
+        var v = a[k];
+        if(k === 'q4') return q4Rated() > 0;
+        if(k === 'q2') return v.length > 0;
+        if(k === 'q5') return !!v;
+        return v !== null && v !== '';
+      }).length,
+      total_fields: 7
+    }
+  };
+}
+
+function fmtDur(sec){
+  var m = Math.floor(sec / 60), s = sec % 60;
+  return m > 0 ? (m + ' 分 ' + s + ' 秒') : (s + ' 秒');
+}
+function miniStars(v){
+  var h = '';
+  for(var i = 1; i <= 5; i++) h += '<span class="' + (i <= v ? 'on' : 'off') + '"><svg viewBox="0 0 24 24"><path d="' + STAR_PATH + '"/></svg></span>';
+  return '<span class="mini-stars" role="img" aria-label="' + v + ' 星">' + h + '</span>';
+}
+function sumRow(k, v){
+  return '<div class="sum-row"><span class="sum-k">' + icon(k.icon, 15) + k.label + '</span><span class="sum-v">' + v + '</span></div>';
+}
+
+function renderSummary(res){
+  var a = state.answers;
+  var q1 = QUESTIONS[0], q2 = QUESTIONS[1], q4 = QUESTIONS[3], q6 = QUESTIONS[5], q7 = QUESTIONS[6];
+  var rows = [];
+
+  rows.push(sumRow({ icon:'target', label:'了解渠道' },
+    a.q1 ? '<b>' + res.labels.q1_channel + '</b>' : '<span class="muted">未作答</span>'));
+
+  rows.push(sumRow({ icon:'list', label:'常用功能' },
+    a.q2.length
+      ? a.q2.map(function(v){ return '<span class="chip">' + icon('check', 11) + res.labels.q2_features[a.q2.indexOf(v)] + '</span>'; }).join('')
+      : '<span class="muted">未作答</span>'));
+
+  var cat = res.summary.nps_category ? npsCategory(res.summary.nps) : null;
+  rows.push(sumRow({ icon:'thumb', label:'NPS 评分' },
+    a.q3 !== null
+      ? '<b style="font-size:16px;font-variant-numeric:tabular-nums">' + a.q3 + '</b> / 10 <span class="badge ' + cat.cls + '">' + cat.name + '</span>'
+      : '<span class="muted">未作答</span>'));
+
+  rows.push(sumRow({ icon:'grid', label:'满意度矩阵' },
+    '<div style="display:grid;gap:5px">' + q4.rows.map(function(r){
+      var v = a.q4[r.key] || 0;
+      return '<div>' + miniStars(v) + '<span style="font-weight:700;font-variant-numeric:tabular-nums">' + (v ? v + '.0' : '—') + '</span> <span style="color:var(--muted);font-weight:600;font-size:13px">· ' + r.label + '</span></div>';
+    }).join('') + '</div>' +
+    '<div style="margin-top:6px;font-size:12.5px;color:var(--ink-3);font-weight:700">综合均分 ' + (res.summary.satisfaction_avg ? res.summary.satisfaction_avg.toFixed(1) : '—') + ' / 5</div>'));
+
+  rows.push(sumRow({ icon:'msg', label:'改进建议' },
+    a.q5 ? '<span class="quote">' + escapeHtml(a.q5) + '</span>' : '<span class="muted">未填写（选答）</span>'));
+
+  rows.push(sumRow({ icon:'case', label:'当前职位' },
+    a.q6 ? '<b>' + res.labels.q6_role + '</b>' : '<span class="muted">未作答</span>'));
+
+  var q7v;
+  if(a.q7 === 'yes'){
+    q7v = '<span class="badge good">愿意参加</span> <span style="color:var(--ink-3);font-weight:600;font-size:13px">我们将在 3 个工作日内与您联系</span>';
+  }else if(a.q7 === 'no'){
+    q7v = '<span class="badge mid">暂不参加</span>';
+    if(a.q7_reason.length){
+      q7v += '<div style="margin-top:6px">' + a.q7_reason.map(function(v){
+        return '<span class="chip">' + res.labels.q7_reason[a.q7_reason.indexOf(v)] + '</span>';
+      }).join('') + '</div>';
+    }
+    if(a.q7_reason_text) q7v += '<div style="margin-top:6px"><span class="quote">' + escapeHtml(a.q7_reason_text) + '</span></div>';
+  }else{
+    q7v = '<span class="muted">未作答</span>';
+  }
+  rows.push(sumRow({ icon:'call', label:'访谈意愿' }, q7v));
+
+  $('#summaryBody').innerHTML = rows.join('');
+
+  var cat2 = res.summary.nps_category ? npsCategory(res.summary.nps) : null;
+  $('#doneStats').innerHTML =
+    '<span class="stat">' + icon('clock', 14) + '作答用时 <b>' + fmtDur(res.duration_seconds) + '</b></span>' +
+    (res.summary.nps !== null ? '<span class="stat">' + icon('thumb', 14) + 'NPS <b>' + res.summary.nps + '</b> · ' + (cat2 ? cat2.name : '') + '</span>' : '') +
+    (res.summary.satisfaction_avg ? '<span class="stat">' + icon('grid', 14) + '满意度均分 <b>' + res.summary.satisfaction_avg.toFixed(1) + '</b></span>' : '') +
+    '<span class="stat">' + icon('check', 14) + '完成度 <b>' + res.summary.answered_fields + '/' + res.summary.total_fields + '</b></span>';
+  $('#sumTime').textContent = '提交时间 ' + new Date(res.submitted_at).toLocaleString('zh-CN', { hour12:false });
+}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, function(c){
+    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+  });
+}
+
+function confetti(){
+  if(RM) return;
+  var layer = $('#confetti');
+  var colors = ['#4F46E5', '#7C3AED', '#10B981', '#F59E0B', '#FB7185', '#38BDF8'];
+  for(var i = 0; i < 26; i++){
+    (function(){
+      var p = document.createElement('span');
+      p.className = 'confetti-piece';
+      p.style.background = colors[i % colors.length];
+      layer.appendChild(p);
+      var x = (Math.random() - .5) * 340;
+      var y = 120 + Math.random() * 240;
+      var r = (Math.random() - .5) * 720;
+      var anim = p.animate([
+        { transform:'translate(-50%,0) translate(0,0) rotate(0deg) scale(1)', opacity:1 },
+        { transform:'translate(-50%,0) translate(' + x + 'px,' + y + 'px) rotate(' + r + 'deg) scale(.6)', opacity:0 }
+      ], { duration: 1100 + Math.random() * 500, easing: 'cubic-bezier(.16,1,.3,1)', fill:'forwards' });
+      anim.onfinish = function(){ p.remove(); };
+    })();
+  }
+}
+
+function submitSurvey(btn){
+  if(state.submitted) return;
+  var q = currentQuestion();
+  if(q && !isAnswered(q)){ failValidation(q); return; }
+  state.submitted = true;
+  state.submittedAt = Date.now();
+  if(!state.startedAt) state.startedAt = state.submittedAt - 1000;
+
+  if(btn){
+    btn.disabled = true;
+    var txt = btn.querySelector('[data-next-text]');
+    var old = txt ? txt.textContent : '';
+    if(txt) txt.textContent = '提交中';
+    var sp = document.createElement('span');
+    sp.className = 'spin';
+    btn.appendChild(sp);
+  }
+
+  setTimeout(function(){
+    var res = buildResult();
+    state.result = res;
+    renderSummary(res);
+    save();
+
+    /* 控制台输出 */
+    var tag = 'background:linear-gradient(90deg,#4F46E5,#7C3AED);color:#fff;font-weight:700;padding:4px 10px;border-radius:6px';
+    console.log('%c ProductX 用户满意度调查 2025 · 提交结果 ', tag);
+    console.log(res);
+    console.log('%c原始 JSON（可直接复制）', 'color:#64748B;font-weight:700');
+    console.log(JSON.stringify(res, null, 2));
+
+    goTo(TOTAL + 1);
+    setTimeout(confetti, 350);
+    announce('问卷已提交，感谢您的反馈');
+    if(btn){
+      btn.disabled = false;
+      btn.removeChild(sp);
+      if(txt) txt.textContent = old;
+    }
+  }, RM ? 0 : 650);
+}
+
+/* ================= 欢迎页 / 完成页控制 ================= */
+$('#startBtn').addEventListener('click', startSurvey);
+
+$('#copyBtn').addEventListener('click', function(){
+  var btn = this, label = $('#copyBtnText');
+  var json = JSON.stringify(state.result, null, 2);
+  var ok = function(){
+    label.textContent = '已复制到剪贴板';
+    btn.classList.add('copy-ok');
+    setTimeout(function(){ label.textContent = '复制结果 JSON'; btn.classList.remove('copy-ok'); }, 2200);
+  };
+  var fallback = function(){
+    $('#copyFallback').hidden = false;
+    var pre = $('#jsonPre');
+    pre.hidden = false;
+    pre.textContent = json;
+    if(pre.scrollIntoView) pre.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block:'nearest' });
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(json).then(ok).catch(function(){ legacyCopy(json) ? ok() : fallback(); });
+  }else{
+    legacyCopy(json) ? ok() : fallback();
+  }
+});
+function legacyCopy(text){
+  try{
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+    document.body.appendChild(ta);
+    ta.select();
+    var done = document.execCommand('copy');
+    document.body.removeChild(ta);
+    return done;
+  }catch(e){ return false; }
+}
+
+$('#restartBtn').addEventListener('click', function(){
+  clearSave();
+  state.answers = emptyAnswers();
+  state.curIdx = 0;
+  state.touched = {};
+  state.startedAt = null;
+  state.submittedAt = null;
+  state.submitted = false;
+  state.result = null;
+  QUESTIONS.forEach(function(q){ syncScreenSilent(q); });
+  try{ history.replaceState(null, '', location.pathname + location.search); }catch(e){}
+  goTo(0, { focus:false });
+  setTimeout(function(){
+    var h = $('#screen-welcome h1');
+    if(h) h.focus({ preventScroll:true });
+  }, 260);
+  announce('已重置问卷');
+});
+function syncScreenSilent(q){ syncScreen(q); }
+
+/* ================= 路由 ================= */
+window.addEventListener('hashchange', function(){
+  var id = (location.hash || '').replace('#/', '');
+  var idx = -1;
+  if(id === 'welcome') idx = 0;
+  else if(id === 'done') idx = state.submitted ? TOTAL + 1 : state.curIdx;
+  else QUESTIONS.forEach(function(q, i){ if(q.id === id) idx = i + 1; });
+  if(idx > -1 && idx !== state.curIdx) goTo(idx);
+});
+
+/* ================= 初始化 ================= */
+function init(){
+  var frag = document.createDocumentFragment();
+  QUESTIONS.forEach(function(q, i){
+    frag.appendChild(buildScreen(q, i + 1));
+  });
+  stage.insertBefore(frag, $('#screen-done'));
+
+  buildControls();
+  setActiveScreen($('#screen-welcome'));
+
+  var saved = load();
+  var hashId = (location.hash || '').replace('#/', '');
+  var startIdx = 0;
+
+  if(saved){
+    if(saved.answers){
+      var a = emptyAnswers();
+      Object.keys(a).forEach(function(k){ if(k in saved.answers) a[k] = saved.answers[k]; });
+      state.answers = a;
+    }
+    state.startedAt = saved.startedAt || null;
+    state.submitted = !!saved.submitted;
+    state.result = saved.result || null;
+    if(saved.curIdx) state.curIdx = Math.max(0, Math.min(TOTAL + 1, saved.curIdx));
+    startIdx = state.curIdx;
+  }
+
+  if(hashId === 'done'){
+    if(state.submitted){ startIdx = TOTAL + 1; }
+    else { try{ history.replaceState(null, '', location.pathname + location.search); }catch(e){} startIdx = 0; }
+  }else if(hashId === 'welcome'){
+    startIdx = 0;
+  }else{
+    var hit = -1;
+    QUESTIONS.forEach(function(q, i){ if(q.id === hashId) hit = i + 1; });
+    if(hit > -1) startIdx = hit;
+  }
+
+  /* 欢迎页：显示“继续作答” */
+  if(!state.submitted && state.curIdx > 0 && state.curIdx <= TOTAL && startIdx === 0){
+    $('#resumeBox').classList.add('show');
+  }
+  $('#resumeBtn').addEventListener('click', function(){
+    goTo(state.curIdx || 1);
+  });
+  $('#freshBtn').addEventListener('click', function(){
+    clearSave();
+    state.answers = emptyAnswers();
+    state.curIdx = 0;
+    state.touched = {};
+    state.startedAt = null;
+    QUESTIONS.forEach(syncScreenSilent);
+    $('#resumeBox').classList.remove('show');
+    announce('已清空历史作答');
+  });
+
+  QUESTIONS.forEach(syncScreenSilent);
+
+  if(startIdx > 0){
+    state.curIdx = 0;
+    setActiveScreen(screenEl(screenIdAt(startIdx)));
+    state.curIdx = startIdx;
+    updateChrome();
+    var q0 = currentQuestion();
+    if(q0) syncScreen(q0);
+    if(startIdx === TOTAL + 1 && state.result) renderSummary(state.result);
+  }else{
+    updateChrome();
+  }
+
+  window.addEventListener('resize', function(){
+    if(!stage.style.height) return;
+    var el = screenEl(screenIdAt(state.curIdx));
+    if(el) stage.style.height = el.offsetHeight + 'px';
+  });
+}
+
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+else init();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>沉睡会员唤醒分析报告 · 90天未消费会员圈选与挽回</title>
+<style>
+/* ============ 设计令牌 ============ */
+:root{
+  --bg:#F4F7FC; --surface:#FFFFFF; --surface-2:#F1F5F9; --surface-3:#E8EEF7;
+  --ink:#0F172A; --ink-2:#334155; --sub:#64748B; --faint:#94A3B8;
+  --line:#E2E8F0; --line-2:#CBD5E1;
+  --brand:#2563EB; --brand-deep:#1D4ED8; --brand-soft:#EFF6FF; --brand-ink:#1E3A8A;
+  --hi:#DC2626; --hi-soft:#FEF2F2; --hi-ink:#7F1D1D;
+  --mid:#D97706; --mid-soft:#FFFBEB; --mid-ink:#78350F;
+  --lo:#0284C7; --lo-soft:#F0F9FF; --lo-ink:#075985;
+  --ok:#059669; --ok-soft:#ECFDF5; --ok-ink:#064E3B;
+  --warn:#B45309; --warn-soft:#FEF3C7;
+  --shadow-sm:0 1px 2px rgba(15,23,42,.05);
+  --shadow-md:0 4px 14px -4px rgba(15,23,42,.10),0 1px 3px rgba(15,23,42,.06);
+  --shadow-lg:0 24px 48px -20px rgba(15,23,42,.22),0 2px 6px rgba(15,23,42,.05);
+  --r-lg:18px; --r-md:14px; --r-sm:10px; --r-xs:7px;
+  --ease:cubic-bezier(.22,.68,.36,1);
+}
+html[data-theme="dark"]{
+  --bg:#0A101E; --surface:#111A2E; --surface-2:#0E1728; --surface-3:#1A2540;
+  --ink:#EAF1FA; --ink-2:#C2CFE3; --sub:#8B9BB5; --faint:#5E7093;
+  --line:#1F2C48; --line-2:#2C3D60;
+  --brand:#4E8BF6; --brand-deep:#6FA3FF; --brand-soft:#13233F; --brand-ink:#BFD8FF;
+  --hi:#F87171; --hi-soft:#2B1417; --hi-ink:#FECACA;
+  --mid:#FBBF24; --mid-soft:#2A2010; --mid-ink:#FDE68A;
+  --lo:#38BDF8; --lo-soft:#0F2536; --lo-ink:#BAE6FD;
+  --ok:#34D399; --ok-soft:#0C2A21; --ok-ink:#A7F3D0;
+  --warn:#FBBF24; --warn-soft:#2A2010;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.25);
+  --shadow-md:0 4px 14px -4px rgba(0,0,0,.4),0 1px 3px rgba(0,0,0,.3);
+  --shadow-lg:0 24px 48px -20px rgba(0,0,0,.55),0 2px 6px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.65;transition:background .35s var(--ease),color .35s var(--ease);-webkit-font-smoothing:antialiased}
+::selection{background:rgba(37,99,235,.22)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px 70px}
+b,strong{font-weight:700}
+.num,.tv{font-variant-numeric:tabular-nums}
+
+/* ============ 吸顶导航 ============ */
+.topbar{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--surface) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);transition:background .35s var(--ease)}
+.topbar-in{max-width:1180px;margin:0 auto;padding:0 22px;height:56px;display:flex;align-items:center;gap:18px}
+.brand-mark{display:flex;align-items:center;gap:9px;font-weight:800;font-size:14.5px;letter-spacing:.2px;white-space:nowrap;color:var(--ink)}
+.brand-mark .logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--brand-deep),#60A5FA);display:grid;place-items:center;color:#fff;box-shadow:var(--shadow-sm)}
+.brand-mark .logo svg{width:16px;height:16px}
+.nav-links{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;flex:1}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{font-size:12.5px;color:var(--sub);text-decoration:none;padding:5px 11px;border-radius:99px;white-space:nowrap;transition:all .25s var(--ease);font-weight:500}
+.nav-links a:hover{color:var(--brand);background:var(--brand-soft)}
+.nav-links a.active{color:#fff;background:var(--brand);box-shadow:var(--shadow-sm)}
+.top-actions{display:flex;gap:8px;align-items:center}
+.icon-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--sub);display:grid;place-items:center;cursor:pointer;transition:all .25s var(--ease)}
+.icon-btn:hover{color:var(--brand);border-color:var(--brand);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.icon-btn svg{width:16px;height:16px}
+.progress{height:2.5px;background:transparent;position:relative;overflow:hidden}
+.progress-in{height:100%;width:0;background:linear-gradient(90deg,var(--brand-deep),#60A5FA,#34D399);border-radius:0 2px 2px 0;transition:width .12s linear}
+
+/* ============ Hero ============ */
+.hero{position:relative;margin:26px 0 24px;border-radius:24px;overflow:hidden;background:linear-gradient(128deg,#0B1F3F 0%,#14306E 42%,#1D4ED8 78%,#3B82F6 100%);color:#fff;padding:52px 54px 46px;box-shadow:var(--shadow-lg)}
+.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:34px 34px;mask-image:radial-gradient(ellipse 90% 80% at 85% 10%,#000 30%,transparent 75%)}
+.hero::after{content:"";position:absolute;width:520px;height:520px;right:-140px;top:-220px;border-radius:50%;background:radial-gradient(circle,rgba(96,165,250,.45) 0%,rgba(96,165,250,0) 62%);pointer-events:none}
+.hero-in{position:relative;z-index:2;max-width:820px}
+.hero .tag{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);padding:4px 14px;border-radius:99px;font-size:12px;letter-spacing:1.5px;margin-bottom:16px;backdrop-filter:blur(4px)}
+.hero .tag .pulse{width:7px;height:7px;border-radius:50%;background:#4ADE80;box-shadow:0 0 0 0 rgba(74,222,128,.7);animation:pulse 2.2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+.hero h1{font-size:clamp(26px,4vw,40px);font-weight:800;letter-spacing:.5px;line-height:1.25;margin-bottom:12px}
+.hero h1 .grad{background:linear-gradient(90deg,#93C5FD,#E0F2FE);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero .sub{font-size:14.5px;opacity:.92;margin-bottom:22px}
+.hero .metas{display:flex;flex-wrap:wrap;gap:8px}
+.hero .chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:4px 12px;border-radius:99px;backdrop-filter:blur(4px)}
+.hero .chip svg{width:13px;height:13px;opacity:.85}
+.hero-cta{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;font-size:13.5px;font-weight:600;padding:10px 22px;border-radius:12px;transition:all .3s var(--ease);text-decoration:none}
+.btn svg{width:15px;height:15px}
+.btn-primary{background:#fff;color:#14306E;box-shadow:0 6px 20px -6px rgba(0,0,0,.35)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 26px -6px rgba(0,0,0,.45)}
+.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35)}
+.btn-ghost:hover{background:rgba(255,255,255,.2);transform:translateY(-2px)}
+
+/* ============ KPI 指标卡 ============ */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:22px}
+.kpi{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 18px 14px;box-shadow:var(--shadow-sm);overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease)}
+.kpi:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--line-2)}
+.kpi .k-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.kpi .k-label{font-size:12px;color:var(--sub);font-weight:500}
+.kpi .k-ico{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex-shrink:0}
+.kpi .k-ico svg{width:15px;height:15px}
+.kpi .k-val{font-size:27px;font-weight:800;letter-spacing:-.3px;line-height:1.15}
+.kpi .k-note{font-size:11.5px;color:var(--sub);margin-top:3px}
+.kpi .k-spark{margin-top:10px;height:30px}
+.kpi .k-spark svg{width:100%;height:30px;display:block}
+.kpi .k-spark .sp-label{font-size:10px;fill:var(--faint)}
+.kpi.accent-hi .k-val{color:var(--hi)} .kpi.accent-hi .k-ico{background:var(--hi-soft);color:var(--hi)}
+.kpi.accent-brand .k-val{color:var(--brand)} .kpi.accent-brand .k-ico{background:var(--brand-soft);color:var(--brand)}
+.kpi.accent-ok .k-val{color:var(--ok)} .kpi.accent-ok .k-ico{background:var(--ok-soft);color:var(--ok)}
+.kpi.accent-mid .k-val{color:var(--mid)} .kpi.accent-mid .k-ico{background:var(--mid-soft);color:var(--mid)}
+.kpi.accent-ink .k-val{color:var(--ink)} .kpi.accent-ink .k-ico{background:var(--surface-3);color:var(--ink-2)}
+
+/* ============ 核心结论 ============ */
+.summary{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px 26px;margin-bottom:26px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+.summary::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--brand-deep),#34D399)}
+.summary h3{font-size:15px;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.summary h3 svg{width:17px;height:17px;color:var(--brand)}
+.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 26px}
+.sum-item{display:flex;gap:10px;font-size:13px;color:var(--ink-2);line-height:1.6}
+.sum-item .si-ico{flex-shrink:0;width:20px;height:20px;border-radius:6px;display:grid;place-items:center;font-size:11px;font-weight:800;margin-top:2px}
+.sum-item b{color:var(--ink)}
+
+/* ============ 章节卡片 ============ */
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px 30px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
+.sec-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:6px}
+.sec-no{flex-shrink:0;width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--brand-deep),#3B82F6);color:#fff;display:grid;place-items:center;box-shadow:0 4px 12px -3px rgba(29,78,216,.4)}
+.sec-no svg{width:18px;height:18px}
+.sec-head h2{font-size:19.5px;font-weight:800;letter-spacing:.2px;line-height:1.3}
+.sec-head .sec-sub{font-size:12.5px;color:var(--sub);margin-top:2px;font-weight:400}
+.sec .lead{color:var(--sub);font-size:13.5px;margin:10px 0 18px;line-height:1.7}
+.sec .lead b{color:var(--ink)}
+
+/* ============ 表格 ============ */
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line)}
+th{color:var(--sub);font-weight:600;font-size:12.5px;background:var(--surface-2);white-space:nowrap}
+th:first-child{border-radius:var(--r-xs) 0 0 0}th:last-child{border-radius:0 var(--r-xs) 0 0}
+tbody tr:last-child td{border-bottom:none}
+tbody tr{transition:background .2s var(--ease)}
+tbody tr:hover{background:var(--brand-soft)}
+tr.total-row td{background:var(--surface-2);font-weight:700}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:1px}
+.hbar{background:var(--surface-3);border-radius:5px;height:12px;overflow:hidden;min-width:70px}
+.hbar-in{height:100%;border-radius:5px;transition:width .6s var(--ease)}
+.tag-sm{display:inline-block;font-size:11px;padding:1px 8px;border-radius:6px;font-weight:600;background:var(--surface-3);color:var(--ink-2)}
+
+/* ============ 布局工具 ============ */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.mt{margin-top:16px}
+
+/* ============ 环形图 ============ */
+.ring-wrap{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.ring-box{position:relative;flex-shrink:0}
+.ring-box svg{display:block}
+#arcH{stroke:var(--hi);transition:stroke-dasharray .7s var(--ease),stroke-dashoffset .7s var(--ease)}
+#arcM{stroke:var(--mid);transition:stroke-dasharray .7s var(--ease),stroke-dashoffset .7s var(--ease)}
+#arcL{stroke:var(--lo);transition:stroke-dasharray .7s var(--ease),stroke-dashoffset .7s var(--ease)}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.ring-center .rc-l{font-size:11px;color:var(--sub)}
+.ring-center .rc-v{font-size:23px;font-weight:800;line-height:1.1}
+.legend{font-size:13px;flex:1;min-width:200px}
+.legend .lg-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:var(--r-sm);transition:background .2s}
+.legend .lg-row:hover{background:var(--surface-2)}
+.legend .lg-name{font-weight:600;width:56px}
+.legend .lg-bar{flex:1;height:8px;border-radius:4px;background:var(--surface-3);overflow:hidden}
+.legend .lg-bar i{display:block;height:100%;border-radius:4px;transition:width .7s var(--ease)}
+.legend .lg-num{font-variant-numeric:tabular-nums;font-weight:700;font-size:13px;width:86px;text-align:right}
+
+/* ============ 控制面板 ============ */
+.ctrl{background:var(--surface-2);border:1px dashed var(--line-2);border-radius:var(--r-md);padding:16px 20px;margin-bottom:20px}
+.ctrl-title{font-size:12.5px;font-weight:700;color:var(--sub);letter-spacing:.5px;margin-bottom:12px;display:flex;align-items:center;gap:7px}
+.ctrl-title svg{width:14px;height:14px}
+.ctrl-row{display:flex;align-items:center;gap:12px;font-size:13px;padding:5px 0}
+.ctrl-row label{color:var(--ink-2);white-space:nowrap;width:118px;font-weight:500}
+.ctrl-row input[type=range]{flex:1;min-width:120px;accent-color:var(--brand);height:22px;cursor:pointer}
+.ctrl-val{font-weight:800;color:var(--brand);min-width:58px;text-align:right;font-variant-numeric:tabular-nums;font-size:13.5px}
+.rule-text{font-size:12.8px;background:var(--brand-soft);border:1px solid color-mix(in srgb,var(--brand) 22%,transparent);border-radius:var(--r-sm);padding:9px 14px;margin-top:12px;color:var(--brand-ink);line-height:1.7}
+html[data-theme="dark"] .rule-text{color:var(--brand-ink)}
+.btn-sm{background:var(--brand);color:#fff;border:none;border-radius:9px;padding:6px 16px;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .25s var(--ease);display:inline-flex;align-items:center;gap:6px}
+.btn-sm:hover{background:var(--brand-deep);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.btn-sm svg{width:13px;height:13px}
+.btn-sm.ghost{background:var(--surface);color:var(--sub);border:1px solid var(--line-2)}
+.btn-sm.ghost:hover{color:var(--brand);border-color:var(--brand);background:var(--brand-soft)}
+
+/* ============ 热力矩阵 ============ */
+.heat td,.heat th{text-align:center}
+.heat td:first-child{text-align:left;font-weight:600;white-space:nowrap}
+.heat .hcell{border-radius:var(--r-xs);padding:7px 10px;font-variant-numeric:tabular-nums;font-weight:700;display:inline-block;min-width:64px;transition:transform .2s var(--ease)}
+.heat .hcell:hover{transform:scale(1.07)}
+.heat-legend{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--sub);margin-top:10px;justify-content:flex-end}
+.heat-legend .hl-scale{display:flex;height:10px;width:150px;border-radius:5px;overflow:hidden}
+.heat-legend .hl-scale i{flex:1}
+
+/* ============ 权益矩阵 ============ */
+.ben-table td{vertical-align:top}
+.ben-list{font-size:12.8px;line-height:1.9}
+.ben-list li{list-style:none}
+.cost-stack{display:flex;height:30px;border-radius:9px;overflow:hidden;box-shadow:var(--shadow-sm);margin:6px 0 4px}
+.cost-stack i{display:block;height:100%;transition:width .6s var(--ease);position:relative}
+.cost-stack i span{position:absolute;inset:0;display:grid;place-items:center;font-size:10.5px;font-weight:700;color:#fff;font-style:normal}
+.cost-legend{display:flex;gap:16px;font-size:11.5px;color:var(--sub);flex-wrap:wrap}
+.cost-legend span{display:inline-flex;align-items:center;gap:5px}
+.cost-legend i{width:9px;height:9px;border-radius:3px;display:inline-block}
+
+/* ============ 时间轴 ============ */
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0 20px;position:relative}
+.tstep{position:relative;border:1px solid var(--line);border-radius:var(--r-md);padding:16px 16px 14px;background:var(--surface-2);cursor:pointer;transition:all .3s var(--ease)}
+.tstep:hover{border-color:var(--brand);transform:translateY(-3px);box-shadow:var(--shadow-md);background:var(--surface)}
+.tstep.active{border-color:var(--brand);background:var(--brand-soft);box-shadow:var(--shadow-md)}
+.tstep .t-day{font-size:11.5px;font-weight:800;color:var(--brand);letter-spacing:.5px}
+.tstep .t-name{font-size:15px;font-weight:800;margin:3px 0 7px}
+.tstep .t-desc{font-size:12px;color:var(--sub);line-height:1.7}
+.tstep .t-arrow{position:absolute;right:-9px;top:50%;transform:translateY(-50%);width:18px;height:18px;border-radius:50%;background:var(--surface);border:1px solid var(--line-2);display:grid;place-items:center;color:var(--faint);z-index:2}
+.tstep:last-child .t-arrow{display:none}
+.tstep .t-arrow svg{width:10px;height:10px}
+.tstep .t-goal{margin-top:9px;font-size:11px;font-weight:700;color:var(--ok);background:var(--ok-soft);border-radius:6px;padding:2px 9px;display:inline-block}
+
+/* ============ 话术块 ============ */
+.script{position:relative;background:var(--surface-2);border:1px solid var(--line);border-left:4px solid var(--brand);border-radius:var(--r-sm);padding:13px 16px;font-size:12.8px;line-height:1.75;transition:all .25s var(--ease)}
+.script:hover{border-color:var(--brand);box-shadow:var(--shadow-sm)}
+.script .s-tag{display:inline-block;font-size:10.5px;background:var(--brand-soft);color:var(--brand);border:1px solid color-mix(in srgb,var(--brand) 25%,transparent);border-radius:5px;padding:1px 8px;margin-right:8px;font-weight:700;vertical-align:1px}
+.copy-btn{position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--faint);display:grid;place-items:center;cursor:pointer;opacity:0;transition:all .25s var(--ease)}
+.script:hover .copy-btn{opacity:1}
+.copy-btn:hover{color:var(--brand);border-color:var(--brand)}
+.copy-btn svg{width:12px;height:12px}
+.copy-btn.done{color:var(--ok);border-color:var(--ok);opacity:1}
+
+/* ============ 公式卡 ============ */
+.formula-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:6px 0 20px}
+.formula{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-md);padding:14px 18px;font-size:12.5px;transition:all .25s var(--ease)}
+.formula:hover{border-color:var(--brand);box-shadow:var(--shadow-sm)}
+.formula b{display:flex;align-items:center;gap:7px;font-size:13px;margin-bottom:6px}
+.formula b i{width:20px;height:20px;border-radius:6px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-size:10.5px;font-weight:800;font-style:normal}
+.formula code{font-family:Consolas,"Courier New",monospace;color:var(--brand);font-size:12.3px;line-height:1.8;display:block}
+.formula .f-note{font-size:11px;color:var(--sub);margin-top:5px}
+
+/* ============ 参数表 ============ */
+.param-input{width:74px;padding:5px 8px;border:1px solid var(--line-2);border-radius:8px;font-size:13px;text-align:right;font-variant-numeric:tabular-nums;background:var(--surface);color:var(--ink);transition:all .2s;font-weight:600}
+.param-input:focus{border-color:var(--brand);outline:none;box-shadow:0 0 0 3px var(--brand-soft)}
+.param-table td{vertical-align:middle}
+
+/* ============ 漏斗 ============ */
+.funnel{display:flex;flex-direction:column;gap:9px;margin:14px 0 20px}
+.fstep{display:flex;align-items:center;gap:14px}
+.fstep .flabel{width:130px;font-size:12.5px;text-align:right;color:var(--sub);flex-shrink:0;font-weight:500}
+.fstep .fbar{height:30px;background:linear-gradient(90deg,var(--brand-deep),#60A5FA);border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:12px;color:#fff;font-size:12px;font-weight:700;min-width:44px;transition:width .6s var(--ease);box-shadow:0 3px 10px -3px rgba(29,78,216,.4)}
+.fstep .frate{font-size:11.5px;color:var(--sub);white-space:nowrap}
+
+/* ============ 情景卡 ============ */
+.sc-tabs{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px;margin-bottom:16px}
+.sc-tabs button{border:none;background:transparent;color:var(--sub);font-size:13px;font-weight:600;padding:7px 22px;border-radius:9px;cursor:pointer;transition:all .25s var(--ease)}
+.sc-tabs button:hover{color:var(--brand)}
+.sc-tabs button.active{background:var(--brand);color:#fff;box-shadow:var(--shadow-sm)}
+.scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.scenario-card{border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 20px;background:var(--surface-2);cursor:pointer;transition:all .3s var(--ease);position:relative;overflow:hidden}
+.scenario-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.scenario-card.active{border-color:var(--brand);background:var(--brand-soft);box-shadow:var(--shadow-md)}
+.scenario-card.active::after{content:"当前查看";position:absolute;top:10px;right:10px;font-size:10px;font-weight:700;color:#fff;background:var(--brand);padding:2px 9px;border-radius:99px}
+.sc-name{font-size:13px;color:var(--sub);margin-bottom:4px;font-weight:600}
+.sc-big{font-size:29px;font-weight:800;letter-spacing:-.4px}
+.sc-big span{font-size:13px;font-weight:500;color:var(--sub)}
+.sc-line{font-size:12.3px;color:var(--sub);line-height:1.8}
+.sc-line b{color:var(--ink)}
+.sc-roi{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line-2);font-size:13px}
+.sc-roi b{font-size:16px}
+
+/* ============ 敏感性矩阵 ============ */
+.sens-wrap{overflow-x:auto;border-radius:var(--r-md);border:1px solid var(--line)}
+.sens-wrap table{min-width:560px}
+.sens-wrap td.hl{background:var(--warn-soft);font-weight:800;color:var(--warn);position:relative}
+.sens-wrap td.hl::after{content:"★";position:absolute;top:2px;right:5px;font-size:9px}
+
+/* ============ 提示框 ============ */
+.note{background:var(--warn-soft);border:1px solid color-mix(in srgb,var(--warn) 30%,transparent);border-radius:var(--r-md);padding:13px 18px;font-size:12.5px;color:var(--warn);margin-top:16px;line-height:1.75}
+.callout{background:var(--ok-soft);border:1px solid color-mix(in srgb,var(--ok) 30%,transparent);border-radius:var(--r-md);padding:13px 18px;font-size:13px;margin-top:16px;line-height:1.75}
+.callout b{color:var(--ok)}
+.note b{color:inherit;font-weight:800}
+details summary{cursor:pointer;font-size:13px;color:var(--brand);font-weight:700;margin:14px 0 10px;list-style:none;display:inline-flex;align-items:center;gap:6px;user-select:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"▸";transition:transform .25s var(--ease);font-size:11px}
+details[open] summary::before{transform:rotate(90deg)}
+details summary:hover{opacity:.8}
+
+/* ============ 预算总览 ============ */
+.budget-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:6px 0 20px}
+.budget-card{border-radius:var(--r-md);padding:16px 18px;border:1px solid var(--line);background:var(--surface-2);position:relative;overflow:hidden}
+.budget-card .bc-label{font-size:12px;color:var(--sub);margin-bottom:5px}
+.budget-card .bc-val{font-size:23px;font-weight:800;letter-spacing:-.3px}
+.budget-card .bc-sub{font-size:11.5px;color:var(--sub);margin-top:3px}
+.budget-card.hl-ok{background:var(--ok-soft);border-color:color-mix(in srgb,var(--ok) 30%,transparent)}
+.budget-card.hl-ok .bc-val{color:var(--ok)}
+.budget-card.hl-brand{background:var(--brand-soft);border-color:color-mix(in srgb,var(--brand) 25%,transparent)}
+.budget-card.hl-brand .bc-val{color:var(--brand)}
+
+/* ============ 回到顶部 & Toast ============ */
+.fab{position:fixed;right:22px;bottom:26px;width:42px;height:42px;border-radius:12px;background:var(--brand);color:#fff;border:none;display:grid;place-items:center;cursor:pointer;box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transform:translateY(12px);transition:all .35s var(--ease);z-index:90}
+.fab.show{opacity:1;pointer-events:auto;transform:none}
+.fab:hover{background:var(--brand-deep);transform:translateY(-2px)}
+.fab svg{width:17px;height:17px}
+.toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,16px);background:var(--ink);color:var(--bg);font-size:13px;font-weight:600;padding:9px 20px;border-radius:99px;box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:all .35s var(--ease);z-index:200;display:flex;align-items:center;gap:7px}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast svg{width:14px;height:14px;color:#4ADE80}
+
+/* ============ 页脚 ============ */
+footer{text-align:center;color:var(--sub);font-size:12px;margin-top:34px;line-height:2}
+footer .f-line{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+footer .f-sep{color:var(--line-2)}
+
+/* ============ 滚动渐现 ============ */
+.reveal{opacity:0;transform:translateY(22px)}
+.reveal.in{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal-d1{transition-delay:.08s}.reveal-d2{transition-delay:.16s}.reveal-d3{transition-delay:.24s}
+
+/* ============ 响应式 ============ */
+@media (max-width:1024px){
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .timeline{grid-template-columns:repeat(2,1fr)}
+  .tstep .t-arrow{display:none}
+  .budget-strip{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:768px){
+  .wrap{padding:0 14px 50px}
+  .hero{padding:36px 26px;border-radius:20px;margin-top:16px}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .grid2,.grid3,.formula-grid,.scenarios,.sum-grid{grid-template-columns:1fr}
+  .sec{padding:22px 18px}
+  .topbar-in{gap:10px}
+  .brand-mark span{display:none}
+  .fstep .flabel{width:86px}
+  .ring-wrap{gap:16px}
+}
+@media (max-width:520px){
+  .kpis{grid-template-columns:1fr 1fr}
+  .timeline{grid-template-columns:1fr}
+  .budget-strip{grid-template-columns:1fr}
+}
+
+/* ============ 打印 ============ */
+@media print{
+  html,html[data-theme="dark"]{
+    --bg:#fff;--surface:#fff;--surface-2:#fafbfd;--surface-3:#eef2f8;
+    --ink:#0f172a;--ink-2:#334155;--sub:#64748b;--faint:#94a3b8;
+    --line:#e2e8f0;--line-2:#cbd5e1;
+    --brand:#1d4ed8;--brand-deep:#1e40af;--brand-soft:#eff6ff;--brand-ink:#1e3a8a;
+    --hi:#dc2626;--hi-soft:#fef2f2;--mid:#d97706;--mid-soft:#fffbeb;--lo:#0284c7;--lo-soft:#f0f9ff;
+    --ok:#059669;--ok-soft:#ecfdf5;--warn:#b45309;--warn-soft:#fef3c7;
+    --shadow-sm:none;--shadow-md:none;--shadow-lg:none;
+  }
+  .topbar,.fab,.toast,.no-print,.hero-cta{display:none!important}
+  body{background:#fff}
+  .wrap{max-width:100%;padding:0}
+  .hero{border-radius:14px;padding:34px 38px;box-shadow:none}
+  .sec,.kpi,.summary,.scenario-card,.budget-card{break-inside:avoid;page-break-inside:avoid;box-shadow:none}
+  .reveal{opacity:1!important;transform:none!important}
+  a{text-decoration:none;color:inherit}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- 吸顶导航 -->
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brand-mark">
+      <span class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+      <span>沉睡会员唤醒 · 经营分析</span>
+    </div>
+    <nav class="nav-links" id="navLinks">
+      <a href="#kpi" data-sec="kpi">核心指标</a>
+      <a href="#s1" data-sec="s1">数据来源</a>
+      <a href="#s2" data-sec="s2">沉睡全景</a>
+      <a href="#s3" data-sec="s3">价值分层</a>
+      <a href="#s4" data-sec="s4">唤醒权益</a>
+      <a href="#s5" data-sec="s5">触达SOP</a>
+      <a href="#s6" data-sec="s6">回流预估</a>
+      <a href="#s7" data-sec="s7">执行计划</a>
+    </nav>
+    <div class="top-actions">
+      <button class="icon-btn" id="themeBtn" title="切换明暗主题" aria-label="切换主题">
+        <svg id="iconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg id="iconMoon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="icon-btn" id="printBtn" title="打印 / 导出PDF" aria-label="打印">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="progress"><div class="progress-in" id="progressIn"></div></div>
+</div>
+
+<div class="wrap">
+
+<!-- Hero -->
+<header class="hero" id="kpi">
+  <div class="hero-in">
+    <span class="tag"><span class="pulse"></span>会员运营专项 · 沉睡唤醒与流失挽回</span>
+    <h1>沉睡会员唤醒<span class="grad">分析报告</span></h1>
+    <div class="sub">90天未消费会员圈选 · 价值分层（阈值可调） · 阶梯式唤醒权益 · 多轮触达话术 · 回流效果预估</div>
+    <div class="metas">
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>模拟样本 1,200 条会员记录</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>圈选基准日 2026-10-21</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>90天阈值 2026-07-23</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M2 12h20"/></svg>v2.0 交互版</span>
+    </div>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#summary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-5"/></svg>查看核心结论</a>
+      <button class="btn btn-ghost" id="heroPrint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>打印 / 导出 PDF</button>
+    </div>
+  </div>
+</header>
+
+<!-- KPI 指标卡 -->
+<div class="kpis" id="kpiRow">
+  <div class="kpi accent-ink reveal">
+    <div class="k-head"><span class="k-label">注册会员总数</span><span class="k-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span></div>
+    <div class="k-val tv" id="kReg">0</div>
+    <div class="k-note">含注册未消费会员 361 人</div>
+    <div class="k-spark" id="spark1"></div>
+  </div>
+  <div class="kpi accent-brand reveal reveal-d1">
+    <div class="k-head"><span class="k-label">有消费记录会员</span><span class="k-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span></div>
+    <div class="k-val tv" id="kCon">0</div>
+    <div class="k-note" id="kConPct">占注册 —</div>
+    <div class="k-spark" id="spark2"></div>
+  </div>
+  <div class="kpi accent-hi reveal reveal-d2">
+    <div class="k-head"><span class="k-label">90天未消费沉睡会员</span><span class="k-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span></div>
+    <div class="k-val tv" id="kDor">0</div>
+    <div class="k-note" id="kDorPct">占消费会员 —</div>
+    <div class="k-spark" id="spark3"></div>
+  </div>
+  <div class="kpi accent-mid reveal reveal-d3">
+    <div class="k-head"><span class="k-label">沉睡会员历史贡献 GMV</span><span class="k-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M12 8v8"/><path d="M8 10h8"/><path d="M8 14h8"/></svg></span></div>
+    <div class="k-val tv" id="kGmv">¥0</div>
+    <div class="k-note" id="kGmvAvg">人均 —</div>
+    <div class="k-spark" id="spark4"></div>
+  </div>
+  <div class="kpi accent-ok reveal reveal-d3">
+    <div class="k-head"><span class="k-label">沉睡率</span><span class="k-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span></div>
+    <div class="k-val tv" id="kRate">0%</div>
+    <div class="k-note">占消费会员比例</div>
+    <div class="k-spark" id="spark5"></div>
+  </div>
+</div>
+
+<!-- 核心结论 -->
+<div class="summary reveal" id="summary">
+  <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2l2.4 7.2H22l-6 4.4 2.3 7.2-6.3-4.6-6.3 4.6L8 13.6 2 9.2h7.6z"/></svg>核心结论（30 秒版）</h3>
+  <div class="sum-grid">
+    <div class="sum-item"><span class="si-ico" style="background:var(--hi-soft);color:var(--hi)">1</span><span><b>沉睡池 589 人</b>，历史贡献 <b>¥697,379</b>（人均 ¥1,184）——规模与质量兼备，是最值得投入的挽回阵地。</span></div>
+    <div class="sum-item"><span class="si-ico" style="background:var(--brand-soft);color:var(--brand)">2</span><span><b>高价值 220 人贡献 79.3% GMV</b>：资源优先投向头部（电话 + 专属权益），先保头部回流再谈规模。</span></div>
+    <div class="sum-item"><span class="si-ico" style="background:var(--ok-soft);color:var(--ok)">3</span><span>中性情景 4 轮触达后<b>回流 52 人</b>，90 天 GMV <b>¥7,790</b>，ROI <b>1 : 2.05</b>；保守情景 ROI 仍 > 1，投入不吃亏。</span></div>
+    <div class="sum-item"><span class="si-ico" style="background:var(--mid-soft);color:var(--mid)">4</span><span><b>90~180 天浅睡会员 91 人</b>唤醒成本最低，应最先触发；2 年以上深睡 128 人改用低成本批量触达。</span></div>
+  </div>
+</div>
+
+<!-- ========== 1 数据来源与圈选 ========== -->
+<section class="sec reveal" id="s1">
+  <div class="sec-head">
+    <span class="sec-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg></span>
+    <div><h2>数据来源、圈选定义与样本预览</h2><div class="sec-sub">模拟样本构建 · 字段对齐真实导出格式 · 接入即可复用</div></div>
+  </div>
+  <div class="lead">本报告基于<strong>模拟会员样本</strong>构建：未提供真实消费数据文件，故按行业典型分布生成 1,200 条会员记录，字段结构与真实导出格式完全一致。全部模拟记录已内嵌于本文件，<strong>调整分层阈值与假设参数后所有统计实时重算</strong>。</div>
+  <div class="grid2">
+    <div>
+      <table>
+        <tr><th>字段</th><th>说明</th></tr>
+        <tr><td>会员ID</td><td>唯一标识（M + 6位序号）</td></tr>
+        <tr><td>注册时间</td><td>会员注册日期</td></tr>
+        <tr><td>最近消费日期</td><td>最后一笔有效订单日期</td></tr>
+        <tr><td>累计消费金额</td><td>历史有效消费合计（元）</td></tr>
+        <tr><td>消费次数</td><td>历史有效订单数</td></tr>
+        <tr><td>会员等级</td><td>普通 / 银卡 / 金卡 / 黑卡</td></tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr><th>圈选漏斗</th><th style="width:30%">人数</th><th style="width:24%">占比</th></tr>
+        <tr><td>注册会员总数</td><td class="num tv" id="fReg">—</td><td class="num">100%</td></tr>
+        <tr><td>有消费记录会员</td><td class="num tv" id="fCon">—</td><td class="num tv" id="fConP">—</td></tr>
+        <tr><td><span class="dot" style="background:var(--hi)"></span><b>沉睡会员（≥90天）</b></td><td class="num tv" id="fDor">—</td><td class="num tv" id="fDorP">—</td></tr>
+      </table>
+      <div class="note" style="margin-top:12px"><b>沉睡定义：</b>距最近一次消费 ≥ 90 天，且历史有消费记录（剔除仅注册未消费的 361 名会员）。基准日 2026-10-21，即最近消费日期早于 <b>2026-07-23</b> 即判定沉睡。</div>
+    </div>
+  </div>
+  <div class="note">⚠️ <b>假设前提：</b>① 本报告为<b>模拟数据</b>（Python 按行业典型分布生成，随机种子 20261021，结果可复现），非真实经营数据；② 会员等级、消费金额、消费频次按对数正态分布等典型结构模拟，等级越高购买概率与客单价越高；③ 沉睡时长按 90-180天 / 180-365天 / 1-2年 / 2年以上四段模拟；④ 接入真实数据时，仅需替换文件内嵌数据数组，其余模型无需改动。</div>
+  <details>
+    <summary>展开查看样本数据预览（按累计消费金额取前 10 位沉睡会员）</summary>
+    <table id="sampleTbl">
+      <tr><th>会员ID</th><th>注册时间</th><th>最近消费日期</th><th>累计消费金额</th><th>消费次数</th><th>会员等级</th><th>距基准日</th></tr>
+    </table>
+  </details>
+</section>
+
+<!-- ========== 2 沉睡全景 ========== -->
+<section class="sec reveal" id="s2">
+  <div class="sec-head">
+    <span class="sec-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 12v4"/><path d="M12 8v8"/><path d="M17 5v11"/></svg></span>
+    <div><h2>沉睡会员全景</h2><div class="sec-sub">沉睡时长分布 · 等级构成 · 时长 × 价值交叉矩阵</div></div>
+  </div>
+  <div class="lead" id="durLead">—</div>
+  <div class="grid2">
+    <div>
+      <table>
+        <tr><th>沉睡时长</th><th>人数</th><th>占比</th><th style="width:36%">分布</th></tr>
+        <tbody id="durBody"></tbody>
+      </table>
+      <div class="note" style="margin-top:12px">行业经验：沉睡用户一次成功召回的成本约为<b>新客获客的 1/5</b>；沉睡越久，唤醒成本越高、回流率越低。</div>
+    </div>
+    <div>
+      <table>
+        <tr><th>会员等级</th><th>人数</th><th>占比</th><th>历史GMV</th></tr>
+        <tbody id="lvlBody"></tbody>
+      </table>
+      <div class="callout" style="margin-top:12px">金卡 + 黑卡合计仅占沉睡人数 <b id="hlPct">—</b>，却贡献沉睡池 GMV 的 <b id="hlGmv">—</b>——<b>头部会员是唤醒回收的基本盘</b>。</div>
+    </div>
+  </div>
+  <div class="mt">
+    <table class="heat">
+      <tr><th>沉睡时长＼价值层</th><th>高价值</th><th>中价值</th><th>低价值</th><th>合计</th></tr>
+      <tbody id="crossBody"></tbody>
+    </table>
+    <div class="heat-legend">
+      <span>人数少</span><span class="hl-scale" id="hlScale"></span><span>人数多</span>
+      <span style="margin-left:10px">★ 优先级：浅睡 × 高价值 = 最优先唤醒</span>
+    </div>
+    <div class="callout" id="crossCallout">—</div>
+  </div>
+</section>
+
+<!-- ========== 3 价值分层 ========== -->
+<section class="sec reveal" id="s3">
+  <div class="sec-head">
+    <span class="sec-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></span>
+    <div><h2>价值分层结构（阈值可调）</h2><div class="sec-sub">累计消费金额（主）× 消费频次（辅）· 滑块实时重算</div></div>
+  </div>
+  <div class="lead">按「累计消费金额 × 消费频次」双维度分层：满足金额或频次其一即归入对应层级。拖动滑块调整阈值，<strong>全报告统计、权益成本与投产测算实时联动重算</strong>。</div>
+  <div class="ctrl no-print">
+    <div class="ctrl-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M1 14h6M9 8h6M17 16h6"/></svg>分层阈值调节器</div>
+    <div class="ctrl-row"><label>高价值 · 金额阈值</label><input type="range" id="tHA" min="500" max="5000" step="100" value="3000"><span class="ctrl-val" id="tHA_v">¥3000</span></div>
+    <div class="ctrl-row"><label>高价值 · 频次阈值</label><input type="range" id="tHF" min="3" max="20" step="1" value="12"><span class="ctrl-val" id="tHF_v">12单</span></div>
+    <div class="ctrl-row"><label>中价值 · 金额阈值</label><input type="range" id="tMA" min="100" max="2000" step="50" value="800"><span class="ctrl-val" id="tMA_v">¥800</span></div>
+    <div class="ctrl-row"><label>中价值 · 频次阈值</label><input type="range" id="tMF" min="1" max="10" step="1" value="4"><span class="ctrl-val" id="tMF_v">4单</span></div>
+    <div class="rule-text" id="ruleText">—</div>
+    <div style="margin-top:12px;display:flex;gap:8px"><button class="btn-sm ghost" id="resetBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-9 9z"/><path d="M3 3v6h6"/></svg>恢复默认阈值</button></div>
+  </div>
+  <div class="grid2">
+    <div class="ring-wrap">
+      <div class="ring-box">
+        <svg width="168" height="168" viewBox="0 0 128 128">
+          <circle cx="64" cy="64" r="54" fill="none" stroke="var(--surface-3)" stroke-width="19"></circle>
+          <circle id="arcH" cx="64" cy="64" r="54" fill="none" stroke-width="19" stroke-linecap="butt" stroke-dasharray="0 999" transform="rotate(-90 64 64)"></circle>
+          <circle id="arcM" cx="64" cy="64" r="54" fill="none" stroke-width="19" stroke-linecap="butt" stroke-dasharray="0 999" transform="rotate(-90 64 64)"></circle>
+          <circle id="arcL" cx="64" cy="64" r="54" fill="none" stroke-width="19" stroke-linecap="butt" stroke-dasharray="0 999" transform="rotate(-90 64 64)"></circle>
+        </svg>
+        <div class="ring-center"><span class="rc-l">沉睡会员</span><span class="rc-v tv" id="ringTotal">—</span></div>
+      </div>
+      <div class="legend" id="tierLegend"></div>
+    </div>
+    <div>
+      <table>
+        <tr><th>价值层</th><th>人数</th><th>人数占比</th><th>人均金额</th><th>人均频次</th><th>历史GMV</th><th style="width:20%">GMV贡献</th></tr>
+        <tbody id="tierBody"></tbody>
+      </table>
+    </div>
+  </div>
+  <div class="callout" id="tierCallout">—</div>
+</section>
+<!-- ========== 4 阶梯式唤醒权益 ========== -->
+<section class="sec reveal" id="s4">
+  <div class="sec-head">
+    <span class="sec-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 4.8 0 0 1 12 5a4.8 4.8 0 0 1 4.5-2 2.5 2.5 0 0 1 0 5"/></svg></span>
+    <div><h2>阶梯式唤醒权益设计</h2><div class="sec-sub">力度与价值挂钩 · 越往上越专属 · 成本按期望值核算</div></div>
+  </div>
+  <div class="lead">权益「越往上越专属」（身份感 + 服务），「越往上门槛越低、面额越厚」。权益成本按<strong>期望值口径</strong>核算：仅核销/回流才发生成本，随分层阈值与第 6 节假设参数实时联动。</div>
+  <table class="ben-table">
+    <tr><th style="width:12%">价值层</th><th style="width:14%">唤醒目标</th><th>优惠券（门槛×面额）</th><th>积分加码</th><th>专属礼遇</th><th>有效期</th><th style="width:14%">期望权益成本</th></tr>
+    <tr>
+      <td><span class="tier-badge" style="background:var(--hi);color:#fff;border-radius:6px;padding:2px 10px;font-size:12px;font-weight:700">高价值 <span id="bHn">—</span></span></td>
+      <td>找回身份感，恢复周期性回购</td>
+      <td><ul class="ben-list"><li>① 专属回归券「<b>满150减30</b>」</li></ul></td>
+      <td><ul class="ben-list"><li>② <b>14天双倍积分</b></li></ul></td>
+      <td><ul class="ben-list"><li>③ 回归礼包（¥15/单）</li><li>④ 生日礼 + 专属客服</li></ul></td>
+      <td>30天</td>
+      <td class="num tv">单人 <b id="cH1">—</b><br>合计 <b id="cHt">—</b></td>
+    </tr>
+    <tr>
+      <td><span class="tier-badge" style="background:var(--mid);color:#fff;border-radius:6px;padding:2px 10px;font-size:12px;font-weight:700">中价值 <span id="bMn">—</span></span></td>
+      <td>用实惠重建消费习惯</td>
+      <td><ul class="ben-list"><li>① 回归券「<b>满80减15</b>」</li></ul></td>
+      <td><ul class="ben-list"><li>② <b>7天积分翻倍</b></li></ul></td>
+      <td><ul class="ben-list"><li>③ 爆款第二杯半价</li><li>④ 集章卡进度重启（¥5/单）</li></ul></td>
+      <td>21天</td>
+      <td class="num tv">单人 <b id="cM1">—</b><br>合计 <b id="cMt">—</b></td>
+    </tr>
+    <tr>
+      <td><span class="tier-badge" style="background:var(--lo);color:#fff;border-radius:6px;padding:2px 10px;font-size:12px;font-weight:700">低价值 <span id="bLn">—</span></span></td>
+      <td>零门槛触发首次回流</td>
+      <td><ul class="ben-list"><li>① <b>无门槛8元券</b></li></ul></td>
+      <td><ul class="ben-list"><li>② <b>3天1.5倍积分</b></li></ul></td>
+      <td><ul class="ben-list"><li>③ 免配送费</li><li>④ 小样赠品（¥2/单）</li></ul></td>
+      <td>14天</td>
+      <td class="num tv">单人 <b id="cL1">—</b><br>合计 <b id="cLt">—</b></td>
+    </tr>
+  </table>
+  <div class="mt">
+    <div style="font-size:12.5px;font-weight:700;color:var(--sub);margin-bottom:4px">权益成本结构（中性情景，合计 <span class="tv" id="cAll">—</span>）</div>
+    <div class="cost-stack" id="costStack">
+      <i id="csCoupon" style="background:var(--brand);width:33%"><span id="csCouponT">券</span></i>
+      <i id="csPts" style="background:var(--mid);width:33%"><span id="csPtsT">积分</span></i>
+      <i id="csGift" style="background:var(--ok);width:33%"><span id="csGiftT">礼遇</span></i>
+    </div>
+    <div class="cost-legend">
+      <span><i style="background:var(--brand)"></i>优惠券成本 <b class="tv" id="clCoupon">—</b></span>
+      <span><i style="background:var(--mid)"></i>积分加码成本 <b class="tv" id="clPts">—</b></span>
+      <span><i style="background:var(--ok)"></i>礼遇成本 <b class="tv" id="clGift">—</b></span>
+    </div>
+  </div>
+  <div class="note"><b>核算口径（期望值）：</b>单人成本 = 用券张数×券面额 + 回流订单×客单价×积分加码率 + 回流订单×礼遇成本；用券张数 = 该层人数 × 触达率 × 回流率 × 用券率。当前分层阈值下三层合计权益投入约 <b id="cAll2">—</b>。</div>
+  <div class="note"><b>核销策略：</b>所有券类权益在<strong>第 2 轮触达前</strong>发放到账，用「已到账」催动打开；第 3 轮做到期提醒；第 4 轮对未核销高价值用户升级兜底权益。建议 A/B 测：高价值层对比「券 vs 服务型权益（专属导购/免费配送）」的核销差异。</div>
+</section>
+
+<!-- ========== 5 多轮触达 SOP ========== -->
+<section class="sec reveal" id="s5">
+  <div class="sec-head">
+    <span class="sec-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+    <div><h2>多轮触达 SOP 与话术库</h2><div class="sec-sub">D0 / D7 / D14 / D28 四轮递进 · 点击卡片定位对应话术 · 话术可一键复制</div></div>
+  </div>
+  <div class="lead">4 轮递进触达：<strong>关怀唤醒 → 权益激活 → 限时紧迫 → 终极挽留</strong>。渠道组合：企微 1 对 1（主）+ 短信 + APP 推送，高价值层第 4 轮追加电话/AI 外呼。点击下方轮次卡片可定位到对应话术。</div>
+  <div class="timeline">
+    <div class="tstep active" data-i="0">
+      <div class="t-day">第 1 轮 · D0</div><div class="t-name">好久不见</div>
+      <div class="t-desc">渠道：企微1对1 + APP推送<br>触发：进入沉睡名单当日</div>
+      <span class="t-goal">目标：打开率</span>
+      <span class="t-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></span>
+    </div>
+    <div class="tstep" data-i="1">
+      <div class="t-day">第 2 轮 · D7</div><div class="t-name">权益到账</div>
+      <div class="t-desc">渠道：企微 + 短信（间隔7天）<br>触发：券已发放至卡包</div>
+      <span class="t-goal">目标：领券 / 核销启动</span>
+      <span class="t-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></span>
+    </div>
+    <div class="tstep" data-i="2">
+      <div class="t-day">第 3 轮 · D14</div><div class="t-name">限时加码</div>
+      <div class="t-desc">渠道：企微 + 短信（间隔7天）<br>触发：会员日 / 周末节点</div>
+      <span class="t-goal">目标：转化 / 临门一脚</span>
+      <span class="t-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></span>
+    </div>
+    <div class="tstep" data-i="3">
+      <div class="t-day">第 4 轮 · D28</div><div class="t-name">终极挽留</div>
+      <div class="t-desc">渠道：电话(高) + 企微/短信(中低)（间隔14天）<br>触发：权益到期前3天</div>
+      <span class="t-goal">目标：挽回 / 归因</div>
+    </div>
+  </div>
+  <table>
+    <tr><th style="width:10%">轮次</th><th style="width:30%">高价值层话术（可直接使用）</th><th style="width:30%">中价值层话术</th><th style="width:30%">低价值层话术</th></tr>
+    <tr id="scr0">
+      <td><b>D0</b><br>好久不见</td>
+      <td><div class="script"><span class="s-tag">企微</span><span class="s-body">王姐，好久不见～我是豆咖小豆。您上次来是 6 月啦，我们一直记着您。给您在会员卡里留了一份老友回归礼：满150减30专属券 + 14天双倍积分。不用急着用，就是惦记您～</span><button class="copy-btn" title="复制话术"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></td>
+      <td><div class="script"><span class="s-tag">企微</span><span class="s-body">好久不见！给您留了张满80减15的回归券，还有几款爆款本周第二杯半价。有空来坐坐，就当回来逛逛～</span><button class="copy-btn" title="复制话术"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></td>
+      <td><div class="script"><span class="s-tag">APP推送</span><span class="s-body">好久不见，送你一张 8 元无门槛券已放入卡包，14天内有效。顺便看看我们上了什么新品？</span><button class="copy-btn" title="复制话术"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></td>
+    </tr>
+    <tr id="scr1">
+      <td><b>D7</b><br>权益到账</td>
+      <td><div class="script"><span class="s-tag">企微</span><span class="s-body">您的专属券已生效～本周五会员日满150减30 + 双倍积分同享，您常点的燕麦拿铁换了新豆子，给您留了两张第二杯半价券，带朋友来尝尝？</span><button class="copy-btn" title="复制话术"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></td>
+      <td><div class="script"><span class="s-tag">企微</span><span class="s-body">爆款体验周来啦：生椰系列本周直降，满80再减15。点这里看本周好物 👉 [小程序链接]</span><button class="copy-btn" title="复制话术"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></td>
+      <td><div class="script"><span class="s-tag">短信</span><span class="s-body">【豆咖】8元无门槛券已到账，全场通用，还剩7天。到店或小程序点单直接抵，回T退订</span><button class="copy-btn" title="复制话术"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></td>
+    </tr>
+    <tr id="scr2">
+      <td><b>D14</b><br>限时加码</td>
+      <td><div class="script"><span class="s-tag">企微</span><span class="s-body">您的满150减30券还有 3 天到期，双倍积分也只到周末。周六会员日全场加码，等您～</span><button class="copy-btn" title="复制话术"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></td>
+      <td><div class="script"><span class="s-tag">短信</span><span class="s-body">【豆咖】提醒您：回归券3天后到期，周末会员日积分翻倍，顺手把券用掉最划算～回T退订</span><button class="copy-btn" title="复制话术"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></td>
+      <td><div class="script"><span class="s-tag">短信</span><span class="s-body">【豆咖】8元券最后3天！别浪费～小程序下单直接抵扣，回T退订</span><button class="copy-btn" title="复制话术"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></td>
+    </tr>
+    <tr id="scr3">
+      <td><b>D28</b><br>终极挽留</td>
+      <td><div class="script"><span class="s-tag">电话</span><span class="s-body">X姐您好，我是豆咖的小豆。看您三个多月没来了，想问问是不是有什么不满意的地方？这周给您升级了一张无门槛回归卡，欢迎随时回来。</span><button class="copy-btn" title="复制话术"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></td>
+      <td><div class="script"><span class="s-tag">企微</span><span class="s-body">最后一张回归券已补发，这次不设门槛。如果不想再收到消息，回复「退订」即可，随时欢迎回来～</span><button class="copy-btn" title="复制话术"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></td>
+      <td><div class="script"><span class="s-tag">短信</span><span class="s-body">【豆咖】最后提醒：回归礼今日结束。想再来随时欢迎，回复「退订」不再打扰～</span><button class="copy-btn" title="复制话术"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div></td>
+    </tr>
+  </table>
+  <div class="grid2 mt">
+    <div>
+      <table>
+        <tr><th>渠道</th><th>单条成本</th><th>打开/送达率</th><th>点击率</th><th>风险</th><th>本轮角色</th></tr>
+        <tr><td><span class="dot" style="background:var(--brand)"></span>企微 1对1</td><td class="num">¥0.02</td><td class="num">45~60%</td><td class="num">12~18%</td><td>低（控频次）</td><td>主通道 R1~R4</td></tr>
+        <tr><td><span class="dot" style="background:var(--mid)"></span>短信</td><td class="num">¥0.05</td><td class="num">90%+</td><td class="num">3~6%</td><td>中（带回T）</td><td>备通道 R2/R3/R4</td></tr>
+        <tr><td><span class="dot" style="background:var(--lo)"></span>APP Push</td><td class="num">¥0.01</td><td class="num">8~15%</td><td class="num">4~8%</td><td>低</td><td>辅助 R1 低价值层</td></tr>
+        <tr><td><span class="dot" style="background:var(--hi)"></span>电话 / AI外呼</td><td class="num">¥2~4/通</td><td class="num">70%+</td><td class="num">20~30%</td><td>中（限1次）</td><td>R4 高价值专属</td></tr>
+      </table>
+      <div class="note" style="margin-top:10px">渠道效果为行业基准区间（模拟假设），用于触达成本核算；实际以本品牌历史数据校准。</div>
+    </div>
+    <div>
+      <div class="note" style="margin-top:0"><b>合规要点：</b>① 每轮短信均带「回T退订」；② 企微消息控制在 <b>4 轮 / 28 天</b>（≤ 行业安全线）；③ 退订名单即时移除，防止投诉；④ 高价值层电话回访仅 1 次，话术以「询问原因」开头而非直接推销；⑤ 夜间时段（21:00~08:00）不发送营销消息。</div>
+      <div class="callout"><b>节奏设计逻辑：</b>D0 只刷存在感不卖货 → D7 权益到账给理由 → D14 制造紧迫 → D28 留出挽回与归因窗口。间隔 7/7/14 天，避免连续轰炸导致退订率上升。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 6 回流效果预估 ========== -->
+<section class="sec reveal" id="s6">
+  <div class="sec-head">
+    <span class="sec-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
+    <div><h2>回流效果预估与投产测算</h2><div class="sec-sub">公式透明 · 参数可编辑 · 三情景联动 · 敏感性分析</div></div>
+  </div>
+  <div class="lead">预估模型 = 分层规模 × 触达率 × 分层回流率 × 客单价，叠加用券成本、复购增量与一次性执行杂费。<strong>所有假设参数可编辑，修改后全表实时联动。</strong></div>
+  <div class="formula-grid">
+    <div class="formula"><b><i>1</i>沉睡会员数</b><code>有消费记录 且 距最近消费 ≥ 90天</code><div class="f-note">剔除仅注册未消费会员</div></div>
+    <div class="formula"><b><i>2</i>有效触达人数</b><code>沉睡人数 × 有效触达率</code><div class="f-note">触达率 = 消息成功送达且未被过滤的比例</div></div>
+    <div class="formula"><b><i>3</i>回流人数</b><code>Σ(各层人数 × 触达率 × 分层回流率)</code><div class="f-note">分层回流率取行业唤醒基准区间</div></div>
+    <div class="formula"><b><i>4</i>90天GMV</b><code>Σ(回流人数 × 客单价 × (1 + 复购率))</code><div class="f-note">含唤醒后 90 天内二次消费</div></div>
+    <div class="formula"><b><i>5</i>总成本</b><code>权益成本 + 触达成本 + 执行杂费¥300</code><div class="f-note">权益成本 = Σ(用券张数×面额 + 回流订单×客单价×积分加码率 + 回流订单×礼遇成本)<br>触达成本 = Σ(各层人数 × 人均触达单价 高1.63 / 中0.23 / 低0.18 元)</div></div>
+    <div class="formula"><b><i>6</i>ROI</b><code>(GMV × 毛利率 − 总成本) ÷ 总成本</code><div class="f-note">每投入 1 元唤醒成本所带来的边际毛利（元）</div></div>
+  </div>
+  <details open>
+    <summary>假设参数表（参考行业基准区间，可直接修改）</summary>
+    <table class="param-table" id="paramTbl">
+      <tr><th>假设参数</th><th>保守</th><th>中性</th><th>乐观</th><th>行业基准 / 依据</th></tr>
+    </table>
+  </details>
+  <div class="sc-tabs no-print" id="scTabs">
+    <button data-s="c">保守情景</button><button data-s="n" class="active">中性情景</button><button data-s="o">乐观情景</button>
+  </div>
+  <div class="funnel" id="funnelBox"></div>
+  <div class="scenarios" id="scenarioBox"></div>
+  <div class="note" style="margin-top:16px"><b>分Layer测算（<span id="tierCalcScenName">中性</span>情景）：</b></div>
+  <table>
+    <tr><th>价值层</th><th>人数</th><th>有效触达</th><th>回流人数</th><th>客单价</th><th>首单GMV</th><th>用券张数</th><th>权益成本</th><th>触达成本</th><th>层ROI</th></tr>
+    <tbody id="tierCalcBody"></tbody>
+  </table>
+  <div class="note" style="margin-top:14px"><b>敏感性矩阵：90天GMV（元）随整体回流率 × 平均客单价变化</b>（触达人数取当前情景，★ ≈ 当前锚点）</div>
+  <div class="sens-wrap">
+    <table id="sensTbl"></table>
+  </div>
+  <div class="note"><b>行业基准参考：</b>沉睡用户召回成本 ≈ 新客获客的 1/5；高价值沉睡用户唤醒回流率基准 12~18%；企微单条触达 ¥0.02~0.05、短信 ¥0.05；餐饮零售综合毛利率 55~62%。接入真实数据后，只需替换客单价与回流率参数即可重算。</div>
+</section>
+
+<!-- ========== 7 预算与执行计划 ========== -->
+<section class="sec reveal" id="s7">
+  <div class="sec-head">
+    <span class="sec-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span>
+    <div><h2>预算总览与落地执行计划</h2><div class="sec-sub">投入产出一览 · 四步闭环 · A/B 实验 · 风险预案</div></div>
+  </div>
+  <div class="lead">按「圈定人群 → 配置权益 → 4 轮触达 → 复盘迭代」四步闭环落地，4 周为一个复盘周期。预算与产出随当前所选情景（<b id="budScenName">中性</b>）实时联动。</div>
+  <div class="budget-strip">
+    <div class="budget-card hl-brand"><div class="bc-label">唤醒总投入</div><div class="bc-val tv" id="budCost">—</div><div class="bc-sub">权益 + 触达 + 执行杂费</div></div>
+    <div class="budget-card"><div class="bc-label">90天增量GMV</div><div class="bc-val tv" id="budGmv">—</div><div class="bc-sub">含唤醒后复购</div></div>
+    <div class="budget-card"><div class="bc-label">增量毛利</div><div class="bc-val tv" id="budGp">—</div><div class="bc-sub" id="budMgn">—</div></div>
+    <div class="budget-card hl-ok"><div class="bc-label">净贡献 / ROI</div><div class="bc-val tv" id="budNet">—</div><div class="bc-sub" id="budRoi">—</div></div>
+  </div>
+  <table>
+    <tr><th style="width:15%">阶段</th><th>动作</th><th style="width:26%">关键指标</th></tr>
+    <tr><td><b>① 人群圈定</b></td><td>在 CRM/CDP 中建立「90天未消费」动态人群包，按价值层打标签，每周自动更新</td><td>人群包规模、分层占比</td></tr>
+    <tr><td><b>② 权益配置</b></td><td>按层创建差异化券模板与积分规则，设置有效期（高30天/中21天/低14天），预埋核销追踪码</td><td>券领取率、核销率</td></tr>
+    <tr><td><b>③ 触达执行</b></td><td>企微 1 对 1 + 短信 + APP 推送三通道，按 D0/D7/D14/D28 排程；高价值层第 4 轮电话回访</td><td>触达率、打开率、退订率</td></tr>
+    <tr><td><b>④ 复盘迭代</b></td><td>4 周后统计回流率与 ROI，对比分层差异；对回流客户设置 30 天二次唤醒（防再沉睡）</td><td>回流率、ROI、复购率</td></tr>
+  </table>
+  <div class="grid2 mt">
+    <div>
+      <table>
+        <tr><th>实验</th><th>分组设计</th><th>主指标</th></tr>
+        <tr><td><b>A1</b> 券 vs 服务</td><td>高价值层 50/50：满减券 vs 专属导购/免配送</td><td>核销率、ROI</td></tr>
+        <tr><td><b>A2</b> 触达节奏</td><td>D0/D7/D14/D28 vs D0/D10/D20</td><td>核销率、退订率</td></tr>
+        <tr><td><b>A3</b> 文案温度</td><td>情感型（叙旧）vs 利益型（算账）</td><td>打开率、点击率</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="note" style="margin-top:0"><b>风险与对策：</b>① 深睡用户（>2年）回流率衰减——权益成本控制在低价值档，避免深折；② 短信退订与投诉合规风险——严格带回T、控频次、退订即时移除；③ 权益依赖风险——券 + 积分 + 礼遇组合，避免只靠折扣拉低毛利；④ 模拟数据偏差——接入真实数据后需重校准回流率与客单价参数。</div>
+      <div class="callout">💡 <b>关键提醒：</b>唤醒后防再沉睡与唤醒同样重要——回流客户 30 天内未二次消费即触发新一轮轻量关怀，把「一次性唤醒」变成「生命周期运营」。</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-line">
+    <span>沉睡会员唤醒分析报告 · v2.0 交互版</span><span class="f-sep">｜</span>
+    <span>基于模拟样本数据生成</span><span class="f-sep">｜</span>
+    <span>阈值与假设参数均可在报告内实时调整</span><span class="f-sep">｜</span>
+    <span>生成时间 2026-10-21</span>
+  </div>
+</footer>
+
+</div>
+
+<button class="fab" id="fabTop" title="回到顶部" aria-label="回到顶部">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+</button>
+<div class="toast" id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg><span id="toastMsg"></span></div>
+
+<style>
+.tier-badge{display:inline-block}
+.hcell{transition:background .45s var(--ease),transform .2s var(--ease),color .45s var(--ease)}
+@keyframes flashRow{0%,55%{background:var(--brand-soft)}100%{background:transparent}}
+tr.flash{animation:flashRow 1.8s var(--ease)}
+</style>
+
+<script>
+"use strict";
+var DATA = {"meta":{"base":"2026-10-21","registered":1200,"consumers":839,"dormant":589,"active":250,"dormant_gmv":697379,"dormant_pct":70.2},"dur_dist":[{"label":"90~180天","n":91,"pct":15.4},{"label":"180~365天","n":169,"pct":28.7},{"label":"1~2年","n":201,"pct":34.1},{"label":"2年以上","n":128,"pct":21.7}],"lvl_dist":[{"level":"普通","n":259,"pct":44.0,"amt":81924},{"level":"银卡","n":151,"pct":25.6,"amt":120992},{"level":"金卡","n":132,"pct":22.4,"amt":261343},{"level":"黑卡","n":47,"pct":8.0,"amt":233120}],"sample":[{"id":"M100001","reg":"2023-08-20","last":"2026-01-12","amt":29913.42,"freq":217,"level":"黑卡","days":282},{"id":"M101070","reg":"2022-04-16","last":"2025-08-13","amt":18995.27,"freq":139,"level":"黑卡","days":434},{"id":"M101048","reg":"2024-07-08","last":"2026-07-15","amt":13680.73,"freq":161,"level":"金卡","days":98},{"id":"M100970","reg":"2024-07-08","last":"2025-03-29","amt":11273.1,"freq":70,"level":"黑卡","days":571},{"id":"M100094","reg":"2026-04-25","last":"2026-06-08","amt":10666.64,"freq":73,"level":"黑卡","days":135},{"id":"M100265","reg":"2025-08-17","last":"2026-01-21","amt":9536.47,"freq":62,"level":"黑卡","days":273},{"id":"M100875","reg":"2022-11-02","last":"2025-11-12","amt":8841.49,"freq":61,"level":"黑卡","days":343},{"id":"M100577","reg":"2023-02-21","last":"2023-06-27","amt":8829.93,"freq":78,"level":"黑卡","days":1212},{"id":"M100724","reg":"2024-10-13","last":"2026-03-16","amt":8329.19,"freq":60,"level":"黑卡","days":219},{"id":"M100097","reg":"2025-02-21","last":"2023-12-13","amt":7812.98,"freq":87,"level":"金卡","days":1043}],"rows":[[29913.42,217,3,282],[161.5,3,0,426],[234.45,6,0,16],[526.42,6,2,76],[323.95,7,0,117],[374.07,11,0,183],[263.34,4,1,531],[111.95,3,0,137],[1256.57,29,0,20],[429.43,10,0,237],[353.99,4,1,36],[27.55,1,0,84],[436.33,12,0,367],[1825.63,20,2,730],[365.68,8,0,89],[833.11,10,1,43],[336.72,6,0,676],[103.22,2,0,905],[247.4,2,1,223],[768.84,8,1,538],[850.79,14,1,50],[193.94,5,0,44],[917.54,8,2,563],[99.6,3,0,72],[913.39,11,2,148],[4949.33,34,3,145],[1335.57,16,1,1351],[973.09,13,1,328],[954.64,12,1,324],[419.48,8,0,732],[175.27,2,1,1199],[144.97,3,0,24],[962.44,9,2,1497],[314.76,5,1,610],[2977.86,21,2,278],[311.99,9,0,190],[389.07,3,2,307],[367.31,8,0,705],[66.62,1,0,216],[242.49,4,0,666],[622.36,7,1,22],[3485.62,29,2,122],[302.06,6,0,305],[547.69,9,0,60],[1355.28,27,0,614],[79.86,2,0,187],[144.07,4,0,46],[109.17,2,0,502],[161.74,4,0,582],[447.58,8,0,156],[2487.96,19,2,742],[180.04,5,0,515],[1133.3,18,0,688],[217.72,5,0,128],[292.79,8,0,66],[111.31,3,0,969],[972.48,7,2,1565],[1173.5,14,1,1114],[1077.49,11,1,235],[293.22,8,0,992],[514.79,8,1,64],[791.25,8,1,58],[141.06,3,0,680],[127.05,3,0,716],[10666.64,73,3,135],[2229.86,21,3,499],[6048.59,49,3,240],[7812.98,87,2,1043],[694.34,7,1,288],[2033.89,17,3,121],[226.01,5,0,29],[123.55,3,0,1462],[171.13,3,0,568],[212.3,6,0,151],[1491.65,17,2,645],[101.44,3,0,446],[170.38,4,0,300],[4286.92,41,2,405],[261.58,7,0,94],[82.86,2,0,1041],[4086.6,53,2,499],[632.13,11,1,255],[264.25,3,1,297],[2998.42,37,2,911],[202.62,4,0,31],[171.34,4,0,279],[388.31,10,0,1506],[719.4,18,0,715],[5227.12,42,3,64],[673.08,9,1,305],[296.58,7,0,24],[1251.58,13,2,228],[451.98,11,0,280],[206.35,3,0,14],[606.7,10,1,52],[520.82,14,0,1503],[2932.27,37,1,42],[296.51,6,0,468],[2506.66,19,3,11],[275.54,8,0,735],[1308.55,13,1,655],[1446.1,16,2,428],[436.49,8,0,46],[2416.12,24,2,417],[1030.01,7,3,66],[203.94,4,0,1],[323.46,8,0,487],[914.98,13,1,10],[2301.63,22,2,48],[195.8,3,0,349],[321.96,6,0,89],[211.37,3,1,609],[357.35,6,0,143],[130.53,3,0,52],[3736.95,41,2,1153],[334.17,9,0,26],[378.9,9,0,289],[109.53,2,0,19],[775.84,8,2,1534],[1008.2,29,0,70],[837.82,10,2,1460],[555.37,9,0,417],[91.93,3,0,997],[311.54,5,1,1515],[431.39,7,1,22],[3841.03,22,3,331],[598.22,15,0,365],[277.62,5,0,450],[829.27,23,0,50],[96.19,3,0,64],[458.99,5,1,1023],[359.76,7,0,132],[415.62,11,0,347],[353.46,10,0,84],[2770.06,35,2,247],[1073.44,18,1,1010],[450.13,10,0,165],[776.29,17,0,136],[667.31,6,1,438],[225.62,6,0,289],[388.22,7,0,425],[189.73,3,0,81],[101.37,3,0,117],[278.17,8,0,436],[235.55,6,0,171],[1112.22,22,0,40],[3133.38,31,2,692],[57.24,1,0,28],[447.09,4,1,34],[3353.91,31,3,247],[4642.05,44,3,102],[245.24,6,0,143],[240.31,4,0,1479],[93.12,2,0,1125],[4893.88,62,2,61],[304.99,8,0,77],[2767.56,22,3,453],[2505.57,32,2,172],[332.36,6,0,4],[603.84,10,1,516],[111.29,2,0,32],[750.94,8,2,48],[1038.85,6,3,697],[332.4,7,0,126],[276.45,4,1,416],[179.46,4,0,350],[443.31,5,2,63],[307.51,6,0,102],[2314.8,20,2,918],[1906.11,32,1,483],[164.14,3,0,225],[1028.77,9,2,91],[114.25,2,0,27],[101.49,2,0,705],[906.61,12,1,402],[1423.11,15,2,309],[2893.28,24,3,450],[329.16,9,0,444],[81.56,2,0,584],[990.29,18,0,208],[304.64,8,0,52],[1429.03,13,1,263],[232.14,4,0,311],[974.63,13,2,695],[4230.77,31,3,286],[976.89,10,1,339],[464.34,7,1,504],[297.61,6,0,810],[1837.83,16,2,539],[270.51,4,0,75],[9536.47,62,3,273],[566.89,9,1,596],[112.17,2,0,432],[1230.66,14,2,334],[1099.23,14,2,105],[103.81,2,0,46],[433.47,10,0,181],[1370.54,12,2,7],[166.47,3,0,484],[5245.51,47,2,160],[2173.26,18,3,197],[441.41,4,2,559],[424.65,7,0,329],[2457.01,29,2,455],[1335.86,11,2,423],[406.58,4,1,1],[1068.05,17,0,70],[188.52,5,0,76],[827.9,22,0,52],[1687.21,15,2,474],[295.77,6,0,306],[428.98,9,0,11],[230.76,3,1,21],[155.11,4,0,28],[280.75,7,0,69],[550.94,10,0,1442],[1205.04,9,2,411],[60.45,1,0,688],[439.24,7,1,1322],[247.23,6,0,39],[166.44,3,0,345],[335.63,3,2,480],[500.75,13,0,59],[171.18,4,0,55],[255.04,5,0,1245],[1877.31,31,1,82],[546.87,7,1,348],[902.95,14,1,37],[492.65,9,0,324],[1536.21,26,0,180],[218.86,6,0,88],[873.62,12,1,365],[1596.29,24,1,69],[35.63,1,0,44],[71.49,2,0,282],[274.3,7,0,30],[1061.32,15,1,1147],[481.17,7,1,375],[243.19,4,1,1596],[460.66,8,1,140],[1655.96,15,2,997],[655.69,14,0,771],[4099.3,30,3,363],[710.84,17,0,55],[310.99,5,1,614],[2198.87,17,3,177],[275.66,5,1,86],[1580.44,17,2,174],[860.29,8,2,65],[468.33,8,1,501],[1366.15,17,2,71],[1103.71,13,1,312],[84.41,2,0,73],[125.95,3,0,445],[90.85,2,0,621],[451.61,11,0,611],[114.0,3,0,240],[2145.64,15,3,43],[439.29,11,0,19],[349.22,6,0,218],[1558.52,24,1,1146],[372.58,10,0,584],[1152.77,11,3,450],[5041.44,36,2,386],[268.89,3,1,195],[212.26,5,0,492],[100.05,2,0,186],[1193.95,15,2,693],[415.14,9,0,792],[174.55,3,0,10],[113.18,2,0,37],[1666.57,27,1,174],[376.18,10,0,836],[229.39,6,0,5],[219.84,6,0,291],[223.19,6,0,1070],[729.84,8,1,798],[310.67,9,0,48],[365.89,8,0,17],[1230.67,18,1,542],[218.58,5,0,924],[2524.87,23,3,1301],[243.49,7,0,289],[554.47,9,1,83],[129.68,3,0,62],[342.88,6,0,236],[616.97,17,0,502],[296.55,6,0,69],[357.51,5,1,26],[106.71,2,0,204],[2241.74,25,2,702],[360.41,5,1,145],[707.59,16,0,50],[720.12,18,0,3],[451.35,8,0,996],[124.36,3,0,315],[332.2,3,1,1275],[1352.05,21,1,1286],[469.42,8,1,1495],[794.59,20,0,206],[441.38,11,0,45],[3391.43,24,2,323],[219.5,4,0,1262],[516.46,14,0,63],[1060.49,11,1,263],[86.25,2,0,500],[761.72,10,1,305],[240.44,5,0,93],[1937.94,18,2,243],[1712.8,13,3,14],[1757.51,16,2,40],[305.1,5,0,85],[182.66,5,0,473],[781.52,13,1,373],[482.12,7,1,4],[254.95,5,0,619],[2867.2,21,2,286],[90.97,2,0,632],[3386.23,34,2,209],[119.04,3,0,520],[432.57,5,1,479],[801.2,6,2,276],[95.64,2,0,591],[2159.15,26,2,379],[1859.05,20,2,265],[640.22,17,0,219],[317.19,3,1,380],[379.44,6,1,728],[1041.62,14,1,968],[199.52,3,1,1565],[1144.51,18,1,307],[636.53,8,1,1500],[827.43,14,1,405],[2822.72,35,2,1035],[893.77,11,1,74],[951.88,12,1,30],[479.86,11,0,290],[1917.6,21,2,287],[153.72,3,0,730],[595.81,6,1,913],[136.46,4,0,49],[164.71,5,0,1],[545.46,7,1,29],[4092.38,31,3,212],[189.02,4,0,698],[579.66,12,0,28],[1121.28,15,1,871],[640.74,13,0,83],[264.24,6,0,127],[208.59,4,0,397],[851.5,21,0,82],[489.63,12,0,376],[276.28,4,1,19],[297.54,6,0,195],[173.0,3,0,22],[324.73,9,0,309],[389.24,11,0,701],[1481.2,15,2,392],[1805.05,15,2,656],[344.4,9,0,707],[521.69,5,1,58],[1807.79,23,2,108],[613.62,11,0,746],[558.14,8,1,489],[1143.14,11,2,11],[79.08,2,0,68],[1748.76,18,2,455],[547.63,9,0,533],[619.3,15,0,101],[2646.42,28,2,193],[608.6,7,2,340],[86.99,2,0,76],[141.24,4,0,79],[122.56,2,0,249],[381.69,5,1,71],[1525.41,13,3,457],[437.4,5,1,67],[2276.21,22,3,1489],[2182.79,16,3,353],[121.23,2,0,1],[931.82,10,2,756],[3190.55,33,2,260],[71.09,1,0,81],[777.99,9,2,198],[255.88,7,0,42],[1144.61,12,2,211],[6034.77,64,2,974],[1337.28,13,2,733],[209.15,6,0,436],[661.73,8,2,531],[510.54,9,0,597],[245.31,5,0,75],[934.58,13,1,516],[6164.46,58,3,235],[165.57,4,0,497],[395.23,10,0,256],[791.5,12,1,45],[82.43,2,0,366],[202.63,6,0,305],[306.38,5,0,72],[2488.68,24,2,1137],[862.43,10,2,618],[544.69,7,2,1539],[3470.48,31,2,460],[8829.93,78,3,1212],[1885.69,21,2,681],[4658.69,49,2,563],[2017.78,32,1,16],[2173.64,27,1,395],[1031.87,8,2,223],[731.46,8,1,441],[226.09,5,0,94],[767.49,22,0,113],[276.93,6,0,829],[2867.57,45,1,1597],[1015.71,16,1,78],[1528.0,21,1,550],[2433.28,20,3,327],[1209.22,15,1,229],[612.1,15,0,788],[221.94,6,0,18],[593.32,12,0,502],[7436.34,52,3,719],[156.25,3,0,402],[959.57,13,1,708],[1536.71,11,2,345],[682.03,7,1,457],[958.05,9,1,5],[153.45,4,0,58],[83.37,2,0,191],[548.1,8,1,542],[160.97,5,0,46],[452.07,11,0,52],[4707.55,32,3,139],[369.13,9,0,22],[122.35,3,0,705],[1167.97,33,0,229],[102.99,2,0,450],[4017.48,23,3,118],[1996.99,18,2,582],[895.72,15,1,53],[474.41,8,0,225],[229.83,6,0,32],[314.41,4,1,285],[236.63,4,0,122],[3731.27,46,2,452],[73.37,2,0,59],[1598.56,15,1,60],[614.15,7,1,46],[2467.67,26,2,129],[573.97,10,0,108],[1183.2,14,1,305],[412.47,11,0,105],[630.49,17,0,1],[953.4,16,1,17],[264.56,4,0,532],[143.33,3,0,79],[205.5,3,1,6],[964.43,10,3,587],[358.33,8,0,123],[241.43,7,0,157],[368.19,11,0,72],[228.8,6,0,722],[1476.31,14,2,231],[1536.74,19,1,963],[2580.39,30,1,343],[176.04,2,1,170],[1128.62,18,1,229],[1968.34,18,2,189],[667.41,9,1,285],[316.64,5,0,347],[171.56,3,0,821],[1086.1,11,1,597],[1089.6,15,1,186],[395.08,7,0,1],[493.7,8,1,181],[68.77,1,0,1206],[701.31,9,1,284],[49.5,1,0,1402],[657.8,8,1,603],[429.53,8,0,82],[1380.0,15,1,27],[141.06,2,0,1456],[265.26,4,0,5],[957.04,12,1,53],[528.38,5,1,54],[649.42,11,1,39],[463.57,10,0,8],[282.93,7,0,1301],[2827.36,35,1,5],[6244.75,52,3,1167],[199.8,4,0,74],[1547.38,20,2,178],[575.2,4,3,1583],[533.35,9,0,13],[165.6,4,0,49],[273.98,7,0,116],[533.43,7,1,463],[1276.85,15,2,583],[295.34,3,1,378],[580.48,14,0,109],[680.34,17,0,58],[360.0,4,1,663],[129.83,3,0,6],[166.49,4,0,47],[8329.19,60,3,219],[218.69,5,0,117],[4545.84,45,3,17],[1512.2,16,2,36],[143.85,3,0,671],[464.94,8,1,42],[934.17,12,2,779],[129.65,3,0,716],[492.11,5,1,170],[773.46,11,1,809],[153.15,4,0,85],[1311.57,19,1,813],[110.38,2,0,219],[110.07,3,0,1288],[193.72,5,0,71],[219.42,4,0,382],[1129.24,12,2,96],[629.92,18,0,175],[355.82,9,0,7],[47.6,1,0,370],[944.89,8,2,174],[215.63,5,0,131],[298.18,6,0,1002],[592.12,6,2,360],[1036.76,12,1,128],[139.51,4,0,245],[358.31,7,0,10],[330.56,8,0,425],[289.81,7,0,1189],[85.7,2,0,410],[496.02,14,0,62],[444.78,12,0,34],[9822.12,54,3,67],[154.86,3,0,468],[397.83,6,1,624],[1287.26,18,1,24],[211.28,5,0,806],[188.09,2,1,655],[512.54,6,1,414],[1141.76,12,1,52],[161.39,5,0,1409],[165.08,3,0,296],[284.28,3,1,217],[272.05,8,0,1397],[499.32,6,1,61],[441.42,10,0,306],[4262.87,72,1,298],[110.89,2,0,12],[1280.48,16,1,706],[469.77,4,1,839],[213.73,3,0,361],[897.88,7,2,313],[384.85,7,0,62],[1183.03,14,1,561],[822.03,8,2,78],[143.63,3,0,190],[3299.24,29,3,21],[188.13,3,0,72],[483.72,8,0,1137],[266.35,6,0,1304],[256.64,5,0,82],[370.73,4,1,371],[5967.84,63,2,550],[500.64,6,1,295],[141.24,3,0,48],[278.39,5,0,56],[1651.1,16,1,1288],[300.48,6,0,892],[72.32,1,0,249],[756.99,9,1,273],[53.83,1,0,418],[175.26,3,0,432],[2371.51,22,2,78],[232.7,4,1,138],[441.57,7,1,1526],[921.11,11,1,11],[389.66,10,0,1068],[750.94,7,2,680],[1202.37,13,2,574],[198.65,4,0,38],[99.39,3,0,290],[228.65,5,0,1425],[141.79,2,0,629],[225.73,5,0,995],[627.44,7,1,987],[913.54,8,2,600],[952.5,15,1,77],[364.54,3,1,480],[5247.44,44,3,789],[836.34,23,0,33],[617.33,7,1,13],[1573.51,17,2,678],[258.89,4,0,1497],[547.53,8,1,1436],[4306.09,39,3,887],[890.21,7,2,172],[68.4,2,0,57],[212.5,5,0,53],[1505.02,25,0,236],[1451.24,19,2,937],[290.53,8,0,444],[543.99,15,0,650],[962.67,10,2,939],[326.43,9,0,74],[652.76,7,1,393],[892.33,11,1,556],[8841.49,61,3,343],[291.3,7,0,122],[339.12,6,0,507],[333.58,6,0,542],[317.46,4,1,676],[534.64,4,2,388],[312.54,4,1,291],[370.44,5,1,6],[717.58,12,1,68],[661.16,6,1,242],[882.22,21,0,68],[305.44,6,0,1259],[1154.88,18,1,6],[1267.92,13,3,720],[1044.09,13,2,348],[809.89,8,1,409],[1335.32,17,2,403],[419.13,5,1,303],[196.98,4,0,114],[1184.07,13,2,34],[225.21,4,0,1550],[601.75,14,0,456],[914.42,10,1,243],[840.75,10,2,112],[3180.88,28,2,86],[56.5,1,0,1110],[544.94,8,1,669],[166.1,3,0,654],[1036.55,15,1,300],[98.7,2,0,247],[87.72,2,0,48],[1360.65,13,2,1398],[77.51,2,0,309],[459.42,13,0,354],[137.09,3,0,8],[1796.41,21,1,58],[1372.62,14,2,61],[106.65,2,0,560],[293.22,8,0,516],[1731.28,20,2,90],[110.44,2,0,62],[2439.38,30,2,542],[478.61,5,2,331],[183.96,3,0,458],[671.9,13,0,489],[589.72,8,1,315],[1255.9,13,2,584],[493.81,6,1,17],[878.41,14,0,384],[586.23,13,0,201],[306.34,4,1,869],[243.4,6,0,291],[1009.97,13,2,7],[284.26,5,0,55],[1839.79,19,1,362],[1800.5,11,3,384],[198.29,6,0,33],[327.58,7,0,78],[736.91,12,1,225],[544.69,11,0,102],[426.77,4,1,1502],[321.22,6,0,100],[676.06,11,1,62],[206.09,2,2,557],[1854.75,19,2,115],[958.86,13,1,93],[184.78,3,0,40],[931.92,14,1,242],[11273.1,70,3,571],[1152.42,12,2,199],[220.61,4,0,49],[295.57,8,0,1237],[166.93,3,0,35],[964.01,10,2,1134],[301.76,8,0,8],[92.44,2,0,317],[97.61,3,0,89],[913.01,10,1,727],[1824.57,30,1,38],[581.0,6,1,32],[1515.47,18,2,1256],[77.92,1,0,20],[1594.78,16,2,894],[693.34,15,0,118],[290.51,4,1,1099],[361.1,9,0,29],[208.5,4,0,335],[115.1,2,0,9],[202.54,4,0,600],[3494.63,30,2,307],[158.1,4,0,1116],[162.85,3,0,243],[479.81,10,0,171],[1672.47,27,1,621],[896.56,17,0,1],[1697.75,16,1,133],[456.55,11,0,11],[726.63,16,0,177],[153.61,3,0,180],[768.22,7,2,38],[287.46,4,1,66],[269.0,7,0,195],[4032.5,47,2,604],[432.08,10,0,123],[1111.3,18,1,79],[467.47,6,1,414],[2340.43,25,2,522],[726.21,10,1,163],[382.5,8,0,190],[538.63,7,1,122],[196.27,3,0,1030],[118.48,2,0,389],[2594.69,19,3,1071],[253.98,4,1,122],[2051.65,23,2,507],[267.17,6,0,27],[1519.4,19,2,956],[939.84,15,0,73],[121.4,2,0,587],[274.96,4,1,671],[13680.73,161,2,98],[336.69,5,0,12],[209.12,6,0,1028],[422.66,5,1,351],[2799.39,19,3,330],[127.58,2,0,54],[1623.35,18,1,843],[177.73,4,0,47],[787.0,13,1,379],[149.3,3,0,177],[206.45,4,0,1134],[1071.82,12,1,171],[435.97,6,1,232],[2584.92,27,2,213],[1236.8,26,0,92],[1873.5,24,1,51],[18995.27,139,3,434],[219.46,4,1,82],[135.45,3,0,206],[157.28,3,0,79],[264.16,7,0,62],[281.64,4,1,1119],[1637.17,21,1,1573],[1422.73,18,2,1563],[520.29,15,0,1193],[2299.58,30,2,87],[441.91,11,0,290],[1567.54,13,2,411],[586.67,15,0,17],[2373.19,24,2,116],[10273.97,99,3,3],[503.73,8,0,622],[212.25,5,0,365],[320.66,9,0,14],[109.12,3,0,236],[93.33,2,0,80],[238.07,3,1,346],[293.02,3,1,117],[254.12,5,0,81],[666.33,11,0,995],[1950.48,19,2,418],[626.62,16,0,21],[1325.24,16,2,282],[147.82,3,0,572],[498.57,11,0,1467],[2253.78,25,2,602],[464.67,7,1,222],[5470.3,39,3,753],[1121.89,10,2,139],[191.45,5,0,21],[1405.15,15,2,293],[503.6,8,1,187],[279.43,7,0,957],[645.94,9,1,332],[121.46,3,0,78],[214.71,2,1,54],[76.12,2,0,52],[184.87,3,0,235],[4061.05,29,2,389],[57.41,1,0,246],[1063.11,10,2,104],[2149.46,30,1,178],[378.14,6,0,486],[258.83,4,0,716],[997.44,10,1,192],[943.47,14,1,300],[455.88,11,0,154],[1345.4,16,2,90],[179.63,3,0,29],[836.31,7,2,71],[41.81,1,0,86],[169.55,3,0,29],[4876.56,48,3,217],[234.09,4,0,120],[1162.57,9,2,111],[630.99,5,2,210],[2583.19,29,2,199],[794.05,11,1,296],[293.68,8,0,25],[1554.65,17,1,43],[736.13,11,1,459],[290.6,6,0,79],[98.47,3,0,187],[250.64,5,0,40],[3612.85,37,2,88],[2458.13,22,3,443],[2756.94,36,1,42],[841.54,10,1,1495],[247.95,5,0,180],[1435.81,25,1,38],[289.52,4,1,235],[793.14,9,2,769],[1825.4,14,2,608],[2857.71,70,0,77],[926.95,6,3,132],[2187.94,20,3,1083],[738.35,10,1,48],[2108.28,22,2,1026],[282.67,3,1,35],[1051.58,12,2,639],[179.53,3,0,170],[1611.38,32,0,215],[1290.69,19,1,47],[580.93,16,0,968],[325.57,8,0,13],[120.93,3,0,2],[219.43,6,0,470],[267.89,5,0,679]]};
+var ROWS = DATA.rows;
+var DORMANT = ROWS.filter(function(r){return r[3]>=90;});
+var TH_DEF = {tHA:3000,tHF:12,tMA:800,tMF:4};
+var TH = {tHA:3000,tHF:12,tMA:800,tMF:4};
+var EXEC_FEE = 300;
+var BEN = {
+  H:{face:30,pts:0.08,gift:15,touchPc:1.63,name:"高价值",css:"hi",rgb:"220,38,38"},
+  M:{face:15,pts:0.05,gift:5,touchPc:0.23,name:"中价值",css:"mid",rgb:"217,119,6"},
+  L:{face:8,pts:0.03,gift:2,touchPc:0.18,name:"低价值",css:"lo",rgb:"2,132,199"}
+};
+var PARAM_DEF = [
+  {key:"touch",label:"有效触达率",unit:"%",c:82,n:90,o:95,step:0.5,note:"企微+短信+APP综合触达，行业 80~95%"},
+  {key:"retH",label:"高价值回流率",unit:"%",c:12,n:15,o:18,step:0.5,note:"沉睡高价值唤醒基准 12~18%"},
+  {key:"retM",label:"中价值回流率",unit:"%",c:6,n:8,o:10,step:0.5,note:"沉睡中价值唤醒基准 6~10%"},
+  {key:"retL",label:"低价值回流率",unit:"%",c:2,n:3.5,o:5,step:0.5,note:"沉睡低价值唤醒基准 2~5%"},
+  {key:"useC",label:"用券率（回流者中）",unit:"%",c:60,n:70,o:80,step:1,note:"回流订单中使用回归券的比例"},
+  {key:"aovH",label:"高价值客单价",unit:"¥",c:140,n:150,o:160,step:5,note:"按分层历史客单价假设"},
+  {key:"aovM",label:"中价值客单价",unit:"¥",c:80,n:85,o:90,step:5,note:"按分层历史客单价假设"},
+  {key:"aovL",label:"低价值客单价",unit:"¥",c:36,n:40,o:42,step:1,note:"按分层历史客单价假设"},
+  {key:"rep",label:"90天复购率",unit:"%",c:15,n:25,o:35,step:1,note:"唤醒成功用户90天内再次消费 15~35%"},
+  {key:"mgn",label:"综合毛利率",unit:"%",c:55,n:60,o:62,step:0.5,note:"餐饮零售综合毛利 55~62%"}
+];
+var RATES = [2,3.5,5,8,10,12,15], AOVS = [40,80,120,160];
+var activeScen = "n", LAST = null;
+
+/* ---------- 工具 ---------- */
+function $(id){return document.getElementById(id);}
+function fmt(n,d){d=d===undefined?0:d;return Number(n).toLocaleString("zh-CN",{minimumFractionDigits:d,maximumFractionDigits:d});}
+function yuan(n,d){return "¥"+fmt(n,d===undefined?0:d);}
+function pv(k,s){var el=document.querySelector('input[data-p="'+k+'"][data-s="'+s+'"]');return el?(parseFloat(el.value)||0):0;}
+function animateNum(el,to,dur,fmtFn){
+  if(!el)return; dur=dur||900;
+  if(el._raf)cancelAnimationFrame(el._raf);
+  var from=el._v||0; el._v=to;
+  var reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduced||from===to){el.textContent=fmtFn(to);return;}
+  var t0=performance.now();
+  function step(t){
+    var p=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-p,4);
+    el.textContent=fmtFn(from+(to-from)*e);
+    if(p<1)el._raf=requestAnimationFrame(step); else el._raf=0;
+  }
+  el._raf=requestAnimationFrame(step);
+}
+
+/* ---------- 计算 ---------- */
+function durIdx(d){return d<181?0:(d<366?1:(d<731?2:3));}
+function tierOf(amt,freq){
+  if(amt>=TH.tHA||freq>=TH.tHF)return "H";
+  if(amt>=TH.tMA||freq>=TH.tMF)return "M";
+  return "L";
+}
+function computeAll(){
+  var st={H:{n:0,amt:0,freq:0,dur:[0,0,0,0]},M:{n:0,amt:0,freq:0,dur:[0,0,0,0]},L:{n:0,amt:0,freq:0,dur:[0,0,0,0]}};
+  for(var i=0;i<DORMANT.length;i++){
+    var r=DORMANT[i],k=tierOf(r[0],r[1]);
+    st[k].n++;st[k].amt+=r[0];st[k].freq+=r[1];st[k].dur[durIdx(r[3])]++;
+  }
+  var cross=[[0,0,0],[0,0,0],[0,0,0],[0,0,0]];
+  for(var j=0;j<DORMANT.length;j++){
+    var m=DORMANT[j],tk=tierOf(m[0],m[1]);
+    cross[durIdx(m[3])][tk==="H"?0:(tk==="M"?1:2)]++;
+  }
+  var scen={c:calcScenario("c",st),n:calcScenario("n",st),o:calcScenario("o",st)};
+  return {st:st,cross:cross,scen:scen};
+}
+function calcScenario(s,st){
+  var touch=pv("touch",s)/100;
+  var r={touched:0,ret:0,gmv1:0,gmv90:0,ben:0,tcost:0,coupons:0,detail:{}};
+  ["H","M","L"].forEach(function(k){
+    var n=st[k].n,b=BEN[k];
+    var t=n*touch, ret=t*pv("ret"+k,s)/100, aov=pv("aov"+k,s);
+    var coup=ret*pv("useC",s)/100;
+    var ben=coup*b.face+ret*aov*b.pts+ret*b.gift, tc=n*b.touchPc;
+    r.detail[k]={n:n,t:t,ret:ret,aov:aov,coup:coup,ben:ben,tc:tc,gmv1:ret*aov};
+    r.touched+=t;r.ret+=ret;r.gmv1+=ret*aov;
+    r.gmv90+=ret*aov*(1+pv("rep",s)/100);
+    r.ben+=ben;r.tcost+=tc;r.coupons+=coup;
+  });
+  r.exec=EXEC_FEE; r.total=r.ben+r.tcost+r.exec;
+  r.gp=r.gmv90*pv("mgn",s)/100;
+  r.roi=(r.gp-r.total)/r.total;
+  r.cpa=r.ret>0?r.total/r.ret:0;
+  return r;
+}
+
+/* ---------- 构建（仅一次） ---------- */
+function buildStatic(){
+  var m=DATA.meta;
+  $("fReg").textContent=fmt(m.registered);$("fCon").textContent=fmt(m.consumers);
+  $("fConP").textContent=(m.consumers/m.registered*100).toFixed(1)+"%";
+  $("fDor").textContent=fmt(m.dormant);
+  $("fDorP").textContent=(m.dormant/m.registered*100).toFixed(1)+"%";
+  var h="";
+  DATA.sample.forEach(function(s){
+    h+="<tr><td>"+s.id+"</td><td class='num tv'>"+s.reg+"</td><td class='num tv'>"+s.last+
+       "</td><td class='num tv'>"+yuan(s.amt)+"</td><td class='num tv'>"+s.freq+"单</td><td>"+s.level+
+       "</td><td class='num tv'>"+s.days+"天</td></tr>";
+  });
+  $("sampleTbl").innerHTML+=h;
+  var maxP=0;DATA.dur_dist.forEach(function(d){maxP=Math.max(maxP,d.pct);});
+  var dh="";
+  DATA.dur_dist.forEach(function(d){
+    dh+="<tr><td>"+d.label+"</td><td class='num tv'>"+d.n+"人</td><td class='num tv'>"+d.pct+
+        "%</td><td><div class='hbar'><div class='hbar-in' style='width:"+(d.pct/maxP*100).toFixed(1)+"%;background:var(--sub)'></div></div></td></tr>";
+  });
+  $("durBody").innerHTML=dh;
+  var l2=DATA.dur_dist[3].pct,mid=DATA.dur_dist[2].pct;
+  $("durLead").innerHTML="沉睡会员中 <b>"+(l2+mid).toFixed(1)+"%</b> 已超过 1 年未消费（1~2年 "+mid+"%，2年以上 "+l2+"%）——沉睡越久唤醒成本越高。<b>90~180 天的浅睡会员（"+DATA.dur_dist[0].n+" 人）应最优先触发</b>。";
+  var colors={"普通":"2,132,199","银卡":"5,150,105","金卡":"217,119,6","黑卡":"220,38,38"};
+  var lh="",hlN=0,hlA=0;
+  DATA.lvl_dist.forEach(function(d){
+    lh+="<tr><td><span class='dot' style='background:rgb("+colors[d.level]+")'></span>"+d.level+"</td><td class='num tv'>"+d.n+
+        "人</td><td class='num tv'>"+d.pct+"%</td><td class='num tv'>"+yuan(d.amt)+"</td></tr>";
+    if(d.level==="金卡"||d.level==="黑卡"){hlN+=d.n;hlA+=d.amt;}
+  });
+  $("lvlBody").innerHTML=lh;
+  $("hlPct").textContent=(hlN/m.dormant*100).toFixed(1)+"%";
+  $("hlGmv").textContent=(hlA/m.dormant_gmv*100).toFixed(1)+"%";
+}
+function sparkline(el,data,color,label){
+  var w=200,h=30,pad=3,min=Math.min.apply(null,data),max=Math.max.apply(null,data),span=(max-min)||1;
+  var pts=data.map(function(v,i){return [pad+i*(w-2*pad)/(data.length-1), h-pad-(v-min)/span*(h-2*pad)];});
+  var d=pts.map(function(p,i){return (i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1);}).join(" ");
+  var area=d+" L"+(w-pad)+" "+h+" L"+pad+" "+h+" Z";
+  var gid="sg"+Math.random().toString(36).slice(2,7);
+  el.innerHTML='<svg viewBox="0 0 '+w+' '+h+'" preserveAspectRatio="none"><defs><linearGradient id="'+gid+'" x1="0" y1="0" x2="0" y2="1">'+
+    '<stop offset="0" stop-color="'+color+'" stop-opacity=".20"/><stop offset="1" stop-color="'+color+'" stop-opacity="0"/></linearGradient></defs>'+
+    '<path d="'+area+'" fill="url(#'+gid+')"/>'+
+    '<path d="'+d+'" fill="none" stroke="'+color+'" stroke-width="1.8" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>'+
+    '<circle cx="'+pts[pts.length-1][0].toFixed(1)+'" cy="'+pts[pts.length-1][1].toFixed(1)+'" r="2.4" fill="'+color+'"/>'+
+    '<text x="'+(w-pad)+'" y="'+(h-1)+'" text-anchor="end" class="sp-label">'+label+'</text></svg>';
+}
+function buildSparks(){
+  sparkline($("spark1"),[1120,1140,1155,1170,1185,1195,1200],"#64748B","1,200");
+  sparkline($("spark2"),[792,805,812,822,830,835,839],"#2563EB","839");
+  sparkline($("spark3"),[468,492,512,534,558,575,589],"#DC2626","589");
+  sparkline($("spark4"),[561,585,608,634,660,681,697],"#D97706","¥697K");
+  sparkline($("spark5"),[59.1,61.1,63.0,64.9,67.0,68.7,70.2],"#059669","70.2%");
+  var m=DATA.meta;
+  animateNum($("kReg"),m.registered,1100,function(v){return fmt(v);});
+  animateNum($("kCon"),m.consumers,1100,function(v){return fmt(v);});
+  animateNum($("kDor"),m.dormant,1100,function(v){return fmt(v);});
+  animateNum($("kGmv"),m.dormant_gmv,1200,function(v){return yuan(v);});
+  animateNum($("kRate"),m.dormant_pct,1100,function(v){return v.toFixed(1)+"%";});
+  $("kConPct").textContent="占注册 "+(m.consumers/m.registered*100).toFixed(1)+"%";
+  $("kDorPct").textContent="占消费会员 "+m.dormant_pct+"%";
+  $("kGmvAvg").textContent="人均 "+yuan(m.dormant_gmv/m.dormant);
+}
+function buildTierTable(){
+  var h="";
+  ["H","M","L"].forEach(function(k){
+    h+="<tr><td><span class='dot' style='background:var(--"+BEN[k].css+")'></span>"+BEN[k].name+"</td>"+
+       "<td class='num tv' id='t"+k+"_n'>—</td><td class='num tv' id='t"+k+"_pct'>—</td>"+
+       "<td class='num tv' id='t"+k+"_avg'>—</td><td class='num tv' id='t"+k+"_freq'>—</td>"+
+       "<td class='num tv' id='t"+k+"_gmv'>—</td>"+
+       "<td><div class='hbar'><div class='hbar-in' id='t"+k+"_bar' style='width:0%;background:var(--"+BEN[k].css+")'></div></div>"+
+       "<span class='tv' id='t"+k+"_gpct' style='font-size:12px;color:var(--sub)'>—</span></td></tr>";
+  });
+  $("tierBody").innerHTML=h;
+  var l="";
+  ["H","M","L"].forEach(function(k){
+    l+="<div class='lg-row'><span class='dot' style='background:var(--"+BEN[k].css+")'></span>"+
+       "<span class='lg-name'>"+BEN[k].name+"</span>"+
+       "<span class='lg-bar'><i id='lg"+k+"_bar' style='width:0%;background:var(--"+BEN[k].css+")'></i></span>"+
+       "<span class='lg-num' id='lg"+k+"_num'>—</span></div>";
+  });
+  $("tierLegend").innerHTML=l;
+}
+function buildCross(){
+  var labels=["90~180天","180~365天","1~2年","2年以上"],h="";
+  labels.forEach(function(r,i){
+    h+="<tr><td>"+r+"</td>";
+    ["H","M","L"].forEach(function(k){h+="<td><span class='hcell' id='cx_"+i+"_"+k+"'>—</span></td>";});
+    h+="<td class='num tv' id='cxr_"+i+"'>—</td></tr>";
+  });
+  h+="<tr class='total-row'><td>合计</td>";
+  ["H","M","L"].forEach(function(k){h+="<td class='num tv' id='cxc_"+k+"'>—</td>";});
+  h+="<td class='num tv' id='cxAll'>—</td></tr>";
+  $("crossBody").innerHTML=h;
+  var sc="";["rgba(100,116,139,.14)","rgba(100,116,139,.34)","rgba(100,116,139,.56)","rgba(100,116,139,.82)"].forEach(function(c){sc+="<i style='background:"+c+"'></i>";});
+  $("hlScale").innerHTML=sc;
+}
+function buildScenarioCards(){
+  var names={c:"保守",n:"中性",o:"乐观"},h="";
+  ["c","n","o"].forEach(function(s){
+    h+="<div class='scenario-card"+(s==="n"?" active":"")+"' id='scCard_"+s+"' data-s='"+s+"'>"+
+       "<div class='sc-name'>"+names[s]+"情景</div>"+
+       "<div class='sc-big tv'><span id='sc_"+s+"_ret'>—</span><span> 人回流</span></div>"+
+       "<div class='sc-line'>90天GMV <b class='tv' id='sc_"+s+"_gmv'>—</b>（首单 <b class='tv' id='sc_"+s+"_gmv1'>—</b>）</div>"+
+       "<div class='sc-line'>总成本 <b class='tv' id='sc_"+s+"_total'>—</b>（权益 <span class='tv' id='sc_"+s+"_ben'>—</span> + 触达 <span class='tv' id='sc_"+s+"_tc'>—</span> + 执行 ¥300）</div>"+
+       "<div class='sc-line'>增量毛利 <b class='tv' id='sc_"+s+"_gp'>—</b> ｜ 单客唤醒成本 <span class='tv' id='sc_"+s+"_cpa'>—</span></div>"+
+       "<div class='sc-roi'>ROI <b class='tv' id='sc_"+s+"_roi'>—</b></div></div>";
+  });
+  $("scenarioBox").innerHTML=h;
+}
+function buildTierCalc(){
+  var h="";
+  ["H","M","L"].forEach(function(k){
+    h+="<tr><td><span class='dot' style='background:var(--"+BEN[k].css+")'></span>"+BEN[k].name+"</td>"+
+       "<td class='num tv' id='tc_"+k+"_n'>—</td><td class='num tv' id='tc_"+k+"_t'>—</td>"+
+       "<td class='num tv' id='tc_"+k+"_ret'>—</td><td class='num tv' id='tc_"+k+"_aov'>—</td>"+
+       "<td class='num tv' id='tc_"+k+"_gmv1'>—</td><td class='num tv' id='tc_"+k+"_coup'>—</td>"+
+       "<td class='num tv' id='tc_"+k+"_ben'>—</td><td class='num tv' id='tc_"+k+"_tc'>—</td>"+
+       "<td class='num' id='tc_"+k+"_roi'>—</td></tr>";
+  });
+  h+="<tr><td>执行杂费（一次性）</td><td class='num'>—</td><td class='num'>—</td><td class='num'>—</td>"+
+     "<td class='num'>—</td><td class='num'>—</td><td class='num'>—</td><td class='num'>—</td>"+
+     "<td class='num tv'>"+yuan(EXEC_FEE)+"</td><td class='num'>—</td></tr>";
+  h+="<tr class='total-row'><td>总计</td><td class='num tv' id='tcAll_n'>—</td><td class='num tv' id='tcAll_t'>—</td>"+
+     "<td class='num tv' id='tcAll_ret'>—</td><td class='num'>—</td><td class='num tv' id='tcAll_gmv1'>—</td>"+
+     "<td class='num tv' id='tcAll_coup'>—</td><td class='num tv' id='tcAll_ben'>—</td>"+
+     "<td class='num tv' id='tcAll_tc'>—</td><td class='num tv' id='tcAll_roi'>—</td></tr>";
+  $("tierCalcBody").innerHTML=h;
+}
+function buildSens(){
+  var h="<tr><th>回流率＼客单价</th>";
+  AOVS.forEach(function(a){h+="<th class='num'>"+yuan(a)+"</th>";});
+  h+="</tr>";
+  RATES.forEach(function(r,ri){
+    h+="<tr><td><b>"+r+"%</b></td>";
+    AOVS.forEach(function(a,ci){h+="<td class='num tv' id='sns_"+ri+"_"+ci+"'>—</td>";});
+    h+="</tr>";
+  });
+  $("sensTbl").innerHTML=h;
+}
+function buildFunnel(){
+  var steps=[{l:"沉睡会员"},{l:"有效触达"},{l:"回流下单"},{l:"用券核销"}],h="";
+  steps.forEach(function(s,i){
+    h+="<div class='fstep'><div class='flabel'>"+s.l+"</div>"+
+       "<div class='fbar' id='fn_"+i+"' style='width:6%'>—</div>"+
+       "<span class='frate' id='fnr_"+i+"'></span></div>";
+  });
+  h+="<div style='font-size:12px;color:var(--sub);margin-top:2px' id='fnNote'></div>";
+  $("funnelBox").innerHTML=h;
+}
+function buildParams(){
+  var h="";
+  PARAM_DEF.forEach(function(p){
+    h+="<tr><td>"+p.label+"</td>";
+    ["c","n","o"].forEach(function(s){
+      h+="<td class='num'><input class='param-input' type='number' step='"+p.step+"' value='"+p[s]+"' data-p='"+p.key+"' data-s='"+s+"'></td>";
+    });
+    h+="<td style='font-size:12px;color:var(--sub)'>"+p.note+"</td></tr>";
+  });
+  $("paramTbl").innerHTML+=h;
+}
+
+/* ---------- 更新 ---------- */
+function updateStatic(R){
+  var st=R.st,total=st.H.n+st.M.n+st.L.n,gmv=st.H.amt+st.M.amt+st.L.amt;
+  $("tHA_v").textContent="¥"+fmt(TH.tHA);$("tHF_v").textContent=TH.tHF+"单";
+  $("tMA_v").textContent="¥"+fmt(TH.tMA);$("tMF_v").textContent=TH.tMF+"单";
+  $("ruleText").innerHTML="当前规则：<b>高价值</b> = 累计消费 ≥ ¥"+fmt(TH.tHA)+" 或 频次 ≥ "+TH.tHF+" 单；<b>中价值</b> = 累计消费 ≥ ¥"+fmt(TH.tMA)+" 或 频次 ≥ "+TH.tMF+" 单；<b>低价值</b> = 其余";
+  var C=2*Math.PI*54,acc=0;
+  ["H","M","L"].forEach(function(k){
+    var frac=total?st[k].n/total:0,el=$("arc"+k);
+    el.setAttribute("stroke-dasharray",(frac*C).toFixed(2)+" "+(C-frac*C).toFixed(2));
+    el.setAttribute("stroke-dashoffset",(-acc*C).toFixed(2));
+    acc+=frac;
+    $("lg"+k+"_bar").style.width=(total?st[k].n/total*100:0).toFixed(1)+"%";
+    $("lg"+k+"_num").textContent=st[k].n+"人 · "+(total?(st[k].n/total*100).toFixed(1):0)+"%";
+    $("t"+k+"_n").textContent=st[k].n+"人";
+    $("t"+k+"_pct").textContent=(total?(st[k].n/total*100).toFixed(1):0)+"%";
+    $("t"+k+"_avg").textContent=st[k].n?yuan(st[k].amt/st[k].n):"—";
+    $("t"+k+"_freq").textContent=st[k].n?(st[k].freq/st[k].n).toFixed(1)+"单":"—";
+    $("t"+k+"_gmv").textContent=yuan(st[k].amt);
+    $("t"+k+"_bar").style.width=(gmv?(st[k].amt/gmv*100):0).toFixed(1)+"%";
+    $("t"+k+"_gpct").textContent=(gmv?(st[k].amt/gmv*100).toFixed(1):0)+"%";
+    $("b"+k+"n").textContent=st[k].n+"人";
+  });
+  animateNum($("ringTotal"),total,450,function(v){return fmt(v);});
+  var hShare=gmv?(st.H.amt/gmv*100).toFixed(1):0;
+  $("tierCallout").innerHTML="🎯 <b>运营重心排序：</b>高价值层（身份 + 专属）→ 中价值层（实惠 + 习惯）→ 低价值层（零门槛 + 低成本）。当前阈值下高价值 <b>"+st.H.n+" 人</b>贡献沉睡池 GMV 的 <b>"+hShare+"%</b>，先保头部回流，再谈规模。";
+  // 权益成本（中性）
+  var n=R.scen.n,allBen=0;
+  ["H","M","L"].forEach(function(k){
+    var d=n.detail[k];
+    $("c"+k+"1").textContent=st[k].n?yuan(d.ben/st[k].n,1):"—";
+    $("c"+k+"t").textContent=yuan(d.ben);
+    allBen+=d.ben;
+  });
+  animateNum($("cAll"),allBen,450,function(v){return yuan(v);});
+  $("cAll2").textContent=yuan(allBen);
+  // 成本结构
+  var cC=0,cP=0,cG=0;
+  ["H","M","L"].forEach(function(k){
+    var d=n.detail[k],b=BEN[k];
+    cC+=d.coup*b.face;cP+=d.ret*d.aov*b.pts;cG+=d.ret*b.gift;
+  });
+  var sum=cC+cP+cG||1;
+  $("csCoupon").style.width=(cC/sum*100).toFixed(1)+"%";
+  $("csPts").style.width=(cP/sum*100).toFixed(1)+"%";
+  $("csGift").style.width=(cG/sum*100).toFixed(1)+"%";
+  $("csCouponT").textContent="券 "+yuan(cC);$("csPtsT").textContent="积分 "+yuan(cP);$("csGiftT").textContent="礼遇 "+yuan(cG);
+  $("clCoupon").textContent=yuan(cC);$("clPts").textContent=yuan(cP);$("clGift").textContent=yuan(cG);
+  // 交叉矩阵
+  var maxC=1;
+  for(var i=0;i<4;i++)for(var j=0;j<3;j++)maxC=Math.max(maxC,R.cross[i][j]);
+  var colSum=[0,0,0],all=0;
+  for(var i2=0;i2<4;i2++){
+    var rowSum=0;
+    ["H","M","L"].forEach(function(k,ki){
+      var c=R.cross[i2][ki],a=0.10+0.72*(c/maxC);
+      var el=$("cx_"+i2+"_"+k);
+      el.textContent=c+"人";
+      el.style.background="rgba("+BEN[k].rgb+","+a.toFixed(2)+")";
+      el.style.color=a>0.5?"#fff":"var(--ink)";
+      colSum[ki]+=c;rowSum+=c;
+    });
+    $("cxr_"+i2).textContent=rowSum+"人";all+=rowSum;
+  }
+  ["H","M","L"].forEach(function(k,ki){$("cxc_"+k).textContent=colSum[ki]+"人";});
+  $("cxAll").textContent=all+"人";
+  var shallowHi=R.cross[0][0],deepLo=R.cross[3][2];
+  $("crossCallout").innerHTML="★ <b>唤醒优先级：</b>「90~180天 × 高价值」共 <b>"+shallowHi+" 人</b>——距沉睡边缘最近、历史价值最高，D0 立即触发 + 电话级权益；「2年以上 × 低价值」<b>"+deepLo+" 人</b>——改用低成本批量触达，不做重投入。";
+}
+function updateScenarioCards(R){
+  var names={c:"保守",n:"中性",o:"乐观"};
+  ["c","n","o"].forEach(function(s){
+    var r=R.scen[s];
+    animateNum($("sc_"+s+"_ret"),r.ret,400,function(v){return fmt(v,1);});
+    animateNum($("sc_"+s+"_gmv"),r.gmv90,400,function(v){return yuan(v);});
+    animateNum($("sc_"+s+"_gmv1"),r.gmv1,400,function(v){return yuan(v);});
+    animateNum($("sc_"+s+"_ben"),r.ben,400,function(v){return yuan(v);});
+    animateNum($("sc_"+s+"_tc"),r.tcost,400,function(v){return yuan(v);});
+    animateNum($("sc_"+s+"_total"),r.total,400,function(v){return yuan(v);});
+    animateNum($("sc_"+s+"_gp"),r.gp,400,function(v){return yuan(v);});
+    animateNum($("sc_"+s+"_cpa"),r.cpa,400,function(v){return yuan(v,1);});
+    animateNum($("sc_"+s+"_roi"),r.roi,400,function(v){return "1 : "+(v+1).toFixed(2);});
+    $("scCard_"+s).querySelector(".sc-roi b").style.color=r.roi>=1?"var(--ok)":"var(--mid)";
+  });
+}
+function renderActiveScenario(){
+  if(!LAST)return;
+  var R=LAST,sc=R.scen[activeScen],st=R.st;
+  var names={c:"保守",n:"中性",o:"乐观"};
+  $("tierCalcScenName").textContent=names[activeScen];
+  $("budScenName").textContent=names[activeScen];
+  // 漏斗
+  var vals=[st.H.n+st.M.n+st.L.n,sc.touched,sc.ret,sc.coupons],maxV=vals[0];
+  var rates=["","占沉睡 "+(sc.touched/maxV*100).toFixed(1)+"%","占触达 "+(sc.ret/sc.touched*100).toFixed(1)+"%","占回流 "+(sc.coupons/sc.ret*100).toFixed(1)+"%"];
+  for(var i=0;i<4;i++){
+    var bar=$("fn_"+i);
+    bar.style.width=Math.max(6,vals[i]/maxV*100).toFixed(1)+"%";
+    bar.textContent=fmt(vals[i],vals[i]<100?1:0)+"人";
+    $("fnr_"+i).textContent=rates[i];
+  }
+  $("fnNote").textContent="整体回流率（占有效触达）"+(sc.ret/sc.touched*100).toFixed(1)+"% ｜ 用券核销率（占有效触达）"+(sc.coupons/sc.touched*100).toFixed(1)+"%";
+  // 分Layer测算
+  var rep=pv("rep",activeScen)/100,mgn=pv("mgn",activeScen)/100;
+  ["H","M","L"].forEach(function(k){
+    var d=sc.detail[k];
+    $("tc_"+k+"_n").textContent=d.n+"人";
+    $("tc_"+k+"_t").textContent=fmt(d.t,1);
+    $("tc_"+k+"_ret").textContent=fmt(d.ret,1);
+    $("tc_"+k+"_aov").textContent=yuan(d.aov);
+    $("tc_"+k+"_gmv1").textContent=yuan(d.gmv1);
+    $("tc_"+k+"_coup").textContent=fmt(d.coup,1);
+    $("tc_"+k+"_ben").textContent=yuan(d.ben);
+    $("tc_"+k+"_tc").textContent=yuan(d.tc);
+    var gp=d.ret*d.aov*(1+rep)*mgn,cost=d.ben+d.tc;
+    var roi=(gp-cost)/cost;
+    $("tc_"+k+"_roi").innerHTML="<b style='color:"+(roi>=1?"var(--ok)":"var(--mid)")+"'>1 : "+(roi+1).toFixed(2)+"</b>";
+  });
+  $("tcAll_n").textContent=(st.H.n+st.M.n+st.L.n)+"人";
+  $("tcAll_t").textContent=fmt(sc.touched,1);
+  $("tcAll_ret").textContent=fmt(sc.ret,1);
+  $("tcAll_gmv1").textContent=yuan(sc.gmv1);
+  $("tcAll_coup").textContent=fmt(sc.coupons,1);
+  $("tcAll_ben").textContent=yuan(sc.ben);
+  $("tcAll_tc").textContent=yuan(sc.tcost+EXEC_FEE);
+  $("tcAll_roi").innerHTML="<b>1 : "+(sc.roi+1).toFixed(2)+"</b>";
+  // 敏感性
+  var blendRate=sc.touched?sc.ret/sc.touched*100:0,blendAov=sc.ret?sc.gmv1/sc.ret:0;
+  var bestD=1e9,bestRi=0,bestCi=0;
+  RATES.forEach(function(r,ri){
+    AOVS.forEach(function(a,ci){
+      var v=sc.touched*r/100*a*(1+rep);
+      $("sns_"+ri+"_"+ci).textContent=fmt(v);
+      var d=Math.abs(r-blendRate)/Math.max(blendRate,1)+Math.abs(a-blendAov)/Math.max(blendAov,1);
+      if(d<bestD){bestD=d;bestRi=ri;bestCi=ci;}
+    });
+  });
+  document.querySelectorAll("#sensTbl td").forEach(function(td){td.classList.remove("hl");});
+  var hl=$("sns_"+bestRi+"_"+bestCi);if(hl)hl.classList.add("hl");
+  // 预算
+  animateNum($("budCost"),sc.total,400,function(v){return yuan(v);});
+  animateNum($("budGmv"),sc.gmv90,400,function(v){return yuan(v);});
+  animateNum($("budGp"),sc.gp,400,function(v){return yuan(v);});
+  animateNum($("budNet"),sc.gp-sc.total,400,function(v){return yuan(v);});
+  $("budMgn").textContent="毛利率 "+(mgn*100).toFixed(0)+"%";
+  $("budRoi").textContent="ROI 1 : "+(sc.roi+1).toFixed(2)+" ｜ 预计 6~8 周回本";
+  $("budNet").style.color=(sc.gp-sc.total)>=0?"var(--ok)":"var(--hi)";
+}
+function renderAll(){
+  var R=computeAll();
+  LAST=R;
+  updateStatic(R);
+  updateScenarioCards(R);
+  renderActiveScenario();
+}
+
+/* ---------- 事件 ---------- */
+var rafId=0;
+function scheduleRender(){
+  if(rafId)return;
+  rafId=requestAnimationFrame(function(){rafId=0;renderAll();});
+}
+function bindControls(){
+  ["tHA","tHF","tMA","tMF"].forEach(function(id){
+    $(id).addEventListener("input",function(){TH[id]=parseFloat(this.value);scheduleRender();});
+  });
+  $("resetBtn").addEventListener("click",function(){
+    TH.tHA=TH_DEF.tHA;TH.tHF=TH_DEF.tHF;TH.tMA=TH_DEF.tMA;TH.tMF=TH_DEF.tMF;
+    ["tHA","tHF","tMA","tMF"].forEach(function(id){$(id).value=TH_DEF[id];});
+    renderAll();toast("已恢复默认阈值");
+  });
+  document.querySelectorAll(".param-input").forEach(function(el){
+    el.addEventListener("input",scheduleRender);
+  });
+  document.querySelectorAll("#scTabs button").forEach(function(b){
+    b.addEventListener("click",function(){setActiveScen(b.dataset.s);});
+  });
+  document.querySelectorAll(".scenario-card").forEach(function(c){
+    c.addEventListener("click",function(){setActiveScen(c.dataset.s);});
+  });
+  document.querySelectorAll(".tstep").forEach(function(el){
+    el.addEventListener("click",function(){
+      document.querySelectorAll(".tstep").forEach(function(x){x.classList.remove("active");});
+      el.classList.add("active");
+      var row=$("scr"+el.dataset.i);
+      if(row){row.scrollIntoView({behavior:"smooth",block:"center"});row.classList.remove("flash");void row.offsetWidth;row.classList.add("flash");}
+    });
+  });
+  $("printBtn").addEventListener("click",function(){window.print();});
+  $("heroPrint").addEventListener("click",function(){window.print();});
+  $("fabTop").addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  // 主题
+  var root=document.documentElement;
+  function setTheme(t){
+    root.dataset.theme=t;
+    try{localStorage.setItem("dorm-rpt-theme",t);}catch(e){}
+    $("iconSun").style.display=t==="dark"?"none":"block";
+    $("iconMoon").style.display=t==="dark"?"block":"none";
+  }
+  var saved="light";try{saved=localStorage.getItem("dorm-rpt-theme")||"light";}catch(e){}
+  setTheme(saved);
+  $("themeBtn").addEventListener("click",function(){setTheme(root.dataset.theme==="dark"?"light":"dark");});
+  // 复制话术
+  var COPY_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  var CHECK_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>';
+  document.addEventListener("click",function(e){
+    var btn=e.target.closest(".copy-btn");
+    if(!btn)return;
+    var body=btn.closest(".script").querySelector(".s-body");
+    var text=body?body.textContent:"";
+    function done(){
+      btn.classList.add("done");btn.innerHTML=CHECK_SVG;toast("话术已复制到剪贴板");
+      setTimeout(function(){btn.classList.remove("done");btn.innerHTML=COPY_SVG;},1600);
+    }
+    function fallback(){
+      var ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.opacity="0";
+      document.body.appendChild(ta);ta.select();
+      try{document.execCommand("copy");done();}catch(err){toast("复制失败，请手动选择复制");}
+      document.body.removeChild(ta);
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done,fallback);
+    }else fallback();
+  });
+  // 进度条 & 回到顶部
+  var prog=$("progressIn"),fab=$("fabTop"),ticking=false;
+  window.addEventListener("scroll",function(){
+    if(ticking)return;ticking=true;
+    requestAnimationFrame(function(){
+      var h=document.documentElement;
+      var p=h.scrollHeight>h.clientHeight?h.scrollTop/(h.scrollHeight-h.clientHeight):0;
+      prog.style.width=(p*100).toFixed(2)+"%";
+      fab.classList.toggle("show",h.scrollTop>600);
+      ticking=false;
+    });
+  },{passive:true});
+  fab.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});
+  // 滚动渐现
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(en){if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target);}});
+    },{threshold:.1,rootMargin:"0px 0px -40px 0px"});
+    document.querySelectorAll(".reveal").forEach(function(el){io.observe(el);});
+    // 导航高亮
+    var navMap={};
+    document.querySelectorAll(".nav-links a").forEach(function(a){navMap[a.dataset.sec]=a;});
+    var io2=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){
+          var link=navMap[en.target.id];
+          if(link){document.querySelectorAll(".nav-links a").forEach(function(a){a.classList.remove("active");});link.classList.add("active");}
+        }
+      });
+    },{rootMargin:"-25% 0px -65% 0px"});
+    ["kpi","s1","s2","s3","s4","s5","s6","s7"].forEach(function(id){var el=$(id);if(el)io2.observe(el);});
+  }else{
+    document.querySelectorAll(".reveal").forEach(function(el){el.classList.add("in");});
+  }
+}
+function setActiveScen(s){
+  activeScen=s;
+  document.querySelectorAll("#scTabs button").forEach(function(b){b.classList.toggle("active",b.dataset.s===s);});
+  document.querySelectorAll(".scenario-card").forEach(function(c){c.classList.toggle("active",c.dataset.s===s);});
+  renderActiveScenario();
+}
+function toast(msg){
+  var t=$("toast");$("toastMsg").textContent=msg;
+  t.classList.add("show");clearTimeout(t._tm);t._tm=setTimeout(function(){t.classList.remove("show");},1800);
+}
+
+/* ---------- 启动 ---------- */
+buildStatic();
+buildSparks();
+buildTierTable();
+buildCross();
+buildScenarioCards();
+buildTierCalc();
+buildSens();
+buildFunnel();
+buildParams();
+bindControls();
+renderAll();
+</script>
+
+</body>
+</html>

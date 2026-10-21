@@ -50,3 +50,29 @@
 - **ProcessLasso 授权机制逆向分析**：包含逆向分析与本机授权/系统信息，不公开。
 
 本目录是公开展示层，不等于个人电脑上的全部原始工程。
+
+## 2026-10-21 新增作品
+
+本次新增 21 个项目（网页 10、办公文档 5、海报 6）；假名、模拟数据和品牌概念均在项目说明中标注。
+
+- [CSS加载动画合集-8种纯CSS动效展示](./css-loading-animations/index.html)（网页 / CSS 动效）
+- [NOVA拟生智能-品牌KeyVisual系统站](./nova-brand-key-visual/index.html)（网页 / 品牌视觉系统）
+- [ProductX满意度问卷2025-单文件交互问卷](./productx-survey/index.html)（网页 / 交互问卷）
+- [SaaS创业公司3年财务模型-交互式财务研报](./saas-financial-model/index.html)（网页 / 财务建模）
+- [客户分层运营控制台-分层测算与触达策略](./customer-segmentation-console/index.html)（网页 / 客户运营）
+- [微服务系统架构图-手绘风格](./microservice-architecture/index.html)（网页 / 系统架构可视化）
+- [心晴-亲子对话演练页](./parent-child-dialogue/index.html)（网页 / 对话交互原型）
+- [沉睡会员唤醒分析报告-交互式经营分析](./dormant-member-reactivation/index.html)（网页 / 经营分析）
+- [神经网络经典算法-交互演示](./neural-network-demo/index.html)（网页 / 算法交互演示）
+- [诸葛亮行迹指南-人物足迹地图](./zhuge-liang-map/index.html)（网页 / 历史地图可视化）
+- [AB测试结果分析表-Excel-作品集](./ab-test-analysis/index.html)（Excel / A/B 测试分析）
+- [TechVision2026峰会签到管理表-Excel-作品集](./techvision-checkin-workbook/index.html)（Excel / 活动签到管理）
+- [人形机器人A轮融资路演BP-PPT-作品集](./humanoid-robot-pitch-deck/index.html)（PPT / 路演材料）
+- [剑隐山河-武侠开放世界发布会幻灯片](./sword-hidden-river-launch-deck/index.html)（PPT / 游戏发布会）
+- [神经网络经典算法-学术报告](./neural-network-lecture/index.html)（PPT / 学术演示）
+- [AI教育直播课海报](./ai-education-live-poster/index.html)（海报 / 教育活动视觉）
+- [WorkBuddy产品战略分享会海报](./workbuddy-strategy-poster/index.html)（海报 / 活动视觉）
+- [山系户外露营节海报](./mountain-camping-poster/index.html)（海报 / 户外活动视觉）
+- [栀子花海报](./gardenia-poster/index.html)（海报 / 花卉主题视觉）
+- [米白6合1空气炸锅-亚马逊商品套图](./air-fryer-listing-images/index.html)（海报 / 电商商品视觉）
+- [雨落之后-AFTER-THE-RAIN电影海报](./after-the-rain-poster/index.html)（海报 / 电影主视觉）

@@ -216,5 +216,262 @@
     "kind": "研究 / 商业模式演示",
     "demo": "./demo/%E4%BD%9C%E5%93%81-%E6%B3%A1%E6%B3%A1%E7%8E%9B%E7%89%B9%E5%93%81%E7%89%8C%E7%A0%94%E7%A9%B6%E6%BC%94%E7%A4%BA%EF%BC%88%E7%BD%91%E9%A1%B5%E7%89%88%EF%BC%89.html",
     "assets": []
+  },
+  {
+    "source": "html-ai作品/CSS加载动画合集-8种纯CSS动效展示",
+    "slug": "css-loading-animations",
+    "title": "CSS加载动画合集-8种纯CSS动效展示",
+    "kind": "网页 / CSS 动效",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/NOVA拟生智能-品牌KeyVisual系统站",
+    "slug": "nova-brand-key-visual",
+    "title": "NOVA拟生智能-品牌KeyVisual系统站",
+    "kind": "网页 / 品牌视觉系统",
+    "demo": "./demo/index.html",
+    "assets": [
+      [
+        "nova-kv-final.png",
+        "./demo/nova-kv-final.png"
+      ],
+      [
+        "bg.png",
+        "./demo/bg.png"
+      ],
+      [
+        "assets",
+        "./demo/assets"
+      ]
+    ]
+  },
+  {
+    "source": "html-ai作品/ProductX满意度问卷2025-单文件交互问卷",
+    "slug": "productx-survey",
+    "title": "ProductX满意度问卷2025-单文件交互问卷",
+    "kind": "网页 / 交互问卷",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/SaaS创业公司3年财务模型-交互式财务研报",
+    "slug": "saas-financial-model",
+    "title": "SaaS创业公司3年财务模型-交互式财务研报",
+    "kind": "网页 / 财务建模",
+    "demo": "./demo/index.html",
+    "assets": [
+      [
+        "SaaS财务模型_可编辑版.xlsx",
+        "./demo/SaaS%E8%B4%A2%E5%8A%A1%E6%A8%A1%E5%9E%8B_%E5%8F%AF%E7%BC%96%E8%BE%91%E7%89%88.xlsx"
+      ]
+    ]
+  },
+  {
+    "source": "html-ai作品/客户分层运营控制台-分层测算与触达策略",
+    "slug": "customer-segmentation-console",
+    "title": "客户分层运营控制台-分层测算与触达策略",
+    "kind": "网页 / 客户运营",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/微服务系统架构图-手绘风格",
+    "slug": "microservice-architecture",
+    "title": "微服务系统架构图-手绘风格",
+    "kind": "网页 / 系统架构可视化",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/心晴-亲子对话演练页",
+    "slug": "parent-child-dialogue",
+    "title": "心晴-亲子对话演练页",
+    "kind": "网页 / 对话交互原型",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/沉睡会员唤醒分析报告-交互式经营分析",
+    "slug": "dormant-member-reactivation",
+    "title": "沉睡会员唤醒分析报告-交互式经营分析",
+    "kind": "网页 / 经营分析",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/神经网络经典算法-交互演示",
+    "slug": "neural-network-demo",
+    "title": "神经网络经典算法-交互演示",
+    "kind": "网页 / 算法交互演示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/诸葛亮行迹指南-人物足迹地图",
+    "slug": "zhuge-liang-map",
+    "title": "诸葛亮行迹指南-人物足迹地图",
+    "kind": "网页 / 历史地图可视化",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "PPT、Excel、Word-ai作品/AB测试结果分析表-Excel-作品集",
+    "slug": "ab-test-analysis",
+    "title": "AB测试结果分析表-Excel-作品集",
+    "kind": "Excel / A/B 测试分析",
+    "demo": null,
+    "assets": [
+      [
+        "作品-AB测试结果分析表.xlsx",
+        "./demo/%E4%BD%9C%E5%93%81-AB%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90%E8%A1%A8.xlsx"
+      ]
+    ]
+  },
+  {
+    "source": "PPT、Excel、Word-ai作品/TechVision2026峰会签到管理表-Excel-作品集",
+    "slug": "techvision-checkin-workbook",
+    "title": "TechVision2026峰会签到管理表-Excel-作品集",
+    "kind": "Excel / 活动签到管理",
+    "demo": null,
+    "assets": [
+      [
+        "作品-TechVision2026峰会签到管理表.xlsx",
+        "./demo/%E4%BD%9C%E5%93%81-TechVision2026%E5%B3%B0%E4%BC%9A%E7%AD%BE%E5%88%B0%E7%AE%A1%E7%90%86%E8%A1%A8.xlsx"
+      ]
+    ]
+  },
+  {
+    "source": "PPT、Excel、Word-ai作品/人形机器人A轮融资路演BP-PPT-作品集",
+    "slug": "humanoid-robot-pitch-deck",
+    "title": "人形机器人A轮融资路演BP-PPT-作品集",
+    "kind": "PPT / 路演材料",
+    "demo": null,
+    "assets": [
+      [
+        "人形机器人A轮路演BP.pptx",
+        "./demo/%E4%BA%BA%E5%BD%A2%E6%9C%BA%E5%99%A8%E4%BA%BAA%E8%BD%AE%E8%B7%AF%E6%BC%94BP.pptx"
+      ]
+    ]
+  },
+  {
+    "source": "PPT、Excel、Word-ai作品/剑隐山河-武侠开放世界发布会幻灯片",
+    "slug": "sword-hidden-river-launch-deck",
+    "title": "剑隐山河-武侠开放世界发布会幻灯片",
+    "kind": "PPT / 游戏发布会",
+    "demo": null,
+    "assets": [
+      [
+        "剑隐山河-全球首曝.pptx",
+        "./demo/%E5%89%91%E9%9A%90%E5%B1%B1%E6%B2%B3-%E5%85%A8%E7%90%83%E9%A6%96%E6%9B%9D.pptx"
+      ],
+      [
+        "预览-全12页.png",
+        "./demo/%E9%A2%84%E8%A7%88-%E5%85%A812%E9%A1%B5.png"
+      ]
+    ]
+  },
+  {
+    "source": "PPT、Excel、Word-ai作品/神经网络经典算法-学术报告",
+    "slug": "neural-network-lecture",
+    "title": "神经网络经典算法-学术报告",
+    "kind": "PPT / 学术演示",
+    "demo": null,
+    "assets": [
+      [
+        "神经网络经典算法.pptx",
+        "./demo/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%8F%E5%85%B8%E7%AE%97%E6%B3%95.pptx"
+      ]
+    ]
+  },
+  {
+    "source": "海报-ai作品/AI教育直播课海报",
+    "slug": "ai-education-live-poster",
+    "title": "AI教育直播课海报",
+    "kind": "海报 / 教育活动视觉",
+    "demo": null,
+    "assets": [
+      [
+        "AI教育课海报.png",
+        "./demo/AI%E6%95%99%E8%82%B2%E8%AF%BE%E6%B5%B7%E6%8A%A5.png"
+      ]
+    ]
+  },
+  {
+    "source": "海报-ai作品/WorkBuddy产品战略分享会海报",
+    "slug": "workbuddy-strategy-poster",
+    "title": "WorkBuddy产品战略分享会海报",
+    "kind": "海报 / 活动视觉",
+    "demo": null,
+    "assets": [
+      [
+        "WorkBuddy海报_1080x1620.jpg",
+        "./demo/WorkBuddy%E6%B5%B7%E6%8A%A5_1080x1620.jpg"
+      ],
+      [
+        "WorkBuddy海报_2160x3240.jpg",
+        "./demo/WorkBuddy%E6%B5%B7%E6%8A%A5_2160x3240.jpg"
+      ]
+    ]
+  },
+  {
+    "source": "海报-ai作品/山系户外露营节海报",
+    "slug": "mountain-camping-poster",
+    "title": "山系户外露营节海报",
+    "kind": "海报 / 户外活动视觉",
+    "demo": null,
+    "assets": [
+      [
+        "camping_festival_poster_1080x1620.jpg",
+        "./demo/camping_festival_poster_1080x1620.jpg"
+      ]
+    ]
+  },
+  {
+    "source": "海报-ai作品/栀子花海报",
+    "slug": "gardenia-poster",
+    "title": "栀子花海报",
+    "kind": "海报 / 花卉主题视觉",
+    "demo": null,
+    "assets": [
+      [
+        "栀子花海报.png",
+        "./demo/%E6%A0%80%E5%AD%90%E8%8A%B1%E6%B5%B7%E6%8A%A5.png"
+      ]
+    ]
+  },
+  {
+    "source": "海报-ai作品/米白6合1空气炸锅-亚马逊商品套图",
+    "slug": "air-fryer-listing-images",
+    "title": "米白6合1空气炸锅-亚马逊商品套图",
+    "kind": "海报 / 电商商品视觉",
+    "demo": null,
+    "assets": [
+      [
+        "空气炸锅套图_总览.png",
+        "./demo/%E7%A9%BA%E6%B0%94%E7%82%B8%E9%94%85%E5%A5%97%E5%9B%BE_%E6%80%BB%E8%A7%88.png"
+      ],
+      [
+        "单图",
+        "./demo/%E5%8D%95%E5%9B%BE"
+      ]
+    ]
+  },
+  {
+    "source": "海报-ai作品/雨落之后-AFTER-THE-RAIN电影海报",
+    "slug": "after-the-rain-poster",
+    "title": "雨落之后-AFTER-THE-RAIN电影海报",
+    "kind": "海报 / 电影主视觉",
+    "demo": null,
+    "assets": [
+      [
+        "雨落之后-1080x1620.png",
+        "./demo/%E9%9B%A8%E8%90%BD%E4%B9%8B%E5%90%8E-1080x1620.png"
+      ],
+      [
+        "雨落之后-2160x3240.png",
+        "./demo/%E9%9B%A8%E8%90%BD%E4%B9%8B%E5%90%8E-2160x3240.png"
+      ]
+    ]
   }
 ]

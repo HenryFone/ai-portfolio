@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微服务系统架构图 · 手绘风格</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Segoe Print','Comic Sans MS','KaiTi','STKaiti','楷体',cursive;
+  background:#fafafa;min-height:100vh;color:#1f2937;
+  display:flex;flex-direction:column;align-items:center;
+  padding:30px 16px 44px;
+}
+.page-header{text-align:center;margin-bottom:16px;}
+.page-header h1{font-size:32px;font-weight:700;letter-spacing:3px;}
+.page-header p{margin-top:8px;font-size:14.5px;color:#6b7280;letter-spacing:1px;}
+.diagram-container{width:100%;max-width:1520px;}
+.board{
+  background-color:#ffffff;
+  background-image:radial-gradient(circle,#e5e7eb 1.1px,transparent 1.2px);
+  background-size:26px 26px;
+  border-radius:16px;
+  box-shadow:0 12px 44px rgba(31,41,55,.10);
+  padding:8px;
+}
+svg.architecture{width:100%;height:auto;display:block;}
+svg text{font-family:'Segoe Print','Comic Sans MS','KaiTi','STKaiti','楷体',cursive;}
+/* 交互：悬停高亮 */
+.service-group{cursor:pointer;transition:opacity .25s ease;}
+.service-group.dimmed{opacity:.14;}
+.service-group.highlighted .node-rect{stroke:#e8590c;stroke-width:3;}
+.connection{transition:opacity .25s ease;}
+.connection.dimmed{opacity:.08;}
+.connection.highlighted .edge-line{stroke:#e8590c;stroke-width:3;}
+.connection.highlighted .edge-label rect{stroke:#f2b394;}
+.layer-frame{pointer-events:none;transition:opacity .25s ease;}
+.diagram-container.focusing .layer-frame{opacity:.35;}
+.legend{pointer-events:none;}
+/* 提示气泡 */
+.tooltip{
+  position:fixed;background:#1f2937;color:#fff;padding:9px 14px;border-radius:8px;
+  font-size:13.5px;font-family:'Segoe UI','Microsoft YaHei',sans-serif;
+  pointer-events:none;opacity:0;transition:opacity .18s ease;z-index:1000;
+  max-width:260px;line-height:1.55;box-shadow:0 8px 24px rgba(0,0,0,.28);
+}
+.tooltip.visible{opacity:1;}
+.hint{
+  margin-top:14px;text-align:center;font-size:13px;color:#6b7280;letter-spacing:.5px;
+  font-family:'Segoe UI','Microsoft YaHei',sans-serif;
+}
+@media (max-width:768px){.page-header h1{font-size:24px;}}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <h1>微服务系统架构图</h1>
+  <p>手绘风格 · 三层架构 · 悬停任一服务，高亮它的全部连接</p>
+</div>
+<div class="diagram-container" id="container">
+  <div class="board">
+    <svg class="architecture" viewBox="0 0 1480 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="微服务系统架构图"></svg>
+  </div>
+  <p class="hint">9 个服务组件 · 13 条连接 · 按「接入网关 / 业务服务 / 基础设施」三层着色</p>
+</div>
+<div class="tooltip" id="tooltip"></div>
+<script>
+(function(){
+'use strict';
+
+/* ================= 数据定义 ================= */
+var LAYERS=[
+  {label:'接入网关层',en:'Gateway Layer',x:100,y:86,w:1280,h:180,c:'gateway'},
+  {label:'业务服务层',en:'Business Services',x:100,y:320,w:1280,h:230,c:'business'},
+  {label:'基础设施层',en:'Infrastructure',x:100,y:610,w:1280,h:210,c:'infra'}
+];
+var C={
+  gateway:{stroke:'#3b82f6',bg:'#dbeafe',text:'#1e40af'},
+  business:{stroke:'#22c55e',bg:'#dcfce7',text:'#166534'},
+  infra:{stroke:'#f97316',bg:'#ffedd5',text:'#9a3412'}
+};
+/* 图标：24x24 视野的 stroke 风格 path，[路径, 是否实心] */
+var ICONS={
+  gateway:[
+    ['M12 2.5 L21.5 12 L12 21.5 L2.5 12 Z',0],
+    ['M12 6 V8.8',0],['M12 15.2 V18',0],['M6 12 H8.8',0],['M15.2 12 H18',0],
+    ['M12 8.9 A3.1 3.1 0 1 1 8.89 8.9 Z',1]
+  ],
+  shield:[
+    ['M12 2.8 L19.6 5.6 V11.2 C19.6 16.6 12 21.2 12 21.2 C12 21.2 4.4 16.6 4.4 11.2 V5.6 Z',0],
+    ['M8.7 11.7 L11 14 L15.5 9.1',0]
+  ],
+  user:[
+    ['M8.8 7.2 A3.4 3.4 0 1 1 8.79 7.2',0],
+    ['M5 20.2 C5 16.5 8.2 14.7 12 14.7 C15.8 14.7 19 16.5 19 20.2',0]
+  ],
+  order:[
+    ['M6.5 3 H13.6 L18 7.4 V21 H6.5 Z',0],
+    ['M13.6 3 V7.4 H18',0],
+    ['M9 12.2 H15',0],['M9 15.6 H13.2',0]
+  ],
+  card:[
+    ['M3.5 6.5 H20.5 V17.5 H3.5 Z',0],
+    ['M3.5 10 H20.5',0],['M6.2 13.8 H9.2',0]
+  ],
+  bell:[
+    ['M12 3.2 C8.7 3.2 6.6 6.1 6.6 9.9 V13.9 L4.7 16.6 H19.3 L17.4 13.9 V9.9 C17.4 6.1 15.3 3.2 12 3.2 Z',0],
+    ['M10.3 18.9 A1.8 1.8 0 1 1 13.7 18.9',0]
+  ],
+  queue:[
+    ['M3 4 H14.5 V8 H3 Z',0],['M3 10 H14.5 V14 H3 Z',0],['M3 16 H14.5 V20 H3 Z',0],
+    ['M15.8 12 H21.2',0],['M19 9.6 L21.4 12 L19 14.4',0]
+  ],
+  db:[
+    ['M4.5 4.8 C4.5 7.3 7.9 9.1 12 9.1 C16.1 9.1 19.5 7.3 19.5 4.8',0],
+    ['M4.5 4.8 V17.8 C4.5 20.3 7.9 22.1 12 22.1 C16.1 22.1 19.5 20.3 19.5 17.8 V4.8',0],
+    ['M4.5 11.6 C4.5 14.1 7.9 15.9 12 15.9 C16.1 15.9 19.5 14.1 19.5 11.6',0]
+  ],
+  cache:[
+    ['M13 2 L4.5 13.5 H11 L9.5 22 L19.5 10 H13 Z',0]
+  ]
+};
+var SERVICES=[
+  {id:'api-gateway',name:'API 网关',sub:'路由 · 鉴权 · 限流',layer:'gateway',x:635,y:130,w:220,h:96,icon:'gateway',
+   tip:'API 网关：系统统一入口，负责请求路由、负载均衡、鉴权与限流。'},
+  {id:'auth-service',name:'认证服务',sub:'JWT · OAuth2',layer:'business',x:135,y:390,w:220,h:96,icon:'shield',
+   tip:'认证服务：处理登录鉴权，签发与校验 JWT Token。'},
+  {id:'user-service',name:'用户服务',sub:'资料 · 账户管理',layer:'business',x:385,y:390,w:220,h:96,icon:'user',
+   tip:'用户服务：用户资料、账户与偏好设置的管理。'},
+  {id:'order-service',name:'订单服务',sub:'下单 · 订单状态',layer:'business',x:635,y:390,w:220,h:96,icon:'order',
+   tip:'订单服务：下单流程与订单生命周期状态机管理。'},
+  {id:'payment-service',name:'支付服务',sub:'渠道 · 退款对账',layer:'business',x:885,y:390,w:220,h:96,icon:'card',
+   tip:'支付服务：对接支付渠道，处理支付、退款与对账。'},
+  {id:'notification-service',name:'通知服务',sub:'短信 · 邮件 · 推送',layer:'business',x:1135,y:390,w:220,h:96,icon:'bell',
+   tip:'通知服务：通过短信、邮件、App 推送发送通知。'},
+  {id:'redis-cache',name:'缓存',sub:'Redis 会话与热点',layer:'infra',x:185,y:690,w:220,h:96,icon:'cache',
+   tip:'Redis 缓存：会话存储、热点数据缓存与限流计数。'},
+  {id:'postgresql',name:'数据库',sub:'PostgreSQL 主存储',layer:'infra',x:645,y:690,w:220,h:96,icon:'db',
+   tip:'PostgreSQL：主关系型数据库，负责事务与数据持久化。'},
+  {id:'kafka',name:'消息队列',sub:'Kafka 事件总线',layer:'infra',x:1105,y:690,w:220,h:96,icon:'queue',
+   tip:'Kafka 消息队列：异步事件总线，实现服务解耦与削峰。'}
+];
+/* 连接：a=起点(源节点边缘)，b=终点(目标节点边缘)，curv=弧率 */
+var CONNECTIONS=[
+  {from:'api-gateway',to:'auth-service',label:'Token 校验',a:[722,226],b:[258,390],curv:-30},
+  {from:'api-gateway',to:'user-service',label:'用户请求',a:[733,226],b:[478,390],curv:-16},
+  {from:'api-gateway',to:'order-service',label:'订单请求',a:[745,226],b:[745,390],curv:0},
+  {from:'api-gateway',to:'payment-service',label:'支付请求',a:[757,226],b:[1012,390],curv:16},
+  {from:'api-gateway',to:'notification-service',label:'通知请求',a:[770,226],b:[1232,390],curv:30},
+  {from:'auth-service',to:'postgresql',label:'读写',a:[225,486],b:[700,690],curv:8},
+  {from:'user-service',to:'postgresql',label:'读写',a:[480,486],b:[730,690],curv:-14},
+  {from:'order-service',to:'postgresql',label:'读写',a:[730,486],b:[770,690],curv:-14},
+  {from:'payment-service',to:'postgresql',label:'读写',a:[930,486],b:[800,690],curv:-20},
+  {from:'order-service',to:'kafka',label:'订单事件',a:[790,486],b:[1140,690],curv:-24},
+  {from:'payment-service',to:'kafka',label:'支付事件',a:[1020,486],b:[1180,690],curv:16},
+  {from:'kafka',to:'notification-service',label:'消费推送',a:[1240,690],b:[1278,486],curv:20},
+  {from:'auth-service',to:'redis-cache',label:'会话缓存',a:[245,486],b:[295,690],curv:18}
+];
+
+/* ================= 工具函数 ================= */
+function r1(n){return Math.round(n*10)/10;}
+function textW(str,size){
+  var w=0;
+  for(var i=0;i<str.length;i++){
+    w+=str.charCodeAt(i)>255?size:size*0.56;
+  }
+  return w;
+}
+function edgeGeom(a,b,curv){
+  var dx=b[0]-a[0],dy=b[1]-a[1],len=Math.sqrt(dx*dx+dy*dy)||1;
+  var nx=-dy/len,ny=dx/len;
+  return {
+    c1:[a[0]+dx*0.32+nx*curv,a[1]+dy*0.32+ny*curv],
+    c2:[a[0]+dx*0.68+nx*curv,a[1]+dy*0.68+ny*curv]
+  };
+}
+function cubicMid(a,c1,c2,b){
+  return [
+    0.125*a[0]+0.375*c1[0]+0.375*c2[0]+0.125*b[0],
+    0.125*a[1]+0.375*c1[1]+0.375*c2[1]+0.125*b[1]
+  ];
+}
+
+/* ================= 渲染 ================= */
+function legendItem(key,label,x,baseY){
+  var c=C[key];
+  return '<rect x="'+x+'" y="19" width="16" height="16" rx="4" ry="4" fill="'+c.bg+'" stroke="'+c.stroke+'" stroke-width="1.8"/>'
+    +'<text x="'+(x+23)+'" y="'+baseY+'" font-size="13" fill="#4b5563">'+label+'</text>';
+}
+function render(){
+  var svg=document.querySelector('svg.architecture');
+  var s='';
+  /* defs：手绘滤镜 + 箭头 marker */
+  s+='<defs>'
+    +'<filter id="rough" x="-6%" y="-6%" width="112%" height="112%">'
+    +'<feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="3" seed="2" result="t"/>'
+    +'<feDisplacementMap in="SourceGraphic" in2="t" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>'
+    +'</filter>'
+    +'<filter id="roughLine" x="-6%" y="-6%" width="112%" height="112%">'
+    +'<feTurbulence type="turbulence" baseFrequency="0.045" numOctaves="2" seed="5" result="t"/>'
+    +'<feDisplacementMap in="SourceGraphic" in2="t" scale="1.6" xChannelSelector="R" yChannelSelector="G"/>'
+    +'</filter>'
+    +'<marker id="arrow" markerWidth="10" markerHeight="8" refX="8.6" refY="3" orient="auto"><path d="M0 0 L9.6 3 L0 6 Z" fill="#8a8f98"/></marker>'
+    +'<marker id="arrow-hl" markerWidth="10" markerHeight="8" refX="8.6" refY="3" orient="auto"><path d="M0 0 L9.6 3 L0 6 Z" fill="#e8590c"/></marker>'
+    +'</defs>';
+  /* 层框 */
+  for(var i=0;i<LAYERS.length;i++){
+    var l=LAYERS[i],c=C[l.c];
+    s+='<g class="layer-frame">'
+      +'<rect x="'+l.x+'" y="'+l.y+'" width="'+l.w+'" height="'+l.h+'" rx="16" ry="16" fill="none" stroke="'+c.stroke+'" stroke-opacity="0.38" stroke-width="1.8" stroke-dasharray="10 8" filter="url(#rough)"/>'
+      +'<text x="'+(l.x+26)+'" y="'+(l.y+34)+'" font-size="16" font-weight="600" fill="'+c.stroke+'">'+l.label
+      +'<tspan dx="9" font-size="12" font-weight="400" fill="#6b7280" letter-spacing="1">'+l.en+'</tspan></text>'
+      +'</g>';
+  }
+  /* 连接（先画，位于节点下层） */
+  for(var j=0;j<CONNECTIONS.length;j++){
+    var cn=CONNECTIONS[j],g=edgeGeom(cn.a,cn.b,cn.curv);
+    var mid=cubicMid(cn.a,g.c1,g.c2,cn.b);
+    var d='M'+cn.a[0]+','+cn.a[1]+' C'+r1(g.c1[0])+','+r1(g.c1[1])+' '+r1(g.c2[0])+','+r1(g.c2[1])+' '+cn.b[0]+','+cn.b[1];
+    var lw=r1(textW(cn.label,13)+20);
+    s+='<g class="connection" data-from="'+cn.from+'" data-to="'+cn.to+'">'
+      +'<path class="edge-line" d="'+d+'" fill="none" stroke="#8a8f98" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrow)" filter="url(#roughLine)"/>'
+      +'<g class="edge-label">'
+      +'<rect x="'+r1(mid[0]-lw/2)+'" y="'+r1(mid[1]-13)+'" width="'+lw+'" height="26" rx="7" fill="#ffffff" fill-opacity="0.95" stroke="#d8dce1" stroke-width="1"/>'
+      +'<text x="'+r1(mid[0])+'" y="'+r1(mid[1]+4.6)+'" text-anchor="middle" font-size="13" fill="#4b5563">'+cn.label+'</text>'
+      +'</g></g>';
+  }
+  /* 服务节点 */
+  for(var k=0;k<SERVICES.length;k++){
+    var sv=SERVICES[k],cc=C[sv.layer];
+    var ic='';
+    var paths=ICONS[sv.icon];
+    for(var p=0;p<paths.length;p++){
+      ic+='<path d="'+paths[p][0]+'" fill="'+(paths[p][1]?cc.stroke:'none')+'" stroke="'+(paths[p][1]?'none':cc.stroke)+'" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>';
+    }
+    s+='<g class="service-group" data-service="'+sv.id+'" data-tip="'+sv.tip+'">'
+      +'<rect class="node-rect" x="'+sv.x+'" y="'+sv.y+'" width="'+sv.w+'" height="'+sv.h+'" rx="10" ry="10" fill="'+cc.bg+'" stroke="'+cc.stroke+'" stroke-width="2.5" filter="url(#rough)"/>'
+      +'<g transform="translate('+(sv.x+18)+','+(sv.y+30)+') scale(1.5)" filter="url(#rough)">'+ic+'</g>'
+      +'<text x="'+(sv.x+64)+'" y="'+(sv.y+42)+'" font-size="18" font-weight="600" fill="'+cc.text+'">'+sv.name+'</text>'
+      +'<text x="'+(sv.x+64)+'" y="'+(sv.y+66)+'" font-size="13" fill="'+cc.text+'" font-weight="400">'+sv.sub+'</text>'
+      +'</g>';
+  }
+  /* 图例（右上角） */
+  s+='<g class="legend">'
+    +'<rect x="1055" y="8" width="400" height="66" rx="12" ry="12" fill="#ffffff" fill-opacity="0.96" stroke="#c9ced6" stroke-width="2" filter="url(#rough)"/>'
+    +legendItem('gateway','接入网关',1075,33)
+    +legendItem('business','业务服务',1183,33)
+    +legendItem('infra','基础设施',1291,33)
+    +'<text x="1075" y="55" font-size="12.5" fill="#6b7280">悬停任一服务，高亮它的全部连接</text>'
+    +'</g>';
+  svg.innerHTML=s;
+}
+
+/* ================= 交互 ================= */
+function bind(){
+  var container=document.getElementById('container');
+  var svg=document.querySelector('svg.architecture');
+  var groups=Array.prototype.slice.call(svg.querySelectorAll('.service-group'));
+  var conns=Array.prototype.slice.call(svg.querySelectorAll('.connection'));
+  var tooltip=document.getElementById('tooltip');
+  function connected(id){
+    var set={};set[id]=1;
+    conns.forEach(function(cn){
+      if(cn.getAttribute('data-from')===id)set[cn.getAttribute('data-to')]=1;
+      if(cn.getAttribute('data-to')===id)set[cn.getAttribute('data-from')]=1;
+    });
+    return set;
+  }
+  function highlight(id){
+    var set=connected(id);
+    container.classList.add('focusing');
+    groups.forEach(function(g){
+      var on=set[g.getAttribute('data-service')];
+      g.classList.toggle('highlighted',!!on);
+      g.classList.toggle('dimmed',!on);
+    });
+    conns.forEach(function(cn){
+      var on=cn.getAttribute('data-from')===id||cn.getAttribute('data-to')===id;
+      cn.classList.toggle('highlighted',on);
+      cn.classList.toggle('dimmed',!on);
+      cn.querySelector('.edge-line').setAttribute('marker-end',on?'url(#arrow-hl)':'url(#arrow)');
+    });
+  }
+  function reset(){
+    container.classList.remove('focusing');
+    groups.forEach(function(g){g.classList.remove('highlighted','dimmed');});
+    conns.forEach(function(cn){
+      cn.classList.remove('highlighted','dimmed');
+      cn.querySelector('.edge-line').setAttribute('marker-end','url(#arrow)');
+    });
+    tooltip.classList.remove('visible');
+  }
+  function showTip(g,pt){
+    tooltip.textContent=g.getAttribute('data-tip');
+    tooltip.classList.add('visible');
+    moveTip(pt);
+  }
+  function moveTip(pt){
+    var x=pt.clientX+14,y=pt.clientY+16;
+    var w=tooltip.offsetWidth||220,h=tooltip.offsetHeight||60;
+    if(x+w>window.innerWidth-8)x=window.innerWidth-w-8;
+    if(y+h>window.innerHeight-8)y=pt.clientY-h-10;
+    tooltip.style.left=x+'px';
+    tooltip.style.top=y+'px';
+  }
+  groups.forEach(function(g){
+    var id=g.getAttribute('data-service');
+    g.addEventListener('mouseenter',function(e){highlight(id);showTip(g,e);});
+    g.addEventListener('mousemove',function(e){moveTip(e);});
+    g.addEventListener('mouseleave',reset);
+    g.addEventListener('touchstart',function(e){highlight(id);showTip(g,e.touches[0]);},{passive:true});
+  });
+  document.addEventListener('touchstart',function(e){
+    var t=e.target;
+    while(t&&t!==document){
+      if(t.classList&&t.classList.contains('service-group'))return;
+      t=t.parentNode;
+    }
+    reset();
+  });
+  window.addEventListener('scroll',reset,{passive:true});
+}
+render();
+bind();
+})();
+</script>
+</body>
+</html>
