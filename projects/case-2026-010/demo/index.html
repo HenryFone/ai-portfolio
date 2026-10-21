@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>MESHLINE · 2026 Q3 产品战略一页纸 · 季中校准</title>
+<style>
+/* ============================================================
+   0. TOKENS
+   ============================================================ */
+:root{
+  --bg:#05070c;
+  --bg-2:#080b12;
+  --ink:#eef1f8;
+  --ink-2:#a4afc5;
+  --ink-3:#6b768e;
+  --line:rgba(255,255,255,.075);
+  --line-2:rgba(255,255,255,.045);
+
+  --gold:#d8b97c;
+  --gold-2:#f1e2ba;
+  --teal:#48d3c4;
+  --violet:#a394f7;
+  --green:#57d69b;
+  --amber:#eab35a;
+  --red:#e06a6a;
+  --rose:#e58aa0;
+
+  --r-lg:24px;
+  --r:16px;
+  --r-sm:11px;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI Variable Display","Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --maxw:1220px;
+  --nav:58px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  padding:calc(var(--nav) + 18px) clamp(14px,3vw,36px) 72px;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(1100px 620px at 78% -12%, rgba(163,148,247,.13), transparent 62%),
+    radial-gradient(900px 520px at 4% 0%, rgba(72,211,196,.085), transparent 58%),
+    radial-gradient(760px 520px at 50% 112%, rgba(216,185,124,.07), transparent 60%);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;
+}
+main{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+::selection{background:rgba(216,185,124,.28);color:#fff}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.num,.kpi-val,.tgt,.cur{font-variant-numeric:tabular-nums}
+
+/* ============================================================
+   1. NAV + PROGRESS
+   ============================================================ */
+#prog{
+  position:fixed;top:0;left:0;height:2px;width:0;z-index:120;
+  background:linear-gradient(90deg,var(--teal),var(--gold-2) 55%,var(--violet));
+  box-shadow:0 0 12px rgba(216,185,124,.6);
+  transition:width .1s linear;
+}
+.nav{
+  position:fixed;top:0;left:0;right:0;height:var(--nav);z-index:110;
+  background:rgba(5,7,12,.72);
+  backdrop-filter:blur(20px) saturate(140%);
+  -webkit-backdrop-filter:blur(20px) saturate(140%);
+  border-bottom:1px solid var(--line-2);
+}
+.nav-in{max-width:var(--maxw);margin:0 auto;height:100%;padding:0 clamp(14px,3vw,36px);display:flex;align-items:center;gap:20px}
+.nav-brand{display:flex;align-items:center;gap:9px;flex:0 0 auto}
+.nav-brand svg{display:block}
+.nav-brand b{font-size:12.5px;font-weight:800;letter-spacing:.2em}
+.nav-brand i{font-style:normal;font-size:10.5px;color:var(--ink-3);letter-spacing:.06em;padding-left:9px;border-left:1px solid var(--line)}
+.nav-links{display:flex;gap:1px;margin-left:6px;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{
+  position:relative;font-size:12.5px;color:var(--ink-3);padding:7px 11px;border-radius:8px;
+  white-space:nowrap;transition:color .2s,background .2s;
+}
+.nav-links a i{font-style:normal;font-family:var(--mono);font-size:10px;opacity:.5;margin-right:5px}
+.nav-links a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+.nav-links a.on{color:var(--gold-2);background:rgba(216,185,124,.1)}
+.nav-links a.on i{opacity:.85}
+.nav-act{margin-left:auto;display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.nav-meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 13px;border-radius:9px;
+  border:1px solid var(--line);background:rgba(255,255,255,.03);
+  font-size:12px;font-weight:600;color:var(--ink-2);
+  transition:background .2s,border-color .2s,color .2s,transform .2s;
+}
+.btn:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.16);color:var(--ink);transform:translateY(-1px)}
+.btn:active{transform:none}
+.btn svg{opacity:.8}
+
+/* ============================================================
+   2. HERO
+   ============================================================ */
+.hero{
+  position:relative;margin-top:8px;overflow:hidden;
+  border:1px solid var(--line);border-radius:var(--r-lg);
+  background:linear-gradient(168deg,#121927 0%,#0a0e17 52%,#06090f 100%);
+  padding:clamp(24px,3.2vw,42px);
+  box-shadow:0 40px 90px -50px rgba(0,0,0,.9), 0 1px 0 rgba(255,255,255,.05) inset;
+}
+.hero::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:1.5px;
+  background:linear-gradient(90deg,transparent,rgba(216,185,124,.95) 18%,rgba(72,211,196,.7) 46%,rgba(163,148,247,.6) 70%,transparent);
+  opacity:.9;
+}
+.aur{position:absolute;border-radius:50%;filter:blur(64px);pointer-events:none;opacity:.5}
+.aur.a1{width:420px;height:420px;right:-90px;top:-160px;background:radial-gradient(circle,rgba(163,148,247,.55),transparent 68%);animation:drift 22s var(--ease) infinite alternate}
+.aur.a2{width:360px;height:360px;left:-120px;bottom:-180px;background:radial-gradient(circle,rgba(72,211,196,.4),transparent 70%);animation:drift 26s var(--ease) infinite alternate-reverse}
+@keyframes drift{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(-26px,22px,0) scale(1.08)}}
+.mesh{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image:radial-gradient(720px 420px at 88% -8%,#000,transparent 74%);
+  mask-image:radial-gradient(720px 420px at 88% -8%,#000,transparent 74%);
+}
+.hero-in{position:relative;z-index:2}
+.hero-grid{display:grid;grid-template-columns:1.5fr .96fr;gap:clamp(26px,3.2vw,46px);align-items:start}
+
+.brand-row{display:flex;align-items:center;gap:12px;margin-bottom:clamp(22px,3vw,34px)}
+.logo{width:44px;height:44px;flex:0 0 auto;border-radius:13px;display:grid;place-items:center;
+  border:1px solid rgba(216,185,124,.32);background:linear-gradient(150deg,rgba(216,185,124,.14),rgba(255,255,255,.02));
+  box-shadow:0 8px 24px -14px rgba(216,185,124,.7)}
+.brand-name{font-size:19px;font-weight:800;letter-spacing:.18em;line-height:1.2}
+.brand-sub{font-size:11.5px;color:var(--ink-3);letter-spacing:.04em;margin-top:2px}
+.chip-q{
+  margin-left:auto;display:inline-flex;align-items:center;gap:8px;flex:0 0 auto;
+  height:30px;padding:0 13px;border-radius:999px;
+  border:1px solid rgba(216,185,124,.28);background:rgba(216,185,124,.07);
+  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--gold-2);
+}
+.chip-q .live{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(87,214,155,.6);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(87,214,155,.55)}70%{box-shadow:0 0 0 7px rgba(87,214,155,0)}100%{box-shadow:0 0 0 0 rgba(87,214,155,0)}}
+
+.eyebrow{font-size:10.5px;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);font-weight:800}
+h1{
+  font-size:clamp(29px,4.15vw,46px);line-height:1.16;font-weight:800;letter-spacing:-.022em;
+  margin:13px 0 18px;
+}
+h1 .mask{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+h1 .mask>span{display:block;transform:translateY(108%);opacity:.001;transition:transform 1.05s var(--ease),opacity .7s ease}
+h1 .mask:nth-child(2)>span{transition-delay:.1s}
+html.ready h1 .mask>span{transform:none;opacity:1}
+h1 .accent{
+  background:linear-gradient(96deg,var(--gold-2) 0%,#9de8df 52%,var(--violet) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.claim{font-size:14.5px;line-height:1.78;color:var(--ink-2);max-width:52ch}
+.claim b{color:var(--ink);font-weight:700}
+.claim em{font-style:normal;color:var(--gold-2);font-weight:700}
+
+.facts{display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;margin-top:24px}
+.fact{display:flex;align-items:baseline;gap:7px;font-size:12px;color:var(--ink-3)}
+.fact .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);opacity:.8}
+.fact .v{font-family:var(--mono);font-size:13px;font-weight:800;color:var(--ink);letter-spacing:.01em}
+.fact .v.g{color:var(--gold-2)}
+.fact .v.t{color:var(--teal)}
+.fact-sep{width:1px;height:13px;background:var(--line)}
+
+/* TL;DR */
+.tldr{
+  position:relative;border:1px solid var(--line);border-radius:var(--r);
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  padding:18px 18px 16px;
+  box-shadow:0 20px 50px -34px #000, 0 1px 0 rgba(255,255,255,.06) inset;
+}
+.tldr-h{display:flex;align-items:center;gap:8px;padding-bottom:11px;margin-bottom:13px;border-bottom:1px solid var(--line-2)}
+.tldr-h span{font-size:10px;letter-spacing:.26em;text-transform:uppercase;font-weight:800;color:var(--teal)}
+.tldr-h .tag{margin-left:auto;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--ink-3)}
+.tldr ol{list-style:none;display:flex;flex-direction:column;gap:13px}
+.tldr li{display:flex;gap:10px;font-size:12.9px;line-height:1.62;color:var(--ink-2)}
+.tldr li b{display:block;color:var(--ink);font-size:13px;font-weight:800;margin-bottom:2px;letter-spacing:.01em}
+.tldr .no{
+  flex:0 0 auto;width:19px;height:19px;border-radius:6px;display:grid;place-items:center;
+  font-family:var(--mono);font-size:10px;font-weight:800;color:#0a0d14;
+  background:linear-gradient(140deg,var(--gold-2),var(--gold));margin-top:2px;
+}
+.tldr .foot{
+  margin-top:14px;padding-top:11px;border-top:1px dashed var(--line);
+  font-size:11.5px;color:var(--ink-3);display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+}
+.tldr .foot b{color:var(--amber);font-weight:700}
+
+/* ASK STRIP */
+.asks{margin-top:clamp(20px,2.6vw,30px);border-top:1px solid var(--line-2);padding-top:18px}
+.asks-h{display:flex;align-items:center;gap:9px;margin-bottom:12px;flex-wrap:wrap}
+.asks-h .lb{font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;font-weight:800;color:var(--amber)}
+.asks-h .sub{font-size:11.5px;color:var(--ink-3)}
+.ask-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ask{
+  position:relative;display:flex;align-items:flex-start;gap:10px;
+  border:1px solid var(--line);border-radius:12px;padding:12px 13px;
+  background:rgba(255,255,255,.022);transition:background .25s,border-color .25s,transform .25s;
+}
+.ask:hover{background:rgba(255,255,255,.045);border-color:rgba(234,179,90,.32);transform:translateY(-2px)}
+.ask .no{
+  flex:0 0 auto;font-family:var(--mono);font-size:10px;font-weight:800;color:var(--amber);
+  border:1px solid rgba(234,179,90,.32);border-radius:6px;padding:1px 5px;margin-top:1px;letter-spacing:.06em;
+}
+.ask b{display:block;font-size:12.6px;font-weight:800;color:var(--ink);line-height:1.45}
+.ask p{font-size:11.8px;color:var(--ink-2);line-height:1.55;margin-top:2px}
+.ask .due{
+  flex:0 0 auto;margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.06em;
+  color:var(--ink-3);white-space:nowrap;padding-top:2px;
+}
+
+/* ============================================================
+   3. SECTION SCAFFOLD
+   ============================================================ */
+section{margin-top:clamp(34px,4.2vw,56px);scroll-margin-top:calc(var(--nav) + 18px)}
+.sec-head{display:flex;align-items:flex-end;gap:13px;margin-bottom:16px;padding-bottom:11px;border-bottom:1px solid var(--line-2)}
+.sec-idx{
+  font-family:var(--mono);font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--gold);
+  padding:2px 7px;border:1px solid rgba(216,185,124,.28);border-radius:6px;background:rgba(216,185,124,.06);
+  transform:translateY(-2px);
+}
+.sec-title{font-size:clamp(16.5px,2.15vw,20.5px);font-weight:800;letter-spacing:.005em;line-height:1.3}
+.sec-title small{display:block;font-size:11.5px;font-weight:500;color:var(--ink-3);letter-spacing:.02em;margin-top:3px}
+.sec-note{margin-left:auto;font-size:11.5px;color:var(--ink-3);letter-spacing:.02em;text-align:right;line-height:1.5}
+
+/* reveal */
+.rv{opacity:1;transform:none}
+html.js .rv{opacity:0;transform:translateY(16px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+html.js .rv.in{opacity:1;transform:none}
+
+/* ============================================================
+   4. CONCLUSION CARDS
+   ============================================================ */
+.concl{display:grid;grid-template-columns:repeat(5,1fr);gap:11px}
+.cc{
+  position:relative;overflow:hidden;border:1px solid var(--line);border-radius:14px;
+  padding:15px 15px 16px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.008));
+  transition:transform .35s var(--ease),border-color .35s,box-shadow .35s;
+}
+.cc::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--ac);opacity:.9}
+.cc::after{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .35s;
+  background:radial-gradient(220px 120px at 50% -20%,var(--ac),transparent 70%);
+}
+.cc:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.16);box-shadow:0 24px 44px -30px #000}
+.cc:hover::after{opacity:.14}
+.cc .k{display:flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);font-weight:700;margin-bottom:9px}
+.cc .k i{width:4px;height:4px;border-radius:50%;background:var(--ac);font-style:normal}
+.cc .v{font-size:16.5px;font-weight:800;line-height:1.32;letter-spacing:-.01em}
+.cc .v small{display:block;font-size:11.5px;font-weight:600;color:var(--ink-2);margin-top:6px;line-height:1.5;letter-spacing:0}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:800;padding:2px 8px;border-radius:6px;letter-spacing:.02em}
+.pill.hi{color:#ffdcdc;background:rgba(224,106,106,.16);border:1px solid rgba(224,106,106,.34)}
+.pill.md{color:#ffe9c2;background:rgba(234,179,90,.13);border:1px solid rgba(234,179,90,.3)}
+.pill.ok{color:#c6f0dd;background:rgba(87,214,155,.13);border:1px solid rgba(87,214,155,.3)}
+
+/* ============================================================
+   5. PILLARS
+   ============================================================ */
+.flow{display:flex;align-items:center;gap:10px;margin-bottom:13px;flex-wrap:wrap}
+.flow .node{font-size:11.5px;color:var(--ink-2);display:flex;align-items:center;gap:7px;white-space:nowrap}
+.flow .node b{font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.1em}
+.flow .bar{flex:1;min-width:20px;height:1px;background:linear-gradient(90deg,rgba(72,211,196,.5),rgba(216,185,124,.5));position:relative}
+.flow .bar::after{content:"";position:absolute;right:0;top:-2.5px;width:6px;height:6px;border-top:1px solid rgba(216,185,124,.7);border-right:1px solid rgba(216,185,124,.7);transform:rotate(45deg)}
+.flow .bar.rev{background:linear-gradient(90deg,rgba(216,185,124,.5),rgba(163,148,247,.5))}
+.flow .bar.rev::after{border-color:rgba(163,148,247,.7)}
+
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.pc{
+  position:relative;overflow:hidden;border:1px solid var(--line);border-radius:var(--r);
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.006));
+  padding:19px 19px 17px;display:flex;flex-direction:column;
+  transition:border-color .35s,transform .35s var(--ease);
+}
+.pc::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.6;
+  background:radial-gradient(300px 150px at 100% 0,rgba(var(--c),.2),transparent 66%);
+}
+.pc:hover{border-color:rgba(var(--c),.34);transform:translateY(-2px)}
+.pc-top{display:flex;align-items:center;gap:11px;margin-bottom:13px;position:relative;z-index:2}
+.pc-ic{width:38px;height:38px;flex:0 0 auto;border-radius:11px;display:grid;place-items:center;
+  border:1px solid rgba(var(--c),.28);background:rgba(var(--c),.08)}
+.pc-no{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;color:var(--ink-3);font-weight:700}
+.pc-name{font-size:15px;font-weight:800;line-height:1.28;margin-top:1px}
+.pc-stat{margin-left:auto;flex:0 0 auto;text-align:right}
+.pc-stat b{display:block;font-family:var(--mono);font-size:13px;font-weight:800;color:rgb(var(--c));line-height:1.2}
+.pc-stat span{font-size:9.5px;letter-spacing:.1em;color:var(--ink-3);text-transform:uppercase}
+.pc-goal{font-size:12.6px;line-height:1.68;color:var(--ink-2);margin-bottom:14px;position:relative;z-index:2;min-height:62px}
+.pc-goal b{color:var(--ink);font-weight:700}
+.moves{list-style:none;display:flex;flex-direction:column;gap:8px;position:relative;z-index:2;margin-bottom:13px}
+.moves li{display:flex;gap:8px;font-size:12.3px;line-height:1.55;color:var(--ink);align-items:flex-start}
+.moves li .st{
+  flex:0 0 auto;margin-top:2px;width:13px;height:13px;border-radius:4px;display:grid;place-items:center;
+  border:1px solid rgba(var(--c),.4);font-size:8px;color:rgb(var(--c));line-height:1;
+}
+.moves li.done .st{background:rgba(var(--c),.16)}
+.moves li.risk .st{border-color:rgba(234,179,90,.55);color:var(--amber)}
+.moves li .meta{margin-left:auto;font-family:var(--mono);font-size:9.5px;color:var(--ink-3);white-space:nowrap;padding-left:6px;align-self:center}
+.dep{
+  position:relative;z-index:2;font-size:11.2px;color:var(--ink-3);line-height:1.5;
+  padding:7px 9px;border-radius:8px;background:rgba(255,255,255,.025);border:1px solid var(--line-2);margin-bottom:13px;
+}
+.dep b{color:var(--ink-2);font-weight:700}
+.pc-foot{margin-top:auto;position:relative;z-index:2;border-top:1px dashed var(--line);padding-top:11px}
+.pc-foot .row{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:7px}
+.pc-foot .lb{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+.pc-foot .vl{font-family:var(--mono);font-size:11.5px;font-weight:800;color:var(--ink)}
+.mini{height:5px;border-radius:3px;background:rgba(255,255,255,.07);overflow:hidden;position:relative}
+.mini i{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:3px;background:linear-gradient(90deg,rgba(var(--c),.6),rgb(var(--c)));transition:width 1.2s var(--ease) .1s}
+.in .mini i{width:var(--p)}
+
+/* ============================================================
+   6. KPI
+   ============================================================ */
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+.kpi{
+  position:relative;border:1px solid var(--line);border-radius:14px;padding:16px 17px 14px;
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.006));
+  transition:border-color .3s,transform .3s var(--ease);
+}
+.kpi:hover{border-color:rgba(255,255,255,.15);transform:translateY(-2px)}
+.kpi-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.kpi-name{font-size:13px;font-weight:700;color:var(--ink);line-height:1.4}
+.kpi-name em{display:block;font-style:normal;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-top:3px;font-weight:600}
+.info{
+  flex:0 0 auto;width:14px;height:14px;border-radius:50%;border:1px solid var(--line);
+  display:grid;place-items:center;font-size:9px;color:var(--ink-3);margin-top:2px;cursor:help;
+  transition:.2s;font-style:normal;line-height:1;
+}
+.info:hover{border-color:rgba(216,185,124,.5);color:var(--gold-2);background:rgba(216,185,124,.1)}
+.kpi-val{margin-left:auto;text-align:right;flex:0 0 auto;line-height:1.1}
+.kpi-val .big{font-family:var(--mono);font-size:24px;font-weight:800;letter-spacing:-.02em;display:block}
+.kpi-val .cap{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;color:var(--ink-3);display:block;margin-top:4px;white-space:nowrap}
+.spark{display:block;width:100%;height:34px;margin-bottom:10px;overflow:visible}
+.spark path.line{fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:220;stroke-dashoffset:220;transition:stroke-dashoffset 1.6s var(--ease) .2s}
+.in .spark path.line{stroke-dashoffset:0}
+.spark path.area{opacity:0;transition:opacity 1s ease .5s}
+.in .spark path.area{opacity:1}
+.bar{position:relative;height:8px;border-radius:4px;background:rgba(255,255,255,.07);margin-bottom:9px}
+.bar .fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:4px;background:linear-gradient(90deg,rgba(var(--kc),.55),rgb(var(--kc)));transition:width 1.3s var(--ease) .1s}
+.in .bar .fill{width:var(--p)}
+.bar .fill::after{content:"";position:absolute;right:0;top:-2px;bottom:-2px;width:2px;border-radius:2px;background:rgba(255,255,255,.75)}
+.bar .pace{position:absolute;top:-4px;bottom:-4px;width:1px;background:rgba(255,255,255,.22)}
+.bar .pace::after{content:"";position:absolute;left:-2px;top:-3px;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.3)}
+.kpi-foot{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11.2px;color:var(--ink-3)}
+.kpi-foot .sep{width:1px;height:10px;background:var(--line)}
+.pace-r{margin-left:auto;font-family:var(--mono);font-size:9.5px;letter-spacing:.02em;color:var(--ink-3);white-space:nowrap}
+.pace-r b{color:var(--ink-2);font-size:10.5px}
+.pace-r.warn b{color:var(--amber)}
+.kpi-alert{display:flex;gap:6px;align-items:flex-start;margin-top:9px;font-size:10.8px;line-height:1.55;color:#f0c58f;background:rgba(234,179,90,.07);border:1px solid rgba(234,179,90,.18);border-radius:7px;padding:5px 8px}
+.kpi-alert b{color:#ffd9a8;font-weight:700}
+.kpi-alert .s{flex:0 0 auto;font-family:var(--mono);font-weight:800;opacity:.9}
+.legend-note.alt{margin-top:7px;color:var(--ink-3)}
+.legend-note.alt .ic{flex:0 0 auto;margin-top:1px}
+.kpi-foot b{color:var(--ink-2);font-weight:700;font-family:var(--mono);font-size:11px}
+.gap-pill{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:10px;font-weight:800;padding:1px 6px;border-radius:5px;letter-spacing:.02em}
+.gap-pill.up{color:#c6f0dd;background:rgba(87,214,155,.12)}
+.gap-pill.dn{color:#ffd3d3;background:rgba(224,106,106,.13)}
+.gap-pill.eq{color:#ffe9c2;background:rgba(234,179,90,.12)}
+.legend-note{display:flex;align-items:flex-start;gap:8px;margin-top:12px;font-size:11px;color:var(--ink-3);line-height:1.6}
+.legend-note .pace-ic{flex:0 0 auto;width:14px;height:1px;background:rgba(255,255,255,.35);position:relative;margin-top:9px}
+.legend-note .pace-ic::after{content:"";position:absolute;left:5px;top:-2px;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.45)}
+
+/* ============================================================
+   7. GANTT
+   ============================================================ */
+.tl{border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.005));padding:18px clamp(12px,2vw,20px) 16px}
+.tl-scroll{overflow-x:auto;padding-bottom:2px}
+.gantt{min-width:660px}
+.g-head{display:grid;grid-template-columns:150px 1fr;gap:12px;margin-bottom:8px}
+.g-months{display:grid;grid-template-columns:repeat(3,1fr);border-left:1px solid var(--line-2)}
+.g-months span{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink-3);padding-left:8px;border-left:1px solid var(--line);padding-bottom:4px}
+.g-months span:first-child{border-left:none;padding-left:0}
+.g-months span b{color:var(--ink-2);font-weight:700;margin-right:5px;font-family:var(--sans);font-size:11px}
+.g-row{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center;margin-bottom:6px}
+.g-label{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--ink-2);line-height:1.3}
+.g-label .d{width:6px;height:6px;border-radius:2px;background:rgb(var(--c));flex:0 0 auto}
+.g-label b{font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.06em;flex:0 0 auto}
+.g-label span{color:var(--ink-2);font-size:11.8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g-track{position:relative;height:32px;border-radius:7px;background:rgba(255,255,255,.022);border:1px solid var(--line-2)}
+.g-cells{position:absolute;inset:0;display:flex;border-radius:7px;overflow:hidden}
+.g-cells i{flex:1;border-right:1px solid rgba(255,255,255,.032)}
+.g-cells i:nth-child(4n){border-right-color:rgba(255,255,255,.075)}
+.g-cells i:last-child{border-right:none}
+.g-bar{
+  position:absolute;top:5px;height:22px;border-radius:6px;overflow:hidden;
+  border:1px solid rgba(var(--c),.3);background:rgba(var(--c),.07);
+  display:flex;align-items:center;padding:0 8px;cursor:default;
+  transition:box-shadow .3s,border-color .3s;
+}
+.g-bar:hover{border-color:rgba(var(--c),.6);box-shadow:0 0 0 3px rgba(var(--c),.08)}
+.g-fill{
+  position:absolute;left:0;top:0;bottom:0;width:0;
+  background:linear-gradient(90deg,rgba(var(--c),.52),rgba(var(--c),.16));
+  border-right:2px solid rgba(var(--c),.85);
+  transition:width 1.4s var(--ease) .15s;
+}
+.in .g-fill{width:var(--p)}
+.g-name{position:relative;z-index:2;font-size:10.5px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.01em;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.g-pct{position:relative;z-index:2;margin-left:auto;font-family:var(--mono);font-size:9.5px;font-weight:800;color:rgba(255,255,255,.85);padding-left:7px}
+.today{
+  position:absolute;top:-1px;bottom:-1px;width:1px;z-index:3;
+  background:linear-gradient(180deg,rgba(234,179,90,.9),rgba(234,179,90,.15));
+  box-shadow:0 0 10px rgba(234,179,90,.5);
+}
+.today::before{
+  content:"08/14";position:absolute;top:-19px;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:9px;font-weight:800;letter-spacing:.06em;color:#1a1206;
+  background:var(--amber);padding:1px 5px;border-radius:4px;white-space:nowrap;
+}
+.gate{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.07);z-index:1}
+.g-row + .g-row .today::before{display:none}
+.ms{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line-2)}
+.ms-card{position:relative;padding-left:14px}
+.ms-card::before{content:"";position:absolute;left:0;top:2px;bottom:2px;width:2px;border-radius:2px;background:rgb(var(--c));opacity:.85}
+.ms-top{display:flex;align-items:center;gap:7px;margin-bottom:6px;flex-wrap:wrap}
+.ms-id{font-family:var(--mono);font-size:10.5px;font-weight:800;letter-spacing:.1em;color:rgb(var(--c))}
+.ms-tt{font-size:13.5px;font-weight:800}
+.ms-st{font-size:9.5px;font-weight:800;padding:1px 6px;border-radius:5px;letter-spacing:.04em}
+.ms-st.done{color:#c6f0dd;background:rgba(87,214,155,.14)}
+.ms-st.warn{color:#ffe1b8;background:rgba(234,179,90,.15)}
+.ms-st.plan{color:var(--ink-3);background:rgba(255,255,255,.06)}
+.ms-date{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+.ms-list{list-style:none;display:flex;flex-direction:column;gap:3px;margin-bottom:8px}
+.ms-list li{font-size:11.6px;color:var(--ink-2);padding-left:9px;position:relative;line-height:1.55}
+.ms-list li::before{content:"";position:absolute;left:0;top:8px;width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.28)}
+.ms-gate{font-size:11px;color:var(--ink-3);border-top:1px dashed var(--line);padding-top:7px;line-height:1.5}
+.ms-gate b{color:rgb(var(--c));font-weight:700}
+.ms-gate .warn{color:var(--amber)}
+.ms-st.now{color:#cfe4ff;background:rgba(110,160,255,.14)}
+.planb{display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:9px 14px;align-items:start;margin-top:14px;padding-top:12px;border-top:1px solid var(--line-2)}
+.planb-note{grid-column:1/-1;margin-top:6px;font-size:11px;color:var(--ink-3);line-height:1.6;border-left:2px solid rgba(216,185,124,.3);padding-left:9px}
+.planb-note b{color:var(--ink-2);font-weight:700}
+.planb .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);font-weight:800;padding-top:2px;white-space:nowrap}
+.planb .i{font-size:11.2px;color:var(--ink-3);line-height:1.6}
+.planb .i b{color:var(--ink-2);font-weight:800}
+.planb .i b.tg{color:var(--amber);font-family:var(--mono);font-size:10.5px}
+
+/* ============================================================
+   8. TABLE
+   ============================================================ */
+.tbl-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:11px}
+.fbtn{
+  height:28px;padding:0 11px;border-radius:8px;border:1px solid var(--line);
+  font-size:11.5px;font-weight:600;color:var(--ink-3);transition:.2s;
+}
+.fbtn:hover{color:var(--ink);border-color:rgba(255,255,255,.18)}
+.fbtn.on{color:var(--gold-2);border-color:rgba(216,185,124,.4);background:rgba(216,185,124,.1)}
+.tbl-count{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.tbl-count b{color:var(--ink);font-weight:800}
+.tbl-note{margin-top:9px;font-size:10.8px;color:var(--ink-3);line-height:1.65}
+.tblwrap{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:rgba(255,255,255,.018)}
+table{width:100%;border-collapse:collapse;font-size:12.8px}
+thead th{
+  text-align:left;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;
+  color:var(--ink-3);padding:11px 16px;background:rgba(255,255,255,.032);border-bottom:1px solid var(--line);white-space:nowrap;
+}
+tbody td{padding:11px 16px;border-bottom:1px solid var(--line-2);color:var(--ink-2);vertical-align:middle}
+tbody tr{transition:background .2s}
+tbody tr:hover{background:rgba(255,255,255,.035)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr.hide{display:none}
+.act{display:flex;align-items:center;gap:8px}
+.act .d{width:5px;height:5px;border-radius:2px;background:rgb(var(--c));flex:0 0 auto}
+.act .t{color:var(--ink);font-weight:600;line-height:1.45}
+.act .star{font-size:9px;color:var(--gold);border:1px solid rgba(216,185,124,.35);border-radius:4px;padding:0 4px;letter-spacing:.04em;flex:0 0 auto}
+.pri{font-family:var(--mono);font-size:10px;font-weight:800;padding:2px 6px;border-radius:5px;letter-spacing:.04em}
+.pri.p0{color:#ffdcdc;background:rgba(224,106,106,.14);border:1px solid rgba(224,106,106,.22)}
+.pri.p1{color:#ffe9c2;background:rgba(234,179,90,.12);border:1px solid rgba(234,179,90,.2)}
+.pri.p2{color:#c6f0dd;background:rgba(87,214,155,.12);border:1px solid rgba(87,214,155,.2)}
+.owner{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.av{width:21px;height:21px;border-radius:6px;display:grid;place-items:center;font-size:9.5px;font-weight:800;color:#0a0d14;flex:0 0 auto}
+.win{font-family:var(--mono);font-size:11px;color:var(--gold-2);white-space:nowrap;letter-spacing:.01em}
+.st{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;white-space:nowrap}
+.st i{width:5px;height:5px;border-radius:50%;flex:0 0 auto}
+.st.done{color:#a9e6cb}.st.done i{background:var(--green)}
+.st.now{color:#a9c6f5}.st.now i{background:#6ea0ff}
+.st.risk{color:#f3cd93}.st.risk i{background:var(--amber);box-shadow:0 0 0 3px rgba(234,179,90,.15)}
+.st.plan{color:var(--ink-3)}.st.plan i{background:#4a5468}
+
+/* ============================================================
+   9. NON-GOALS + RISK
+   ============================================================ */
+.ng-panel{position:relative;border:1px solid var(--line);border-radius:var(--r);background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.005));padding:18px 19px}
+.panel-h{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+.panel-h h4{font-size:13.5px;font-weight:800;letter-spacing:.01em}
+.panel-sub{font-size:11.5px;color:var(--ink-3);margin-bottom:14px}
+.ng-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ng{
+  border:1px solid var(--line-2);border-radius:11px;padding:12px 13px;background:rgba(255,255,255,.02);
+  transition:border-color .25s,background .25s;
+}
+.ng:hover{border-color:rgba(224,106,106,.28);background:rgba(224,106,106,.035)}
+.ng .t{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:800;color:var(--ink);margin-bottom:5px}
+.ng .t svg{flex:0 0 auto;opacity:.9}
+.ng p{font-size:11.5px;color:var(--ink-3);line-height:1.6}
+.ng p b{color:var(--ink-2);font-weight:600}
+.ng-rule{
+  margin-top:12px;display:flex;align-items:flex-start;gap:9px;
+  border:1px dashed rgba(216,185,124,.28);border-radius:10px;padding:10px 12px;
+  background:rgba(216,185,124,.035);font-size:11.5px;color:var(--ink-3);line-height:1.6;
+}
+.ng-rule .k{flex:0 0 auto;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:800;padding-top:2px}
+.ng-rule b{color:var(--ink-2)}
+
+.risk-wrap{display:grid;grid-template-columns:300px 1fr;gap:22px;align-items:start}
+.mx{position:relative;padding:8px 8px 26px 30px;max-width:360px}
+.mx-plot{
+  position:relative;aspect-ratio:1.02/1;border-left:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14);
+  background:linear-gradient(135deg,rgba(87,214,155,.05) 0%,rgba(234,179,90,.05) 45%,rgba(224,106,106,.09) 100%);
+}
+.mx-plot::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
+  background-size:33.333% 33.333%;
+}
+.mx-dot{
+  position:absolute;width:13px;height:13px;border-radius:50%;transform:translate(-50%,50%);
+  border:1.5px solid rgba(0,0,0,.45);cursor:pointer;z-index:2;
+  transition:box-shadow .25s,scale .25s;
+}
+.mx-dot::after{content:attr(data-n);position:absolute;inset:0;display:grid;place-items:center;font-family:var(--mono);font-size:8px;font-weight:800;color:#101010}
+.mx-dot:hover,.mx-dot.hl{box-shadow:0 0 0 5px rgba(255,255,255,.13)}
+.mx-dot.hi{background:#e06a6a}
+.mx-dot.md{background:#eab35a}
+.mx-dot.lo{background:#57d69b}
+.mx-lab{position:absolute;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-family:var(--mono)}
+.mx-lab.x{left:calc(50% + 15px);bottom:4px;transform:translateX(-50%)}
+.mx-lab.y{left:2px;top:50%;transform:translateY(-50%) rotate(-90deg);transform-origin:left center;white-space:nowrap}
+.mx-ticks-y{position:absolute;left:20px;top:8px;bottom:24px;display:flex;flex-direction:column;justify-content:space-between;font-family:var(--mono);font-size:8.5px;color:var(--ink-3);text-align:right}
+.mx-ticks-x{position:absolute;left:30px;right:8px;bottom:6px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:8.5px;color:var(--ink-3)}
+.mx-ticks-y span{transform:translateY(-50%)}
+.mx-ticks-y span:first-child{transform:translateY(0)}
+.mx-ticks-y span:last-child{transform:translateY(-100%)}
+
+.risk-list{display:flex;flex-direction:column}
+.rk{display:grid;grid-template-columns:auto 1fr;gap:10px;padding:10px 8px;border-bottom:1px solid var(--line-2);transition:background .2s;border-radius:8px}
+.rk:last-child{border-bottom:none;padding-bottom:0}
+.rk.hl{background:rgba(255,255,255,.035)}
+.rk-n{
+  flex:0 0 auto;width:20px;height:20px;border-radius:6px;display:grid;place-items:center;
+  font-family:var(--mono);font-size:10px;font-weight:800;color:#111;margin-top:1px;
+}
+.rk-n.hi{background:#e06a6a}.rk-n.md{background:#eab35a}.rk-n.lo{background:#57d69b}
+.rk-b .t{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:2px}
+.rk-b .t b{font-size:12.6px;font-weight:800;color:var(--ink)}
+.rk-b .stt{font-size:9.5px;font-weight:800;letter-spacing:.04em;padding:1px 6px;border-radius:4px}
+.stt.fire{color:#ffd3d3;background:rgba(224,106,106,.15)}
+.stt.watch{color:#ffe9c2;background:rgba(234,179,90,.13)}
+.stt.quiet{color:var(--ink-3);background:rgba(255,255,255,.06)}
+.rk-b p{font-size:11.6px;color:var(--ink-2);line-height:1.55}
+.rk-b .mit{margin-top:4px;font-size:11px;color:var(--teal);line-height:1.5;display:flex;gap:5px}
+.rk-b .mit span:first-child{opacity:.8}
+
+/* ============================================================
+   10. FOOTER
+   ============================================================ */
+footer{
+  margin-top:44px;padding-top:18px;border-top:1px solid var(--line-2);
+  display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:space-between;
+  font-size:11px;color:var(--ink-3);
+}
+footer .l{display:flex;align-items:center;gap:9px}
+footer .r{display:flex;flex-wrap:wrap;gap:6px 16px;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+
+/* ============================================================
+   11. TOOLTIP / TO TOP
+   ============================================================ */
+.tip{
+  position:fixed;left:0;top:0;z-index:300;max-width:264px;pointer-events:none;
+  padding:8px 10px;border-radius:9px;
+  background:rgba(14,18,28,.97);border:1px solid rgba(255,255,255,.13);
+  box-shadow:0 18px 40px -18px #000;
+  font-size:11.5px;line-height:1.55;color:var(--ink-2);
+  opacity:0;transition:opacity .18s;backdrop-filter:blur(8px);
+}
+.tip.on{opacity:1}
+.tip b{color:var(--ink);font-weight:800}
+.tip .tt{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.totop{
+  position:fixed;right:22px;bottom:22px;z-index:105;width:38px;height:38px;border-radius:11px;
+  border:1px solid var(--line);background:rgba(12,16,24,.9);backdrop-filter:blur(10px);
+  display:grid;place-items:center;color:var(--ink-2);
+  opacity:0;transform:translateY(10px);pointer-events:none;transition:.3s var(--ease);
+}
+.totop.show{opacity:1;transform:none;pointer-events:auto}
+.totop:hover{color:var(--ink);border-color:rgba(255,255,255,.2)}
+
+/* ============================================================
+   12. RESPONSIVE
+   ============================================================ */
+@media(max-width:1120px){
+  .hero-grid{grid-template-columns:1fr;gap:26px}
+  .concl{grid-template-columns:repeat(3,1fr)}
+  .pillars{grid-template-columns:1fr}
+  .pc-goal{min-height:0}
+  .risk-wrap{grid-template-columns:1fr}
+  .mx{max-width:330px}
+  .ms{grid-template-columns:1fr;gap:14px}
+  .ask-grid{grid-template-columns:1fr}
+}
+@media(max-width:900px){
+  .nav-links{display:none}
+  .kpis{grid-template-columns:1fr}
+  .ng-grid{grid-template-columns:1fr}
+  .sec-note{display:none}
+}
+@media(max-width:720px){
+  body{padding-left:12px;padding-right:12px}
+  .concl{grid-template-columns:repeat(2,1fr)}
+  .cc:last-child{grid-column:1/-1}
+  .hero{border-radius:18px}
+  .chip-q{margin-left:0}
+  .brand-row{flex-wrap:wrap}
+  .g-head,.g-row{grid-template-columns:108px 1fr}
+  .g-label span{font-size:11px}
+  .g-name{font-size:9.5px}
+  .tblwrap{overflow-x:auto}
+  table{min-width:640px}
+  .facts{gap:6px 12px}
+  .kpi-val .big{font-size:21px}
+}
+@media(max-width:430px){
+  h1{font-size:26px}
+  .concl{grid-template-columns:1fr}
+  .cc:last-child{grid-column:auto}
+}
+
+/* ============================================================
+   13. PRINT
+   ============================================================ */
+@media print{
+  @page{size:A3 portrait;margin:9mm}
+  html,body{background:#05070c !important}
+  body{padding:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body::before,body::after{display:none}
+  .nav,#prog,.totop,.tip,.btn{display:none !important}
+  main{max-width:none}
+  .hero,section,.tl,.ng-panel{break-inside:avoid}
+  html.js .rv{opacity:1 !important;transform:none !important}
+  .bar .fill,.mini i,.g-fill{width:var(--p) !important}
+  .spark path.line{stroke-dashoffset:0 !important}
+  .spark path.area{opacity:1 !important}
+  .gantt{min-width:0}
+}
+</style>
+</head>
+<body>
+
+<div id="prog" aria-hidden="true"></div>
+
+<!-- ================= NAV ================= -->
+<header class="nav">
+  <div class="nav-in">
+    <a class="nav-brand" href="#top" aria-label="回到顶部">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x=".8" y=".8" width="22.4" height="22.4" rx="7" stroke="#d8b97c" stroke-opacity=".55"/>
+        <path d="M7 7v10M12 7v10M17 7v10" stroke="#f1e2ba" stroke-width="1.4" stroke-linecap="round" opacity=".3"/>
+        <path d="M7 12h10" stroke="#48d3c4" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="1.9" fill="#05070c" stroke="#48d3c4" stroke-width="1.3"/>
+      </svg>
+      <b>MESHLINE</b>
+      <i>2026 Q3 · 产品战略</i>
+    </a>
+    <nav class="nav-links" aria-label="章节导航">
+      <a href="#s1"><i>01</i>结论</a>
+      <a href="#s2"><i>02</i>支柱</a>
+      <a href="#s3"><i>03</i>指标</a>
+      <a href="#s4"><i>04</i>里程碑</a>
+      <a href="#s5"><i>05</i>行动</a>
+      <a href="#s6"><i>06</i>边界</a>
+    </nav>
+    <div class="nav-act">
+      <span class="nav-meta">v2.0 · 08/14</span>
+      <button class="btn" id="btn-print" type="button" aria-label="打印或导出 PDF">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M4.5 6V2.5h7V6M4.5 12H3a1 1 0 01-1-1V7a1 1 0 011-1h10a1 1 0 011 1v4a1 1 0 01-1 1h-1.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><rect x="4.5" y="9.5" width="7" height="4" rx=".8" stroke="currentColor" stroke-width="1.2"/></svg>
+        打印 / PDF
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="top" style="margin-top:0">
+    <div class="aur a1" aria-hidden="true"></div>
+    <div class="aur a2" aria-hidden="true"></div>
+    <div class="mesh" aria-hidden="true"></div>
+
+    <div class="hero-in">
+      <div class="hero-grid">
+        <div>
+          <div class="brand-row">
+            <span class="logo">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 6v12M12 6v12M18 6v12" stroke="#f1e2ba" stroke-width="1.5" stroke-linecap="round" opacity=".28"/>
+                <path d="M6 12h12" stroke="#48d3c4" stroke-width="1.8" stroke-linecap="round"/>
+                <circle cx="12" cy="12" r="2.6" fill="#0b0f17" stroke="#48d3c4" stroke-width="1.5"/>
+              </svg>
+            </span>
+            <div>
+              <div class="brand-name">MESHLINE</div>
+              <div class="brand-sub">织线 · 团队协作与知识平台</div>
+            </div>
+            <span class="chip-q"><span class="live" aria-hidden="true"></span>2026 Q3 · 第 7 周</span>
+          </div>
+
+          <div class="eyebrow">Quarterly Product Strategy · Mid-Quarter Review</div>
+          <h1>
+            <span class="mask"><span>把每一次协作，</span></span>
+            <span class="mask"><span>沉淀为<span class="accent">可复用的组织资产</span></span></span>
+          </h1>
+
+          <p class="claim">
+            季度过半，主链路的假设已经被数据验证。真正的瓶颈从「能不能打通」变成了<b>「新团队用不用得起来」</b>。
+            剩余 6.5 周，<em>资源向激活链路倾斜</em>，商业化的节奏主动放慢。
+          </p>
+
+          <div class="facts">
+            <span class="fact"><span class="k">北极星</span><span class="v t">WAT 8.1k</span></span>
+            <span class="fact-sep"></span>
+            <span class="fact"><span class="k">目标</span><span class="v">9.8k</span></span>
+            <span class="fact-sep"></span>
+            <span class="fact"><span class="k">进度</span><span class="v g">49.5% 时间 / 52.8% 达成</span></span>
+            <span class="fact-sep"></span>
+            <span class="fact"><span class="k">更新</span><span class="v">2026-08-14</span></span>
+          </div>
+        </div>
+
+        <aside class="tldr">
+          <div class="tldr-h">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.6l1.9 3.8 4.2.6-3 3 .7 4.2L8 11.2l-3.8 2 .7-4.2-3-3 4.2-.6L8 1.6z" stroke="#48d3c4" stroke-width="1.2" stroke-linejoin="round"/></svg>
+            <span>TL;DR · 执行摘要</span>
+            <span class="tag">03 条</span>
+          </div>
+          <ol>
+            <li><span class="no">1</span><span><b>链路成立</b>主链路交付 85%，WAT 8.1k，完成率 52.8%，领先时间进度 3pt。</span></li>
+            <li><span class="no">2</span><span><b>激活是唯一瓶颈</b>41.5%，距保底 2pt，且 <b style="display:inline;color:#eab35a">M2 读数 08/24 就已锁定</b>；#4 引导 08/21 才上线，救不了这道门槛，收益落 9 月与 52% 缺口。</span></li>
+            <li><span class="no">3</span><span><b>要求资源再分配</b>P3 首波灰度压到 80 家，6 名研发 8/18 起转入「会后 5 分钟」。</span></li>
+          </ol>
+          <div class="foot">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.4" stroke="#eab35a" stroke-width="1.2"/><path d="M8 4.6v4M8 10.8v.2" stroke="#eab35a" stroke-width="1.4" stroke-linecap="round"/></svg>
+            本页结论：<b>策略不变，资源换挡</b>——不加新战场，只把激活拉起来。
+          </div>
+        </aside>
+      </div>
+
+      <!-- 需要拍板 -->
+      <div class="asks">
+        <div class="asks-h">
+          <span class="lb">Decisions Needed · 需要拍板 3 项</span>
+          <span class="sub">决定本季最后 6.5 周的资源去向</span>
+        </div>
+        <div class="ask-grid">
+          <div class="ask">
+            <span class="no">A1</span>
+            <div>
+              <b>收缩 P3 灰度范围</b>
+              <p>300 → 180 家（首波 80），释放 6 名研发 8/18 起转入激活</p>
+            </div>
+            <span class="due">08/18</span>
+          </div>
+          <div class="ask">
+            <span class="no">A2</span>
+            <div>
+              <b>追加 AI 推理预算</b>
+              <p>月度上限提至 52 万，换取知识卡片生成时延 &lt; 8s</p>
+            </div>
+            <span class="due">08/20</span>
+          </div>
+          <div class="ask">
+            <span class="no">A3</span>
+            <div>
+              <b>延长集成冻结期</b>
+              <p>冻结延续至 Q4 末，避免 9 月排期二次冲突</p>
+            </div>
+            <span class="due">08/22</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 01 结论 ================= -->
+  <section id="s1">
+    <div class="sec-head rv">
+      <span class="sec-idx">01</span>
+      <span class="sec-title">核心结论卡<small>一句话定调 · 向上汇报口径</small></span>
+      <span class="sec-note">阶段判定：2 领先 · 1 持平 · 1 落后</span>
+    </div>
+    <div class="concl">
+      <div class="cc rv" style="--ac:#48d3c4">
+        <div class="k"><i></i>本季主题</div>
+        <div class="v">协作资产化<small>从协作工具到组织记忆</small></div>
+      </div>
+      <div class="cc rv" style="--ac:#d8b97c">
+        <div class="k"><i></i>优先级</div>
+        <div class="v"><span class="pill hi">P0 · 公司级</span><small>三支柱共用一条主链路</small></div>
+      </div>
+      <div class="cc rv" style="--ac:#a394f7">
+        <div class="k"><i></i>预期影响</div>
+        <div class="v">NRR 108%→118%<small>净收入留存，来自资产黏性</small></div>
+      </div>
+      <div class="cc rv" style="--ac:#57d69b">
+        <div class="k"><i></i>资源投入</div>
+        <div class="v">4 团队 · 31 人<small>研发 62% / 设计 16% / 增长 22%</small></div>
+      </div>
+      <div class="cc rv" style="--ac:#eab35a">
+        <div class="k"><i></i>风险等级</div>
+        <div class="v"><span class="pill md">中 · 已触发缓解</span><small>排期冲突与推理成本</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 02 支柱 ================= -->
+  <section id="s2">
+    <div class="sec-head rv">
+      <span class="sec-idx">02</span>
+      <span class="sec-title">三大战略支柱<small>目标 · 关键举措 · 衡量指标</small></span>
+      <span class="sec-note">链路打通 → 用户规模化 → 价值变现</span>
+    </div>
+
+    <div class="flow rv" aria-hidden="true">
+      <span class="node"><b>P1</b> 链路打通</span>
+      <span class="bar"></span>
+      <span class="node"><b>P2</b> 用户规模化</span>
+      <span class="bar rev"></span>
+      <span class="node"><b>P3</b> 价值变现</span>
+    </div>
+
+    <div class="pillars">
+
+      <article class="pc rv" style="--c:72,211,196">
+        <div class="pc-top">
+          <span class="pc-ic">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="5" cy="6.5" r="2.2" stroke="#48d3c4" stroke-width="1.7"/><circle cx="5" cy="17.5" r="2.2" stroke="#48d3c4" stroke-width="1.7"/><circle cx="19" cy="12" r="2.2" stroke="#48d3c4" stroke-width="1.7"/><path d="M7.2 7.6c3.8 1.3 6.4 2.8 9.3 4M7.2 16.4c3.8-1.3 6.4-2.8 9.3-4" stroke="#48d3c4" stroke-width="1.7" stroke-linecap="round" opacity=".6"/></svg>
+          </span>
+          <div>
+            <div class="pc-no">PILLAR 01</div>
+            <div class="pc-name">主链路收口</div>
+          </div>
+          <div class="pc-stat"><b>85%</b><span>交付</span></div>
+        </div>
+        <p class="pc-goal">让会议结束后 10 分钟内，<b>决议、待办、知识</b>全部落到结构化对象上，不再依赖人工搬运。</p>
+        <ul class="moves">
+          <li class="done"><span class="st">✓</span>会议纪要多模态自动生成<span class="meta">GA</span></li>
+          <li class="done"><span class="st">✓</span>「决议」一等对象 + 状态机<span class="meta">v1</span></li>
+          <li><span class="st"></span>知识卡片回流搜索 / 项目页<span class="meta">08/28</span></li>
+        </ul>
+        <div class="dep"><b>关键依赖</b>：决议对象 ↔ 任务系统双向同步（平台组）</div>
+        <div class="pc-foot">
+          <div class="row"><span class="lb">衡量 · WAT</span><span class="vl">8.1k / 9.8k</span></div>
+          <div class="mini" style="--p:52.8%"><i></i></div>
+        </div>
+      </article>
+
+      <article class="pc rv" style="--c:216,185,124">
+        <div class="pc-top">
+          <span class="pc-ic">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.4l2.5 5.1 5.6.8-4 4 1 5.6-5.1-2.7-5.1 2.7 1-5.6-4-4 5.6-.8L12 3.4z" stroke="#d8b97c" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </span>
+          <div>
+            <div class="pc-no">PILLAR 02</div>
+            <div class="pc-name">激活与留存提速</div>
+          </div>
+          <div class="pc-stat"><b>50%</b><span>交付</span></div>
+        </div>
+        <p class="pc-goal">把新团队从注册到<b>第一份组织资产</b>的路径压进 7 天，让激活成为可复制的增长引擎。</p>
+        <ul class="moves">
+          <li class="done"><span class="st">✓</span>3 类角色 × 12 套场景模板<span class="meta">08/14</span></li>
+          <li class="risk"><span class="st">!</span>「会后 5 分钟」引导 + 埋点<span class="meta">08/21</span></li>
+          <li><span class="st"></span>协作健康分与流失预警<span class="meta">09/11</span></li>
+        </ul>
+        <div class="dep"><b>关键依赖</b>：以 P1 的纪要链路作为引导入口，A1 决策释放 6 名研发</div>
+        <div class="pc-foot">
+          <div class="row"><span class="lb">衡量 · 7 日激活</span><span class="vl">41.5% / 52%</span></div>
+          <div class="mini" style="--p:41.7%"><i></i></div>
+        </div>
+      </article>
+
+      <article class="pc rv" style="--c:163,148,247">
+        <div class="pc-top">
+          <span class="pc-ic">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 17l5-5 3.5 3.5L21 6.5" stroke="#a394f7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M15.5 6.5H21v5.4" stroke="#a394f7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div>
+            <div class="pc-no">PILLAR 03</div>
+            <div class="pc-name">AI 资产商业化</div>
+          </div>
+          <div class="pc-stat"><b>05%</b><span>交付</span></div>
+        </div>
+        <p class="pc-goal">在真实客户里验证「知识助手按席位加购」的付费意愿，为 Q4 定价提供<b>硬数据</b>而非假设。</p>
+        <ul class="moves">
+          <li><span class="st"></span>首波灰度 80 家（9/8 后补）<span class="meta">08/19</span></li>
+          <li><span class="st"></span>席位加购付费墙 A/B<span class="meta">09/02</span></li>
+          <li><span class="st"></span>推理成本与单位经济看板<span class="meta">09/16</span></li>
+        </ul>
+        <div class="dep"><b>关键依赖</b>：灰度范围受资源约束已收缩，A2 决定预算上限</div>
+        <div class="pc-foot">
+          <div class="row"><span class="lb">衡量 · 席位加购</span><span class="vl">13.5% / 18%</span></div>
+          <div class="mini" style="--p:50%"><i></i></div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ================= 03 KPI ================= -->
+  <section id="s3">
+    <div class="sec-head rv">
+      <span class="sec-idx">03</span>
+      <span class="sec-title">关键指标 · 期初 → 当前 → 目标<small>8 个周点趋势 · 完成率对照时间进度</small></span>
+      <span class="sec-note">数据截至 2026-08-14 · 口径见 ⓘ</span>
+    </div>
+
+    <div class="kpis">
+
+      <article class="kpi rv" style="--kc:72,211,196">
+        <div class="kpi-head">
+          <div class="kpi-name">主链路周活团队数
+            <em>North Star · WAT</em>
+          </div>
+          <i class="info" data-tip="<span class='tt'>口径定义</span>统计周内在「会议→决议→知识」链路上完成 ≥2 个动作的活跃团队数，按自然周去重。">i</i>
+          <div class="kpi-val">
+            <span class="big" data-to="8.1" data-dec="1" data-suf="k">0.0k</span>
+            <span class="cap">期初 6.2k → 目标 9.8k</span>
+          </div>
+        </div>
+        <svg class="spark" viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#48d3c4" stop-opacity=".3"/><stop offset="1" stop-color="#48d3c4" stop-opacity="0"/></linearGradient></defs>
+          <path class="area" d="M0,30 L14,24 L28,19 L42,15 L56,12 L70,9 L84,7 L98,4 L98,34 L0,34 Z" fill="url(#g1)"/>
+          <path class="line" d="M0,30 L14,24 L28,19 L42,15 L56,12 L70,9 L84,7 L98,4" stroke="#48d3c4"/>
+        </svg>
+        <div class="bar" style="--p:52.8%"><span class="fill"></span><span class="pace" style="left:49.5%"></span></div>
+        <div class="kpi-foot">
+          <span>完成率 <b>52.8%</b></span><span class="sep"></span>
+          <span>缺口 <b>+1.7k</b></span>
+          <span class="gap-pill up">领先 +3pt</span>
+          <span class="pace-r">节奏比 <b>1.17</b></span>
+        </div>
+      </article>
+
+      <article class="kpi rv" style="--kc:232,179,90">
+        <div class="kpi-head">
+          <div class="kpi-name">新团队 7 日激活率
+            <em>Activation · 唯一瓶颈</em>
+          </div>
+          <i class="info" data-tip="<span class='tt'>口径定义</span>新注册团队自注册日起 7 日内完成「建首会 + 出纪要 + 产 1 张知识卡片」的比例；按注册周归集单 cohort，季末判定取已收齐 cohort（8/17–8/23），避免右删失低估。">i</i>
+          <div class="kpi-val">
+            <span class="big" data-to="41.5" data-dec="1" data-suf="%">0.0%</span>
+            <span class="cap">期初 34% → 目标 52%</span>
+          </div>
+        </div>
+        <svg class="spark" viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eab35a" stop-opacity=".3"/><stop offset="1" stop-color="#eab35a" stop-opacity="0"/></linearGradient></defs>
+          <path class="area" d="M0,30 L14,25 L28,20 L42,13 L56,9 L70,6 L84,5 L98,4 L98,34 L0,34 Z" fill="url(#g2)"/>
+          <path class="line" d="M0,30 L14,25 L28,20 L42,13 L56,9 L70,6 L84,5 L98,4" stroke="#eab35a"/>
+        </svg>
+        <div class="bar" style="--p:41.7%"><span class="fill"></span><span class="pace" style="left:49.5%"></span></div>
+        <div class="kpi-foot">
+          <span>完成率 <b>41.7%</b></span><span class="sep"></span>
+          <span>缺口 <b>+10.5pt</b></span>
+          <span class="gap-pill dn">落后 -8pt</span>
+          <span class="pace-r warn">节奏比 <b>0.75</b></span>
+        </div>
+        <div class="kpi-alert"><span class="s">!</span><span>按当前 1.10pt/周 外推，季末仅 <b>48.9%</b>；52% 目标需 1.5pt/周，构成 <b>≈3.1pt</b> 结构性缺口。</span></div>
+      </article>
+
+      <article class="kpi rv" style="--kc:163,148,247">
+        <div class="kpi-head">
+          <div class="kpi-name">知识卡片周新增数
+            <em>Knowledge Asset</em>
+          </div>
+          <i class="info" data-tip="<span class='tt'>口径定义</span>由会议纪要或决议自动生成、且被至少 1 人查看或引用的知识卡片，按周去重计数。">i</i>
+          <div class="kpi-val">
+            <span class="big" data-to="3.1" data-dec="1" data-suf="万">0.0万</span>
+            <span class="cap">期初 1.4万 → 目标 4.5万</span>
+          </div>
+        </div>
+        <svg class="spark" viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a394f7" stop-opacity=".3"/><stop offset="1" stop-color="#a394f7" stop-opacity="0"/></linearGradient></defs>
+          <path class="area" d="M0,30 L14,27 L28,21 L42,16 L56,12 L70,9 L84,6 L98,4 L98,34 L0,34 Z" fill="url(#g3)"/>
+          <path class="line" d="M0,30 L14,27 L28,21 L42,16 L56,12 L70,9 L84,6 L98,4" stroke="#a394f7"/>
+        </svg>
+        <div class="bar" style="--p:54.8%"><span class="fill"></span><span class="pace" style="left:49.5%"></span></div>
+        <div class="kpi-foot">
+          <span>完成率 <b>54.8%</b></span><span class="sep"></span>
+          <span>缺口 <b>+1.4万</b></span>
+          <span class="gap-pill up">领先 +5pt</span>
+          <span class="pace-r">节奏比 <b>1.27</b></span>
+        </div>
+      </article>
+
+      <article class="kpi rv" style="--kc:87,214,155">
+        <div class="kpi-head">
+          <div class="kpi-name">AI 席位加购转化率
+            <em>Monetization</em>
+          </div>
+          <i class="info" data-tip="<span class='tt'>口径定义</span>灰度客户在 30 天内为知识助手购买 ≥1 个附加席位的比例，样本为 180 家有效客户。">i</i>
+          <div class="kpi-val">
+            <span class="big" data-to="13.5" data-dec="1" data-suf="%">0.0%</span>
+            <span class="cap">期初 9% → 目标 18% · n≈68</span>
+          </div>
+        </div>
+        <svg class="spark" viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="g4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#57d69b" stop-opacity=".3"/><stop offset="1" stop-color="#57d69b" stop-opacity="0"/></linearGradient></defs>
+          <path class="area" d="M0,30 L14,28 L28,24 L42,18 L56,14 L70,10 L84,6 L98,4 L98,34 L0,34 Z" fill="url(#g4)"/>
+          <path class="line" d="M0,30 L14,28 L28,24 L42,18 L56,14 L70,10 L84,6 L98,4" stroke="#57d69b"/>
+        </svg>
+        <div class="bar" style="--p:50%"><span class="fill"></span><span class="pace" style="left:49.5%"></span></div>
+        <div class="kpi-foot">
+          <span>完成率 <b>50.0%</b></span><span class="sep"></span>
+          <span>缺口 <b>+4.5pt</b></span>
+          <span class="gap-pill eq">持平 ±0pt</span>
+          <span class="pace-r">节奏比 <b>1.04</b></span>
+        </div>
+      </article>
+
+    </div>
+    <div class="legend-note">
+      <span class="pace-ic" aria-hidden="true"></span>
+      <span>竖线 = 时间进度 49.5%；<b style="color:var(--ink-2)">节奏比</b> = 当前周均增量 ÷ 完成剩余目标所需周均增量（≥1 可持续，&lt;1 告急），是跨指标唯一可比口径。</span>
+    </div>
+    <div class="legend-note alt">
+      <svg class="ic" width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.4" stroke="#6b768e" stroke-width="1.2"/><path d="M8 4.6v4M8 10.8v.2" stroke="#6b768e" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <span>完成率不可跨指标横比（同 50% 对应的绝对缺口差异极大）：WAT +1.7k / 激活 +10.5pt / 加购 +4.5pt。知识卡片 8/12 因 AI 生成灰度出现一次性台阶（+0.55 万），趋势判定需剔除；加购样本 n≈68，置信区间约 ±2pt。</span>
+    </div>
+  </section>
+
+  <!-- ================= 04 里程碑 ================= -->
+  <section id="s4">
+    <div class="sec-head rv">
+      <span class="sec-idx">04</span>
+      <span class="sec-title">M1–M3 里程碑时间线<small>按周推进 · 含今日进度与门禁</small></span>
+      <span class="sec-note">2026.07.01 → 09.30 · 12 周</span>
+    </div>
+
+    <div class="tl rv">
+      <div class="tl-scroll">
+        <div class="gantt">
+          <div class="g-head">
+            <div></div>
+            <div class="g-months">
+              <span><b>7月</b>JUL</span><span><b>8月</b>AUG</span><span><b>9月</b>SEP</span>
+            </div>
+          </div>
+
+          <div class="g-row" style="--c:72,211,196">
+            <div class="g-label"><span class="d"></span><b>P1</b><span>主链路收口</span></div>
+            <div class="g-track">
+              <div class="g-cells"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="gate" style="left:33.33%"></div>
+              <div class="gate" style="left:66.66%"></div>
+              <div class="today" style="left:49.5%"></div>
+              <div class="g-bar" style="--c:72,211,196;left:0.4%;width:65%;--p:85%"
+                   data-tip="<span class='tt'>P1 · 07/01 – 08/28</span><b>交付 85%</b><br>纪要 GA ✓ · 决议对象 v1 ✓ · 知识回流 08/28">
+                <span class="g-fill"></span><span class="g-name">纪要 GA → 决议对象 → 知识回流</span><span class="g-pct">85%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="g-row" style="--c:216,185,124">
+            <div class="g-label"><span class="d"></span><b>P2</b><span>激活与留存</span></div>
+            <div class="g-track">
+              <div class="g-cells"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="gate" style="left:33.33%"></div>
+              <div class="gate" style="left:66.66%"></div>
+              <div class="today" style="left:49.5%"></div>
+              <div class="g-bar" style="--c:216,185,124;left:16.6%;width:66.7%;--p:50%"
+                   data-tip="<span class='tt'>P2 · 07/15 – 09/11</span><b>交付 50%</b><br>模板库 ✓ · 会后 5 分钟 08/25 ⚠ · 健康分 09/11">
+                <span class="g-fill"></span><span class="g-name">模板库 → 会后 5 分钟引导 → 留存实验</span><span class="g-pct">50%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="g-row" style="--c:163,148,247">
+            <div class="g-label"><span class="d"></span><b>P3</b><span>AI 商业化</span></div>
+            <div class="g-track">
+              <div class="g-cells"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="gate" style="left:33.33%"></div>
+              <div class="gate" style="left:66.66%"></div>
+              <div class="today" style="left:49.5%"></div>
+              <div class="g-bar" style="--c:163,148,247;left:50%;width:49.6%;--p:5%"
+                   data-tip="<span class='tt'>P3 · 08/19 – 09/30</span><b>交付 5%</b><br>灰度名单已定 · 范围收缩至 180 家（待 A1 拍板）">
+                <span class="g-fill"></span><span class="g-name">180 家灰度 → 加购 A/B → 定价方案</span><span class="g-pct">5%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ms">
+        <div class="ms-card" style="--c:72,211,196">
+          <div class="ms-top">
+            <span class="ms-id">M1</span><span class="ms-tt">主链路上线</span>
+            <span class="ms-st warn">达成待判定</span><span class="ms-date">07/31</span>
+          </div>
+          <ul class="ms-list">
+            <li>纪要自动生成全量 GA</li>
+            <li>决议对象 v1 + 状态机上线</li>
+            <li>全链路埋点与看板就位</li>
+          </ul>
+          <div class="ms-gate">门槛：WAT ≥ 7.2k 且 NPS ≥ 40<br>WAT <b>8.1k ✓</b>（7/24 越线 7.25k）· NPS 待补录</div>
+        </div>
+
+        <div class="ms-card" style="--c:216,185,124">
+          <div class="ms-top">
+            <span class="ms-id">M2</span><span class="ms-tt">激活放量</span>
+            <span class="ms-st warn">进行中 · 口径未闭合</span><span class="ms-date">08/31</span>
+          </div>
+          <ul class="ms-list">
+            <li>12 套场景模板库全量</li>
+            <li>「会后 5 分钟」引导上线</li>
+            <li>30 日留存实验 v1 启动</li>
+          </ul>
+          <div class="ms-gate">门槛分层：保底 43.5% / 挑战 44%<br>当前 <span class="warn">41.5% · 距保底 2pt · 定性「边缘」</span><br>判定值日 <b>08/28</b>（周五同口径），08/23 为最后可干预注册日<br>该日仅 8/17–8/21 子集成熟（<b>71%</b>），需删失校正，否则判「不可闭合」</div>
+        </div>
+
+        <div class="ms-card" style="--c:163,148,247">
+          <div class="ms-top">
+            <span class="ms-id">M3</span><span class="ms-tt">商业收口</span>
+            <span class="ms-st plan">计划中</span><span class="ms-date">09/30</span>
+          </div>
+          <ul class="ms-list">
+            <li>席位加购 A/B 实验收口</li>
+            <li>推理成本与毛利看板</li>
+            <li>Q4 定价与打包方案评审</li>
+          </ul>
+          <div class="ms-gate">门槛：加购 ≥ 18%（±1.5）· n≈68<br>当前 <span class="warn">13.5%，区间 16.5%–19.5%，落在门槛两侧</span><br>毛利率 74% 无基线，剥离为 Q4 待建指标</div>
+        </div>
+      </div>
+
+      <div class="planb">
+        <span class="k">判定规则</span>
+        <div class="i"><b>稳</b> <b class="tg">≥ 43.0</b><br>到 44% 仅需 ≤1.0pt/周，低于历史下沿：按计划走，不再调排期。</div>
+        <div class="i"><b>边缘</b> <b class="tg">42.5–43.0</b><br>需 1.0–1.5pt/周，至多等于历史峰值：只启动领先指标监测，<b>不动排期</b>。</div>
+        <div class="i"><b>风险</b> <b class="tg">&lt; 42.5</b><br>需 &gt;1.5pt/周，超历史峰值；&lt;42.0 判不可达。转防守档：灰度 80→50 家、09/08 前冻结 P3 新增、缺口升为季度首要风险。</div>
+        <div class="planb-note"><b>#4 保持 08/21 全量、不抢跑 08/18</b>：抢 3 天对 9 月无实质意义，排期扰动却是实的。省下的 3 天用于<b>激活埋点校验</b>（埋点错则读数整体不可信）与模板入口前置。<b>08/28 早读只用于确认不利</b>：子集 &lt;44% → 提前确认未达（早 3 天预警）；子集 ≥44% <b>不得宣告达标</b>——子集全为工作日（8/17–8/21），B2B 周末注册团队激活率更低，子集系统性偏高。<br><span style="color:#6b768e">注意：本判定本质是<b style="color:#a4afc5">单次观测</b>，相邻 cohort 重叠 4–7 天不构成独立复测；不做 D0/D1 拟合映射（周环比 sd≈0.75pt，n=8 预测区间 ±1.8~4pt，是待判别 0.5pt 差的 4~8 倍）。</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 05 行动 ================= -->
+  <section id="s5">
+    <div class="sec-head rv">
+      <span class="sec-idx">05</span>
+      <span class="sec-title">行动清单<small>关键行动 · 负责方 · 时间窗 · 状态</small></span>
+      <span class="sec-note">★ 关键路径：#4 → 决定 M2；#6 → 7a 决定 Q4 起步</span>
+    </div>
+
+    <div class="tbl-bar rv">
+      <button class="fbtn on" data-f="all" type="button">全部</button>
+      <button class="fbtn" data-f="p0" type="button">P0</button>
+      <button class="fbtn" data-f="p1" type="button">P1</button>
+      <button class="fbtn" data-f="p2" type="button">P2</button>
+      <button class="fbtn" data-f="risk" type="button">风险项</button>
+      <button class="fbtn" data-f="todo" type="button">未开始</button>
+      <span class="tbl-count">显示 <b id="rowcount">9</b> / 9 条</span>
+    </div>
+
+    <div class="tblwrap rv">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:44%">关键行动</th>
+            <th style="width:9%">优先级</th>
+            <th style="width:22%">负责方</th>
+            <th style="width:15%">时间窗</th>
+            <th style="width:10%">状态</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <tr data-tags="p0 done">
+            <td><div class="act" style="--c:72,211,196"><span class="d"></span><span class="t">会议纪要多模态生成全量 GA</span></div></td>
+            <td><span class="pri p0">P0</span></td>
+            <td><span class="owner"><span class="av" style="background:#48d3c4">核</span>核心体验组</span></td>
+            <td><span class="win">07/01–07/25</span></td>
+            <td><span class="st done"><i></i>已完成</span></td>
+          </tr>
+          <tr data-tags="p0 done">
+            <td><div class="act" style="--c:72,211,196"><span class="d"></span><span class="t">「决议」对象建模 + 状态机 + 任务同步</span></div></td>
+            <td><span class="pri p0">P0</span></td>
+            <td><span class="owner"><span class="av" style="background:#8fb0f0">平</span>平台组</span></td>
+            <td><span class="win">07/08–08/08</span></td>
+            <td><span class="st done"><i></i>已完成</span></td>
+          </tr>
+          <tr data-tags="p0 done">
+            <td><div class="act" style="--c:216,185,124"><span class="d"></span><span class="t">3 类角色 × 12 套场景模板库</span></div></td>
+            <td><span class="pri p0">P0</span></td>
+            <td><span class="owner"><span class="av" style="background:#d8b97c">增</span>增长组</span></td>
+            <td><span class="win">07/14–08/14</span></td>
+            <td><span class="st done"><i></i>已完成</span></td>
+          </tr>
+          <tr data-tags="p0 risk">
+            <td><div class="act" style="--c:216,185,124"><span class="d"></span><span class="star">关键</span><span class="t">「会后 5 分钟」引导 + 激活漏斗埋点</span></div></td>
+            <td><span class="pri p0">P0</span></td>
+            <td><span class="owner"><span class="av" style="background:#d8b97c">增</span>增长组</span></td>
+            <td><span class="win">07/28–08/21</span></td>
+            <td><span class="st risk"><i></i>风险</span></td>
+          </tr>
+          <tr data-tags="p1 now">
+            <td><div class="act" style="--c:72,211,196"><span class="d"></span><span class="t">知识卡片回流至全局搜索 / 项目页</span></div></td>
+            <td><span class="pri p1">P1</span></td>
+            <td><span class="owner"><span class="av" style="background:#48d3c4">核</span>核心体验组</span></td>
+            <td><span class="win">08/04–09/04</span></td>
+            <td><span class="st now"><i></i>进行中</span></td>
+          </tr>
+          <tr data-tags="p0 todo">
+            <td><div class="act" style="--c:163,148,247"><span class="d"></span><span class="star">关键</span><span class="t">AI 知识助手首波灰度（80 家）+ 配额</span></div></td>
+            <td><span class="pri p0">P0</span></td>
+            <td><span class="owner"><span class="av" style="background:#a394f7">智</span>智能组</span></td>
+            <td><span class="win">08/19–09/08</span></td>
+            <td><span class="st plan"><i></i>未开始</span></td>
+          </tr>
+          <tr data-tags="p1 todo">
+            <td><div class="act" style="--c:163,148,247"><span class="d"></span><span class="star">关键</span><span class="t">推理成本取数 + 单位经济看板（Q4 基座，数据侧 08/19 先行）</span></div></td>
+            <td><span class="pri p1">P1</span></td>
+            <td><span class="owner"><span class="av" style="background:#8fb0f0">数</span>数据 × 智能</span></td>
+            <td><span class="win">09/02–09/22</span></td>
+            <td><span class="st plan"><i></i>未开始</span></td>
+          </tr>
+          <tr data-tags="p2 todo">
+            <td><div class="act" style="--c:163,148,247"><span class="d"></span><span class="t">席位加购付费墙 A/B（单变体小流量，出季结算）</span></div></td>
+            <td><span class="pri p2">P2</span></td>
+            <td><span class="owner"><span class="av" style="background:#a394f7">智</span>智能组</span></td>
+            <td><span class="win">09/08–10/22</span></td>
+            <td><span class="st plan"><i></i>未开始</span></td>
+          </tr>
+          <tr data-tags="p1 todo">
+            <td><div class="act" style="--c:216,185,124"><span class="d"></span><span class="t">Q4 定价与打包方案（决策评审）</span></div></td>
+            <td><span class="pri p1">P1</span></td>
+            <td><span class="owner"><span class="av" style="background:#eab35a">舵</span>战略办</span></td>
+            <td><span class="win">09/15–09/30</span></td>
+            <td><span class="st plan"><i></i>未开始</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tbl-note">状态口径：<b style="color:var(--ink-2)">已完成</b> = 门槛所有条件均有实测读数；<b style="color:var(--ink-2)">进行中</b> = 无未消除阻塞但尚不可判定；<b style="color:var(--ink-2)">风险</b> = 关键路径且按当前速率将错过窗口；<b style="color:var(--ink-2)">未开始</b> = 窗口未到或无产能投入。门槛含无基线指标（NPS / 毛利率）一律标「待判定」，不默认通过。</div>
+  </section>
+
+  <!-- ================= 06 边界 ================= -->
+  <section id="s6">
+    <div class="sec-head rv">
+      <span class="sec-idx">06</span>
+      <span class="sec-title">本季 Non-goals 与风险缓解<small>主动取舍 · 守住资源</small></span>
+      <span class="sec-note">4 项风险 · 2 项已触发缓解</span>
+    </div>
+
+    <div class="ng-panel rv">
+      <div class="panel-h">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.3" stroke="#e06a6a" stroke-width="1.3"/><path d="M5.6 5.6l4.8 4.8M10.4 5.6l-4.8 4.8" stroke="#e06a6a" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <h4>Non-goals · 本季明确不做</h4>
+      </div>
+      <div class="panel-sub">把 31 人守在一条主链路上，这三件事主动放弃</div>
+      <div class="ng-grid">
+        <div class="ng">
+          <div class="t">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="3" y="6.5" width="10" height="7.5" rx="1.6" stroke="#e06a6a" stroke-width="1.2"/><path d="M5.6 6.5V5a2.4 2.4 0 014.8 0v1.5" stroke="#e06a6a" stroke-width="1.2"/></svg>
+            移动端原生重写
+          </div>
+          <p>继续维护现有 App，端上问题走渐进修复，<b>本季不投大版本</b>。</p>
+        </div>
+        <div class="ng">
+          <div class="t">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="3" y="6.5" width="10" height="7.5" rx="1.6" stroke="#e06a6a" stroke-width="1.2"/><path d="M5.6 6.5V5a2.4 2.4 0 014.8 0v1.5" stroke="#e06a6a" stroke-width="1.2"/></svg>
+            新增第三方集成
+          </div>
+          <p>集成扩张冻结，仅交付已承诺的 2 个，<b>避免维护成本摊薄研发</b>。</p>
+        </div>
+        <div class="ng">
+          <div class="t">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="3" y="6.5" width="10" height="7.5" rx="1.6" stroke="#e06a6a" stroke-width="1.2"/><path d="M5.6 6.5V5a2.4 2.4 0 014.8 0v1.5" stroke="#e06a6a" stroke-width="1.2"/></svg>
+            企业版权限 / 审计大改
+          </div>
+          <p>需求真实但非本季杠杆点，只做数据隔离兜底，<b>方案顺延 Q4</b>。</p>
+        </div>
+      </div>
+      <div class="ng-rule">
+        <span class="k">取舍原则</span>
+        <span>任何不落在三支柱链路内的需求，一律进入 Q4 Backlog：本季不评估、不排期，<b>口头需求不作为交付承诺</b>。</span>
+      </div>
+    </div>
+
+    <div class="ng-panel rv" style="margin-top:11px">
+      <div class="panel-h">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.9l6.3 11.4H1.7L8 1.9z" stroke="#eab35a" stroke-width="1.3" stroke-linejoin="round"/><path d="M8 6.4v3.1M8 11.3v.1" stroke="#eab35a" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <h4>风险与缓解</h4>
+      </div>
+      <div class="panel-sub">气泡位置 = 发生概率 × 影响程度，悬停查看对应缓解动作</div>
+
+      <div class="risk-wrap">
+        <div class="mx">
+          <div class="mx-ticks-y"><span>高</span><span>中</span><span>低</span></div>
+          <div class="mx-plot">
+            <span class="mx-dot hi hl" data-n="1" style="left:72%;bottom:85%" data-risk="r1" data-tip="<span class='tt'>R1 · 高</span><b>推理成本超预算</b><br>已触发：8 月推理支出环比 +38%"></span>
+            <span class="mx-dot md" data-n="2" style="left:76%;bottom:55%" data-risk="r2" data-tip="<span class='tt'>R2 · 中</span><b>三支柱挤占排期</b><br>已发生：P3 与激活链路争抢 6 名研发"></span>
+            <span class="mx-dot hi" data-n="3" style="left:42%;bottom:90%" data-risk="r3" data-tip="<span class='tt'>R3 · 高影响</span><b>会议数据合规</b><br>未发生，但影响面覆盖全部客户"></span>
+            <span class="mx-dot md" data-n="4" style="left:56%;bottom:64%" data-risk="r4" data-tip="<span class='tt'>R4 · 中</span><b>知识卡片质量</b><br>抽检准确率 91%，低于 95% 目标"></span>
+          </div>
+          <div class="mx-ticks-x"><span>低</span><span>中</span><span>高</span></div>
+          <span class="mx-lab x">发生概率</span>
+          <span class="mx-lab y">影响程度</span>
+        </div>
+
+        <div class="risk-list">
+          <div class="rk" data-risk="r1">
+            <span class="rk-n hi">1</span>
+            <div class="rk-b">
+              <div class="t"><b>推理成本超预算</b><span class="stt fire">已触发</span></div>
+              <p>知识助手放量后单客户成本上行，8 月推理支出环比 +38%，逼近毛利线。</p>
+              <div class="mit"><span>↳</span><span>配额上限 + 缓存命中 ≥ 45% 周监控；A2 申请预算至 52 万/月</span></div>
+            </div>
+          </div>
+          <div class="rk" data-risk="r2">
+            <span class="rk-n md">2</span>
+            <div class="rk-b">
+              <div class="t"><b>三支柱挤占排期</b><span class="stt watch">已发生</span></div>
+              <p>31 人并行三线，P3 灰度准备与激活链路争抢同 6 名后端研发。</p>
+              <div class="mit"><span>↳</span><span>P3 灰度两阶收缩至 80 家（全档 50 家），8/18 起 6 人整建制切换（A1）</span></div>
+            </div>
+          </div>
+          <div class="rk" data-risk="r3">
+            <span class="rk-n hi">3</span>
+            <div class="rk-b">
+              <div class="t"><b>会议数据合规</b><span class="stt quiet">未发生</span></div>
+              <p>录音与纪要涉及跨区域存储与敏感信息识别，一旦事发影响全部客户。</p>
+              <div class="mit"><span>↳</span><span>区域化存储 + 脱敏开关，法务前置评审通过后才允许灰度</span></div>
+            </div>
+          </div>
+          <div class="rk" data-risk="r4">
+            <span class="rk-n md">4</span>
+            <div class="rk-b">
+              <div class="t"><b>知识卡片质量不达标</b><span class="stt watch">局部</span></div>
+              <p>抽检准确率 91%，低于 95% 目标；幻觉与错引会直接损伤「组织资产」的可信度。</p>
+              <div class="mit"><span>↳</span><span>引用溯源 + 低置信标注 + 每周 1% 人工抽检，低于 93% 即暂停放量</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="l">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.6" y="1.6" width="12.8" height="12.8" rx="3.6" stroke="#6b768e"/><path d="M5 8.3l2 2 4-4.4" stroke="#6b768e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      MESHLINE · 2026 Q3 产品战略 OnePager · 季中校准版
+    </span>
+    <span class="r">
+      <span>汇报对象 产品委员会</span><span>数据截至 2026-08-14</span><span>v2.0</span>
+    </span>
+  </footer>
+
+</main>
+
+<button class="totop" id="totop" type="button" aria-label="回到顶部">
+  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 12.5V3.5M4 7.5L8 3.5l4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<div class="tip" id="tip" role="tooltip" aria-hidden="true"></div>
+
+<script>
+(function(){
+  var doc=document, root=doc.documentElement;
+  root.classList.add('js');
+  var reduce=false;
+  try{ reduce=matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+
+  /* ---- 1. headline ready ---- */
+  function ready(){ root.classList.add('ready'); }
+  if(reduce) ready(); else setTimeout(ready,60);
+
+  /* ---- 2. reveal ---- */
+  var revs=[].slice.call(doc.querySelectorAll('.rv'));
+  revs.forEach(function(el){
+    var p=el.parentNode, idx=[].indexOf.call(p.children, el);
+    el.style.transitionDelay=(Math.min(idx,6)*55)+'ms';
+  });
+  if(reduce){
+    revs.forEach(function(el){el.classList.add('in')});
+  } else if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{rootMargin:'-6% 0px -10% 0px',threshold:.04});
+    revs.forEach(function(el){io.observe(el)});
+    setTimeout(function(){ revs.forEach(function(el){el.classList.add('in')}); },1400);
+  } else {
+    revs.forEach(function(el){el.classList.add('in')});
+  }
+
+  /* ---- 3. count up ---- */
+  [].slice.call(doc.querySelectorAll('[data-to]')).forEach(function(el){
+    var to=parseFloat(el.getAttribute('data-to'))||0;
+    var dec=parseInt(el.getAttribute('data-dec')||'0',10);
+    var suf=el.getAttribute('data-suf')||'';
+    if(reduce){ el.textContent=to.toFixed(dec)+suf; return; }
+    var st=null, dur=1200;
+    var iv=setInterval(function(){
+      if(st===null) st=Date.now();
+      var p=Math.min(1,(Date.now()-st)/dur);
+      var e=1-Math.pow(1-p,3);
+      el.textContent=(to*e).toFixed(dec)+suf;
+      if(p>=1) clearInterval(iv);
+    },16);
+  });
+
+  /* ---- 4. scroll spy + progress ---- */
+  var prog=doc.getElementById('prog');
+  var totop=doc.getElementById('totop');
+  var secs=[].slice.call(doc.querySelectorAll('section[id]'));
+  var links=[].slice.call(doc.querySelectorAll('.nav-links a'));
+  function onScroll(){
+    var y=window.pageYOffset||doc.documentElement.scrollTop;
+    var cur='';
+    secs.forEach(function(s){
+      var top=s.getBoundingClientRect().top+y;
+      if(y+window.innerHeight*0.32>=top) cur=s.id;
+    });
+    links.forEach(function(a){
+      a.classList.toggle('on', a.getAttribute('href')==='#'+cur);
+    });
+    var h=doc.documentElement.scrollHeight-window.innerHeight;
+    prog.style.width=(h>0?Math.min(100,y/h*100):0)+'%';
+    totop.classList.toggle('show', y>620);
+  }
+  var ticking=false;
+  window.addEventListener('scroll',function(){
+    if(!ticking){ ticking=true; requestAnimationFrame(function(){ onScroll(); ticking=false; }); }
+  },{passive:true});
+  onScroll();
+
+  /* ---- 5. tooltip ---- */
+  var tip=doc.getElementById('tip');
+  function showTip(el){
+    var html=el.getAttribute('data-tip');
+    if(!html) return;
+    tip.innerHTML=html;
+    tip.classList.add('on');
+    var r=el.getBoundingClientRect();
+    var tw=tip.offsetWidth, th=tip.offsetHeight;
+    var x=r.left+r.width/2-tw/2;
+    var y=r.top-th-10;
+    x=Math.max(10,Math.min(window.innerWidth-tw-10,x));
+    if(y<70) y=r.bottom+10;
+    tip.style.transform='translate('+Math.round(x)+'px,'+Math.round(y)+'px)';
+  }
+  function hideTip(){ tip.classList.remove('on'); }
+  doc.addEventListener('mouseover',function(e){
+    var t=e.target.closest?e.target.closest('[data-tip]'):null;
+    if(t) showTip(t);
+  });
+  doc.addEventListener('mouseout',function(e){
+    var t=e.target.closest?e.target.closest('[data-tip]'):null;
+    if(t) hideTip();
+  });
+  window.addEventListener('scroll',hideTip,{passive:true});
+
+  /* ---- 6. table filter ---- */
+  var fbtns=[].slice.call(doc.querySelectorAll('.fbtn'));
+  var rows=[].slice.call(doc.querySelectorAll('#tbody tr'));
+  var rc=doc.getElementById('rowcount');
+  fbtns.forEach(function(b){
+    b.addEventListener('click',function(){
+      fbtns.forEach(function(x){x.classList.remove('on')});
+      b.classList.add('on');
+      var f=b.getAttribute('data-f'), n=0;
+      rows.forEach(function(r){
+        var tags=(r.getAttribute('data-tags')||'').split(' ');
+        var ok = f==='all' || tags.indexOf(f)>=0;
+        r.classList.toggle('hide', !ok);
+        if(ok) n++;
+      });
+      if(rc) rc.textContent=n;
+    });
+  });
+
+  /* ---- 7. risk matrix <-> list ---- */
+  function hl(id,on){
+    [].slice.call(doc.querySelectorAll('[data-risk="'+id+'"]')).forEach(function(el){
+      el.classList.toggle('hl', on);
+    });
+  }
+  [].slice.call(doc.querySelectorAll('.mx-dot')).forEach(function(d){
+    var id=d.getAttribute('data-risk');
+    d.addEventListener('mouseenter',function(){hl(id,true)});
+    d.addEventListener('mouseleave',function(){hl(id,false)});
+  });
+  [].slice.call(doc.querySelectorAll('.rk')).forEach(function(r){
+    var id=r.getAttribute('data-risk');
+    r.addEventListener('mouseenter',function(){hl(id,true)});
+    r.addEventListener('mouseleave',function(){hl(id,false)});
+  });
+
+  /* ---- 8. print / top ---- */
+  var bp=doc.getElementById('btn-print');
+  if(bp) bp.addEventListener('click',function(){ window.print(); });
+  totop.addEventListener('click',function(){ window.scrollTo({top:0,behavior:reduce?'auto':'smooth'}); });
+})();
+</script>
+</body>
+</html>

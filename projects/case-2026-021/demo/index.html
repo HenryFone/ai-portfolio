@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用户画像报告 · 大学生搞钱情报站</title>
+<meta name="description" content="大学生搞钱情报站 · 三画像差异化研究与产品策略建议">
+<style>
+/* ==========================================================================
+   0. TOKENS
+   ========================================================================== */
+:root{
+  --paper:#F1EFE9;
+  --paper-2:#E9E6DE;
+  --surface:#FFFFFF;
+  --surface-2:#F7F5F0;
+  --ink:#14161A;
+  --ink-2:#4C525C;
+  --ink-3:#868D98;
+  --ink-4:#B0B4BC;
+  --rule:#D9D5CA;
+  --rule-2:#E8E5DD;
+
+  --a:#2338D6; --a-soft:#E7EAFB;
+  --b:#0B7060; --b-soft:#DFF1ED;
+  --c:#C2400D; --c-soft:#FAE9E1;
+
+  --ring-bg:#E4E0D6;
+  --sh-s:0 1px 2px rgba(20,22,26,.05);
+  --sh-m:0 2px 6px rgba(20,22,26,.05), 0 12px 28px -12px rgba(20,22,26,.14);
+  --sh-l:0 4px 10px rgba(20,22,26,.06), 0 32px 60px -24px rgba(20,22,26,.24);
+
+  --sans:"Segoe UI Variable Text","Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei UI","Microsoft YaHei",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --mono:"Cascadia Mono","Cascadia Code",Consolas,"SF Mono",Menlo,"Courier New",monospace;
+
+  --maxw:1180px;
+  --navh:60px;
+}
+[data-theme="dark"]{
+  --paper:#0C0D10;
+  --paper-2:#111318;
+  --surface:#16181D;
+  --surface-2:#1B1E24;
+  --ink:#F3F2EE;
+  --ink-2:#AEB4BD;
+  --ink-3:#7B828D;
+  --ink-4:#565C66;
+  --rule:#2A2E36;
+  --rule-2:#212429;
+
+  --a:#7C8CFF; --a-soft:#181B33;
+  --b:#34D3B4; --b-soft:#0E2A26;
+  --c:#FF8A4C; --c-soft:#2E1B12;
+
+  --ring-bg:#2A2E36;
+  --sh-s:0 1px 2px rgba(0,0,0,.5);
+  --sh-m:0 2px 6px rgba(0,0,0,.4), 0 12px 28px -12px rgba(0,0,0,.6);
+  --sh-l:0 4px 10px rgba(0,0,0,.4), 0 32px 60px -24px rgba(0,0,0,.8);
+}
+
+/* ==========================================================================
+   1. BASE
+   ========================================================================== */
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--navh) + 20px);-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--sans);background:var(--paper);color:var(--ink);
+  font-size:15px;line-height:1.75;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  transition:background .4s ease,color .4s ease;
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%}
+code{font-family:var(--mono);font-size:.86em;background:var(--surface-2);border:1px solid var(--rule-2);border-radius:4px;padding:1px 5px;word-break:break-all}
+::selection{background:var(--a);color:#fff}
+:focus-visible{outline:2px solid var(--a);outline-offset:3px;border-radius:4px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+[data-rv]{opacity:0;transform:translateY(20px);
+  transition:opacity .8s cubic-bezier(.16,.84,.28,1),transform .8s cubic-bezier(.16,.84,.28,1);
+  transition-delay:var(--d,0ms)}
+[data-rv].is-in{opacity:1;transform:none}
+
+/* ==========================================================================
+   2. COVER
+   ========================================================================== */
+.cover{position:relative;background:#08090D;color:#fff;overflow:hidden;isolation:isolate}
+.cover-bg{position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(1000px 620px at 8% -14%, rgba(35,56,214,.62), transparent 60%),
+    radial-gradient(820px 520px at 92% 2%, rgba(11,112,96,.45), transparent 58%),
+    radial-gradient(700px 460px at 52% 118%, rgba(194,64,13,.30), transparent 62%),
+    linear-gradient(168deg,#08090D 0%,#101426 54%,#08090D 100%);
+}
+.cover-grid{position:absolute;inset:0;z-index:0;opacity:.55;
+  background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:72px 72px;
+  mask-image:radial-gradient(ellipse 78% 62% at 24% 16%,#000 6%,transparent 76%);
+  -webkit-mask-image:radial-gradient(ellipse 78% 62% at 24% 16%,#000 6%,transparent 76%);
+}
+.cover-word{
+  position:absolute;right:-2vw;bottom:-2.6vw;z-index:0;pointer-events:none;user-select:none;
+  font-family:var(--mono);font-size:13vw;font-weight:800;letter-spacing:-.055em;line-height:.8;
+  color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.05);white-space:nowrap;
+  mask-image:linear-gradient(90deg,#000 0%,transparent 62%);
+  -webkit-mask-image:linear-gradient(90deg,#000 0%,transparent 62%);
+}
+.cover-in{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:46px 28px 0}
+
+.cv-top{display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.16);flex-wrap:wrap}
+.cv-brand{display:flex;align-items:center;gap:11px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.22em;text-transform:uppercase;color:#9DA6C6;font-weight:600}
+.cv-brand i{width:22px;height:22px;border-radius:6px;flex:none;
+  background:linear-gradient(135deg,#2338D6,#0B7060);box-shadow:0 0 22px rgba(35,56,214,.6)}
+.cv-date{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:#7C86A8}
+
+.cv-title{
+  margin:44px 0 0;font-size:clamp(40px,7.6vw,92px);font-weight:800;
+  letter-spacing:-.035em;line-height:1.02;color:#fff;
+}
+.cv-title em{font-style:normal;position:relative;color:#8FA2FF;white-space:nowrap}
+.cv-title em::after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:.12em;
+  background:linear-gradient(90deg,#2338D6,#0B7060);border-radius:2px;opacity:.9}
+.cv-sub{margin-top:20px;font-family:var(--mono);font-size:12px;letter-spacing:.2em;
+  text-transform:uppercase;color:#8E97B8}
+.cv-lead{margin-top:22px;max-width:720px;font-size:16.5px;line-height:1.86;color:#B7BEDA}
+.cv-lead b{color:#EDEFFF;font-weight:700}
+
+.cv-people{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  margin-top:46px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.14);
+  border-radius:16px;overflow:hidden}
+.cv-people a{display:block;padding:22px 22px 20px;background:rgba(9,11,18,.55);
+  text-decoration:none;color:inherit;position:relative;transition:background .28s;backdrop-filter:blur(4px)}
+.cv-people a::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ac);
+  transform:scaleY(0);transform-origin:top;transition:transform .34s cubic-bezier(.16,.84,.28,1)}
+.cv-people a:hover{background:rgba(24,30,52,.72)}
+.cv-people a:hover::before{transform:scaleY(1)}
+.cp-n{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--ac);font-weight:700}
+.cp-name{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-top:8px;line-height:1.2}
+.cp-role{font-size:12px;color:#8B94B4;margin-top:5px}
+.cp-line{font-size:12.5px;color:#C3CADF;margin-top:14px;padding-top:13px;
+  border-top:1px dashed rgba(255,255,255,.16);line-height:1.6}
+.cp-sc{position:absolute;right:20px;top:20px;text-align:right}
+.cp-sc b{font-family:var(--mono);font-size:26px;font-weight:800;color:var(--ac);line-height:1}
+.cp-sc b em{font-size:11px;font-style:normal;color:#6D7695;font-weight:600}
+.cp-sc span{display:block;font-size:9.5px;color:#6D7695;letter-spacing:.1em;margin-top:3px}
+
+.ticker{position:relative;z-index:2;margin-top:46px;border-top:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.028);overflow:hidden}
+.ticker-in{display:flex;width:max-content;animation:marq 42s linear infinite}
+.ticker:hover .ticker-in{animation-play-state:paused}
+.ticker-seq{display:flex;align-items:center;padding:13px 0}
+.ticker-seq span{display:inline-flex;align-items:center;gap:9px;padding:0 26px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;color:#8E97B8;white-space:nowrap}
+.ticker-seq span::after{content:"";width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.28)}
+.ticker-seq b{color:#D6DBF0;font-weight:700}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ==========================================================================
+   3. NAV
+   ========================================================================== */
+.nav{position:sticky;top:0;z-index:80;height:var(--navh);
+  background:color-mix(in srgb,var(--paper) 86%,transparent);
+  backdrop-filter:saturate(1.7) blur(16px);-webkit-backdrop-filter:saturate(1.7) blur(16px);
+  border-bottom:1px solid var(--rule)}
+.nav-in{max-width:var(--maxw);margin:0 auto;padding:0 28px;height:100%;
+  display:flex;align-items:center;gap:18px;position:relative}
+.nav-brand{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:800;
+  letter-spacing:-.01em;white-space:nowrap;flex:none}
+.nav-brand i{width:18px;height:18px;border-radius:5px;flex:none;
+  background:linear-gradient(135deg,var(--a),var(--b))}
+.nav-links{display:flex;gap:1px;flex:1;overflow-x:auto;scrollbar-width:none;height:100%;align-items:center}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{position:relative;font-size:13px;font-weight:600;color:var(--ink-3);text-decoration:none;
+  padding:8px 13px;border-radius:7px;white-space:nowrap;transition:color .2s;
+  display:inline-flex;align-items:center;gap:7px}
+.nav-links a .num{font-family:var(--mono);font-size:10px;opacity:.6}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a.on{color:var(--a)}
+.nav-links a.on::after{content:"";position:absolute;left:13px;right:13px;bottom:2px;height:2px;
+  background:var(--a);border-radius:2px}
+.nav-tools{display:flex;gap:7px;flex:none}
+.ibtn{width:34px;height:34px;border-radius:9px;border:1px solid var(--rule);background:var(--surface);
+  color:var(--ink-2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}
+.ibtn:hover{color:var(--a);border-color:var(--a);background:var(--a-soft)}
+.ibtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.85;
+  stroke-linecap:round;stroke-linejoin:round}
+.nav-prog{position:absolute;left:0;bottom:-1px;height:2px;width:0;
+  background:linear-gradient(90deg,var(--a),var(--b));transition:width .08s linear}
+
+/* ==========================================================================
+   4. SECTION (editorial rail)
+   ========================================================================== */
+.sec{display:grid;grid-template-columns:196px minmax(0,1fr);gap:52px;align-items:start;
+  padding-top:88px;scroll-margin-top:calc(var(--navh) + 8px)}
+.rail{position:sticky;top:calc(var(--navh) + 34px)}
+.rail-n{font-family:var(--mono);font-size:52px;font-weight:800;line-height:.9;letter-spacing:-.05em;
+  color:transparent;-webkit-text-stroke:1.5px var(--ink-4)}
+.rail-t{margin-top:14px;font-size:17px;font-weight:800;letter-spacing:-.015em;line-height:1.4}
+.rail-e{margin-top:8px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink-4);font-weight:600;line-height:1.7}
+.rail-line{margin-top:16px;width:44px;height:2px;background:var(--a)}
+.sec-body{min-width:0}
+
+.card{background:var(--surface);border:1px solid var(--rule-2);border-radius:16px;
+  box-shadow:var(--sh-m);padding:30px 34px}
+
+.bt{display:flex;align-items:center;gap:14px;margin:36px 0 18px}
+.bt:first-child{margin-top:0}
+.bt .bar{width:3px;height:15px;border-radius:2px;background:var(--ac,var(--a));flex:none}
+.bt h3{font-size:14.5px;font-weight:800;letter-spacing:.005em;white-space:nowrap}
+.bt .rl{flex:1;height:1px;background:var(--rule-2)}
+.bt .hn{font-size:11.5px;color:var(--ink-3);white-space:nowrap;font-family:var(--mono)}
+
+p{font-size:14.6px;color:var(--ink-2);line-height:1.88}
+p strong{color:var(--ink);font-weight:700}
+.stack p+p{margin-top:13px}
+
+.leadq{position:relative;padding:22px 26px 22px 30px;border-left:3px solid var(--a);
+  background:linear-gradient(100deg,var(--a-soft),transparent 70%);
+  font-size:16.5px;font-weight:600;line-height:1.88;letter-spacing:-.005em;color:var(--ink);
+  border-radius:0 12px 12px 0}
+
+.mg{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.mg-i{background:var(--surface-2);border:1px solid var(--rule-2);border-radius:12px;
+  padding:17px 19px;transition:.24s}
+.mg-i:hover{border-color:var(--ac,var(--a));background:var(--surface);transform:translateY(-2px)}
+.mg-i .h{display:flex;align-items:center;gap:10px;font-weight:800;font-size:14px;margin-bottom:8px}
+.mg-i .h i{width:21px;height:21px;border-radius:6px;flex:none;background:var(--a-soft);color:var(--a);
+  font-family:var(--mono);font-size:10.5px;font-weight:800;font-style:normal;
+  display:flex;align-items:center;justify-content:center}
+.mg-i .d{font-size:13px;color:var(--ink-2);line-height:1.72}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:12.5px;font-weight:600;color:var(--ink-2);background:var(--surface-2);
+  border:1px solid var(--rule-2);border-radius:999px;padding:6px 14px;transition:.2s}
+.chip:hover{border-color:var(--a);color:var(--a);background:var(--a-soft)}
+
+/* ==========================================================================
+   5. TABLES
+   ========================================================================== */
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13.9px}
+th,td{text-align:left;padding:13px 18px;vertical-align:top;border-bottom:1px solid var(--rule-2)}
+thead th{font-family:var(--mono);font-size:10.5px;font-weight:700;color:var(--ink-3);
+  letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;
+  border-bottom:1.5px solid var(--ink);padding-top:0;padding-bottom:11px}
+tbody tr{transition:background .18s}
+tbody tr:hover{background:var(--surface-2)}
+tbody tr:last-child td{border-bottom:none}
+td:first-child{font-weight:700;color:var(--ink)}
+
+table.kv td:first-child{width:172px;color:var(--ink-3);font-weight:600;font-size:12.5px;padding-right:24px}
+table.kv td{padding:12px 0}
+table.kv td:last-child{padding-right:0}
+table.kv tr:hover{background:transparent}
+table.k td:first-child{width:150px}
+
+.meter{display:inline-flex;gap:3px;vertical-align:middle;margin-right:10px}
+.meter i{width:5px;height:13px;border-radius:2px;background:var(--rule);display:block}
+.meter i.f{background:var(--ac,var(--a))}
+.bdg{display:inline-flex;align-items:center;font-size:11.5px;font-weight:700;padding:3px 11px;
+  border-radius:999px;white-space:nowrap}
+.bdg.must{background:var(--ac-soft,var(--a-soft));color:var(--ac,var(--a));
+  border:1px solid color-mix(in srgb,var(--ac,var(--a)) 34%,transparent)}
+.bdg.want{background:var(--surface-2);color:var(--ink-2);border:1px solid var(--rule)}
+.bdg.nice{background:transparent;color:var(--ink-3);border:1px dashed var(--rule)}
+.bdg.no{background:transparent;color:var(--ink-4);border:1px dashed var(--rule);
+  text-decoration:line-through;text-decoration-color:var(--ink-4)}
+
+/* ==========================================================================
+   6. PERSONA DOSSIER
+   ========================================================================== */
+.persona{margin-top:96px;scroll-margin-top:calc(var(--navh) + 8px);
+  border-radius:20px;overflow:hidden;border:1px solid var(--rule-2);box-shadow:var(--sh-l);
+  background:var(--surface);--ac:var(--a);--ac-soft:var(--a-soft)}
+.persona.pb{--ac:var(--b);--ac-soft:var(--b-soft)}
+.persona.pc{--ac:var(--c);--ac-soft:var(--c-soft)}
+
+.p-head{position:relative;background:#0B0D12;color:#fff;overflow:hidden;isolation:isolate}
+.p-head::before{content:"";position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(560px 300px at 4% 0%, color-mix(in srgb,var(--ac) 42%,transparent), transparent 66%),
+    linear-gradient(150deg,#0B0D12 40%,#15181F 100%)}
+.p-head::after{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.045) 0 1px,transparent 1px 9px);
+  mask-image:linear-gradient(100deg,#000 0%,transparent 52%);
+  -webkit-mask-image:linear-gradient(100deg,#000 0%,transparent 52%)}
+.p-head-in{position:relative;z-index:1;padding:28px 34px 26px}
+.p-file{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding-bottom:15px;border-bottom:1px solid rgba(255,255,255,.14);flex-wrap:wrap}
+.p-file .no{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:#8B94B4;font-weight:600}
+.p-file .stamp{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--ac);
+  border:1px solid color-mix(in srgb,var(--ac) 52%,transparent);
+  background:color-mix(in srgb,var(--ac) 14%,transparent);border-radius:6px;padding:5px 12px}
+.p-main{display:flex;align-items:flex-end;justify-content:space-between;gap:26px;
+  margin-top:22px;flex-wrap:wrap}
+.p-l .nm{font-size:clamp(30px,4.2vw,46px);font-weight:800;letter-spacing:-.035em;line-height:1.08}
+.p-l .sb{font-size:13.5px;color:#9BA3C2;margin-top:10px;line-height:1.65}
+.p-score{display:flex;align-items:center;gap:16px;flex:none}
+.p-ring{position:relative;width:86px;height:86px}
+.p-ring svg{width:86px;height:86px;transform:rotate(-90deg)}
+.p-ring .bg{fill:none;stroke:rgba(255,255,255,.14);stroke-width:6}
+.p-ring .fg{fill:none;stroke:var(--ac);stroke-width:6;stroke-linecap:round;
+  stroke-dasharray:100;stroke-dashoffset:100;
+  transition:stroke-dashoffset 1.6s cubic-bezier(.16,.84,.28,1)}
+.is-in .p-ring .fg{stroke-dashoffset:var(--off)}
+.p-ring .mid{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center}
+.p-ring .mid b{font-family:var(--mono);font-size:24px;font-weight:800;color:var(--ac);line-height:1}
+.p-ring .mid b em{font-size:11px;font-style:normal;color:#6D7695}
+.p-ring .mid span{font-size:9px;color:#8B94B4;letter-spacing:.08em;margin-top:4px}
+.p-score-txt{text-align:right}
+.p-score-txt .t{font-family:var(--mono);font-size:10px;letter-spacing:.16em;
+  color:#6D7695;text-transform:uppercase}
+.p-score-txt .v{font-size:14px;font-weight:700;color:#E4E7F2;margin-top:6px;line-height:1.5}
+
+.p-strip{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid rgba(255,255,255,.14)}
+.p-strip div{padding:18px 34px;border-right:1px solid rgba(255,255,255,.10)}
+.p-strip div:last-child{border-right:none}
+.p-strip .v{font-family:var(--mono);font-size:22px;font-weight:800;color:#fff;
+  letter-spacing:-.02em;line-height:1.2}
+.p-strip .l{font-size:11px;color:#8B94B4;margin-top:6px}
+
+.p-body{padding:34px}
+
+.tl{position:relative;padding-left:30px}
+.tl::before{content:"";position:absolute;left:6px;top:9px;bottom:9px;width:2px;border-radius:2px;
+  background:linear-gradient(180deg,var(--ac),color-mix(in srgb,var(--ac) 6%,transparent))}
+.tl-i{position:relative;padding-bottom:22px}
+.tl-i:last-child{padding-bottom:0}
+.tl-i::before{content:"";position:absolute;left:-30px;top:5px;width:14px;height:14px;border-radius:50%;
+  background:var(--surface);border:3px solid var(--ac)}
+.tl-i .tt{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--ac);letter-spacing:.04em}
+.tl-i .td{font-size:14.2px;font-weight:700;color:var(--ink);margin-top:4px}
+.tl-i .ta{font-size:13.6px;color:var(--ink-2);margin-top:4px;line-height:1.74}
+
+.pains{display:grid;gap:11px}
+.pain{position:relative;background:var(--surface-2);border:1px solid var(--rule-2);
+  border-left:3px solid var(--ac);border-radius:0 12px 12px 0;padding:16px 20px 16px 50px;
+  font-size:14.4px;color:var(--ink);line-height:1.78;transition:.24s}
+.pain::before{content:"\201C";position:absolute;left:17px;top:9px;font-size:36px;line-height:1;
+  color:var(--ac);opacity:.3;font-weight:800;font-family:Georgia,serif}
+.pain:hover{background:var(--surface);border-color:var(--ac);
+  box-shadow:0 6px 18px -8px color-mix(in srgb,var(--ac) 40%,transparent);transform:translateX(3px)}
+
+.scenes{display:grid;gap:12px}
+.scene{display:flex;gap:16px;background:var(--surface-2);border:1px solid var(--rule-2);
+  border-radius:12px;padding:18px 20px;transition:.24s}
+.scene:hover{border-color:var(--ac);background:var(--surface)}
+.scene .ix{width:29px;height:29px;flex:none;border-radius:9px;background:var(--ac);color:#fff;
+  font-family:var(--mono);font-size:12.5px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;margin-top:1px}
+.scene .st{font-size:14.4px;font-weight:800;color:var(--ink);letter-spacing:-.008em}
+.scene .sd{font-size:13.7px;color:var(--ink-2);margin-top:5px;line-height:1.76}
+
+.risks{display:grid;gap:12px}
+.risk{display:grid;grid-template-columns:1fr 1.4fr;border:1px solid var(--rule-2);
+  border-radius:12px;overflow:hidden;transition:.24s}
+.risk:hover{border-color:var(--ac);box-shadow:var(--sh-s)}
+.risk .r1{padding:17px 20px;background:var(--surface-2);border-right:1px solid var(--rule-2);
+  position:relative}
+.risk .r1::before{content:"";position:absolute;left:0;top:15px;bottom:15px;width:3px;
+  background:#D62828;border-radius:0 3px 3px 0;opacity:.7}
+.risk .r2{padding:17px 20px}
+.risk .lb{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  font-weight:700;margin-bottom:7px}
+.risk .r1 .lb{color:#D62828}
+.risk .r2 .lb{color:var(--ac)}
+.risk p{font-size:13.7px;line-height:1.76;margin:0}
+.risk .r1 p{color:var(--ink);font-weight:600}
+.risk .r2 p{color:var(--ink-2)}
+
+.vn{margin-top:34px;display:flex;gap:15px;align-items:flex-start;
+  background:linear-gradient(100deg,var(--ac-soft),transparent 82%);
+  border:1px solid color-mix(in srgb,var(--ac) 26%,transparent);
+  border-radius:12px;padding:19px 22px}
+.vn .i{width:31px;height:31px;flex:none;border-radius:9px;background:var(--ac);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:15px}
+.vn .k{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ac);font-weight:700;margin-bottom:6px}
+.vn p{font-size:14px;color:var(--ink-2);line-height:1.8;margin:0}
+.vn p strong{color:var(--ink)}
+
+/* ==========================================================================
+   7. COMPARISON
+   ========================================================================== */
+.cmp2{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:20px;align-items:stretch}
+.rbox{background:var(--surface);border:1px solid var(--rule-2);border-radius:16px;
+  padding:26px;box-shadow:var(--sh-m);display:flex;flex-direction:column}
+.rbox h3{font-size:15px;font-weight:800}
+.rbox .rs{font-size:12.5px;color:var(--ink-3);margin-top:5px}
+.rcwrap{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 0 0}
+.rc{width:100%;max-width:370px;height:auto;overflow:visible}
+.rc .g{fill:none;stroke:var(--rule);stroke-width:1}
+.rc .go{fill:none;stroke:var(--rule);stroke-width:1.5}
+.rc .ax{stroke:var(--rule);stroke-width:1}
+.rc .al{font-family:var(--sans);font-size:11px;fill:var(--ink-2);font-weight:600}
+.rc .po{stroke-width:2;stroke-linejoin:round;transition:opacity .28s,fill-opacity .28s}
+.rcwrap[data-f="A"] .po:not(.pA),
+.rcwrap[data-f="B"] .po:not(.pB),
+.rcwrap[data-f="C"] .po:not(.pC){opacity:.10}
+.rc .dt{stroke:var(--surface);stroke-width:1.5}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;justify-content:center}
+.lg{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--ink-2);
+  background:var(--surface-2);border:1px solid var(--rule-2);border-radius:999px;
+  padding:5px 13px;transition:.2s}
+.lg:hover{border-color:var(--ac);color:var(--ink)}
+.lg i{width:9px;height:9px;border-radius:3px;background:var(--ac);flex:none}
+
+.mbox{background:var(--surface);border:1px solid var(--rule-2);border-radius:16px;
+  overflow:hidden;box-shadow:var(--sh-m);margin-top:20px}
+.mx{width:100%;min-width:800px;border-collapse:separate;border-spacing:0;font-size:13.5px}
+.mx th,.mx td{padding:13px 18px;text-align:left;vertical-align:top;border-bottom:1px solid var(--rule-2)}
+.mx thead th{position:sticky;top:0;z-index:3;background:var(--surface);
+  border-bottom:1.5px solid var(--ink);padding-top:20px;padding-bottom:13px}
+.mx thead th:first-child{z-index:4}
+.mx tbody td:first-child{position:sticky;left:0;z-index:2;background:var(--surface);
+  font-weight:700;color:var(--ink);width:148px;min-width:148px;box-shadow:1px 0 0 var(--rule-2)}
+.mx tbody tr:hover td{background:var(--surface-2)}
+.mx tbody tr:hover td:first-child{background:var(--surface-2)}
+.mx tbody tr:last-child td{border-bottom:none}
+.mh{display:flex;align-items:center;gap:10px}
+.mh .dt{width:9px;height:9px;border-radius:50%;flex:none}
+.mh .nm{font-weight:800;font-size:13.5px;white-space:nowrap;color:var(--ink)}
+.mh .rl{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:2px}
+.msc{font-family:var(--mono);font-size:17px;font-weight:800;letter-spacing:-.02em}
+
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+.trio-c{background:var(--surface);border:1px solid var(--rule-2);border-radius:16px;
+  padding:24px;position:relative;overflow:hidden;box-shadow:var(--sh-s);transition:.26s}
+.trio-c::before{content:"";position:absolute;left:0;top:0;width:100%;height:4px;background:var(--ac)}
+.trio-c:hover{transform:translateY(-4px);box-shadow:var(--sh-m);border-color:var(--ac)}
+.trio-c .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ac);font-weight:700}
+.trio-c .n{font-size:21px;font-weight:800;letter-spacing:-.025em;margin:9px 0 9px}
+.trio-c .d{font-size:13.3px;color:var(--ink-2);line-height:1.74}
+
+.jrn{background:var(--surface);border:1px solid var(--rule-2);border-radius:16px;
+  box-shadow:var(--sh-m);padding:30px 34px;margin-top:20px}
+.jr-head h3{font-size:16px;font-weight:800}
+.jr-head p{font-size:12.5px;color:var(--ink-3);margin-top:7px;max-width:660px}
+.jr-scale{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:22px 0 10px}
+.jr-scale span{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:var(--ink-3);
+  text-align:center;line-height:1.5}
+.jr-row{display:grid;grid-template-columns:134px 1fr;gap:16px;align-items:center;
+  padding:14px 0;border-top:1px solid var(--rule-2)}
+.jr-row:first-of-type{border-top:1.5px solid var(--ink)}
+.jr-who{display:flex;align-items:center;gap:10px}
+.jr-who .av{width:30px;height:30px;border-radius:9px;flex:none;background:var(--ac);color:#fff;
+  font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.jr-who b{font-size:13.5px;display:block;line-height:1.3}
+.jr-who i{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);font-style:normal}
+.jr-track{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.jr-cell{height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:11px;font-weight:700;border:1px solid var(--rule-2);
+  background:var(--surface-2);color:var(--ink-4)}
+.jr-cell.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.jr-cell.part{background:var(--ac-soft);border-color:color-mix(in srgb,var(--ac) 40%,transparent);color:var(--ac)}
+.jr-cell.stop{background:transparent;border:1.5px dashed #D62828;color:#D62828}
+.jr-note{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+.jr-note div{background:var(--surface-2);border:1px solid var(--rule-2);border-left:3px solid var(--ac);
+  border-radius:0 10px 10px 0;padding:15px 17px}
+.jr-note .t{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ac);font-weight:700;margin-bottom:7px}
+.jr-note p{font-size:13.3px;color:var(--ink-2);line-height:1.74;margin:0}
+
+/* ==========================================================================
+   8. STRATEGY
+   ========================================================================== */
+.stg{display:grid;gap:16px}
+.stg-c{background:var(--surface);border:1px solid var(--rule-2);border-radius:16px;
+  padding:28px 32px;display:flex;gap:26px;box-shadow:var(--sh-s);position:relative;
+  overflow:hidden;transition:.26s}
+.stg-c::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--a),var(--b));opacity:0;transition:.26s}
+.stg-c:hover{box-shadow:var(--sh-m);border-color:color-mix(in srgb,var(--a) 40%,transparent);
+  transform:translateY(-2px)}
+.stg-c:hover::after{opacity:1}
+.stg-n{font-family:var(--mono);font-size:38px;font-weight:800;line-height:1;flex:none;width:62px;
+  color:transparent;-webkit-text-stroke:1.5px var(--a);opacity:.6}
+.stg-b{flex:1;min-width:0}
+.stg-b h4{font-size:16.5px;font-weight:800;letter-spacing:-.018em;line-height:1.55;margin-bottom:11px}
+.stg-b p{font-size:14.3px;color:var(--ink-2);line-height:1.86;margin:0}
+.stg-k{margin-top:17px;display:flex;gap:11px;align-items:flex-start;
+  background:var(--a-soft);border:1px solid color-mix(in srgb,var(--a) 26%,transparent);
+  border-radius:10px;padding:12px 15px}
+.stg-k .kk{font-family:var(--mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--a);font-weight:700;flex:none;margin-top:2px}
+.stg-k .kv{font-size:12.8px;color:var(--ink-2);line-height:1.65}
+
+/* ==========================================================================
+   9. FOOTER / MISC
+   ========================================================================== */
+footer{margin-top:96px;padding:38px 0 64px;border-top:1.5px solid var(--ink);
+  font-size:12.8px;color:var(--ink-3);line-height:1.95}
+footer .fb{display:flex;align-items:center;gap:11px;margin-bottom:16px;font-weight:800;
+  color:var(--ink);font-size:14px;letter-spacing:-.015em}
+footer .fb i{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,var(--a),var(--b))}
+
+.totop{position:fixed;right:24px;bottom:24px;z-index:90;width:46px;height:46px;border-radius:14px;
+  background:var(--ink);color:var(--paper);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--sh-l);
+  opacity:0;pointer-events:none;transform:translateY(12px);transition:.3s}
+.totop.on{opacity:1;pointer-events:auto;transform:none}
+.totop:hover{background:var(--a);color:#fff}
+.totop svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+
+/* ==========================================================================
+   10. RESPONSIVE
+   ========================================================================== */
+@media (max-width:1080px){
+  .sec{grid-template-columns:1fr;gap:26px;padding-top:70px}
+  .rail{position:static;display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+    padding-bottom:14px;border-bottom:1.5px solid var(--ink)}
+  .rail-n{font-size:34px}
+  .rail-t{margin-top:0}
+  .rail-e{margin-top:0;margin-left:auto}
+  .rail-line{display:none}
+  .cmp2{grid-template-columns:1fr}
+  .trio{grid-template-columns:1fr}
+  .jr-note{grid-template-columns:1fr}
+}
+@media (max-width:860px){
+  .wrap{padding:0 20px}
+  .cover-in{padding:38px 20px 0}
+  .nav-in{padding:0 20px}
+  .nav-brand span{display:none}
+  .cv-people{grid-template-columns:1fr}
+  .cv-people a{display:flex;flex-direction:column}
+  .cv-people a .cp-n{order:1}
+  .cv-people a .cp-name{order:2}
+  .cv-people a .cp-role{order:3}
+  .cv-people a .cp-sc{order:4}
+  .cv-people a .cp-line{order:5}
+  .cp-sc{position:static;text-align:left;margin-top:14px}
+  .cv-title{margin-top:32px}
+  .card{padding:24px 22px}
+  .p-head-in{padding:24px 22px 22px}
+  .p-body{padding:24px 22px}
+  .p-strip{grid-template-columns:repeat(2,1fr)}
+  .p-strip div{padding:16px 22px}
+  .p-strip div:nth-child(2){border-right:none}
+  .p-strip div:nth-child(1),.p-strip div:nth-child(2){border-bottom:1px solid rgba(255,255,255,.10)}
+  .mg{grid-template-columns:1fr}
+  .risk{grid-template-columns:1fr}
+  .risk .r1{border-right:none;border-bottom:1px solid var(--rule-2)}
+  .stg-c{flex-direction:column;gap:14px;padding:24px 22px}
+  .stg-n{width:auto;font-size:30px}
+  .jrn{padding:24px 22px}
+  .jr-scale{display:none}
+  .jr-row{grid-template-columns:1fr;gap:10px}
+  .jr-track{gap:5px}
+  .jr-cell{height:30px;font-size:10px}
+  table.kv td:first-child{width:120px}
+  .cover-word{font-size:24vw}
+}
+@media (max-width:600px){
+  body{font-size:14.5px}
+  .cv-lead{font-size:15px}
+  .rail-e{width:100%;margin-left:0}
+  .p-ring{width:72px;height:72px}
+  .p-ring svg{width:72px;height:72px}
+  .p-main{align-items:flex-start}
+}
+
+/* ==========================================================================
+   11. PRINT
+   ========================================================================== */
+@media print{
+  :root{--paper:#fff;--surface:#fff;--surface-2:#fff;--ink:#000;--ink-2:#333;
+        --ink-3:#666;--rule:#bbb;--rule-2:#e2e2e2;--a:#1a1a1a;--b:#333;--c:#444;
+        --a-soft:#f2f2f2;--b-soft:#f2f2f2;--c-soft:#f2f2f2;
+        --sh-s:none;--sh-m:none;--sh-l:none}
+  body{background:#fff;font-size:10.5pt}
+  .nav,.totop,.ticker,.cover-word,.cover-grid,.cover-bg{display:none!important}
+  .cover{background:#fff!important;color:#000!important;border-bottom:2.5px solid #000}
+  .cv-top{border-color:#999}
+  .cv-brand,.cv-date,.cv-sub,.cv-lead{color:#222!important}
+  .cv-title{color:#000!important}.cv-title em{color:#000!important}
+  .cv-title em::after{background:#000!important}
+  .cv-people{background:#ccc;border-color:#ccc}
+  .cv-people a{background:#f7f7f7!important;color:#000}
+  .cp-name{color:#000}.cp-role,.cp-line,.cp-n,.cp-sc b,.cp-sc span,.cp-sc b em{color:#333!important}
+  .p-head{background:#fff!important;color:#000!important;border-bottom:2px solid #000}
+  .p-head::before,.p-head::after{display:none}
+  .p-l .nm,.p-strip .v{color:#000!important}
+  .p-l .sb,.p-strip .l,.p-file .no,.p-score-txt .t,.p-score-txt .v{color:#333!important}
+  .p-ring .bg{stroke:#ddd}
+  [data-rv]{opacity:1!important;transform:none!important}
+  .p-ring .fg{stroke-dashoffset:var(--off)!important;transition:none!important}
+  .card,.persona,.trio-c,.stg-c,.rbox,.mbox,.jrn{box-shadow:none!important;break-inside:avoid}
+  .sec,.persona,.stg-c,.pain,.scene,.risk,.tl-i{break-inside:avoid}
+  .rail{position:static}
+  table{font-size:9pt}
+  .rc .g,.rc .ax,.rc .go{stroke:#ccc}
+  footer{margin-top:30px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+  [data-rv]{opacity:1!important;transform:none!important}
+  .p-ring .fg{stroke-dashoffset:var(--off)!important}
+  .ticker-in{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================== COVER ============================== -->
+<header class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-grid"></div>
+  <div class="cover-word">PERSONA</div>
+
+  <div class="cover-in">
+    <div class="cv-top">
+      <span class="cv-brand"><i></i>User Persona Report · 用户画像研究</span>
+      <span class="cv-date">2026 / 10 / 15</span>
+    </div>
+
+    <h1 class="cv-title">大学生<em>搞钱</em>情报站</h1>
+    <div class="cv-sub">三画像差异化研究 · 核心 / 增长 / 边缘</div>
+    <p class="cv-lead">
+      面向在校大学生的一站式兼职、实习与线上副业情报工作台。本报告拆解 <b>3 个差异化用户画像</b>，
+      覆盖基本信息、职业背景、核心痛点、功能优先级、使用场景、付费决策、流失风险与挽留策略，
+      用于指导功能排序、定价与增长节奏。
+    </p>
+
+    <ul class="cv-people">
+      <li><a href="#pa" style="--ac:var(--a)">
+        <span class="cp-sc"><b>9<em>/10</em></b><span>付费意愿</span></span>
+        <span class="cp-n">FILE 01</span>
+        <div class="cp-name">沈知微</div>
+        <div class="cp-role">核心用户 · Core</div>
+        <div class="cp-line">要的是「别再瞎撞」<br>高付费 + 高频 + 强传播</div>
+      </a></li>
+      <li><a href="#pb" style="--ac:var(--b)">
+        <span class="cp-sc"><b>5<em>/10</em></b><span>付费意愿</span></span>
+        <span class="cp-n">FILE 02</span>
+        <div class="cp-name">陈嘉禾</div>
+        <div class="cp-role">增长用户 · Growth</div>
+        <div class="cp-line">要的是「先做哪一件」<br>低付费 + 高天花板 + 强传播</div>
+      </a></li>
+      <li><a href="#pc" style="--ac:var(--c)">
+        <span class="cp-sc"><b>2<em>/10</em></b><span>付费意愿</span></span>
+        <span class="cp-n">FILE 03</span>
+        <div class="cp-name">郑铭远</div>
+        <div class="cp-role">边缘用户 · Edge</div>
+        <div class="cp-line">要的是「帮我拿 offer」<br>低付费 + 低留存 + 高信息价值</div>
+      </a></li>
+    </ul>
+  </div>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-in">
+      <div class="ticker-seq">
+        <span>画像数量 <b>3 个</b></span>
+        <span>可变现方向 <b>12 个</b></span>
+        <span>排序维度 <b>9 个</b></span>
+        <span>核心模块 <b>5 个</b></span>
+        <span>定价假设 <b>¥9.9 / 月</b></span>
+        <span>最高付费意愿 <b>9 / 10</b></span>
+        <span>最短生命周期 <b>2–3 周</b></span>
+        <span>策略建议 <b>5 条</b></span>
+        <span>覆盖人群 <b>在校本科生</b></span>
+      </div>
+      <div class="ticker-seq">
+        <span>画像数量 <b>3 个</b></span>
+        <span>可变现方向 <b>12 个</b></span>
+        <span>排序维度 <b>9 个</b></span>
+        <span>核心模块 <b>5 个</b></span>
+        <span>定价假设 <b>¥9.9 / 月</b></span>
+        <span>最高付费意愿 <b>9 / 10</b></span>
+        <span>最短生命周期 <b>2–3 周</b></span>
+        <span>策略建议 <b>5 条</b></span>
+        <span>覆盖人群 <b>在校本科生</b></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================== NAV ============================== -->
+<nav class="nav">
+  <div class="nav-in">
+    <div class="nav-brand"><i></i><span>用户画像报告</span></div>
+    <div class="nav-links">
+      <a href="#product"><span class="num">01</span>产品速览</a>
+      <a href="#pa"><span class="num">02</span>画像 A</a>
+      <a href="#pb"><span class="num">03</span>画像 B</a>
+      <a href="#pc"><span class="num">04</span>画像 C</a>
+      <a href="#cmp"><span class="num">05</span>对比与旅程</a>
+      <a href="#strategy"><span class="num">06</span>策略建议</a>
+    </div>
+    <div class="nav-tools">
+      <button class="ibtn" id="themeBtn" title="切换深色 / 浅色" aria-label="切换深色 / 浅色">
+        <svg id="icoSun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.6M12 19.4V22M4.2 4.2l1.9 1.9M17.9 17.9l1.9 1.9M2 12h2.6M19.4 12H22M4.2 19.8l1.9-1.9M17.9 6.1l1.9-1.9"/></svg>
+        <svg id="icoMoon" viewBox="0 0 24 24" style="display:none"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg>
+      </button>
+      <button class="ibtn" id="printBtn" title="打印 / 导出 PDF" aria-label="打印或导出 PDF">
+        <svg viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><path d="M6 18H4.5A1.5 1.5 0 0 1 3 16.5v-6A1.5 1.5 0 0 1 4.5 9h15A1.5 1.5 0 0 1 21 10.5v6a1.5 1.5 0 0 1-1.5 1.5H18"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg>
+      </button>
+    </div>
+    <div class="nav-prog" id="navProg"></div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- ============================ 01 产品速览 ============================ -->
+<section class="sec" id="product">
+  <div class="rail" data-rv>
+    <div class="rail-n">01</div>
+    <div class="rail-t">产品速览</div>
+    <div class="rail-e">Product<br>Snapshot</div>
+    <div class="rail-line"></div>
+  </div>
+
+  <div class="sec-body">
+    <div class="card" data-rv>
+      <div class="leadq">「发现 · 比较 · 筛选 · 起跑 · 追踪」——把「找兼职」从"刷微信群转发、碰运气"，变成"看数据、做比较、按步骤跑通、能看到进度"。</div>
+
+      <div class="bt" style="--ac:var(--a)"><span class="bar"></span><h3>五个核心模块</h3><span class="rl"></span><span class="hn">产品实际能力边界</span></div>
+      <div class="mg">
+        <div class="mg-i" style="--ac:var(--a)"><div class="h"><i>1</i>首页 · 搞钱控制台</div><div class="d">「今天要处理」提醒，5 个指标：已收录方向 / 适合我的方向 / 正在尝试 / 本周任务 / 已跑通；支持挂载自有 CSV 情报。</div></div>
+        <div class="mg-i" style="--ac:var(--a)"><div class="h"><i>2</i>兼职雷达</div><div class="d">收录 12 个可变现方向，支持关键词搜索、类型筛选（线下兼职 / 线上副业 / 实习），9 个维度排序，可勾选「只看可远程」「只看前期有收入」，支持多方向横向对比。</div></div>
+        <div class="mg-i" style="--ac:var(--a)"><div class="h"><i>3</i>帮我选</div><div class="d">12 项「我的情况」问卷（每周可投入时间、希望月收入、专业、主要目标、可接受通勤、掌握技能、是否接受线下、是否写进简历、能否接受前期无收入、是否擅长沟通、是否愿意露脸、是否愿意持续创作）→ 输出匹配方向与理由。</div></div>
+        <div class="mg-i" style="--ac:var(--a)"><div class="h"><i>4</i>起跑器</div><div class="d">选定方向后给出分步 SOP，每一步写明：做什么 / 为什么 / 怎么做 / 需要什么材料 / 预计耗时 / 验收标准 / 下一步。</div></div>
+        <div class="mg-i" style="--ac:var(--a)"><div class="h"><i>5</i>进度</div><div class="d">方向卡与里程碑三态追踪（未跑通 / 进行中 / 已跑通），汇总本周截止任务，形成可复盘的时间线。</div></div>
+        <div class="mg-i" style="--ac:var(--a)"><div class="h"><i>＋</i>数据形态</div><div class="d">在线工作台，数据实时写入资料库数据表，多端自动同步、支持多人协作；无本地存储、无导入导出。</div></div>
+      </div>
+
+      <div class="bt" style="--ac:var(--a)"><span class="bar"></span><h3>9 个排序维度</h3><span class="rl"></span><span class="hn">用户真实做决策时用的变量</span></div>
+      <div class="chips">
+        <span class="chip">收入水平</span><span class="chip">时间投入（少→多）</span><span class="chip">时间自由度</span>
+        <span class="chip">远程程度</span><span class="chip">入门难度（低→高）</span><span class="chip">成长性</span>
+        <span class="chip">简历价值</span><span class="chip">收入稳定性</span><span class="chip">长期收入潜力</span>
+      </div>
+
+      <div class="bt" style="--ac:var(--a)"><span class="bar"></span><h3>已收录的 12 个可变现方向</h3><span class="rl"></span><span class="hn">每个方向约 40 个字段</span></div>
+      <div class="chips">
+        <span class="chip">家教</span><span class="chip">图文自媒体</span><span class="chip">短视频创作</span><span class="chip">直播</span>
+        <span class="chip">小说写作</span><span class="chip">视频剪辑</span><span class="chip">平面设计</span><span class="chip">校园推广 / 地推</span>
+        <span class="chip">摄影约拍</span><span class="chip">线下门店兼职</span><span class="chip">新媒体运营实习</span><span class="chip">互联网实习</span>
+      </div>
+
+      <div class="bt" style="--ac:var(--a)"><span class="bar"></span><h3>定价</h3><span class="rl"></span><span class="hn">本次分析的定价假设</span></div>
+      <div class="tw">
+        <table class="k">
+          <thead><tr><th>版本</th><th>价格</th><th>包含能力</th></tr></thead>
+          <tbody>
+            <tr><td>免费版</td><td class="mono" style="font-weight:800">¥0</td><td>兼职雷达全部方向浏览与排序、方向详情、帮我选 3 次 / 月、1 个进行中方向</td></tr>
+            <tr><td>队员版</td><td class="mono" style="font-weight:800">¥9.9 / 月<br>¥69 / 年</td><td>无限次匹配、多方向横向对比、12 个方向的完整起跑 SOP 与资源清单、无限并行方向追踪与进度看板</td></tr>
+            <tr><td>社团版</td><td class="mono" style="font-weight:800">¥199 / 年<br><span style="font-weight:600;color:var(--ink-3);font-size:12px">≤ 50 人</span></td><td>共享方向库与对比结果、社团内进度看板、可挂载社团自有情报 CSV</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top:24px;padding:16px 19px;background:var(--surface-2);border:1px dashed var(--rule);
+                  border-radius:12px;font-size:12.9px;color:var(--ink-3);line-height:1.88">
+        <b style="color:var(--ink-2)">说明：</b>产品页面本身未定义价格，上表为本次分析的定价假设；三个画像的付费意愿与决策判断均基于该假设。画像中的人物为典型化合成角色（非真实个体），文中数字用于刻画决策逻辑，不代表统计事实。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 02 画像 A ============================ -->
+<article class="persona" id="pa" data-rv>
+  <div class="p-head">
+    <div class="p-head-in">
+      <div class="p-file">
+        <span class="no">FILE 01 / 03 · 核心用户</span>
+        <span class="stamp">CORE · 核心用户</span>
+      </div>
+      <div class="p-main">
+        <div class="p-l">
+          <div class="nm">沈知微</div>
+          <div class="sb">21 岁 · 女 · 武汉 · 某双非本科 网络与新媒体 · 大三</div>
+        </div>
+        <div class="p-score">
+          <div class="p-score-txt">
+            <div class="t">Willingness to Pay</div>
+            <div class="v">一杯奶茶钱<br>换「不再瞎撞」</div>
+          </div>
+          <div class="p-ring">
+            <svg viewBox="0 0 40 40" aria-hidden="true"><circle class="bg" cx="20" cy="20" r="15.6"/><circle class="fg" cx="20" cy="20" r="15.6" pathLength="100" style="--off:10"/></svg>
+            <div class="mid"><b>9<em>/10</em></b><span>付费意愿</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-strip">
+      <div><div class="v">12 h</div><div class="l">每周可投入</div></div>
+      <div><div class="v">¥2,000</div><div class="l">目标月收入</div></div>
+      <div><div class="v">¥380</div><div class="l">当前月收入</div></div>
+      <div><div class="v">3 次</div><div class="l">尝试过并中断</div></div>
+    </div>
+  </div>
+
+  <div class="p-body">
+    <div class="bt" style="--ac:var(--a)"><span class="bar"></span><h3>基本信息</h3><span class="rl"></span></div>
+    <table class="kv">
+      <tbody>
+        <tr><td>所在城市 / 学校</td><td>武汉 · 某双非本科（新闻传播学院）</td></tr>
+        <tr><td>年级 / 专业</td><td>大三 · 网络与新媒体</td></tr>
+        <tr><td>月生活费 / 可支配</td><td>¥1,800 / 约 ¥600</td></tr>
+        <tr><td>兼职史</td><td>发传单（1 周放弃）· 家教 2 个月（被家长从 80 压到 65 元/时）· 小红书图文 14 条（涨粉 300，未变现）</td></tr>
+        <tr><td>技能自评</td><td>写作、剪辑（剪映基础）、沟通表达、网感；不擅定价与谈单</td></tr>
+        <tr><td>设备 / 环境</td><td>轻薄本 + 手机，宿舍 Wi-Fi，线下活动半径约 40 分钟通勤</td></tr>
+      </tbody>
+    </table>
+
+    <div class="bt" style="--ac:var(--a)"><span class="bar"></span><h3>学业与兼职背景</h3><span class="rl"></span></div>
+    <div class="stack">
+      <p>沈知微家里每月给 1,800，除去吃饭和地铁剩不下多少。她不算缺钱，但想要「自己能支配的钱」——换手机、寒暑假出去玩、给爸妈买点东西都不好意思开口。她的目标很具体：<strong>每月稳定进账 1,500–2,000，同时希望这件事别只是出卖时间，最好能在简历上留一行。</strong></p>
+      <p>她已经试过三次，都停在半路：发传单一天 120 元，站了 6 小时腰疼，觉得不值；家教做了 2 个月，家长从 80 元/时压到 65 元/时，她不会谈价；小红书连更 14 条，涨了 300 粉但一条商单都没接到，不知道问题出在哪就断了。</p>
+      <p>她最大的困扰不是「没机会」，而是<strong>信息太多、判断不了</strong>：微信兼职群每天刷 200 条，一半是招募代理和刷单；校园墙发的家教帖不敢接（怕中介）；实习僧投了几家没回音，也不知道是简历不行还是岗位不匹配。</p>
+    </div>
+
+    <div class="bt" style="--ac:var(--a)"><span class="bar"></span><h3>一周时间线</h3><span class="rl"></span></div>
+    <div class="tl">
+      <div class="tl-i"><div class="tt">周一 20:00</div><div class="td">宿舍刷手机</div><div class="ta">翻 5 个兼职群，收藏 3 条信息，没有一条敢联系</div></div>
+      <div class="tl-i"><div class="tt">周三 14:00</div><div class="td">两节课之间的空档</div><div class="ta">上 BOSS 直聘搜「新媒体运营 兼职」，看到「面议」就退出去了</div></div>
+      <div class="tl-i"><div class="tt">周五 21:00</div><div class="td">想做点什么</div><div class="ta">打开小红书后台，看到上周的图文没流量，关掉</div></div>
+      <div class="tl-i"><div class="tt">周六 09:00–15:00</div><div class="td">本可以兼职</div><div class="ta">因为在等「更靠谱的机会」，实际上什么都没做</div></div>
+      <div class="tl-i"><div class="tt">周日 22:00</div><div class="td">算账</div><div class="ta">微信零钱 ¥380，心想「这个月又没搞到钱」</div></div>
+    </div>
+
+    <div class="bt" style="--ac:var(--a)"><span class="bar"></span><h3>核心痛点</h3><span class="rl"></span><span class="hn">直接引用她的原话</span></div>
+    <div class="pains">
+      <div class="pain">「群里 200 条信息，我哪知道哪条是真的、哪条真能赚到钱？」</div>
+      <div class="pain">「我每周真正能拿出来就 10 来个小时，到底该投在哪个方向上，没人告诉我。」</div>
+      <div class="pain">「发传单一天 120，家教一小时 65，我自己会算账，但不知道有没有更好的选择。」</div>
+      <div class="pain">「干活我不怕，但每一步要准备什么、第一步做什么全靠自己瞎猜，一卡住就不想动了。」</div>
+      <div class="pain">「我连自己这个月进了多少、下个月该干嘛都说不清，感觉像在原地打转。」</div>
+    </div>
+
+    <div class="bt" style="--ac:var(--a)"><span class="bar"></span><h3>功能需求优先级</h3><span class="rl"></span></div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>功能</th><th>优先级</th><th>原因</th></tr></thead>
+        <tbody>
+          <tr><td>帮我选（匹配推荐）</td><td><span class="meter"><i class="f"></i><i class="f"></i><i class="f"></i></span><span class="bdg must">必须有</span></td><td>直接回应「12 小时该投哪个方向」——这是她最贵的一次决策</td></tr>
+          <tr><td>起跑器（分步 SOP）</td><td><span class="meter"><i class="f"></i><i class="f"></i><i class="f"></i></span><span class="bdg must">必须有</span></td><td>她的失败模式是「卡在第一步」，需要有人把每一步拆到能立刻动手</td></tr>
+          <tr><td>进度追踪</td><td><span class="meter"><i class="f"></i><i class="f"></i><i class="f"></i></span><span class="bdg must">必须有</span></td><td>她需要看到「这个月进了多少」，才有动力继续</td></tr>
+          <tr><td>兼职雷达（多维度排序）</td><td><span class="meter"><i class="f"></i><i class="f"></i><i class="f"></i></span><span class="bdg must">必须有</span></td><td>收入水平 / 时间投入 / 入门难度 / 简历价值 正是她的真实决策变量</td></tr>
+          <tr><td>只看前期有收入</td><td><span class="meter"><i class="f"></i><i class="f"></i><i></i></span><span class="bdg want">很想要</span></td><td>她不能接受「先做三个月再看」的方向</td></tr>
+          <tr><td>横向对比</td><td><span class="meter"><i class="f"></i><i class="f"></i><i></i></span><span class="bdg want">很想要</span></td><td>家教 vs 内容副业，她需要一个摆在一起的对比台</td></tr>
+          <tr><td>首页「今天要处理」</td><td><span class="meter"><i class="f"></i><i class="f"></i><i></i></span><span class="bdg want">很想要</span></td><td>她需要外部提醒，自己不会主动推进</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bt" style="--ac:var(--a)"><span class="bar"></span><h3>使用场景</h3><span class="rl"></span></div>
+    <div class="scenes">
+      <div class="scene"><div class="ix">1</div><div><div class="st">周日晚做下周计划</div><div class="sd">打开首页看「今天要处理」与本周任务，确认本周推进 2 个方向，用兼职雷达按「收入水平 + 时间投入」筛出 3 个候选。</div></div></div>
+      <div class="scene"><div class="ix">2</div><div><div class="st">决策「到底做哪个」</div><div class="sd">用「帮我选」填入每周 12 小时、目标 ¥2,000、想写进简历、不能接受前期无收入 → 得到「新媒体运营实习 &gt; 图文自媒体 &gt; 家教」的排序与理由，她接受排序并开始跑第一条。</div></div></div>
+      <div class="scene"><div class="ix">3</div><div><div class="st">按 SOP 跑通第一步</div><div class="sd">进「起跑器」，第 1 步是「写出定位 + 做一份电子版简历」，验收标准明确到「完成一页 PDF」，耗时 30 分钟。她当晚就做完了——这是三次尝试里第一次真的跨过第一步。</div></div></div>
+      <div class="scene"><div class="ix">4</div><div><div class="st">横向对比再入场</div><div class="sd">把「图文自媒体」和「视频剪辑」勾选横向对比，看收入水平 / 入门难度 / 成长性 / 简历价值四栏，决定先做剪辑（前期可接单、入门更快）。</div></div></div>
+      <div class="scene"><div class="ix">5</div><div><div class="st">月度复盘</div><div class="sd">在「进度」看到「图文自媒体」卡在「出样片集」这一步 3 周没动，主动降级，把时间集中到新媒体运营实习这一条上。</div></div></div>
+    </div>
+
+    <div class="bt" style="--ac:var(--a)"><span class="bar"></span><h3>付费决策</h3><span class="rl"></span></div>
+    <table class="kv">
+      <tbody>
+        <tr><td>付费意愿</td><td><strong style="color:var(--a)">9 / 10</strong> — 一杯奶茶钱换「不再瞎撞」，在她这个阶段是最划算的支出</td></tr>
+        <tr><td>决策链路</td><td>自己决定，不需要问任何人；从「免费版匹配次数用完」到付款约 15 分钟</td></tr>
+        <tr><td>价格敏感度</td><td>中。¥9.9 / 月 无感；¥29 / 月 会犹豫；年付 ¥69 需要她想清楚「能不能坚持」</td></tr>
+        <tr><td>升级触发点</td><td>帮我选 3 次用完、想同时追 2 个方向、需要看完整 SOP</td></tr>
+        <tr><td>替代方案对比</td><td>微信兼职群（免费、真假混杂、无结构）、实习僧 / BOSS（岗位多但不教怎么做）、小红书攻略帖（碎片、过期、无进度）</td></tr>
+      </tbody>
+    </table>
+
+    <div class="bt" style="--ac:var(--a)"><span class="bar"></span><h3>获客渠道</h3><span class="rl"></span></div>
+    <div class="chips">
+      <span class="chip">小红书「大学生搞钱 / 副业」测评笔记</span>
+      <span class="chip">校园墙 / 班级群 / 社团群转发</span>
+      <span class="chip">学校就业指导中心 · 勤工助学中心</span>
+      <span class="chip">室友同学一对一安利</span>
+    </div>
+
+    <div class="bt" style="--ac:var(--a)"><span class="bar"></span><h3>流失风险与挽留策略</h3><span class="rl"></span></div>
+    <div class="risks">
+      <div class="risk">
+        <div class="r1"><div class="lb">流失场景</div><p>按 SOP 跑了两周，第一单还没接到，觉得「没用」</p></div>
+        <div class="r2"><div class="lb">挽留策略</div><p>把第一笔收入的时间预期写进 SOP 首屏；第 10 天未出单时主动推送「卡点诊断」，把挫败归因到具体某一步</p></div>
+      </div>
+      <div class="risk">
+        <div class="r1"><div class="lb">流失场景</div><p>免费版限制正好挡住最关键功能，直接卸载</p></div>
+        <div class="r2"><div class="lb">挽留策略</div><p>免费版保留第一条方向的完整 SOP，让用户完整跑通一次再付费</p></div>
+      </div>
+      <div class="risk">
+        <div class="r1"><div class="lb">流失场景</div><p>考试周冲掉了时间，之后就没再回来</p></div>
+        <div class="r2"><div class="lb">挽留策略</div><p>首页「今天要处理」提供考试周降级模式（只保留长周期方向），开学周主动推送「重新起跑」</p></div>
+      </div>
+      <div class="risk">
+        <div class="r1"><div class="lb">流失场景</div><p>在别处接到一单后，觉得「用不上了」</p></div>
+        <div class="r2"><div class="lb">挽留策略</div><p>进度页承接「接单之后」：结算提醒、复盘模板、简历转化，把价值终点从「赚到钱」延后到「变成简历上的一行」</p></div>
+      </div>
+    </div>
+
+    <div class="vn">
+      <div class="i">◆</div>
+      <div>
+        <div class="k">User Value · 用户价值定位</div>
+        <p>高付费意愿 + 高频使用 + 强自传播 —— 产品的<strong>收入基本盘</strong>与内容口碑来源。产品应围绕她的「卡在第一步」打磨核心体验。</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ============================ 03 画像 B ============================ -->
+<article class="persona pb" id="pb" data-rv>
+  <div class="p-head">
+    <div class="p-head-in">
+      <div class="p-file">
+        <span class="no">FILE 02 / 03 · 增长用户</span>
+        <span class="stamp">GROWTH · 增长用户</span>
+      </div>
+      <div class="p-main">
+        <div class="p-l">
+          <div class="nm">陈嘉禾</div>
+          <div class="sb">19 岁 · 男 · 成都 · 某 211 高校 计算机科学与技术 · 大二</div>
+        </div>
+        <div class="p-score">
+          <div class="p-score-txt">
+            <div class="t">Willingness to Pay</div>
+            <div class="v">认可价值<br>但怕「坚持不了」</div>
+          </div>
+          <div class="p-ring">
+            <svg viewBox="0 0 40 40" aria-hidden="true"><circle class="bg" cx="20" cy="20" r="15.6"/><circle class="fg" cx="20" cy="20" r="15.6" pathLength="100" style="--off:50"/></svg>
+            <div class="mid"><b>5<em>/10</em></b><span>付费意愿</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-strip">
+      <div><div class="v">20 h</div><div class="l">每周可投入</div></div>
+      <div><div class="v">模糊</div><div class="l">目标收入</div></div>
+      <div><div class="v">¥0</div><div class="l">当前月收入</div></div>
+      <div><div class="v">2 个月</div><div class="l">摇摆未开始</div></div>
+    </div>
+  </div>
+
+  <div class="p-body">
+    <div class="bt" style="--ac:var(--b)"><span class="bar"></span><h3>基本信息</h3><span class="rl"></span></div>
+    <table class="kv">
+      <tbody>
+        <tr><td>所在城市 / 学校</td><td>成都 · 某 211 高校</td></tr>
+        <tr><td>年级 / 专业</td><td>大二 · 计算机科学与技术</td></tr>
+        <tr><td>月生活费 / 可支配</td><td>¥2,500 / 约 ¥900（家里给得不算紧）</td></tr>
+        <tr><td>兼职史</td><td>帮学长做过一个后端小项目（一次收了 ¥600）；无正式兼职</td></tr>
+        <tr><td>技能自评</td><td>编程（Python / 后端）、数据 / Excel；短板是沟通表达与"把事情说清楚"</td></tr>
+        <tr><td>设备 / 环境</td><td>游戏本 + 手机，宿舍；每周真正空闲集中在周末与假期</td></tr>
+      </tbody>
+    </table>
+
+    <div class="bt" style="--ac:var(--b)"><span class="bar"></span><h3>学业与兼职背景</h3><span class="rl"></span></div>
+    <div class="stack">
+      <p>陈嘉禾家里给得不算紧，他并不「缺钱」。想赚钱的动机一半是「证明自己能行」，一半是想攒点作品。他技术基础不错，但<strong>不知道学了这些能换成什么钱</strong>——同宿舍有同学在做赛事外包，他不太会跟人谈；也想过做技术自媒体，写了 3 篇博客就停了。</p>
+      <p>他的困境是<strong>选项太多、标准没有</strong>：刷到「大学生月入过万」就兴奋，刷到「副业都是坑」就放弃，来回摇摆两个月，一个方向都没真正开始。他不怕花钱，但怕「买了又不用」。</p>
+    </div>
+
+    <div class="bt" style="--ac:var(--b)"><span class="bar"></span><h3>一周时间线</h3><span class="rl"></span></div>
+    <div class="tl">
+      <div class="tl-i"><div class="tt">周一–周五 白天</div><div class="td">上课 + 打游戏</div><div class="ta">偶尔在 B 站刷到「大学生副业」视频，加进收藏夹</div></div>
+      <div class="tl-i"><div class="tt">周三 23:00</div><div class="td">睡前刷手机</div><div class="ta">搜「计算机专业 怎么赚钱」，看了 6 篇帖子，收藏 +5 条，没有一条看完</div></div>
+      <div class="tl-i"><div class="tt">周五 22:00</div><div class="td">和室友聊天</div><div class="ta">说「下周开始做点什么」，之后没有下文</div></div>
+      <div class="tl-i"><div class="tt">周六 14:00</div><div class="td">有空闲</div><div class="ta">想动手但不知道第一步做什么，最后去打球了</div></div>
+      <div class="tl-i"><div class="tt">周日 21:00</div><div class="td">打游戏</div><div class="ta">突然焦虑，觉得「这学期又白过了」</div></div>
+    </div>
+
+    <div class="bt" style="--ac:var(--b)"><span class="bar"></span><h3>核心痛点</h3><span class="rl"></span><span class="hn">直接引用他的原话</span></div>
+    <div class="pains">
+      <div class="pain">「我会写代码，但我不知道这能变成哪种收入、值多少钱。」</div>
+      <div class="pain">「每个方向看起来都能做，但我没有一个标准去比，最后就是一直在选。」</div>
+      <div class="pain">「我怕花钱买了工具，结果自己三分钟热度，那更亏。」</div>
+      <div class="pain">「我不想做那种纯出卖时间的活，但我想做的方向短期又没钱，我撑不住。」</div>
+      <div class="pain">「收藏了一堆攻略，没有一份告诉我今天先做哪一件。」</div>
+    </div>
+
+    <div class="bt" style="--ac:var(--b)"><span class="bar"></span><h3>功能需求优先级</h3><span class="rl"></span></div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>功能</th><th>优先级</th><th>原因</th></tr></thead>
+        <tbody>
+          <tr><td>兼职雷达（入门难度排序）</td><td><span class="meter"><i class="f"></i><i class="f"></i><i class="f"></i></span><span class="bdg must">必须有</span></td><td>他需要一个「从最容易的一档开始」的入口，把启动门槛降到最低</td></tr>
+          <tr><td>起跑器（分步 SOP）</td><td><span class="meter"><i class="f"></i><i class="f"></i><i class="f"></i></span><span class="bdg must">必须有</span></td><td>他缺的不是能力，是「今天先做哪一件」</td></tr>
+          <tr><td>帮我选</td><td><span class="meter"><i class="f"></i><i class="f"></i><i></i></span><span class="bdg want">很想要</span></td><td>能帮他把模糊目标结构化，但他得先想清楚「目标到底是什么」</td></tr>
+          <tr><td>只看前期有收入</td><td><span class="meter"><i class="f"></i><i class="f"></i><i></i></span><span class="bdg want">很想要</span></td><td>他需要早期正反馈来对抗三分钟热度</td></tr>
+          <tr><td>横向对比</td><td><span class="meter"><i class="f"></i><i></i><i></i></span><span class="bdg nice">锦上添花</span></td><td>他感兴趣，但还没走到需要做取舍的阶段</td></tr>
+          <tr><td>进度追踪</td><td><span class="meter"><i class="f"></i><i></i><i></i></span><span class="bdg nice">锦上添花</span></td><td>需要被教育「追踪有用」，自己不会主动打开</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bt" style="--ac:var(--b)"><span class="bar"></span><h3>使用场景</h3><span class="rl"></span></div>
+    <div class="scenes">
+      <div class="scene"><div class="ix">1</div><div><div class="st">第一次「逛」</div><div class="sd">从 B 站视频点进来，先逛兼职雷达，按「入门难度（低→高）」排序，看前 4 个方向，停在与自己专业相关的「视频剪辑 / 互联网实习」上。</div></div></div>
+      <div class="scene"><div class="ix">2</div><div><div class="st">把模糊目标变清楚</div><div class="sd">用「帮我选」填入每周 20 小时、主要目标选「两者都要」（短期赚钱 + 长期积累），得到一份排序与理由——第一次看到「自己的情况对应哪些方向」。</div></div></div>
+      <div class="scene"><div class="ix">3</div><div><div class="st">低成本试第一次</div><div class="sd">选「视频剪辑」，按起跑器第 1 步「明确目标与验收标准」写下 3 条可量化目标，再用「出样片集并定价」花 2 小时做了 9 张样片。</div></div></div>
+      <div class="scene"><div class="ix">4</div><div><div class="st">把做出来的东西发出去</div><div class="sd">跑通后截图发到宿舍群和小红书，成为产品的一次自然传播——他不带货，但会主动推荐给同样迷茫的同学。</div></div></div>
+      <div class="scene"><div class="ix">5</div><div><div class="st">假期集中跑一轮</div><div class="sd">寒暑假时间充裕时同时开 2 个方向，靠进度看板维持节奏；这正是他最可能转为付费版的时刻。</div></div></div>
+    </div>
+
+    <div class="bt" style="--ac:var(--b)"><span class="bar"></span><h3>付费决策</h3><span class="rl"></span></div>
+    <table class="kv">
+      <tbody>
+        <tr><td>付费意愿</td><td><strong style="color:var(--b)">5 / 10</strong> — 认可价值，但「不知道自己会不会坚持」是最大的心理阻力</td></tr>
+        <tr><td>决策链路</td><td>自己决定；但会主动提出「宿舍 4 个人合买社团版」，把人均成本压到约 ¥50</td></tr>
+        <tr><td>价格敏感度</td><td>中高。¥9.9 / 月 会想「用不用得回本」；年付 ¥69 会直接跳过（担心坚持不了）</td></tr>
+        <tr><td>升级触发点</td><td>免费版完整跑通 1 个方向并看到实际收益；或宿舍 / 社团集体购买</td></tr>
+        <tr><td>替代方案对比</td><td>B 站 / 小红书攻略（免费、碎片、看完就忘）、GitHub 上零散的项目清单、校内勤工助学岗位（僧多粥少）</td></tr>
+      </tbody>
+    </table>
+
+    <div class="bt" style="--ac:var(--b)"><span class="bar"></span><h3>获客渠道</h3><span class="rl"></span></div>
+    <div class="chips">
+      <span class="chip">B 站 / 小红书「计算机专业搞钱」内容</span>
+      <span class="chip">社团 · 班级群同学转发</span>
+      <span class="chip">高校就业指导中心 · 计算机学院学生会</span>
+      <span class="chip">搜索长尾词（大学生副业方向 / 计算机专业怎么接单）</span>
+    </div>
+
+    <div class="bt" style="--ac:var(--b)"><span class="bar"></span><h3>流失风险与挽留策略</h3><span class="rl"></span></div>
+    <div class="risks">
+      <div class="risk">
+        <div class="r1"><div class="lb">流失场景</div><p>逛了一圈，收藏了就再也没回来</p></div>
+        <div class="r2"><div class="lb">挽留策略</div><p>首次访问即引导完成「帮我选」（约 1 分钟），24 小时内推送「你的匹配结果 + 今天先做这一件」</p></div>
+      </div>
+      <div class="risk">
+        <div class="r1"><div class="lb">流失场景</div><p>觉得「免费版够用」，长期不付费</p></div>
+        <div class="r2"><div class="lb">挽留策略</div><p>免费版不做体验阉割，但把「多方向并行」和「完整 SOP 库」设为付费门槛，用「先跑通再付费」降低心理成本</p></div>
+      </div>
+      <div class="risk">
+        <div class="r1"><div class="lb">流失场景</div><p>开学 / 期末时间被挤掉，直接流失</p></div>
+        <div class="r2"><div class="lb">挽留策略</div><p>提供「学期轻量 / 假期冲刺」两套节奏，让使用强度可切换</p></div>
+      </div>
+      <div class="risk">
+        <div class="r1"><div class="lb">流失场景</div><p>试了两周没赚到钱，判定「这是骗人的」</p></div>
+        <div class="r2"><div class="lb">挽留策略</div><p>在起跑器首屏明确「这个方向的第一笔收入通常在 X 周后」，把收益预期前置管理</p></div>
+      </div>
+    </div>
+
+    <div class="vn">
+      <div class="i">◆</div>
+      <div>
+        <div class="k">User Value · 用户价值定位</div>
+        <p>低付费意愿、高获客天花板、强传播系数 —— 产品的<strong>规模入口</strong>与自然增长引擎。激活（而非拉新）是他这一类的核心课题。</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ============================ 04 画像 C ============================ -->
+<article class="persona pc" id="pc" data-rv>
+  <div class="p-head">
+    <div class="p-head-in">
+      <div class="p-file">
+        <span class="no">FILE 03 / 03 · 边缘用户</span>
+        <span class="stamp">EDGE · 边缘用户</span>
+      </div>
+      <div class="p-main">
+        <div class="p-l">
+          <div class="nm">郑铭远</div>
+          <div class="sb">22 岁 · 男 · 南京 · 某双非本科 市场营销 · 大四（秋招冲刺中）</div>
+        </div>
+        <div class="p-score">
+          <div class="p-score-txt">
+            <div class="t">Willingness to Pay</div>
+            <div class="v">愿为「求职结果」<br>付费，不为「搞钱工具」</div>
+          </div>
+          <div class="p-ring">
+            <svg viewBox="0 0 40 40" aria-hidden="true"><circle class="bg" cx="20" cy="20" r="15.6"/><circle class="fg" cx="20" cy="20" r="15.6" pathLength="100" style="--off:80"/></svg>
+            <div class="mid"><b>2<em>/10</em></b><span>付费意愿</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-strip">
+      <div><div class="v">6 h</div><div class="l">每周可投入</div></div>
+      <div><div class="v">拿 offer</div><div class="l">真实目标</div></div>
+      <div><div class="v">¥1,500</div><div class="l">实习补贴 / 月</div></div>
+      <div><div class="v">2–3 周</div><div class="l">生命周期</div></div>
+    </div>
+  </div>
+
+  <div class="p-body">
+    <div class="bt" style="--ac:var(--c)"><span class="bar"></span><h3>基本信息</h3><span class="rl"></span></div>
+    <table class="kv">
+      <tbody>
+        <tr><td>所在城市 / 学校</td><td>南京 · 某双非本科</td></tr>
+        <tr><td>年级 / 专业</td><td>大四 · 市场营销（秋招冲刺中）</td></tr>
+        <tr><td>经济状况</td><td>家庭经济尚可，不需要靠兼职养活自己</td></tr>
+        <tr><td>实习史</td><td>1 段 —— 本地一家广告公司，3 个月，月补 ¥1,500</td></tr>
+        <tr><td>当前动作</td><td>已投 40+ 家，进过 3 次面试；主要在改简历、刷笔试、准备面试</td></tr>
+        <tr><td>预算去向</td><td>面试辅导课、简历精修、牛客会员 —— 愿意为「求职结果」付费</td></tr>
+      </tbody>
+    </table>
+
+    <div class="bt" style="--ac:var(--c)"><span class="bar"></span><h3>学业与兼职背景</h3><span class="rl"></span></div>
+    <div class="stack">
+      <p>郑铭远正在秋招冲刺，投了 40 多家，进了 3 次面试。他不缺钱，也不觉得「家教 65 元/时」值得投入——他真正焦虑的是<strong>简历上实习那一栏太薄</strong>。他需要的是一条「从实习到 offer」的路径，而不是「12 个可以赚钱的方向」。</p>
+      <p>他之所以会打开这个产品，是因为在求职群里看到有人转发，说「里面有实习方向的 SOP」。他只会用其中一个功能：筛出实习类方向、看简历价值排序，把其中一条加进自己的待办。看完就没再打开过——产品的「搞钱」主线对他来说始终是噪音。</p>
+    </div>
+
+    <div class="bt" style="--ac:var(--c)"><span class="bar"></span><h3>一周时间线</h3><span class="rl"></span></div>
+    <div class="tl">
+      <div class="tl-i"><div class="tt">周一–周五</div><div class="td">改简历、投递、准备面试</div><div class="ta">不打开产品</div></div>
+      <div class="tl-i"><div class="tt">周三 22:00</div><div class="td">焦虑，翻手机</div><div class="ta">打开产品，只筛「实习」类型，把「互联网实习」的 SOP 截了图</div></div>
+      <div class="tl-i"><div class="tt">周六 10:00</div><div class="td">面试复盘</div><div class="ta">想找「面试怎么准备」，产品里没有，转去小红书</div></div>
+      <div class="tl-i"><div class="tt">周日</div><div class="td">完全不用</div><div class="ta">—</div></div>
+    </div>
+
+    <div class="bt" style="--ac:var(--c)"><span class="bar"></span><h3>核心痛点</h3><span class="rl"></span><span class="hn">直接引用他的原话</span></div>
+    <div class="pains">
+      <div class="pain">「我要的是 offer，不是每小时 65 块。」</div>
+      <div class="pain">「实习的 SOP 太浅了——『投 15 个岗位』我早就投了 40 个，问题是我不知道怎么过面试。」</div>
+      <div class="pain">「产品的所有指标都是围绕『收入』算的，可我只关心『简历价值』。」</div>
+      <div class="pain">「我一周只有 6 个小时，不想看 12 个跟我无关的方向。」</div>
+      <div class="pain">「找不到能直接解决我当下问题（面试、简历）的内容，我就走了。」</div>
+    </div>
+
+    <div class="bt" style="--ac:var(--c)"><span class="bar"></span><h3>功能需求优先级</h3><span class="rl"></span></div>
+    <div class="tw">
+      <table>
+        <thead><tr><th>功能</th><th>优先级</th><th>原因</th></tr></thead>
+        <tbody>
+          <tr><td>兼职雷达（只看实习 + 简历价值排序）</td><td><span class="meter"><i class="f"></i><i class="f"></i><i class="f"></i></span><span class="bdg must">必须有</span></td><td>这是他唯一会用到的入口</td></tr>
+          <tr><td>起跑器（实习方向 SOP）</td><td><span class="meter"><i class="f"></i><i class="f"></i><i></i></span><span class="bdg want">有最好</span></td><td>但内容深度不够，看完一次就弃用</td></tr>
+          <tr><td>进度追踪</td><td><span class="meter"><i></i><i></i><i></i></span><span class="bdg no">不需要</span></td><td>他的「进度」在 BOSS 直聘和邮箱里，不在这个产品</td></tr>
+          <tr><td>帮我选</td><td><span class="meter"><i></i><i></i><i></i></span><span class="bdg no">不需要</span></td><td>目标过于明确（拿 offer），不需要匹配</td></tr>
+          <tr><td>横向对比</td><td><span class="meter"><i></i><i></i><i></i></span><span class="bdg no">不需要</span></td><td>他不比较方向，他比较 offer</td></tr>
+          <tr><td>收入水平 / 只看前期有收入</td><td><span class="meter"><i></i><i></i><i></i></span><span class="bdg no">不需要</span></td><td>收入不是他的决策变量</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bt" style="--ac:var(--c)"><span class="bar"></span><h3>使用场景</h3><span class="rl"></span></div>
+    <div class="scenes">
+      <div class="scene"><div class="ix">1</div><div><div class="st">一次性的信息提取</div><div class="sd">筛「实习」类型 → 看「互联网实习」的启动步骤与渠道 → 截图存进自己的求职文件夹，产品生命周期结束。</div></div></div>
+      <div class="scene"><div class="ix">2</div><div><div class="st">被转发的链接吸引进来</div><div class="sd">看到「简历价值」这个排序维度觉得有点意思，但一次没用完就关了；第二次打开的成本对他很高。</div></div></div>
+      <div class="scene"><div class="ix">3</div><div><div class="st">反向输出需求</div><div class="sd">他是产品最强的需求反馈源——明确提出了产品目前没有的能力：面试准备、简历优化、offer 横向比较。</div></div></div>
+    </div>
+
+    <div class="bt" style="--ac:var(--c)"><span class="bar"></span><h3>付费决策</h3><span class="rl"></span></div>
+    <table class="kv">
+      <tbody>
+        <tr><td>付费意愿</td><td><strong style="color:var(--c)">2 / 10</strong> — 愿意为「求职结果」付费，但不愿意为「搞钱工具」付费；产品现有付费点与他的目标不重合</td></tr>
+        <tr><td>决策链路</td><td>自己决定，但用过一次就结束，没有第二次付费触发场景</td></tr>
+        <tr><td>价格敏感度</td><td>不重要——他不是嫌贵，而是觉得「这东西跟我的目标无关」</td></tr>
+        <tr><td>生命周期</td><td>约 2–3 周（从秋招焦虑开始到放弃），之后彻底沉默</td></tr>
+        <tr><td>替代方案对比</td><td>实习僧 / BOSS 直聘（岗位）、牛客网（笔试面试）、求职付费课（面试辅导）——他真正的预算在这些上</td></tr>
+      </tbody>
+    </table>
+
+    <div class="bt" style="--ac:var(--c)"><span class="bar"></span><h3>获客渠道</h3><span class="rl"></span></div>
+    <div class="chips">
+      <span class="chip">求职群 · 秋招群转发链接</span>
+      <span class="chip">搜索「市场营销 实习 怎么准备」的长尾命中</span>
+      <span class="chip">学校就业中心公众号推送</span>
+    </div>
+
+    <div class="bt" style="--ac:var(--c)"><span class="bar"></span><h3>流失风险与挽留策略</h3><span class="rl"></span></div>
+    <div class="risks">
+      <div class="risk">
+        <div class="r1"><div class="lb">流失场景</div><p>只筛一次「实习」就走了</p></div>
+        <div class="r2"><div class="lb">挽留策略</div><p>把「实习」做成独立路径（求职冲刺），SOP 深度做到面试准备与简历量化层级</p></div>
+      </div>
+      <div class="risk">
+        <div class="r1"><div class="lb">流失场景</div><p>觉得所有指标都是「钱」，与自己无关</p></div>
+        <div class="r2"><div class="lb">挽留策略</div><p>支持把主视角从「收入」切换为「简历价值 / 成长性」，或提供隐藏收入类指标的「求职模式」</p></div>
+      </div>
+      <div class="risk">
+        <div class="r1"><div class="lb">流失场景</div><p>秋招结束后需求消失</p></div>
+        <div class="r2"><div class="lb">挽留策略</div><p>在秋招结束节点召回：把「实习成果如何写进简历」做成闭环，延伸到入职后的材料留档</p></div>
+      </div>
+      <div class="risk">
+        <div class="r1"><div class="lb">流失场景</div><p>内容深度不够，转向专业求职平台</p></div>
+        <div class="r2"><div class="lb">挽留策略</div><p>不与其求职工具正面竞争，定位为「实习之前的准备期工具」——从无实习经历到第一段实习</p></div>
+      </div>
+    </div>
+
+    <div class="vn">
+      <div class="i">◆</div>
+      <div>
+        <div class="k">User Value · 用户价值定位</div>
+        <p>低付费意愿、低留存，但提供高价值需求信号 —— 产品的<strong>需求雷达</strong>。他暴露的「求职向缺口」可能指向产品的第二增长曲线。</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ============================ 05 对比与旅程 ============================ -->
+<section class="sec" id="cmp">
+  <div class="rail" data-rv>
+    <div class="rail-n">05</div>
+    <div class="rail-t">三画像对比<br>与用户旅程</div>
+    <div class="rail-e">Comparison<br>&amp; Journey</div>
+    <div class="rail-line"></div>
+  </div>
+
+  <div class="sec-body">
+    <div class="cmp2">
+      <div class="rbox" data-rv>
+        <h3>六维能力雷达</h3>
+        <div class="rs">三个画像在关键决策维度上的相对强弱（0–10 分）</div>
+        <div class="rcwrap" id="rcwrap">
+          <svg class="rc" id="rc" viewBox="0 0 400 348" role="img" aria-label="三画像六维雷达图"></svg>
+        </div>
+        <div class="legend" id="legend">
+          <span class="lg" data-k="A" style="--ac:var(--a)"><i></i>沈知微 · 核心</span>
+          <span class="lg" data-k="B" style="--ac:var(--b)"><i></i>陈嘉禾 · 增长</span>
+          <span class="lg" data-k="C" style="--ac:var(--c)"><i></i>郑铭远 · 边缘</span>
+        </div>
+      </div>
+
+      <div class="card" data-rv style="--d:80ms;display:flex;flex-direction:column;justify-content:center">
+        <div class="bt" style="--ac:var(--a)"><span class="bar"></span><h3>一句话读法</h3><span class="rl"></span></div>
+        <p style="font-size:15.2px;line-height:1.95">三个人对产品的期待完全不同——<strong style="color:var(--a)">沈知微</strong>要「别再瞎撞」，<strong style="color:var(--b)">陈嘉禾</strong>要「有人告诉我先做哪一件」，<strong style="color:var(--c)">郑铭远</strong>要「能不能帮我拿到 offer」。</p>
+        <p style="margin-top:15px;font-size:15.2px;line-height:1.95">产品当前的能量集中在第一个人身上，第二个人的问题是「激活」，第三个人指出了一条还没被服务的能力缺口。</p>
+      </div>
+    </div>
+
+    <div class="trio" data-rv>
+      <div class="trio-c" style="--ac:var(--a)"><div class="k">Value 01 · 沈知微</div><div class="n">收入基本盘</div><div class="d">高付费 + 高频 + 强传播。产品的核心变现人群，也是内容口碑的来源。</div></div>
+      <div class="trio-c" style="--ac:var(--b)"><div class="k">Value 02 · 陈嘉禾</div><div class="n">规模入口</div><div class="d">低付费 + 高天花板 + 强传播。决定产品能不能规模化，关键在激活而非拉新。</div></div>
+      <div class="trio-c" style="--ac:var(--c)"><div class="k">Value 03 · 郑铭远</div><div class="n">需求雷达</div><div class="d">低付费 + 低留存 + 高信息价值。他暴露的缺口可能指向产品第二增长曲线。</div></div>
+    </div>
+
+    <div class="mbox" data-rv>
+      <div class="tw">
+        <table class="mx">
+          <thead>
+            <tr>
+              <th>对比维度</th>
+              <th><div class="mh"><span class="dt" style="background:var(--a)"></span><span><span class="nm">沈知微</span><span class="rl">Core · 核心</span></span></div></th>
+              <th><div class="mh"><span class="dt" style="background:var(--b)"></span><span><span class="nm">陈嘉禾</span><span class="rl">Growth · 增长</span></span></div></th>
+              <th><div class="mh"><span class="dt" style="background:var(--c)"></span><span><span class="nm">郑铭远</span><span class="rl">Edge · 边缘</span></span></div></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>角色</td><td>大三 · 网络与新媒体 · 双非</td><td>大二 · 计算机 · 211</td><td>大四 · 市场营销 · 双非</td></tr>
+            <tr><td>核心目标</td><td>月入 ¥1,500–2,000 + 简历留痕</td><td>先跑通一个方向、证明自己能行</td><td>拿到 offer</td></tr>
+            <tr><td>每周可投入</td><td class="mono">12 小时</td><td class="mono">20 小时</td><td class="mono">6 小时</td></tr>
+            <tr><td>当前月收入</td><td class="mono">¥380</td><td class="mono">¥0</td><td class="mono">¥1,500（实习补贴）</td></tr>
+            <tr><td>核心痛点</td><td>信息真假难辨 · 不知投哪个方向 · 卡在第一步</td><td>不知道专业能变现成什么 · 一直在选不开始</td><td>目标错配：要 offer 不要零钱</td></tr>
+            <tr><td>关键功能</td><td>帮我选 + 起跑器 + 进度</td><td>兼职雷达（入门难度）+ 起跑器</td><td>只看「实习」+ 简历价值排序</td></tr>
+            <tr><td>付费意愿</td>
+              <td><span class="msc" style="color:var(--a)">9</span><span style="color:var(--ink-3);font-size:12px"> / 10</span></td>
+              <td><span class="msc" style="color:var(--b)">5</span><span style="color:var(--ink-3);font-size:12px"> / 10</span></td>
+              <td><span class="msc" style="color:var(--c)">2</span><span style="color:var(--ink-3);font-size:12px"> / 10</span></td>
+            </tr>
+            <tr><td>价格敏感度</td><td>中（¥9.9 无感）</td><td>中高（要「用回本」）</td><td>非价格问题，是需求不匹配</td></tr>
+            <tr><td>决策链路 / 周期</td><td>自己决定 · 约 15 分钟</td><td>自己决定或宿舍合买 · 1–2 周</td><td>自己决定 · 一次即走</td></tr>
+            <tr><td>生命周期</td><td>长（跨学期、可复购）</td><td>中（假期冲刺 + 学期轻量）</td><td>短（约 2–3 周）</td></tr>
+            <tr><td>获客渠道</td><td>小红书 + 校园群 + 就业中心</td><td>B 站 / 小红书 + 社团 + 搜索长尾</td><td>求职群转发 + 搜索长尾</td></tr>
+            <tr><td>主要替代方案</td><td>微信兼职群 · 实习僧 · 攻略帖</td><td>B 站攻略 · GitHub 清单 · 勤工助学</td><td>实习僧 · BOSS · 牛客 · 求职付费课</td></tr>
+            <tr><td>用户价值</td>
+              <td><strong style="color:var(--a)">收入基本盘</strong><br><span style="color:var(--ink-3);font-size:12.5px">高付费 + 高频 + 强传播</span></td>
+              <td><strong style="color:var(--b)">规模入口</strong><br><span style="color:var(--ink-3);font-size:12.5px">低付费 + 高天花板 + 强传播</span></td>
+              <td><strong style="color:var(--c)">需求雷达</strong><br><span style="color:var(--ink-3);font-size:12.5px">低付费 + 低留存 + 高信息价值</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="jrn" data-rv>
+      <div class="jr-head">
+        <h3>用户旅程断点</h3>
+        <p>把三个画像的行为描述放进同一条使用链路上，可以看到他们各自停在哪里 —— 这决定了产品该先修哪一段。</p>
+      </div>
+
+      <div class="jr-scale">
+        <span>接触内容</span><span>首次打开</span><span>完成「帮我选」</span>
+        <span>跑通第一步</span><span>拿到第一笔收入</span><span>转付费 / 留存</span>
+      </div>
+
+      <div class="jr-row" style="--ac:var(--a)">
+        <div class="jr-who"><span class="av">沈</span><span><b>沈知微</b><i>Core 核心</i></span></div>
+        <div class="jr-track">
+          <span class="jr-cell on">✓</span><span class="jr-cell on">✓</span><span class="jr-cell on">✓</span>
+          <span class="jr-cell on">✓</span><span class="jr-cell stop">断点</span><span class="jr-cell">·</span>
+        </div>
+      </div>
+      <div class="jr-row" style="--ac:var(--b)">
+        <div class="jr-who"><span class="av">陈</span><span><b>陈嘉禾</b><i>Growth 增长</i></span></div>
+        <div class="jr-track">
+          <span class="jr-cell on">✓</span><span class="jr-cell on">✓</span><span class="jr-cell stop">断点</span>
+          <span class="jr-cell">·</span><span class="jr-cell">·</span><span class="jr-cell">·</span>
+        </div>
+      </div>
+      <div class="jr-row" style="--ac:var(--c)">
+        <div class="jr-who"><span class="av">郑</span><span><b>郑铭远</b><i>Edge 边缘</i></span></div>
+        <div class="jr-track">
+          <span class="jr-cell on">✓</span><span class="jr-cell part">掠过</span><span class="jr-cell stop">断点</span>
+          <span class="jr-cell">·</span><span class="jr-cell">·</span><span class="jr-cell">·</span>
+        </div>
+      </div>
+
+      <div class="jr-note">
+        <div style="--ac:var(--a)"><div class="t">沈知微 · 断在第 5 步</div><p>她能跨过「跑通第一步」，卡在「拿到第一笔收入」——第一单的时间预期没有被管理。</p></div>
+        <div style="--ac:var(--b)"><div class="t">陈嘉禾 · 断在第 3 步</div><p>目标模糊导致「帮我选」填不下去，链路在最早的一环就断了，根本没有进入执行阶段。</p></div>
+        <div style="--ac:var(--c)"><div class="t">郑铭远 · 断在第 3 步</div><p>目标过于明确，直接跳过匹配环节做一次性信息提取，用完即走，没有回访理由。</p></div>
+      </div>
+
+      <div style="margin-top:20px;font-size:12.3px;color:var(--ink-3);line-height:1.8">
+        注：该旅程图为基于三个画像行为描述的<strong style="color:var(--ink-2)">定性推断</strong>，用于定位问题环节，非统计数据。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 06 策略 ============================ -->
+<section class="sec" id="strategy">
+  <div class="rail" data-rv>
+    <div class="rail-n">06</div>
+    <div class="rail-t">产品策略建议</div>
+    <div class="rail-e">Strategy<br>Recommendations</div>
+    <div class="rail-line"></div>
+  </div>
+
+  <div class="sec-body">
+    <div class="stg">
+      <div class="stg-c" data-rv>
+        <div class="stg-n">01</div>
+        <div class="stg-b">
+          <h4>把「从 0 到第一笔收入」做成产品的第一性目标，而不是把 12 个方向摆全</h4>
+          <p>三个画像的失败模式高度一致：<strong>卡在第一步、看不到正反馈、中途放弃</strong>。建议在起跑器首屏就写明「这个方向的第一笔收入通常出现在第 X 周」，并把第一个方向的完整 SOP 放进免费版（含出单诊断），让用户先完整跑通一次。</p>
+          <div class="stg-k"><span class="kk">判据</span><span class="kv">新手在首次访问后 48 小时内完成第 1 步的比例；第 3 周内完成首次结算的比例</span></div>
+        </div>
+      </div>
+
+      <div class="stg-c" data-rv>
+        <div class="stg-n">02</div>
+        <div class="stg-b">
+          <h4>付费墙不要卡在「信息」上，要卡在「并行」和「陪跑」上</h4>
+          <p>免费版应让人能完整跑通一条路，否则用户还没学到价值就流失。付费点放在「同时追多个方向 + 无限次匹配 + 完整 SOP 库」——沈知微想同时追两条时会自然触发付费，陈嘉禾也不会因「怕用不回本」而拒绝。定价保留 <strong>¥9.9 / 月</strong> 的低门槛，年付只作次要选项，并补一条「宿舍 / 社团合买」路径（这正是陈嘉禾自己提出的购买方式）。</p>
+          <div class="stg-k"><span class="kk">判据</span><span class="kv">免费版用户的「第一条方向跑通率」；社团版订单中来自学生自发合买的占比</span></div>
+        </div>
+      </div>
+
+      <div class="stg-c" data-rv>
+        <div class="stg-n">03</div>
+        <div class="stg-b">
+          <h4>激活比拉新更紧急：新用户第一次访问必须走完「帮我选」</h4>
+          <p>陈嘉禾这类量大但目标模糊的用户，最大风险是「逛一圈、收藏、再也不来」。建议首次访问即引导填写「我的情况」（约 1 分钟），并在 24 小时内推送「你的匹配结果 + 今天只需要做这一件」——把用户的第一次成功体验从天级压缩到分钟级。</p>
+          <div class="stg-k"><span class="kk">判据</span><span class="kv">新用户「帮我选」完成率；次日 / 7 日回访率</span></div>
+        </div>
+      </div>
+
+      <div class="stg-c" data-rv>
+        <div class="stg-n">04</div>
+        <div class="stg-b">
+          <h4>补一条「求职冲刺」支线，把边缘用户的缺口变成第二增长曲线</h4>
+          <p>郑铭远的抱怨不是个例：实习方向的 SOP 停在「投 15 个岗位」，而真实瓶颈在简历与面试。建议把「互联网实习 / 新媒体运营实习」两条路做深到<strong>面试准备、简历条目量化、offer 横向比较</strong>，并允许把主视角从「收入」切换为「简历价值 / 成长性」。这类内容对核心用户同样成立——沈知微也要把兼职写成简历上的一行。</p>
+          <div class="stg-k"><span class="kk">判据</span><span class="kv">实习类方向的 SOP 完读率与「简历相关」功能的调用占比</span></div>
+        </div>
+      </div>
+
+      <div class="stg-c" data-rv>
+        <div class="stg-n">05</div>
+        <div class="stg-b">
+          <h4>用「进度 + 复盘」把一次性工具变成常驻习惯，对抗学期性流失</h4>
+          <p>学生在考试周和假期会集体掉线。建议提供<strong>「学期轻量 / 假期冲刺」两套节奏</strong>，以及考试周自动降级（只保留长周期方向）。同时在「进度」里接住「接单之后」的动作：结算提醒、复盘模板、简历转化——把产品的价值终点从「赚到第一笔钱」延后到「这件事变成简历上的一行」。</p>
+          <div class="stg-k"><span class="kk">判据</span><span class="kv">学期中周活跃留存曲线是否平滑；考试周后的回流率</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fb"><i></i>用户画像报告 · 大学生搞钱情报站</div>
+  报告说明：本报告的三个画像为典型化合成角色，用于刻画决策逻辑与优先级取舍，不代表统计抽样结果。产品能力描述依据工作区现有页面（<code>check_page/大学生搞钱情报站.html</code>）实际结构与数据维度还原；定价为本次分析的设定值，产品页面本身未定义价格；用户旅程图为基于画像行为描述的定性推断。<br>
+  生成：WorkBuddy 智能设计助手 · 2026-10-15
+</footer>
+
+</div>
+
+<button class="totop" id="toTop" aria-label="回到顶部">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+(function(){
+  "use strict";
+  var root = document.documentElement;
+  var $  = function(s,c){ return (c||document).querySelector(s); };
+  var $$ = function(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); };
+
+  /* ---------------- theme ---------------- */
+  var themeBtn = $('#themeBtn'), icoSun = $('#icoSun'), icoMoon = $('#icoMoon');
+  function applyTheme(t){
+    root.setAttribute('data-theme', t);
+    icoSun.style.display  = (t === 'dark') ? 'none'  : 'block';
+    icoMoon.style.display = (t === 'dark') ? 'block' : 'none';
+    drawRadar();
+  }
+  var saved = null;
+  try{ saved = localStorage.getItem('pr-theme'); }catch(e){}
+  applyTheme(saved === 'dark' ? 'dark' : 'light');
+  themeBtn.addEventListener('click', function(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    try{ localStorage.setItem('pr-theme', next); }catch(e){}
+  });
+
+  $('#printBtn').addEventListener('click', function(){ window.print(); });
+
+  /* ---------------- reveal ---------------- */
+  var revEls = $$('[data-rv]');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('is-in'); io.unobserve(en.target); }
+      });
+    }, {rootMargin:'0px 0px -10% 0px', threshold:0.05});
+    revEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revEls.forEach(function(el){ el.classList.add('is-in'); });
+  }
+
+  /* ---------------- count up ---------------- */
+  function ease(t){ return 1 - Math.pow(1 - t, 3); }
+  $$('.p-strip .v').forEach(function(el){
+    var m = el.textContent.match(/^([^\d]*)([\d,]+)([\s\S]*)$/);
+    if(!m) return;
+    var pre = m[1], num = parseInt(m[2].replace(/,/g,''), 10), suf = m[3];
+    if(isNaN(num) || num === 0) return;
+    el.textContent = pre + '0' + suf;
+    function run(){
+      var t0 = null, dur = 1000;
+      function step(ts){
+        if(t0 === null) t0 = ts;
+        var p = Math.min(1, (ts - t0) / dur);
+        el.textContent = pre + Math.round(num * ease(p)).toLocaleString('en-US') + suf;
+        if(p < 1) requestAnimationFrame(step);
+        else el.textContent = pre + num.toLocaleString('en-US') + suf;
+      }
+      requestAnimationFrame(step);
+    }
+    if('IntersectionObserver' in window){
+      var o = new IntersectionObserver(function(es){
+        es.forEach(function(x){ if(x.isIntersecting){ run(); o.disconnect(); } });
+      }, {threshold:0.4});
+      o.observe(el);
+    } else { run(); }
+  });
+
+  /* ---------------- scroll: progress / spy / to-top ---------------- */
+  var prog = $('#navProg'), toTop = $('#toTop');
+  var navLinks = $$('.nav-links a');
+  var sections = navLinks.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.width = (h > 0 ? Math.min(1, window.scrollY / h) * 100 : 0).toFixed(2) + '%';
+    toTop.classList.toggle('on', window.scrollY > 720);
+    var probe = window.scrollY + 140, active = -1;
+    sections.forEach(function(s, i){ if(s && s.offsetTop <= probe) active = i; });
+    navLinks.forEach(function(a, i){ a.classList.toggle('on', i === active); });
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if(ticking) return; ticking = true;
+    requestAnimationFrame(function(){ onScroll(); ticking = false; });
+  }, {passive:true});
+  window.addEventListener('resize', function(){ onScroll(); });
+  onScroll();
+  toTop.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+
+  /* ---------------- radar ---------------- */
+  var AX = ['付费意愿','时间充裕度','目标清晰度','需求匹配度','传播系数','留存周期'];
+  var SER = {
+    A:{ vals:[9,6,5,9,8,9], cls:'pA', tok:'--a' },
+    B:{ vals:[5,10,3,6,9,6], cls:'pB', tok:'--b' },
+    C:{ vals:[2,3,9,2,4,3],  cls:'pC', tok:'--c' }
+  };
+  var NS = 'http://www.w3.org/2000/svg';
+  function mk(tag, attrs){
+    var e = document.createElementNS(NS, tag);
+    for(var k in attrs){ if(Object.prototype.hasOwnProperty.call(attrs, k)) e.setAttribute(k, attrs[k]); }
+    return e;
+  }
+  function cv(name){
+    return getComputedStyle(root).getPropertyValue(name).trim() ||
+           getComputedStyle(document.body).getPropertyValue(name).trim() || '#888888';
+  }
+  function drawRadar(){
+    var svg = $('#rc');
+    if(!svg || !AX) return;
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+    var cx = 200, cy = 168, R = 112, n = AX.length;
+    var cols = { A: cv('--a'), B: cv('--b'), C: cv('--c') };
+    var surf = cv('--surface');
+
+    function pt(i, r){
+      var ang = -Math.PI / 2 + i * (2 * Math.PI / n);
+      return [cx + r * Math.cos(ang), cy + r * Math.sin(ang)];
+    }
+    [0.34, 0.67, 1].forEach(function(f, idx){
+      var d = '';
+      for(var i = 0; i < n; i++){
+        var p = pt(i, R * f);
+        d += (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1);
+      }
+      svg.appendChild(mk('path', { d: d + 'Z', class: idx === 2 ? 'go' : 'g' }));
+    });
+    for(var i = 0; i < n; i++){
+      var e = pt(i, R);
+      svg.appendChild(mk('line', { x1:cx, y1:cy, x2:e[0].toFixed(1), y2:e[1].toFixed(1), class:'ax' }));
+      var l = pt(i, R + 30);
+      var anchor = Math.abs(l[0] - cx) < 6 ? 'middle' : (l[0] > cx ? 'start' : 'end');
+      var t = mk('text', { x:l[0].toFixed(1), y:(l[1] + 4).toFixed(1), 'text-anchor':anchor, class:'al' });
+      t.textContent = AX[i];
+      svg.appendChild(t);
+    }
+    ['A','B','C'].forEach(function(k){
+      var s = SER[k], d = '';
+      s.vals.forEach(function(v, i){
+        var p = pt(i, R * v / 10);
+        d += (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1);
+      });
+      svg.appendChild(mk('path', {
+        d: d + 'Z', class: 'po ' + s.cls,
+        fill: cols[k], 'fill-opacity': 0.15, stroke: cols[k]
+      }));
+      s.vals.forEach(function(v, i){
+        var p = pt(i, R * v / 10);
+        svg.appendChild(mk('circle', {
+          cx:p[0].toFixed(1), cy:p[1].toFixed(1), r:3.2,
+          fill: cols[k], class:'dt', stroke: surf
+        }));
+      });
+    });
+  }
+  var rcwrap = $('#rcwrap');
+  $$('#legend .lg').forEach(function(lg){
+    lg.addEventListener('mouseenter', function(){ rcwrap.setAttribute('data-f', lg.getAttribute('data-k')); });
+    lg.addEventListener('mouseleave', function(){ rcwrap.removeAttribute('data-f'); });
+  });
+  drawRadar();
+})();
+</script>
+</body>
+</html>

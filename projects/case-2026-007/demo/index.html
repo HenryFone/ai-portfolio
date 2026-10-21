@@ -1,0 +1,2232 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="AI 编程工具赛道商业模式深度研究报告 · 2026 Q4 · 采用率、变现模式、单位经济与竞争格局">
+<title>AI 编程工具赛道商业模式深度研究报告 · 2026 Q4</title>
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root{
+  --indigo:#4F46E5; --indigo-700:#4338CA; --indigo-500:#6366F1; --indigo-300:#A5B4FC; --indigo-50:#EEF2FF;
+  --emer:#10B981; --emer-700:#047857; --emer-600:#059669; --emer-50:#ECFDF5; --emer-300:#6EE7B7;
+  --amber:#F59E0B; --amber-700:#B45309; --amber-50:#FFFBEB;
+  --rose:#F43F5E; --rose-50:#FEF2F2;
+  --violet:#8B5CF6; --sky:#0EA5E9; --teal:#14B8A6;
+
+  --ink:#0B1220; --ink-2:#1E293B; --ink-3:#475569; --ink-4:#7C8899; --ink-5:#A3AEBD;
+  --line:#E4E8EF; --line-2:#F1F5F9; --line-3:#F8FAFC;
+  --bg:#F7F8FC; --bg-2:#FFFFFF; --card:#FFFFFF; --card-2:#FCFDFF;
+
+  --sh-1:0 1px 2px rgba(11,18,32,.04), 0 1px 3px rgba(11,18,32,.06);
+  --sh-2:0 2px 4px -1px rgba(11,18,32,.05), 0 10px 20px -6px rgba(11,18,32,.10);
+  --sh-3:0 8px 16px -6px rgba(11,18,32,.08), 0 24px 44px -14px rgba(11,18,32,.16);
+  --sh-glow:0 0 0 1px rgba(79,70,229,.10), 0 12px 32px -10px rgba(79,70,229,.30);
+
+  --r-xs:8px; --r-sm:11px; --r:16px; --r-lg:20px; --r-xl:28px;
+
+  --nav-w:262px; --rail-w:176px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --ease-io:cubic-bezier(.65,0,.35,1);
+}
+html[data-theme="dark"]{
+  --ink:#F1F5F9; --ink-2:#E2E8F0; --ink-3:#B4C0CE; --ink-4:#8B98A8; --ink-5:#6B7684;
+  --line:#263141; --line-2:#1C2634; --line-3:#161E29;
+  --bg:#080C14; --bg-2:#0D1420; --card:#111A27; --card-2:#0F1724;
+  --indigo-50:#161E3D; --emer-50:#06251C; --amber-50:#2A1F08; --rose-50:#2C1119;
+  --indigo-300:#818CF8;
+  --sh-1:0 1px 2px rgba(0,0,0,.30);
+  --sh-2:0 2px 4px -1px rgba(0,0,0,.35), 0 10px 20px -6px rgba(0,0,0,.45);
+  --sh-3:0 8px 16px -6px rgba(0,0,0,.45), 0 24px 44px -14px rgba(0,0,0,.60);
+  --sh-glow:0 0 0 1px rgba(129,140,248,.18), 0 12px 32px -10px rgba(79,70,229,.35);
+}
+html[data-theme="dark"] footer{background:#05080E;border-top:1px solid var(--line)}
+html[data-theme="dark"] .src-item a{color:#A5B4FC}
+html[data-theme="dark"] .src-item .tt{color:#CBD5E1}
+html[data-theme="dark"] .sw.s{background:linear-gradient(160deg,#06251C,#0B1F1A)}
+html[data-theme="dark"] .sw.w{background:linear-gradient(160deg,#2C1119,#1E0F16)}
+html[data-theme="dark"] .sw.o{background:linear-gradient(160deg,#0C1B33,#0A1526)}
+html[data-theme="dark"] .sw.t{background:linear-gradient(160deg,#2A1F08,#1C1608)}
+html[data-theme="dark"] .alert{background:linear-gradient(150deg,#2A1F08,#1E1608);border-color:#4A3610}
+html[data-theme="dark"] .alert p{color:#F5D9A8}
+html[data-theme="dark"] .alert .t{color:#FCD34D}
+html[data-theme="dark"] .exec{background:linear-gradient(150deg,#0F1729 0%,#151E3E 45%,#062A22 130%)!important}
+html[data-theme="dark"] .callout{background:linear-gradient(135deg,#131C36,#101A2E 60%,#08241D);border-color:#28324F}
+html[data-theme="dark"] .hero-canvas{opacity:.5}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:"Inter","Segoe UI Variable Text","Segoe UI",-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  font-size:16px;line-height:1.72;letter-spacing:-.006em;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  transition:background .4s var(--ease), color .4s var(--ease);
+  overflow-x:hidden;
+}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(900px 500px at 12% -6%, rgba(79,70,229,.055), transparent 60%),
+             radial-gradient(800px 460px at 92% 8%, rgba(16,185,129,.05), transparent 60%);
+}
+html[data-theme="dark"] body::before{background:radial-gradient(900px 500px at 12% -6%, rgba(79,70,229,.14), transparent 60%),
+             radial-gradient(800px 460px at 92% 8%, rgba(16,185,129,.10), transparent 60%);}
+::selection{background:var(--indigo);color:#fff}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px;border:3px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:var(--ink-5)}
+b,strong{font-weight:700;color:var(--ink)}
+a{color:var(--indigo)}
+
+/* ============================================================
+   PROGRESS + SIDE NAV
+   ============================================================ */
+#bar{position:fixed;top:0;left:0;height:2.5px;background:linear-gradient(90deg,var(--indigo),var(--emer));z-index:200;width:0;transition:width .08s linear}
+.sidenav{
+  position:fixed;top:0;left:0;width:var(--nav-w);height:100vh;z-index:150;
+  background:var(--bg-2);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;transition:transform .42s var(--ease), background .4s var(--ease);
+}
+html[data-theme="dark"] .sidenav{background:#0A1019}
+.sn-head{padding:26px 22px 18px;border-bottom:1px solid var(--line)}
+.sn-logo{display:flex;align-items:center;gap:10px;margin-bottom:5px}
+.sn-mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--indigo),var(--emer));display:grid;place-items:center;font-size:13px;font-weight:800;color:#fff;box-shadow:0 4px 12px rgba(79,70,229,.32);flex-shrink:0;letter-spacing:-.04em}
+.sn-title{font-size:13.5px;font-weight:750;letter-spacing:-.02em;line-height:1.3}
+.sn-sub{font-size:10.5px;color:var(--ink-4);font-weight:600;letter-spacing:.09em;text-transform:uppercase}
+.sn-scroll{flex:1;overflow-y:auto;padding:14px 12px 8px}
+.sn-scroll::-webkit-scrollbar{width:5px}
+.sn-scroll::-webkit-scrollbar-thumb{background:var(--line);border:none;border-radius:99px}
+.sn-label{font-size:10px;font-weight:750;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-5);padding:12px 12px 7px}
+.sn-a{
+  display:flex;align-items:center;gap:11px;padding:8.5px 12px;border-radius:10px;
+  font-size:13px;font-weight:600;color:var(--ink-3);text-decoration:none;position:relative;
+  transition:.22s var(--ease);
+}
+.sn-a:hover{background:var(--line-3);color:var(--ink)}
+.sn-a .num{font-size:10.5px;font-weight:750;color:var(--ink-5);width:19px;flex-shrink:0;font-variant-numeric:tabular-nums;transition:.22s}
+.sn-a.on{background:var(--indigo-50);color:var(--indigo);font-weight:700}
+html[data-theme="dark"] .sn-a.on{color:var(--indigo-300)}
+.sn-a.on .num{color:var(--indigo)}
+.sn-a.on:before{content:"";position:absolute;left:-12px;top:50%;transform:translateY(-50%);width:3px;height:20px;border-radius:0 3px 3px 0;background:var(--indigo)}
+.sn-foot{padding:14px 20px 18px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:9px}
+.mbar-t{display:none;gap:12px;align-items:center;padding:12px 20px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:3;font-size:13px;font-weight:750;letter-spacing:-.02em}
+.sn-tools{display:flex;gap:7px}
+.tbtn{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:7.5px 8px;border-radius:9px;
+  background:var(--card);border:1px solid var(--line);color:var(--ink-3);font-size:11px;font-weight:650;
+  cursor:pointer;transition:.22s var(--ease);font-family:inherit;
+}
+.tbtn:hover{border-color:var(--indigo);color:var(--indigo);box-shadow:var(--sh-1)}
+.tbtn svg{width:13px;height:13px}
+.sn-meta{font-size:10.5px;color:var(--ink-5);line-height:1.55}
+.kbd{display:inline-block;padding:1px 5px;border-radius:5px;background:var(--line-2);border:1px solid var(--line);font-family:ui-monospace,Menlo,monospace;font-size:9.5px;color:var(--ink-4);font-weight:600}
+#scrim{position:fixed;inset:0;background:rgba(11,18,32,.5);backdrop-filter:blur(3px);z-index:140;opacity:0;pointer-events:none;transition:opacity .35s var(--ease)}
+.menubtn{display:none}
+#fab{
+  display:none;position:fixed;left:16px;top:16px;z-index:145;width:44px;height:44px;border-radius:13px;
+  background:var(--card);border:1px solid var(--line);box-shadow:var(--sh-2);cursor:pointer;
+  place-items:center;color:var(--ink-2);transition:.28s var(--ease);padding:0;
+}
+#fab:hover{border-color:var(--indigo);color:var(--indigo)}
+#fab:active{transform:scale(.94)}
+#fab svg{width:20px;height:20px;pointer-events:none}
+#fab .x{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transition:.28s var(--ease)}
+#fab .x svg{width:20px;height:20px}
+#fab[aria-expanded="true"] .bars{opacity:0;transform:rotate(90deg) scale(.6)}
+#fab[aria-expanded="true"] .x{opacity:1;transform:none}
+#fab .bars{transition:.28s var(--ease)}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.main{margin-left:var(--nav-w);margin-right:var(--rail-w);position:relative;z-index:1}
+.wrap{max-width:1140px;margin:0 auto;padding:0 44px}
+section{padding:74px 0;scroll-margin-top:0;position:relative}
+section + section{border-top:1px solid var(--line-2)}
+html[data-theme="dark"] section + section{border-color:var(--line)}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{min-height:100vh;display:flex;align-items:center;padding:0;position:relative;overflow:hidden;border-top:none}
+.hero-canvas{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.85}
+.hero-inner{position:relative;z-index:2;width:100%;max-width:1140px;margin:0 auto;padding:100px 44px 60px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);
+  padding:6.5px 15px 6.5px 12px;border-radius:99px;font-size:11.5px;font-weight:700;color:var(--indigo);
+  box-shadow:var(--sh-1);margin-bottom:30px;letter-spacing:.01em;
+}
+html[data-theme="dark"] .eyebrow{color:var(--indigo-300)}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--emer);position:relative;flex-shrink:0}
+.pulse:after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--emer);animation:ping 2.2s var(--ease-io) infinite}
+@keyframes ping{0%{transform:scale(1);opacity:.8}75%,100%{transform:scale(3.2);opacity:0}}
+h1{font-size:clamp(40px,6.4vw,76px);line-height:1.03;letter-spacing:-.045em;font-weight:820;margin-bottom:26px;max-width:14em}
+h1 .grad{background:linear-gradient(100deg,var(--indigo) 5%,#7C3AED 45%,var(--emer-600) 95%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.lede{font-size:clamp(16px,1.5vw,19.5px);color:var(--ink-3);max-width:43em;line-height:1.78}
+.lede b{color:var(--ink-2)}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:34px}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:12px;color:var(--ink-4);font-weight:600;box-shadow:var(--sh-1);display:flex;align-items:center;gap:7px;transition:.22s var(--ease)}
+.chip:hover{transform:translateY(-2px);box-shadow:var(--sh-2);border-color:var(--indigo-300)}
+.chip b{color:var(--ink);font-weight:750}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:56px;border-top:1px solid var(--line);padding-top:28px}
+.hstat{padding-right:22px}
+.hstat + .hstat{border-left:1px solid var(--line);padding-left:22px}
+.hstat .odo{display:inline-block;font-variant-numeric:tabular-nums;white-space:nowrap;line-height:1}
+.odo-strip{display:inline-block;overflow:hidden;vertical-align:top}
+.odo-strip>span{display:block}
+.odo-strip>span>span{display:block}
+.odo-static{font-size:inherit;font-weight:inherit;letter-spacing:inherit}
+.hstat .v{font-size:clamp(24px,2.7vw,34px);font-weight:820;letter-spacing:-.04em;line-height:1;margin-bottom:7px;font-variant-numeric:tabular-nums}
+.hstat .l{font-size:11.5px;color:var(--ink-4);line-height:1.45;font-weight:600;margin-top:9px}
+.scrollcue{position:absolute;bottom:26px;left:44px;display:flex;align-items:center;gap:9px;font-size:10.5px;color:var(--ink-5);font-weight:650;letter-spacing:.11em;text-transform:uppercase}
+.scrollcue .ln{width:1px;height:26px;background:linear-gradient(180deg,var(--ink-5),transparent);animation:cue 2.4s var(--ease-io) infinite}
+@keyframes cue{0%,100%{opacity:.3;transform:scaleY(.6);transform-origin:top}50%{opacity:1;transform:scaleY(1)}}
+
+/* ============================================================
+   SECTION HEADER
+   ============================================================ */
+.shead{margin-bottom:36px;position:relative}
+.snumrow{display:flex;align-items:center;gap:13px;margin-bottom:14px}
+.snum{font-size:11px;font-weight:800;letter-spacing:.15em;color:var(--indigo);text-transform:uppercase}
+html[data-theme="dark"] .snum{color:var(--indigo-300)}
+.srule{height:1px;flex:1;max-width:120px;background:linear-gradient(90deg,var(--indigo),transparent)}
+.ghost{position:absolute;top:-30px;right:0;font-size:clamp(80px,11vw,148px);font-weight:850;line-height:1;color:var(--ink);opacity:.035;letter-spacing:-.06em;pointer-events:none;user-select:none;font-variant-numeric:tabular-nums}
+h2{font-size:clamp(27px,3.4vw,40px);letter-spacing:-.035em;font-weight:800;line-height:1.16;max-width:22em}
+.shead .sub{color:var(--ink-3);font-size:15.5px;margin-top:14px;max-width:52em;line-height:1.78}
+.shead .sub b{color:var(--ink-2)}
+
+/* ============================================================
+   PRIMITIVES
+   ============================================================ */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh-1);transition:.3s var(--ease);position:relative}
+.card:hover{box-shadow:var(--sh-2);transform:translateY(-2px);border-color:var(--ink-5)}
+html[data-theme="dark"] .card:hover{border-color:var(--ink-4)}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.mb16{margin-bottom:16px}.mb18{margin-bottom:18px}.mb20{margin-bottom:20px}.mb24{margin-bottom:24px}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:750;padding:3px 8px;border-radius:6px;letter-spacing:.01em;white-space:nowrap;line-height:1.5}
+.tag i{width:5px;height:5px;border-radius:50%;display:block}
+.tag.real{background:var(--emer-50);color:var(--emer-700)}
+.tag.real i{background:var(--emer)}
+.tag.est{background:var(--amber-50);color:var(--amber-700)}
+.tag.est i{background:var(--amber)}
+.tag.qual{background:var(--indigo-50);color:var(--indigo-700)}
+.tag.qual i{background:var(--indigo)}
+html[data-theme="dark"] .tag.real{color:var(--emer-300)} html[data-theme="dark"] .tag.est{color:#FCD34D}
+html[data-theme="dark"] .tag.qual{color:var(--indigo-300)}
+.srcnote{display:block;font-size:10.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--indigo);background:var(--indigo-50);padding:2px 7px;border-radius:6px;font-weight:600;margin-top:7px;display:inline-block;line-height:1.5}
+html[data-theme="dark"] .srcnote{color:var(--indigo-300)}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease), transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rv-d1{transition-delay:.07s}.rv-d2{transition-delay:.14s}.rv-d3{transition-delay:.21s}
+.rv-d4{transition-delay:.28s}.rv-d5{transition-delay:.35s}.rv-d6{transition-delay:.42s}
+
+/* ============================================================
+   EXEC SUMMARY
+   ============================================================ */
+.exec{
+  border-radius:var(--r-xl);padding:44px;color:#fff;position:relative;overflow:hidden;
+  background:linear-gradient(145deg,#141A3A 0%,#26235C 42%,#0A4A38 115%);
+  box-shadow:var(--sh-3);
+}
+.exec:before{content:"";position:absolute;top:-160px;right:-120px;width:520px;height:520px;background:radial-gradient(circle,rgba(16,185,129,.34),transparent 68%)}
+.exec:after{content:"";position:absolute;bottom:-200px;left:-140px;width:480px;height:480px;background:radial-gradient(circle,rgba(129,140,248,.26),transparent 68%)}
+.exec > *{position:relative;z-index:2}
+.exec-kicker{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--emer-300);font-weight:800;margin-bottom:20px;display:flex;align-items:center;gap:9px}
+.exec-lead{font-size:clamp(18px,2vw,22px);line-height:1.62;font-weight:500;color:#E0E7FF;max-width:40em}
+.exec-lead .hl{color:var(--emer-300);font-weight:750;position:relative;white-space:nowrap}
+.exec-lead .hl:after{content:"";position:absolute;left:0;right:0;bottom:2px;height:5px;background:rgba(16,185,129,.28);border-radius:3px;z-index:-1}
+.concl{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin-top:28px}
+.cbox{background:rgba(255,255,255,.065);border:1px solid rgba(255,255,255,.13);border-radius:14px;padding:19px 20px;transition:.3s var(--ease);backdrop-filter:blur(10px);cursor:default}
+.cbox:hover{background:rgba(255,255,255,.11);border-color:rgba(255,255,255,.26);transform:translateY(-3px)}
+.cbox .n{font-size:10.5px;font-weight:800;color:var(--emer-300);letter-spacing:.1em;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+.cbox .n:before{content:"";width:16px;height:1.5px;background:var(--emer-300);border-radius:2px}
+.cbox .h{font-size:15.5px;font-weight:750;margin-bottom:8px;color:#fff;letter-spacing:-.015em;line-height:1.45}
+.cbox p{font-size:13.2px;color:#C7D2FE;line-height:1.68}
+.cbox p b{color:#FCD34D;font-weight:750}
+.cbox.full{grid-column:1/-1}
+
+/* ============================================================
+   KPI
+   ============================================================ */
+.kpi{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:23px 21px 20px;
+  box-shadow:var(--sh-1);position:relative;overflow:hidden;transition:.32s var(--ease);cursor:default;
+}
+.kpi:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--indigo),var(--emer));transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.kpi:hover{transform:translateY(-4px);box-shadow:var(--sh-3);border-color:var(--ink-5)}
+.kpi:hover:before{transform:scaleX(1)}
+.kpi .lbl{font-size:12px;color:var(--ink-4);font-weight:650;display:flex;align-items:center;gap:7px;min-height:34px;line-height:1.45}
+.kpi .val{font-size:clamp(28px,3.2vw,40px);font-weight:830;letter-spacing:-.05em;line-height:1.05;margin:8px 0 0;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:2px;flex-wrap:wrap}
+.kpi .val .cur{font-size:.55em;font-weight:750;color:var(--ink-3);letter-spacing:-.02em}
+.kpi .val .un{font-size:.44em;font-weight:700;color:var(--ink-4);letter-spacing:0}
+.kpi .note{font-size:11.5px;color:var(--ink-4);line-height:1.62;margin-top:12px;border-top:1px dashed var(--line);padding-top:11px}
+.kpi .note b{color:var(--ink-2)}
+
+/* ============================================================
+   CHART
+   ============================================================ */
+.chart{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px;box-shadow:var(--sh-1);transition:.3s var(--ease)}
+.chart:hover{box-shadow:var(--sh-2)}
+.chart-hd{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:20px;flex-wrap:wrap}
+.chart-t{font-size:17px;font-weight:770;letter-spacing:-.022em;line-height:1.4}
+.chart-d{font-size:12.2px;color:var(--ink-4);margin-top:6px;max-width:46em;line-height:1.68}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-4);margin-top:16px;padding-top:15px;border-top:1px solid var(--line-2)}
+.legend span{display:flex;align-items:center;gap:7px;font-weight:600}
+.lgd{width:11px;height:11px;border-radius:3.5px;flex-shrink:0}
+.lgd.dash{background:repeating-linear-gradient(90deg,var(--amber) 0 4px,transparent 4px 7px)}
+.lgd.ring{border-radius:50%;background:var(--emer-50);border:1.5px solid var(--emer)}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:inherit;font-variant-numeric:tabular-nums}
+.hit{cursor:pointer}
+.hit circle.ring-h{transition:r .2s var(--ease), stroke-width .2s var(--ease)}
+.hit:hover circle.ring-h{stroke-width:4}
+.tipbox{
+  position:fixed;z-index:300;background:var(--ink);color:#fff;padding:11px 14px;border-radius:11px;
+  font-size:12px;line-height:1.6;pointer-events:none;opacity:0;transform:translateY(5px) scale(.96);
+  transition:opacity .16s, transform .16s;box-shadow:0 12px 32px rgba(0,0,0,.28);max-width:270px;font-weight:550;
+}
+html[data-theme="dark"] .tipbox{background:#F1F5F9;color:#0B1220}
+.tipbox.on{opacity:1;transform:none}
+.tipbox b{color:var(--emer-300);font-weight:750;display:block;margin-bottom:3px;font-size:12.5px}
+html[data-theme="dark"] .tipbox b{color:var(--emer-700)}
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.search{position:relative;flex:1;min-width:230px;max-width:360px}
+.search input{
+  width:100%;padding:10px 14px 10px 38px;border-radius:11px;border:1px solid var(--line);background:var(--card);
+  font-size:13px;color:var(--ink);font-family:inherit;transition:.22s var(--ease);box-shadow:var(--sh-1);
+}
+.search input:focus{outline:none;border-color:var(--indigo);box-shadow:0 0 0 3.5px var(--indigo-50)}
+.search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--ink-5)}
+.fchips{display:flex;gap:6px;flex-wrap:wrap}
+.fchip{padding:7px 13px;border-radius:99px;border:1px solid var(--line);background:var(--card);font-size:11.5px;font-weight:650;color:var(--ink-3);cursor:pointer;transition:.2s var(--ease);font-family:inherit}
+.fchip:hover{border-color:var(--ink-5);color:var(--ink)}
+.fchip.on{background:var(--indigo);border-color:var(--indigo);color:#fff;box-shadow:0 4px 12px rgba(79,70,229,.28)}
+.tbl-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh-1);overflow:hidden}
+.tscroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.2px;min-width:880px}
+th{background:var(--line-3);text-align:left;padding:12px 15px;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-4);border-bottom:1px solid var(--line);white-space:nowrap;position:sticky;top:0;backdrop-filter:blur(8px);z-index:2}
+td{padding:14px 15px;border-bottom:1px solid var(--line-2);vertical-align:top;color:var(--ink-3);line-height:1.66}
+tbody tr{transition:background .18s}
+tbody tr:hover{background:var(--line-3)}
+tr:last-child td{border-bottom:none}
+td.nm{font-weight:750;color:var(--ink);white-space:nowrap}
+.rk{display:inline-grid;place-items:center;width:21px;height:21px;border-radius:6px;background:var(--indigo-50);color:var(--indigo);font-size:10.5px;font-weight:800;margin-right:8px;vertical-align:1px}
+html[data-theme="dark"] .rk{color:var(--indigo-300)}
+tbody tr.hide{display:none}
+.noresult{padding:34px;text-align:center;color:var(--ink-5);font-size:13px;display:none}
+
+/* ============================================================
+   QUADRANT
+   ============================================================ */
+.quad{display:grid;grid-template-columns:1.06fr .94fr;gap:20px;align-items:start}
+.qpanel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--sh-1)}
+.qdot{cursor:pointer;transition:.28s var(--ease)}
+.qdot:hover{filter:brightness(1.06) saturate(1.1)}
+.qinfo{display:grid;gap:13px}
+.icard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:21px;box-shadow:var(--sh-1);transition:.3s var(--ease)}
+.icard:hover{box-shadow:var(--sh-2);transform:translateX(3px);border-color:var(--ink-5)}
+.icard-h{display:flex;align-items:center;gap:10px;margin-bottom:11px}
+.icard-h .sq{width:9px;height:9px;border-radius:3px;flex-shrink:0}
+.icard-h .t{font-size:14.5px;font-weight:770;letter-spacing:-.015em}
+.icard p{font-size:13.2px;color:var(--ink-3);line-height:1.72}
+
+/* ============================================================
+   REVENUE STACK
+   ============================================================ */
+.stack{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.sl{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:23px 21px;position:relative;transition:.32s var(--ease);overflow:hidden}
+.sl:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--line);transition:.4s var(--ease)}
+.sl:hover{transform:translateY(-4px);box-shadow:var(--sh-3);border-color:var(--ink-5)}
+.sl:hover:before{background:linear-gradient(90deg,var(--indigo),var(--emer))}
+.sl.hero-card{border-color:var(--emer);background:linear-gradient(180deg,var(--emer-50),var(--card) 55%)}
+.sl.hero-card:before{background:linear-gradient(90deg,var(--emer),var(--emer-600))}
+.sl .step{width:31px;height:31px;border-radius:10px;background:linear-gradient(135deg,var(--indigo),var(--indigo-700));color:#fff;font-size:13.5px;font-weight:800;display:grid;place-items:center;margin-bottom:14px;box-shadow:0 5px 14px rgba(79,70,229,.30);font-variant-numeric:tabular-nums}
+.sl.hero-card .step{background:linear-gradient(135deg,var(--emer),var(--emer-600));box-shadow:0 5px 14px rgba(16,185,129,.34)}
+.sl h4{font-size:15.5px;font-weight:780;margin-bottom:4px;letter-spacing:-.02em;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.sl .badge{font-size:9.5px;font-weight:800;padding:2.5px 7px;border-radius:5px;background:var(--emer);color:#fff;letter-spacing:.04em}
+.sl p{font-size:12.8px;color:var(--ink-3);line-height:1.68;margin:8px 0 14px}
+.pbox{background:var(--line-3);border:1px solid var(--line-2);border-radius:10px;padding:11px 13px;font-size:11.8px;line-height:1.72;color:var(--ink-3)}
+html[data-theme="dark"] .pbox{background:#0B121C}
+.pbox .t{display:block;font-size:9.5px;font-weight:800;letter-spacing:.1em;color:var(--ink-5);margin-bottom:6px;text-transform:uppercase}
+.pbox .row{display:flex;justify-content:space-between;gap:10px;padding:2.5px 0}
+.pbox .row span:first-child{color:var(--ink-4)}
+.pbox .row b{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ============================================================
+   ECONOMICS
+   ============================================================ */
+.econ{display:grid;grid-template-columns:1.02fr .98fr;gap:18px}
+.alert{background:linear-gradient(150deg,var(--amber-50),#FEF7E0);border:1px solid #FCD9A0;border-radius:var(--r);padding:26px;position:relative;overflow:hidden}
+html[data-theme="dark"] .alert{background:linear-gradient(150deg,#241B07,#1A1409);border-color:#4A3610}
+.alert .t{font-size:15px;font-weight:790;margin-bottom:14px;display:flex;align-items:center;gap:9px;color:var(--amber-700)}
+html[data-theme="dark"] .alert .t{color:#FCD34D}
+.alert p{font-size:13.2px;color:#7C4A0E;line-height:1.75}
+html[data-theme="dark"] .alert p{color:#F0D9AE}
+.alert .big{font-size:clamp(30px,3.6vw,40px);font-weight:850;color:var(--amber-700);letter-spacing:-.045em;margin:12px 0 6px;line-height:1;font-variant-numeric:tabular-nums}
+html[data-theme="dark"] .alert .big{color:#FCD34D}
+.alert .sm{font-size:11px;color:#92610E;opacity:.9;margin-top:16px;padding-top:13px;border-top:1px dashed #F0C68A;font-weight:600}
+html[data-theme="dark"] .alert .sm{color:#C9A96A;border-color:#4A3610}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sp{border-radius:13px;padding:15px 16px;border:1px solid}
+.sp.good{background:var(--emer-50);border-color:#A7F3D0}
+.sp.bad{background:var(--rose-50);border-color:#FECDD3}
+html[data-theme="dark"] .sp.good{border-color:#065F46}
+html[data-theme="dark"] .sp.bad{border-color:#7F1D3A}
+.sp .h{font-size:10.5px;font-weight:800;letter-spacing:.07em;margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.sp.good .h{color:var(--emer-700)}html[data-theme="dark"] .sp.good .h{color:var(--emer-300)}
+.sp.bad .h{color:#B91C1C}html[data-theme="dark"] .sp.bad .h{color:#FDA4AF}
+.sp p{font-size:12.6px;line-height:1.68;color:var(--ink-3)}
+.sp.good p{color:#065F46}html[data-theme="dark"] .sp.good p{color:#A7F3D0}
+.sp.bad p{color:#7F1D1D}html[data-theme="dark"] .sp.bad p{color:#FECDD3}
+
+/* margin bars */
+.mbar{margin-top:6px}
+.mrow{margin-bottom:14px}
+.mrow:last-child{margin-bottom:0}
+.mhead{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;margin-bottom:6px;gap:10px}
+.mhead .nm2{font-weight:700;color:var(--ink)}
+.mhead .vl{font-weight:800;font-variant-numeric:tabular-nums;font-size:13px}
+.mtrack{height:9px;border-radius:99px;background:var(--line-2);overflow:hidden;position:relative}
+html[data-theme="dark"] .mtrack{background:#1A2433}
+.mfill{height:100%;border-radius:99px;width:0;transition:width 1.3s var(--ease);position:relative}
+.mfill.b{background:linear-gradient(90deg,#EF4444,#F59E0B)}
+.mfill.m{background:linear-gradient(90deg,#F59E0B,#FBBF24)}
+.mfill.g{background:linear-gradient(90deg,#10B981,#059669)}
+.mnote{font-size:10.5px;color:var(--ink-5);margin-top:4px}
+
+/* ============================================================
+   TABS
+   ============================================================ */
+.tabs{display:flex;gap:5px;background:var(--line-2);padding:5px;border-radius:13px;margin-bottom:22px;flex-wrap:wrap}
+html[data-theme="dark"] .tabs{background:#0B121C}
+.tab{padding:9px 18px;border-radius:9px;border:none;background:transparent;font-size:13px;font-weight:700;color:var(--ink-4);cursor:pointer;transition:.26s var(--ease);font-family:inherit;display:flex;align-items:center;gap:8px}
+.tab:hover{color:var(--ink-2)}
+.tab.on{background:var(--card);color:var(--ink);box-shadow:var(--sh-1)}
+.tab i{width:7px;height:7px;border-radius:50%;display:block}
+.tpane{display:none;animation:fade .45s var(--ease)}
+.tpane.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ============================================================
+   SWOT
+   ============================================================ */
+.swot{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.sw{border-radius:var(--r);padding:25px;border:1px solid;position:relative;overflow:hidden;transition:.3s var(--ease)}
+.sw:hover{transform:translateY(-3px);box-shadow:var(--sh-2)}
+.sw .hd{font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:9px}
+.sw .ic{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-size:11.5px;font-weight:850;color:#fff;flex-shrink:0}
+.sw ul{list-style:none;display:flex;flex-direction:column;gap:13px}
+.sw li{font-size:13.2px;line-height:1.7;padding-left:18px;position:relative}
+.sw li:before{content:"";position:absolute;left:0;top:8.5px;width:6px;height:6px;border-radius:50%}
+.sw li b{font-weight:750}
+.sw li .q{font-size:12.3px;color:var(--ink-4);display:block;margin-top:3px;line-height:1.66}
+.sw li .q b{color:var(--ink-3)}
+.s{background:linear-gradient(160deg,#F0FDF4,#fff 70%);border-color:#BBF7D0}.s .hd{color:#15803D}.s .ic{background:#15803D}.s li:before{background:#22C55E}.s li b{color:#14532D}.s li .q{color:#3F6B4E}
+.w{background:linear-gradient(160deg,#FEF2F2,#fff 70%);border-color:#FECACA}.w .hd{color:#B91C1C}.w .ic{background:#DC2626}.w li:before{background:#EF4444}.w li b{color:#7F1D1D}.w li .q{color:#8B5558}
+.o{background:linear-gradient(160deg,#EFF6FF,#fff 70%);border-color:#BFDBFE}.o .hd{color:#1D4ED8}.o .ic{background:#2563EB}.o li:before{background:#3B82F6}.o li b{color:#1E3A8A}.o li .q{color:#4A6580}
+.t{background:linear-gradient(160deg,#FFFBEB,#fff 70%);border-color:#FDE68A}.t .hd{color:#B45309}.t .ic{background:#D97706}.t li:before{background:#F59E0B}.t li b{color:#78350F}.t li .q{color:#86693C}
+
+/* ============================================================
+   TIMELINE / HORIZON
+   ============================================================ */
+.hz{position:relative;padding-top:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.hz-track{position:absolute;top:0;left:0;right:0;height:3px;border-radius:99px;background:linear-gradient(90deg,var(--indigo),var(--emer));opacity:.28}
+.hzpill{position:relative;display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);padding:7px 16px;border-radius:99px;box-shadow:var(--sh-1);margin-bottom:16px;font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-weight:800}
+.hzpill i{width:8px;height:8px;border-radius:50%;position:relative;z-index:2;box-shadow:0 0 0 4px var(--card)}
+html[data-theme="dark"] .hzpill i{box-shadow:0 0 0 4px var(--card)}
+.hzcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:25px 23px;box-shadow:var(--sh-1);transition:.32s var(--ease);position:relative;overflow:hidden;height:100%}
+.hzcard:hover{transform:translateY(-4px);box-shadow:var(--sh-3);border-color:var(--ink-5)}
+.hzcard:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--c);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.hzcard:hover:before{transform:scaleX(1)}
+.hzcard h4{font-size:18px;font-weight:780;letter-spacing:-.025em;margin-bottom:10px;line-height:1.35}
+.hzcard>p{font-size:13.2px;color:var(--ink-3);line-height:1.72;margin-bottom:15px}
+.hzcard ul{list-style:none;display:flex;flex-direction:column;gap:9px;border-top:1px solid var(--line-2);padding-top:15px;margin-top:auto}
+.hzcard ul li{font-size:12.3px;color:var(--ink-3);padding-left:19px;position:relative;line-height:1.66}
+.hzcard ul li:before{content:"→";position:absolute;left:0;color:var(--c);font-weight:800}
+
+/* ============================================================
+   CALLOUT
+   ============================================================ */
+.callout{background:linear-gradient(135deg,var(--indigo-50),#F5F3FF 55%,var(--emer-50));border:1px solid #DDD6FE;border-radius:var(--r);padding:27px;display:flex;gap:19px;align-items:flex-start;box-shadow:var(--sh-1);transition:.3s var(--ease)}
+html[data-theme="dark"] .callout{background:linear-gradient(135deg,#111A33,#0F1A2C 55%,#07231C);border-color:#28324F}
+.callout:hover{box-shadow:var(--sh-2)}
+.callout .n{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,var(--indigo),var(--emer));color:#fff;display:grid;place-items:center;font-weight:850;font-size:15px;flex-shrink:0;box-shadow:0 7px 18px rgba(79,70,229,.32);font-variant-numeric:tabular-nums}
+.callout .b h4{font-size:16.5px;font-weight:790;margin-bottom:10px;letter-spacing:-.02em}
+.callout .b p{font-size:13.8px;color:var(--ink-2);line-height:1.78}
+.callout .b p b{color:var(--indigo)}
+html[data-theme="dark"] .callout .b p b{color:var(--indigo-300)}
+.callout .b p + p{margin-top:12px}
+.vc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.vcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px 22px;box-shadow:var(--sh-1);transition:.3s var(--ease);position:relative;overflow:hidden}
+.vcard:hover{transform:translateY(-4px);box-shadow:var(--sh-3);border-color:var(--ink-5)}
+.vcard .ic{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-size:14px;font-weight:850;color:#fff;margin-bottom:15px;box-shadow:0 5px 14px rgba(0,0,0,.16)}
+.vcard h5{font-size:15px;font-weight:780;margin-bottom:9px;letter-spacing:-.02em}
+.vcard p{font-size:12.8px;color:var(--ink-3);line-height:1.72}
+
+/* ============================================================
+   FOOTER / SOURCES
+   ============================================================ */
+footer{background:var(--bg-2);padding:60px 0 44px;margin-top:20px;font-size:13px;transition:background .4s var(--ease)}
+footer h3{color:var(--ink);font-size:19px;font-weight:790;letter-spacing:-.025em;margin-bottom:9px}
+footer .sub{font-size:12.5px;color:var(--ink-4);margin-bottom:26px;max-width:52em;line-height:1.75}
+.src-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 26px}
+.src-item{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;transition:.24s var(--ease);position:relative}
+.src-item:hover{border-color:var(--indigo);box-shadow:var(--sh-1);transform:translateY(-1px)}
+.src-item .hd{display:flex;gap:11px;align-items:flex-start}
+.src-item .num{color:var(--indigo);font-weight:850;font-family:ui-monospace,Menlo,monospace;flex-shrink:0;font-size:11px;padding-top:2px;width:20px}
+html[data-theme="dark"] .src-item .num{color:var(--indigo-300)}
+.src-item .tt{color:var(--ink);font-weight:720;font-size:12.6px;line-height:1.5}
+.src-item .mm{color:var(--ink-4);display:block;font-size:11.3px;margin-top:5px;line-height:1.68}
+.src-item a{color:var(--indigo);text-decoration:none;word-break:break-all;font-size:11px}
+.src-item a:hover{text-decoration:underline}
+html[data-theme="dark"] .src-item a{color:var(--indigo-300)}
+.cbtn{position:absolute;top:11px;right:11px;width:26px;height:26px;border-radius:7px;border:1px solid var(--line);background:var(--bg-2);color:var(--ink-5);cursor:pointer;display:grid;place-items:center;opacity:0;transition:.2s var(--ease)}
+.src-item:hover .cbtn{opacity:1}
+.cbtn:hover{border-color:var(--indigo);color:var(--indigo);background:var(--indigo-50)}
+.cbtn.done{border-color:var(--emer);color:var(--emer);background:var(--emer-50);opacity:1}
+.cbtn svg{width:12px;height:12px}
+footer .foot{margin-top:34px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:11.3px;color:var(--ink-5)}
+.totop{position:fixed;right:26px;bottom:26px;width:44px;height:44px;border-radius:14px;background:var(--card);border:1px solid var(--line);box-shadow:var(--sh-2);display:grid;place-items:center;cursor:pointer;z-index:120;opacity:0;pointer-events:none;transform:translateY(14px);transition:.32s var(--ease);color:var(--ink-3)}
+.totop.on{opacity:1;pointer-events:auto;transform:none}
+.totop:hover{border-color:var(--indigo);color:var(--indigo);transform:translateY(-3px)}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1180px){
+  .wrap,.hero-inner{padding-left:32px;padding-right:32px}
+  .g5{grid-template-columns:repeat(3,1fr)}
+  .scrollcue{left:32px}
+}
+@media(max-width:1024px){
+  .main{margin-right:0}
+  .sidenav{transform:translateX(-100%);box-shadow:var(--sh-3)}
+  .sidenav.open{transform:none}
+  .main{margin-left:0}
+  .menubtn{display:none}
+  #fab{display:grid}
+  .mbar-t{padding-left:74px}
+  .quad,.econ{grid-template-columns:1fr}
+  .hz{grid-template-columns:1fr}
+  .g4,.vc{grid-template-columns:repeat(2,1fr)}
+  .stack{grid-template-columns:repeat(2,1fr)}
+  .concl{grid-template-columns:1fr}
+  .cbox.full{grid-column:auto}
+  .hztrack{display:none}
+  .swot{grid-template-columns:1fr}
+  .src-list{grid-template-columns:1fr}
+  .hero-stats{grid-template-columns:repeat(2,1fr);gap:22px 0}
+  .hstat:nth-child(3){border-left:none;padding-left:0}
+  .hstat:nth-child(3),.hstat:nth-child(4){padding-top:20px;border-top:1px solid var(--line)}
+  .scrollcue{display:none}
+}
+@media(max-width:760px){
+  body{font-size:15.5px}
+  .wrap,.hero-inner{padding-left:20px;padding-right:20px}
+  section{padding:52px 0}
+  .g2,.g3,.g4,.g5,.stack,.vc,.split{grid-template-columns:1fr}
+  .hero{min-height:auto;padding-bottom:56px}
+  .hero-inner{padding-top:76px}
+  .exec{padding:28px 24px;border-radius:var(--r-lg)}
+  .callout{flex-direction:column;gap:14px;padding:22px}
+  .search{max-width:none}
+  .toolbar{gap:8px}
+  .totop{right:16px;bottom:16px;width:40px;height:40px}
+  .hero-stats{grid-template-columns:1fr;gap:0}
+  .hstat{padding:16px 0 !important;border-left:none !important;border-top:1px solid var(--line)}
+  .hstat:first-child{border-top:none}
+  .hstat + .hstat{padding-left:0}
+  .ghost{display:none}
+  h1{letter-spacing:-.035em}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .rv{opacity:1;transform:none}
+}
+@media print{
+  #bar,.sidenav,#scrim,#fab,.rail,.palette,.totop,.cbtn,.tabs,.toolbar,.mbar-t{display:none!important}
+  .main{margin-left:0}
+  body{background:#fff;font-size:11pt}
+  section{padding:18px 0;break-inside:avoid}
+  .rv{opacity:1!important;transform:none!important}
+  .card,.kpi,.chart,.alert,.callout{box-shadow:none;border:1px solid #ddd}
+  .hero{min-height:auto}
+  a{color:#000;text-decoration:none}
+}
+
+/* ============================================================
+   V3 ADDITIONS
+   ============================================================ */
+.rail{
+  position:fixed;right:0;top:0;height:100vh;width:var(--rail-w);z-index:120;
+  display:flex;flex-direction:column;justify-content:center;gap:2px;padding:0 18px 0 0;pointer-events:none;
+}
+.rail-item{display:flex;align-items:center;gap:9px;padding:5px 0;pointer-events:auto;cursor:pointer;
+  font-size:11px;font-weight:650;color:var(--ink-5);transition:.26s var(--ease);text-align:right;
+  justify-content:flex-end;width:100%;background:none;border:none;font-family:inherit;}
+.rail-item .rt{opacity:0;transform:translateX(6px);transition:.26s var(--ease);white-space:nowrap}
+.rail-item .rd{width:20px;height:2.5px;border-radius:99px;background:var(--line);flex-shrink:0;transition:.3s var(--ease)}
+.rail-item:hover{color:var(--ink-2)} .rail-item:hover .rt{opacity:1;transform:none}
+.rail-item.on{color:var(--indigo)} .rail-item.on .rd{background:var(--indigo);width:30px}
+.rail-item.on .rt{opacity:1;transform:none}
+.rail-read{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:9.5px;color:var(--ink-5);text-align:right;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.rail-read b{display:block;font-size:15px;color:var(--ink-2);font-weight:800;letter-spacing:-.03em}
+
+.palette{position:fixed;inset:0;z-index:400;display:none;align-items:flex-start;justify-content:center;
+  padding:12vh 20px 20px;background:rgba(11,18,32,.42);backdrop-filter:blur(7px)}
+.palette.open{display:flex;animation:fadeIn .2s var(--ease)}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.pal-box{width:min(620px,100%);background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:0 30px 70px rgba(0,0,0,.30);overflow:hidden;animation:palIn .3s var(--ease)}
+@keyframes palIn{from{opacity:0;transform:translateY(-14px) scale(.98)}to{opacity:1;transform:none}}
+.pal-input-wrap{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.pal-input-wrap svg{width:18px;height:18px;color:var(--ink-4);flex-shrink:0}
+.pal-input{flex:1;border:none;background:transparent;font-size:16px;color:var(--ink);font-family:inherit;outline:none}
+.pal-input::placeholder{color:var(--ink-5)}
+.pal-list{max-height:min(440px,52vh);overflow-y:auto;padding:8px}
+.pal-list::-webkit-scrollbar{width:6px} .pal-list::-webkit-scrollbar-thumb{background:var(--line);border:none;border-radius:99px}
+.pal-group{font-size:9.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-5);padding:11px 12px 6px}
+.pal-item{display:flex;align-items:center;gap:12px;padding:9.5px 12px;border-radius:10px;cursor:pointer;transition:.14s}
+.pal-item.on{background:var(--indigo-50)}
+.pal-item .ic{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:11px;font-weight:800;color:#fff;flex-shrink:0}
+.pal-item .tx{flex:1;min-width:0}
+.pal-item .t1{font-size:13.5px;font-weight:650;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pal-item .t2{font-size:11px;color:var(--ink-4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pal-item.on .t1{color:var(--indigo)}
+.pal-empty{padding:30px;text-align:center;color:var(--ink-5);font-size:13px}
+.pal-foot{padding:9px 16px;border-top:1px solid var(--line);display:flex;gap:14px;font-size:10.5px;color:var(--ink-5);align-items:center}
+html[data-theme="dark"] .pal-box{background:#0D1420}
+html[data-theme="dark"] .pal-item.on{background:#1A2340}
+html[data-theme="dark"] .pal-item.on .t1{color:var(--indigo-300)}
+
+.cmp-shell{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:26px;box-shadow:var(--sh-1)}
+.cmp-pick{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:20px}
+.cmp-pick button{display:flex;align-items:center;gap:8px;padding:9px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--line-3);font-size:12.5px;font-weight:680;color:var(--ink-3);cursor:pointer;transition:.24s var(--ease);font-family:inherit}
+.cmp-pick button .sw{width:9px;height:9px;border-radius:3px}
+.cmp-pick button:hover{border-color:var(--ink-5);color:var(--ink)}
+.cmp-pick button.on{background:var(--card);border-color:var(--indigo);color:var(--ink);box-shadow:0 0 0 3px var(--indigo-50)}
+.cmp-grid{display:grid;grid-template-columns:118px 1fr 1fr;gap:1px;background:var(--line);border-radius:12px;overflow:hidden;font-size:13px}
+.cmp-grid > div{background:var(--card);padding:13px 15px}
+.cmp-grid .hd{font-weight:800;font-size:12px;letter-spacing:.02em;background:var(--line-3);display:flex;align-items:center;gap:8px}
+.cmp-grid .hd .sw{width:9px;height:9px;border-radius:3px}
+.cmp-grid .lb{font-weight:700;color:var(--ink);background:var(--line-3);font-size:12px}
+.cmp-grid .vl{color:var(--ink-3);font-variant-numeric:tabular-nums}
+.cmp-note{margin-top:18px;padding:17px 19px;border-radius:13px;background:var(--indigo-50);border:1px solid #C7D2FE;font-size:13.2px;line-height:1.75;color:var(--ink-2)}
+html[data-theme="dark"] .cmp-note{background:#141C36;border-color:#2A3A66}
+html[data-theme="dark"] .cmp-note b{color:var(--indigo-300)}
+.cmp-note b{color:var(--indigo)}
+.count-note{font-size:11.5px;color:var(--ink-4);padding:10px 15px;border-top:1px solid var(--line-2);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+.draw{stroke-dasharray:var(--len,1200);stroke-dashoffset:var(--len,1200);transition:stroke-dashoffset 1.9s var(--ease)}
+.draw.go{stroke-dashoffset:0}
+.draw-2{stroke-dasharray:var(--len,1200);stroke-dashoffset:var(--len,1200);transition:stroke-dashoffset 2.1s var(--ease) .25s}
+.draw-2.go{stroke-dashoffset:0}
+.pop{opacity:0;transform:scale(.4);transform-origin:center;transition:opacity .5s var(--ease), transform .5s var(--ease)}
+.pop.go{opacity:1;transform:scale(1)}
+.hit rect.ring-h{transition:filter .2s var(--ease)}
+.hit:hover rect.ring-h{filter:brightness(1.08)}
+.cmdhint{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-radius:9px;
+  background:var(--line-3);border:1px solid var(--line);font-size:11px;color:var(--ink-4);font-weight:600;cursor:pointer;transition:.22s var(--ease)}
+html[data-theme="dark"] .cmdhint{background:#0B121C}
+.cmdhint:hover{border-color:var(--indigo);color:var(--indigo)}
+
+@media(max-width:1380px){ .rail{display:none} }
+@media(max-width:1024px){
+  .cmp-grid{grid-template-columns:88px 1fr 1fr;font-size:12px}
+  .cmp-grid > div{padding:11px 12px}
+}
+@media(max-width:760px){
+  .cmp-grid{grid-template-columns:1fr;font-size:13px}
+  .cmp-grid .hd{grid-column:1/-1}
+  .cmp-grid .lb{background:var(--line-2)}
+  .palette{padding:8vh 12px 12px}
+  .cmp-shell{padding:20px 16px}
+}
+@media(prefers-reduced-motion:reduce){
+  .draw,.draw-2{stroke-dashoffset:0!important}
+  .pop{opacity:1!important;transform:none!important}
+}
+@media print{
+  .rail,.palette,.cmp-pick{display:none!important}
+  .draw,.draw-2{stroke-dashoffset:0!important}
+  .pop{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+<button id="fab" aria-label="打开导航" aria-expanded="false">
+  <span class="bars"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></span>
+  <span class="x"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></span>
+</button>
+<div id="scrim"></div>
+
+<div class="palette" id="palette">
+  <div class="pal-box">
+    <div class="pal-input-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
+      <input class="pal-input" id="palInput" placeholder="跳转章节、搜索来源、执行操作…" autocomplete="off">
+      <span class="kbd">ESC</span>
+    </div>
+    <div class="pal-list" id="palList"></div>
+    <div class="pal-foot"><span><span class="kbd">↑</span><span class="kbd">↓</span> 选择</span><span><span class="kbd">↵</span> 打开</span><span><span class="kbd">ESC</span> 关闭</span></div>
+  </div>
+</div>
+<div class="tipbox" id="tip"></div>
+
+<!-- ===================== SIDE NAV ===================== -->
+<aside class="sidenav" id="sn">
+  <div class="mbar-t">
+    <button class="menubtn" id="menuBtn" aria-label="菜单">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div style="font-size:13px;font-weight:750;letter-spacing:-.02em">报告导航</div>
+  </div>
+  <div class="sn-head">
+    <div class="sn-logo">
+      <div class="sn-mark">AI</div>
+      <div>
+        <div class="sn-title">AI 编程工具赛道<br>商业模式研究</div>
+      </div>
+    </div>
+    <div class="sn-sub" style="margin-top:11px">Deep Dive Report · 2026 Q4</div>
+  </div>
+  <div class="sn-scroll">
+    <div class="cmdhint" id="cmdBtn"><span>搜索 / 跳转</span><span><span class="kbd">⌘</span><span class="kbd">K</span></span></div>
+    <div class="sn-label">Contents</div>
+    <a class="sn-a" href="#summary"><span class="num">01</span>执行摘要</a>
+    <a class="sn-a" href="#metrics"><span class="num">02</span>核心读数</a>
+    <a class="sn-a" href="#growth"><span class="num">03</span>增长曲线</a>
+    <a class="sn-a" href="#competition"><span class="num">04</span>竞争格局</a>
+    <a class="sn-a" href="#monetization"><span class="num">05</span>变现拆解</a>
+    <a class="sn-a" href="#unit"><span class="num">06</span>单位经济</a>
+    <a class="sn-a" href="#swot"><span class="num">07</span>SWOT</a>
+    <a class="sn-a" href="#outlook"><span class="num">08</span>趋势展望</a>
+    <a class="sn-a" href="#sources"><span class="num">09</span>来源清单</a>
+    <div class="sn-label">Tools</div>
+    <a class="sn-a" id="printBtn" style="cursor:pointer"><span class="num">⎙</span>导出 PDF</a>
+  </div>
+  <div class="sn-foot">
+    <div class="sn-tools">
+      <button class="tbtn" id="themeBtn" title="切换主题 (T)">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/></svg>
+        <span id="themeTxt">深色</span>
+      </button>
+      <button class="tbtn" id="topBtn" title="回到顶部">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+        顶部
+      </button>
+    </div>
+    <div class="sn-meta">
+      数据截至 <b>2026-10-17</b> · 26 项公开来源<br>
+      <span class="kbd">T</span> 主题 · <span class="kbd">P</span> 打印
+    </div>
+  </div>
+</aside>
+
+<nav class="rail" id="rail" aria-label="章节进度"></nav>
+
+<!-- ===================== MAIN ===================== -->
+<div class="main">
+
+<!-- ---------- HERO ---------- -->
+<header class="hero" id="top">
+  <canvas class="hero-canvas" id="mesh"></canvas>
+  <div class="hero-inner">
+    <div class="eyebrow rv in"><span class="pulse"></span>深度研究报告 · 产品与市场情报 · 2026 Q4</div>
+    <h1 class="rv in">AI 编程工具赛道<br><span class="grad">商业模式</span>深度研究</h1>
+    <p class="lede rv in rv-d1">从「代码补全插件」到「按用量计费的智能体平台」——一个 <b>18 个月完成寡头化</b>、年化规模近百亿美元的企业软件赛道。本报告拆解其增长曲线、四层收入栈、单位经济真相与未来三段式演进。</p>
+    <div class="chips rv in rv-d2">
+      <div class="chip">研究日期 <b>2026.10.17</b></div>
+      <div class="chip">方法 <b>桌面研究 + 多源三角验证</b></div>
+      <div class="chip">核心来源 <b>26 项公开披露</b></div>
+      <div class="chip">标注体系 <b>真实 / 估算 / 定性</b></div>
+    </div>
+    <div class="hero-stats rv in rv-d3">
+      <div class="hstat">
+        <div class="v odo" data-odo="83" data-suffix="%"><span class="odo-static">83%</span></div>
+        <div class="l">开发者已使用 AI 工具<br>Stack Overflow 2026</div>
+      </div>
+      <div class="hstat">
+        <div class="v"><span class="cur">$</span><span class="odo" data-odo="50" data-suffix="B"><span class="odo-static">50B</span></span></div>
+        <div class="l">Cursor 估值（洽谈中）<br>较 2025/11 近乎翻倍</div>
+      </div>
+      <div class="hstat">
+        <div class="v"><span class="cur">$</span><span class="odo" data-odo="9.8" data-dec="1" data-suffix="–11B"><span class="odo-static">9.8–11B</span></span></div>
+        <div class="l">企业级市场年化规模<br>Gartner · 2026/04</div>
+      </div>
+      <div class="hstat">
+        <div class="v odo" data-odo="70" data-suffix="%+"><span class="odo-static">70%+</span></div>
+        <div class="l">收入集中于前三名<br>18 个月完成收敛</div>
+      </div>
+    </div>
+    <div class="scrollcue"><span class="ln"></span>Scroll</div>
+  </div>
+</header>
+
+<!-- ---------- 01 EXEC ---------- -->
+<section id="summary">
+  <div class="wrap">
+    <div class="ghost">01</div>
+    <div class="shead rv">
+      <div class="snumrow"><span class="snum">01 / Executive Summary</span><span class="srule"></span></div>
+      <h2>执行摘要：五条核心结论</h2>
+      <p class="sub">AI 编程工具已完成从「尝鲜插件」到「默认基础设施」的跃迁。赛道真正的变化不在采用率，而在<b>计费单位——从「人头席位」转向「Token 消耗」</b>。这一次范式切换重写了整个商业模型。</p>
+    </div>
+
+    <div class="exec rv">
+      <div class="exec-kicker">核心判断 · The Verdict</div>
+      <p class="exec-lead">2026 年，AI 编程赛道最重要的变化不是用户增长，而是 <span class="hl">计费单位从「席位」迁移到「用量」</span>。GitHub Copilot 于 6 月 1 日全面切换为 AI Credits 按量计费，标志着这个品类正式告别 SaaS 席位时代，进入云成本结构主导的新阶段——增长的天花板由此从「有多少开发者」变成「有多少 Token 可被变现」。</p>
+
+      <div class="concl">
+        <div class="cbox rv rv-d1">
+          <div class="n">结论 01 · 采用</div>
+          <div class="h">渗透接近饱和，增长引擎换挡</div>
+          <p>Stack Overflow 2026 调查（<b>30,000+ 开发者</b>）显示 <b>83%</b> 已使用至少一种 AI 工具，其中代码助手/智能体占 <b>66%</b>；JetBrains 2026 年 5–7 月对 15,000+ 职业开发者的调查显示 <b>90%</b> 每周至少使用一次 AI 编程智能体。<b>拉新不再是瓶颈，付费转化、留存与用量深度才是。</b></p>
+        </div>
+        <div class="cbox rv rv-d2">
+          <div class="n">结论 02 · 格局</div>
+          <div class="h">三强割据，但份额在实时转移</div>
+          <p>Claude Code（<b>$2.5B+</b> ARR）已超越 Cursor 同期规模成为收入第一，Copilot 以 <b>4.7M</b> 付费席位与 <b>50M</b> 总用户守住规模第一。Copilot 份额从 1 月 <b>67%</b> 降至 7 月 <b>51%</b>——绝对量仍在涨，<b>相对份额却在被 Agent 原生工具持续侵蚀</b>。</p>
+        </div>
+        <div class="cbox rv rv-d3">
+          <div class="n">结论 03 · 变现</div>
+          <div class="h">四层收入栈，用量层成为主引擎</div>
+          <p>个人订阅 → 企业席位 → API/用量 → 模型差价。<b>2026 年最大的结构性变化是用量层从「弹性补充」升级为「计费中枢」</b>：Copilot 各档位均含等值 AI Credits，Enterprise 组织内共享额度池，轻度用户的未用额度可抵扣重度用户——<b>这实质上是一次毛利结构的重构</b>。</p>
+        </div>
+        <div class="cbox rv rv-d4">
+          <div class="n">结论 04 · 经济</div>
+          <div class="h">推理成本是毛利税，但已非「无底洞」</div>
+          <p>公开测算显示 Cursor 早期年付 Anthropic API 成本 <b>~$6.5 亿</b> vs 收入 <b>~$5 亿</b>（毛利率 <b>-30%</b>）；如今通过自研 Composer 模型 + 低价开源模型路由已转为<b>轻微毛利转正</b>，<b>企业账户毛利为正、个人账户仍亏损</b>——利润池正在明确向上迁移。</p>
+        </div>
+        <div class="cbox full rv rv-d5">
+          <div class="n">结论 05 · 趋势</div>
+          <div class="h">模型方下场，是这个赛道最深的结构性威胁</div>
+          <p>Gartner 明确指出：2026 年<b>前沿模型厂商已从上游供应商变成直接竞争者</b>——Anthropic（Claude Code）、OpenAI（Codex）与它们曾经的客户在同一张牌桌上。这带来一个残酷的不对称：<b>拥有模型的一方按「边际成本」定价，套壳方按「零售 API 价」采购</b>。Cursor 约 20 名研究员基于 DeepSeek / Kimi / Qwen 训练 Composer 系列来对冲，正是这场挤压的最直接证据。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- 02 METRICS ---------- -->
+<section id="metrics">
+  <div class="wrap">
+    <div class="ghost">02</div>
+    <div class="shead rv">
+      <div class="snumrow"><span class="snum">02 / Key Metrics</span><span class="srule"></span></div>
+      <h2>核心读数：十张定义赛道的卡片</h2>
+      <p class="sub">每个数字标注来源与性质。<span class="tag real"><i></i>真实</span> 为公开披露，<span class="tag est"><i></i>估算</span> 为第三方测算，<span class="tag qual"><i></i>定性</span> 为研究判断。悬停卡片可查看详情。</p>
+    </div>
+
+    <div class="g5 mb18">
+      <div class="kpi rv"><div class="lbl">开发者 AI 工具采用率</div><div class="val"><span data-cnt="83" data-suffix="%">83%</span></div><div class="note">代码助手 <b>66%</b> · 通用聊天 <b>63%</b> · Agent 工作流 <b>26.2%</b> · 完全不用 <b>17.2%</b><span class="srcnote">Stack Overflow 2026 · n=17,464</span></div></div>
+      <div class="kpi rv rv-d1"><div class="lbl">Copilot 付费订阅</div><div class="val"><span data-cnt="4.7" data-dec="1" data-suffix="M">4.7M</span></div><div class="note">同比 <b>+75%</b> · 近 <b>14 万家</b>组织 · 总用户 <b>50M</b><span class="srcnote">Microsoft FY26 财报 Q2/Q3/Q4</span></div></div>
+      <div class="kpi rv rv-d2"><div class="lbl">Cursor 估值</div><div class="val"><span class="cur">$</span><span data-cnt="50" data-suffix="B">50B</span></div><div class="note">2026/04–05 洽谈中，拟募资 <b>$2B</b> · a16z + Thrive 领投<span class="srcnote">CNBC / TechCrunch</span></div></div>
+      <div class="kpi rv rv-d3"><div class="lbl">Claude Code ARR</div><div class="val"><span class="cur">$</span><span data-cnt="2.5" data-dec="1" data-suffix="B+">2.5B+</span></div><div class="note">3 个月翻倍 · 企业收入占比 <b>&gt;50%</b><span class="srcnote">Anthropic Series G 公告</span></div></div>
+      <div class="kpi rv rv-d4"><div class="lbl">GitHub 新代码 AI 生成占比</div><div class="val"><span data-cnt="46" data-suffix="%">46%</span></div><div class="note">不是「辅助」——接近一半新代码由机器撰写、人类批准<span class="srcnote">GitHub 官方遥测</span></div></div>
+    </div>
+
+    <div class="g5 mb24">
+      <div class="kpi rv"><div class="lbl">企业级市场规模 <span class="tag qual"><i></i>机构</span></div><div class="val"><span class="cur">$</span><span data-cnt="9.8" data-dec="1" data-suffix="–11B">9.8–11B</span></div><div class="note">2026/4 年化口径 · 涵盖助手、AI 原生 IDE、终端智能体<span class="srcnote">Gartner MQ 2026</span></div></div>
+      <div class="kpi rv rv-d1"><div class="lbl">Cursor ARR（2026/06）</div><div class="val"><span class="cur">$</span><span data-cnt="4" data-suffix="B">4B</span></div><div class="note">路径 $0.1B→$1B→$2B→<b>$4B</b> · 目标年底 <b>$6B</b><span class="srcnote">Bloomberg / Forbes / TechCrunch</span></div></div>
+      <div class="kpi rv rv-d2"><div class="lbl">Copilot 估算 ARR <span class="tag est"><i></i>估算</span></div><div class="val"><span class="cur">$</span><span data-cnt="0.9" data-dec="1" data-suffix="–1.1B">0.9–1.1B</span></div><div class="note"><b>微软从未披露 Copilot 收入。</b>Axis Intelligence 推算；FT 下限 <b>$5.5 亿</b>。因 7 月单季 <b>+60%</b>，估算或已偏低<span class="srcnote">Axis Intelligence / FT</span></div></div>
+      <div class="kpi rv rv-d3"><div class="lbl">Claude Code 占 GitHub 公开提交</div><div class="val"><span data-cnt="4" data-suffix="%">4%</span></div><div class="note"><b>较上月翻倍</b>。首个可独立验证的 Agent 代码产量观测口径<span class="srcnote">第三方分析</span></div></div>
+      <div class="kpi rv rv-d4"><div class="lbl">对 AI 的「无条件信任」</div><div class="val"><span data-cnt="6.6" data-dec="1" data-suffix="%">6.6%</span></div><div class="note">仅 6.6% 愿在<b>重要决策</b>上信任 AI；78.7% 要求来源标注<span class="srcnote">Stack Overflow 2026</span></div></div>
+    </div>
+
+    <div class="callout rv">
+      <div class="n">※</div>
+      <div class="b">
+        <h4>关于这批数字的三点提醒</h4>
+        <p><b>一、口径不可混用。</b>Stack Overflow 的「83% 使用至少一种 AI 工具」与 JetBrains 的「90% 每周使用 AI 编程智能体」看起来矛盾，实则测量对象不同——前者是全量开发者，后者是职业开发者且限定在「编程智能体」这一子类。<b>引用时务必带口径。</b><br><br>
+        <b>二、Copilot 的收入是估算，不是披露。</b>微软在 FY26 Q2/Q3/Q4 三次财报中分别公布了付费订户数、组织数与总用户数，但<b>从未公布收入</b>。任何写着「Copilot 年收入 XX 亿」的表述都是第三方测算，务必注明估算方。<br><br>
+        <b>三、时点差异会造成误判。</b>本报告核心数据分布在 2026 年 2 月至 9 月的不同披露中（Cursor ARR 为 6 月口径，Copilot 付费数为 1 月口径）。<b>横向比较时需注意这些数字并非同一时点。</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- 03 GROWTH ---------- -->
+<section id="growth">
+  <div class="wrap">
+    <div class="ghost">03</div>
+    <div class="shead rv">
+      <div class="snumrow"><span class="snum">03 / Growth Curve</span><span class="srule"></span></div>
+      <h2>市场增长曲线：两个截然不同的速度</h2>
+      <p class="sub">上图为品类总盘的机构预测，下图为 Cursor 单家的真实 ARR 轨迹。<b>单家增速远超品类增速</b>——这不是普惠增长，是赢家通吃。悬停数据点查看详情。</p>
+    </div>
+
+    <div class="chart mb18 rv" data-chart>
+      <div class="chart-hd">
+        <div>
+          <div class="chart-t">全球 AI 代码生成市场规模（十亿美元）</div>
+          <div class="chart-d">口径：Research and Markets「AI 代码生成」宽口径，含助手、IDE 与 Agent 产品。2025 / 2026 / 2031 为其公布值，2027–2030 按其披露的 37.39% CAGR 插值推算。</div>
+        </div>
+        <span class="tag qual"><i></i>部分为 CAGR 插值</span>
+      </div>
+      <svg viewBox="0 0 760 320" role="img" aria-label="AI 代码生成市场规模增长曲线">
+        <defs>
+          <linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4F46E5" stop-opacity=".30"/><stop offset="100%" stop-color="#4F46E5" stop-opacity="0"/></linearGradient>
+          <linearGradient id="gl" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#818CF8"/><stop offset="100%" stop-color="#059669"/></linearGradient>
+        </defs>
+        <g stroke="#E4E8EF" stroke-width="1" stroke-dasharray="3 5">
+          <line x1="64" y1="211.4" x2="740" y2="211.4"/><line x1="64" y1="154.2" x2="740" y2="154.2"/>
+          <line x1="64" y1="97.1" x2="740" y2="97.1"/><line x1="64" y1="39.9" x2="740" y2="39.9"/>
+        </g>
+        <line x1="64" y1="268.5" x2="740" y2="268.5" stroke="#CBD5E1" stroke-width="1.5"/>
+        <g font-size="11" fill="#A3AEBD" text-anchor="end"><text x="56" y="272">$0</text><text x="56" y="215">$20</text><text x="56" y="158">$40</text><text x="56" y="101">$60</text><text x="56" y="44">$80</text></g>
+        <!-- split real vs interpolated -->
+        <path d="M78,233.5 L188,221.1 L188,268.5 L78,268.5 Z" fill="#4F46E5" opacity=".05"/>
+        <path class="draw" data-len="820" style="--len:820" d="M78,233.5 L188,221.1 L298,203.4 L408,180.1 L518,147.6 L628,103.1 L738,42.2 L738,268.5 L78,268.5 Z" fill="url(#ga)"/>
+        <polyline class="draw" data-len="120" style="--len:120" points="78,233.5 188,221.1" fill="none" stroke="#4F46E5" stroke-width="3.2" stroke-linecap="round"/>
+        <polyline class="draw-2" data-len="700" style="--len:700" points="188,221.1 298,203.4 408,180.1 518,147.6 628,103.1 738,42.2" fill="none" stroke="url(#gl)" stroke-width="3.2" stroke-linecap="round" opacity=".25"/>
+        <g class="pop" font-size="11.5" font-weight="800" text-anchor="middle">
+          <text x="78" y="220" fill="#4F46E5">11.8</text><text x="188" y="208" fill="#4F46E5">16.1</text>
+          <text x="298" y="190" fill="#6366F1">22.2</text><text x="408" y="167" fill="#6366F1">30.4</text>
+          <text x="518" y="134" fill="#10B981">41.8</text><text x="628" y="90" fill="#10B981">57.5</text><text x="738" y="30" fill="#059669">79.0</text>
+        </g>
+        <g class="hit pop">
+          <circle class="ring-h" cx="78" cy="233.5" r="5.5" fill="#fff" stroke="#4F46E5" stroke-width="2.6" data-tip="<b>2025 · $11.8B</b>公布值 · 赛道首次突破百亿美元量级的临界年"/>
+          <circle class="ring-h" cx="188" cy="221.1" r="5.5" fill="#fff" stroke="#4F46E5" stroke-width="2.6" data-tip="<b>2026 · $16.1B</b>公布值 · 交叉锚点：Gartner 同期企业级口径年化 $9.8–11.0B"/>
+          <circle class="ring-h" cx="298" cy="203.4" r="4.6" fill="#fff" stroke="#6366F1" stroke-width="2.3" data-tip="<b>2027 · $22.2B</b>推算值 · 按 37.39% CAGR 插值"/>
+          <circle class="ring-h" cx="408" cy="180.1" r="4.6" fill="#fff" stroke="#6366F1" stroke-width="2.3" data-tip="<b>2028 · $30.4B</b>推算值 · Gartner 预计此时 &gt;70% 企业软件工程师将依赖 AI 代码智能体"/>
+          <circle class="ring-h" cx="518" cy="147.6" r="4.6" fill="#fff" stroke="#10B981" stroke-width="2.3" data-tip="<b>2029 · $41.8B</b>推算值 · 按 CAGR 插值"/>
+          <circle class="ring-h" cx="628" cy="103.1" r="4.6" fill="#fff" stroke="#10B981" stroke-width="2.3" data-tip="<b>2030 · $57.5B</b>推算值 · 按 CAGR 插值"/>
+          <circle class="ring-h" cx="738" cy="42.2" r="6" fill="#059669" stroke="#fff" stroke-width="2.6" data-tip="<b>2031 · $79.0B</b>公布终值 · 较 2025 年增长约 6.7 倍"/>
+        </g>
+        <g font-size="11.5" fill="#7C8899" text-anchor="middle" font-weight="650">
+          <text x="78" y="288">2025</text><text x="188" y="288">2026</text><text x="298" y="288">2027</text><text x="408" y="288">2028</text>
+          <text x="518" y="288">2029</text><text x="628" y="288">2030</text><text x="738" y="288">2031</text>
+        </g>
+        <g class="pop">
+          <rect x="500" y="196" width="212" height="40" rx="11" fill="#ECFDF5" stroke="#A7F3D0"/>
+          <text x="606" y="212" font-size="10.5" fill="#047857" text-anchor="middle" font-weight="750">2026 → 2031 年复合增速</text>
+          <text x="606" y="228" font-size="14" fill="#059669" text-anchor="middle" font-weight="850">CAGR 37.39%</text>
+        </g>
+        <text x="133" y="258" font-size="10" fill="#A3AEBD" text-anchor="middle" font-weight="700">公布值</text>
+        <text x="468" y="258" font-size="10" fill="#A3AEBD" text-anchor="middle" font-weight="700">CAGR 插值推算</text>
+      </svg>
+      <div class="legend">
+        <span><i class="lgd" style="background:#4F46E5"></i>公布锚点（2025 / 2026 / 2031）</span>
+        <span><i class="lgd dash"></i>按披露 CAGR 插值推算</span>
+        <span><i class="lgd" style="background:#F59E0B"></i>交叉锚点：Gartner 2026/04 企业级口径 $9.8–11.0B（年化，与上图口径不同，不可直接相加）</span>
+      </div>
+    </div>
+
+    <div class="chart mb18 rv" data-chart>
+      <div class="chart-hd">
+        <div>
+          <div class="chart-t">Cursor（Anysphere）年化收入轨迹（十亿美元）</div>
+          <div class="chart-d">均为公司披露或权威媒体报道的里程碑值，非模型推算。横轴按里程碑等距排列（非等时间轴）。<b>14 个月 40 倍</b>，为公司史上最快的 B2B 收入爬坡。</div>
+        </div>
+        <span class="tag real"><i></i>真实披露</span>
+      </div>
+      <svg viewBox="0 0 760 320" role="img" aria-label="Cursor ARR 增长轨迹">
+        <defs><linearGradient id="ca" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#10B981" stop-opacity=".32"/><stop offset="100%" stop-color="#10B981" stop-opacity="0"/></linearGradient></defs>
+        <g stroke="#E4E8EF" stroke-width="1" stroke-dasharray="3 5">
+          <line x1="64" y1="195.2" x2="740" y2="195.2"/><line x1="64" y1="121.9" x2="740" y2="121.9"/><line x1="64" y1="48.6" x2="740" y2="48.6"/>
+        </g>
+        <line x1="64" y1="268.5" x2="740" y2="268.5" stroke="#CBD5E1" stroke-width="1.5"/>
+        <g font-size="11" fill="#A3AEBD" text-anchor="end"><text x="56" y="272">$0</text><text x="56" y="199">$2B</text><text x="56" y="126">$4B</text><text x="56" y="53">$6B</text></g>
+        <path class="draw" data-len="800" style="--len:800" d="M78,264.9 L188,250.2 L298,231.8 L408,195.2 L518,158.6 L628,121.9 L738,48.6 L738,268.5 L78,268.5 Z" fill="url(#ca)"/>
+        <polyline class="draw" data-len="620" style="--len:620" points="78,264.9 188,250.2 298,231.8 408,195.2 518,158.6 628,121.9" fill="none" stroke="#10B981" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <line class="draw-2" data-len="110" style="--len:110" x1="628" y1="121.9" x2="738" y2="48.6" stroke="#F59E0B" stroke-width="3.2" stroke-dasharray="7 6" stroke-linecap="round"/>
+        <g class="pop" font-size="11.5" font-weight="800" text-anchor="middle">
+          <text x="78" y="251" fill="#059669">0.1</text><text x="188" y="237" fill="#059669">0.5</text><text x="298" y="218" fill="#059669">1.0</text>
+          <text x="408" y="182" fill="#047857">2.0</text><text x="518" y="145" fill="#047857">3.0</text><text x="628" y="108" fill="#047857">4.0</text><text x="738" y="36" fill="#B45309">6.0</text>
+        </g>
+        <g class="hit pop">
+          <circle class="ring-h" cx="78" cy="264.9" r="5.5" fill="#fff" stroke="#10B981" stroke-width="2.6" data-tip="<b>2025/01 · $100M</b>Series A 后不久 · 此前 2024/09 仅 $1M ARR"/>
+          <circle class="ring-h" cx="188" cy="250.2" r="5.5" fill="#fff" stroke="#10B981" stroke-width="2.6" data-tip="<b>2025/06 · $500M</b>半年翻 5 倍 · 同年 Series C 估值 $9B"/>
+          <circle class="ring-h" cx="298" cy="231.8" r="5.5" fill="#fff" stroke="#10B981" stroke-width="2.6" data-tip="<b>2025/11 · $1B</b>Series D 估值 $29.3B · 同期上线自研 Composer 模型"/>
+          <circle class="ring-h" cx="408" cy="195.2" r="5.5" fill="#fff" stroke="#059669" stroke-width="2.6" data-tip="<b>2026/02 · $2B</b>14 个月 20 倍 · 企业客户约占收入 60%"/>
+          <circle class="ring-h" cx="518" cy="158.6" r="5.5" fill="#fff" stroke="#059669" stroke-width="2.6" data-tip="<b>2026/04 · ~$3B</b>估值洽谈 $50B · 周活突破 300 万"/>
+          <circle class="ring-h" cx="628" cy="121.9" r="6" fill="#059669" stroke="#fff" stroke-width="2.6" data-tip="<b>2026/06 · ~$4B</b>月活破 100 万 · 5 万企业团队 · 覆盖 70% Fortune 1000"/>
+          <circle class="ring-h" cx="738" cy="48.6" r="6" fill="#fff" stroke="#F59E0B" stroke-width="3" stroke-dasharray="4 3" data-tip="<b>2026/12 · $6B（目标）</b>公司目标值，非承诺 · 若达成为 10 个月内 3 倍增长"/>
+        </g>
+        <g font-size="11" fill="#7C8899" text-anchor="middle" font-weight="650">
+          <text x="78" y="288">25/01</text><text x="188" y="288">25/06</text><text x="298" y="288">25/11</text>
+          <text x="408" y="288">26/02</text><text x="518" y="288">26/04</text><text x="628" y="288">26/06</text><text x="738" y="288">26/12</text>
+        </g>
+        <g class="pop">
+          <rect x="586" y="212" width="152" height="24" rx="8" fill="#FFFBEB" stroke="#FCD34D"/>
+          <text x="662" y="228" font-size="10.5" fill="#92400E" text-anchor="middle" font-weight="750">虚线 = 公司目标，非承诺值</text>
+        </g>
+      </svg>
+      <div class="legend">
+        <span><i class="lgd" style="background:#10B981"></i>实线：已实现 ARR（公司披露 / 权威媒体报道）</span>
+        <span><i class="lgd dash"></i>虚线：2026 年底 $6B 目标</span>
+        <span>对照 Claude Code：$1B(25/11) → $2.5B(26/02) → $2.5B+(26 年中)——<b>已在收入规模上完成对 Cursor 的反超</b></span>
+      </div>
+    </div>
+
+    <div class="chart mb18 rv" data-chart>
+      <div class="chart-hd">
+        <div>
+          <div class="chart-t">赛道收入集中度：CR3 拆解</div>
+          <div class="chart-d">下图为示意性结构图，用以表达「头部集中、长尾极薄」的形态。绝对金额取自各家最新公开披露或第三方测算。</div>
+        </div>
+        <span class="tag qual"><i></i>结构为定性示意</span>
+      </div>
+      <svg viewBox="0 0 760 260" role="img" aria-label="赛道收入集中度">
+        <!-- stacked bar 100% -->
+        <g class="pop">
+          <rect x="64" y="52" width="420" height="56" rx="10" fill="#D97706" opacity=".9"/>
+          <rect x="484" y="52" width="126" height="56" fill="#10B981" opacity=".9"/>
+          <rect x="610" y="52" width="105" height="56" fill="#4F46E5" opacity=".9"/>
+          <rect x="715" y="52" width="25" height="56" fill="#94A3B8" opacity=".55"/>
+          <rect x="727" y="52" width="13" height="56" rx="10" fill="#94A3B8" opacity=".55"/>
+          <text x="274" y="80" font-size="14" fill="#fff" text-anchor="middle" font-weight="850">Claude Code</text>
+          <text x="274" y="97" font-size="11" fill="rgba(255,255,255,.9)" text-anchor="middle" font-weight="650">$2.5B+</text>
+          <text x="547" y="80" font-size="13" fill="#fff" text-anchor="middle" font-weight="850">Cursor</text>
+          <text x="547" y="97" font-size="11" fill="rgba(255,255,255,.9)" text-anchor="middle" font-weight="650">$4B</text>
+          <text x="662" y="80" font-size="12.5" fill="#fff" text-anchor="middle" font-weight="850">Copilot</text>
+          <text x="662" y="97" font-size="11" fill="rgba(255,255,255,.9)" text-anchor="middle" font-weight="650">~$1–2B</text>
+        </g>
+        <g stroke="#fff" stroke-width="2">
+          <line x1="484" y1="52" x2="484" y2="108"/><line x1="610" y1="52" x2="610" y2="108"/><line x1="715" y1="52" x2="715" y2="108"/>
+        </g>
+        <!-- bracket CR3 -->
+        <g stroke="#059669" stroke-width="1.6" fill="none">
+          <path d="M64,132 v12 h651 v-12" stroke-dasharray="0"/>
+        </g>
+        <rect x="300" y="136" width="180" height="28" rx="9" fill="#ECFDF5" stroke="#A7F3D0"/>
+        <text x="390" y="154" font-size="12.5" fill="#047857" text-anchor="middle" font-weight="850">CR3 ≈ 70–80%</text>
+        <text x="64" y="196" font-size="12" fill="#7C8899" font-weight="700">长尾：逾 800 家获投 AI 智能体初创公司，多数带编码产品</text>
+        <text x="64" y="216" font-size="11.5" fill="#A3AEBD">但收入集中度已接近成熟市场——传统开发者工具（GitHub / VS Code / Slack）各自花了 5–10 年才完成这种收敛</text>
+        <text x="64" y="240" font-size="11.5" fill="#A3AEBD"><tspan font-weight="800" fill="#B45309">AI 编程工具只用了 18 个月。</tspan></text>
+      </svg>
+    </div>
+
+    <div class="callout rv">
+      <div class="n">!</div>
+      <div class="b">
+        <h4>读数要点：品类增速 37%，头部增速远超赛道</h4>
+        <p>品类总盘年复合增速约 <b>37%</b>，而 Cursor 单家在 14 个月内做到 <b>40 倍</b>，Claude Code 在 3 个月内翻倍至 $2.5B。这种剪刀差只有一个解释：<b>市场正在以远快于自然增长的速度向头部集中</b>。对企业采购方而言，这是坏消息——你的议价能力正在下降，供应商替换成本在上升，且这种集中还在继续。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- 04 COMPETITION ---------- -->
+<section id="competition">
+  <div class="wrap">
+    <div class="ghost">04</div>
+    <div class="shead rv">
+      <div class="snumrow"><span class="snum">04 / Competitive Landscape</span><span class="srule"></span></div>
+      <h2>竞争象限与玩家对比</h2>
+      <p class="sub">横轴为「生态与分发控制力」，纵轴为「Agent 原生产品力」。气泡位置为定性判断，悬停可查看详情；下方表格支持搜索与分类筛选。</p>
+    </div>
+
+    <div class="quad mb20">
+      <div class="qpanel rv">
+        <div class="chart-hd" style="margin-bottom:16px">
+          <div>
+            <div class="chart-t">竞争定位象限</div>
+            <div class="chart-d">2026 年格局：左上角「产品型」Agent 原生玩家正在持续挤压右上角「生态型」的份额</div>
+          </div>
+          <span class="tag qual"><i></i>定性示意</span>
+        </div>
+        <svg viewBox="0 0 560 460" role="img" aria-label="AI 编程工具竞争定位象限">
+          <rect x="70" y="26" width="220" height="192" fill="#F8FAFC"/>
+          <rect x="290" y="26" width="220" height="192" fill="#EEF2FF" opacity=".7"/>
+          <rect x="70" y="218" width="220" height="192" fill="#FFFFFF"/>
+          <rect x="290" y="218" width="220" height="192" fill="#ECFDF5" opacity=".55"/>
+          <rect x="70" y="26" width="440" height="384" fill="none" stroke="#CBD5E1" stroke-width="1.5" rx="4"/>
+          <line x1="290" y1="26" x2="290" y2="410" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4 5"/>
+          <line x1="70" y1="218" x2="510" y2="218" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="4 5"/>
+          <g font-size="10" font-weight="700" fill="#A3AEBD" text-anchor="middle">
+            <text x="180" y="42">弱生态 · 强 Agent</text><text x="400" y="42">强生态 · 强 Agent</text>
+            <text x="180" y="404">弱生态 · 弱 Agent</text><text x="400" y="404">强生态 · 弱 Agent</text>
+          </g>
+          <text x="290" y="440" font-size="12" font-weight="750" fill="#475569" text-anchor="middle">生态与分发控制力 →</text>
+          <text transform="translate(36,218) rotate(-90)" font-size="12" font-weight="750" fill="#475569" text-anchor="middle">Agent 原生产品力 →</text>
+
+          <g class="qdot" data-tip="<b>GitHub Copilot</b>微软 + GitHub 生态 · 4.7M 付费 / 50M 总用户 · Fortune 100 渗透 90% · 生成 GitHub 46% 新代码<br><i>变现：席位 + 用量，组织共享额度池</i>">
+            <circle cx="404" cy="120" r="32" fill="#4F46E5" opacity=".16"/><circle class="ring-h" cx="404" cy="120" r="32" fill="none" stroke="#4F46E5" stroke-width="2.2"/>
+            <text x="404" y="117" font-size="11.5" font-weight="800" fill="#3730A3" text-anchor="middle">GitHub</text>
+            <text x="404" y="131" font-size="11.5" font-weight="800" fill="#3730A3" text-anchor="middle">Copilot</text>
+            <text x="404" y="162" font-size="9.5" fill="#6366F1" text-anchor="middle" font-weight="700">50M 用户 · 4.7M 付费</text>
+          </g>
+          <g class="qdot" data-tip="<b>Cursor (Anysphere)</b>MIT 四人 2022 年创立 · ARR $0.1B→$4B（14 个月）· 估值洽谈 $50B<br><i>变现：$20–200/月订阅 + Business $40–120/人/月</i>">
+            <circle cx="240" cy="94" r="29" fill="#10B981" opacity=".18"/><circle class="ring-h" cx="240" cy="94" r="29" fill="none" stroke="#059669" stroke-width="2.2"/>
+            <text x="240" y="91" font-size="12" font-weight="800" fill="#065F46" text-anchor="middle">Cursor</text>
+            <text x="240" y="105" font-size="12" font-weight="800" fill="#065F46" text-anchor="middle">(Anysphere)</text>
+            <text x="240" y="134" font-size="9.5" fill="#047857" text-anchor="middle" font-weight="700">$4B ARR · $50B 估值</text>
+          </g>
+          <g class="qdot" data-tip="<b>Claude Code</b>Anthropic 自有模型 · ARR $2.5B+ · 收入规模第一 · 占 GitHub 公开提交 4%<br><i>变现：Max $100–200/月 + 企业席位，边际成本优势显著</i>">
+            <circle cx="150" cy="72" r="30" fill="#D97706" opacity=".18"/><circle class="ring-h" cx="150" cy="72" r="30" fill="none" stroke="#D97706" stroke-width="2.2"/>
+            <text x="150" y="69" font-size="12" font-weight="800" fill="#92400E" text-anchor="middle">Claude</text>
+            <text x="150" y="83" font-size="12" font-weight="800" fill="#92400E" text-anchor="middle">Code</text>
+            <text x="150" y="113" font-size="9.5" fill="#B45309" text-anchor="middle" font-weight="700">$2.5B+ ARR · 收入第一</text>
+          </g>
+          <g class="qdot" data-tip="<b>Devin / Cognition</b>自主编码智能体 · 已收购 Windsurf · 合并企业 ARR 七周 +30%<br><i>变现：Devin Teams = 固定席位 + 共享按需 Credits</i>">
+            <circle cx="116" cy="150" r="20" fill="#8B5CF6" opacity=".16"/><circle class="ring-h" cx="116" cy="150" r="20" fill="none" stroke="#8B5CF6" stroke-width="2"/>
+            <text x="116" y="154" font-size="10.5" font-weight="800" fill="#5B21B6" text-anchor="middle">Devin</text>
+            <text x="116" y="181" font-size="9" fill="#7C3AED" text-anchor="middle" font-weight="700">Cognition · 含 Windsurf</text>
+          </g>
+          <g class="qdot" data-tip="<b>Windsurf</b>原 Codeium · Cascade 智能体工作流 · ARR ~$82M（5 个月 2 倍）<br><i>覆盖 59% Fortune 500，已并入 Cognition 体系</i>">
+            <circle cx="186" cy="200" r="17" fill="#EC4899" opacity=".16"/><circle class="ring-h" cx="186" cy="200" r="17" fill="none" stroke="#EC4899" stroke-width="2"/>
+            <text x="186" y="204" font-size="10" font-weight="800" fill="#9D174D" text-anchor="middle">Windsurf</text>
+          </g>
+          <g class="qdot" data-tip="<b>OpenAI Codex</b>模型方下场的直接产物 · Gartner 领导者象限<br><i>与 OpenAI API 生态深度绑定</i>">
+            <circle cx="318" cy="64" r="18" fill="#0EA5E9" opacity=".16"/><circle class="ring-h" cx="318" cy="64" r="18" fill="none" stroke="#0EA5E9" stroke-width="2"/>
+            <text x="318" y="68" font-size="10" font-weight="800" fill="#075985" text-anchor="middle">Codex</text>
+          </g>
+          <g class="qdot" data-tip="<b>Amazon Q Developer / Google Gemini Code Assist</b>Gartner 挑战者象限 · 依托云生态导流<br><i>弱化独立产品，靠云服务捆绑获客</i>">
+            <circle cx="440" cy="252" r="19" fill="#F59E0B" opacity=".16"/><circle class="ring-h" cx="440" cy="252" r="19" fill="none" stroke="#F59E0B" stroke-width="2"/>
+            <text x="440" y="249" font-size="9" font-weight="800" fill="#92400E" text-anchor="middle">Amazon Q</text>
+            <text x="440" y="260" font-size="9" font-weight="800" fill="#92400E" text-anchor="middle">Gemini Code</text>
+          </g>
+          <g class="qdot" data-tip="<b>阿里云 Qoder</b>Gartner 挑战者象限唯一中国公司 · 全球用户 500 万+ · IDC 中国份额 47.6%<br><i>变现：企业方案 + 本地/混合云/VPC 隔离部署</i>">
+            <circle cx="140" cy="320" r="17" fill="#F97316" opacity=".16"/><circle class="ring-h" cx="140" cy="320" r="17" fill="none" stroke="#F97316" stroke-width="2"/>
+            <text x="140" y="324" font-size="10" font-weight="800" fill="#9A3412" text-anchor="middle">Qoder</text>
+          </g>
+          <g class="qdot" data-tip="<b>Replit</b>连续 1 年以上毛利为正 · 按工作量定价 + 托管/数据库/部署等多元变现<br><i>「卖成果而非卖交互」的先行验证者</i>">
+            <circle cx="228" cy="348" r="16" fill="#14B8A6" opacity=".16"/><circle class="ring-h" cx="228" cy="348" r="16" fill="none" stroke="#14B8A6" stroke-width="2"/>
+            <text x="228" y="352" font-size="10" font-weight="800" fill="#115E59" text-anchor="middle">Replit</text>
+          </g>
+          <g class="qdot" data-tip="<b>长尾 / 开源阵营</b>逾 800 家获投 AI 智能体初创公司，多数带编码产品<br><i>但收入集中度已接近成熟市场，几乎无生存空间</i>">
+            <circle cx="352" cy="352" r="14" fill="#94A3B8" opacity=".16"/><circle class="ring-h" cx="352" cy="352" r="14" fill="none" stroke="#94A3B8" stroke-width="1.6" stroke-dasharray="3 2.5"/>
+            <text x="352" y="356" font-size="9.5" fill="#64748B" text-anchor="middle" font-weight="750">长尾 / 开源</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="qinfo">
+        <div class="icard rv rv-d1"><div class="icard-h"><span class="sq" style="background:var(--indigo)"></span><span class="t">两条护城河正在交叉</span></div><p><b style="color:var(--indigo)">分发型（Copilot）</b>：GitHub 上「已在用 GitHub 的开发者等于半只脚已进 Copilot」，激活成本只是一个开关和一次账单决策，而非平台迁移。<br><br><b style="color:var(--emer-600)">产品型（Cursor / Claude Code）</b>：技术敏感用户愿意<b>主动离开</b> VS Code + Copilot 这个主流组合，换取更顺手的 Agent 工作流——这类用户技术 sophistication 更高、付费意愿更强。</p></div>
+        <div class="icard rv rv-d2"><div class="icard-h"><span class="sq" style="background:var(--emer)"></span><span class="t">份额转移已被独立观测到</span></div><p>Stack Overflow 数据显示 Copilot 的 AI 工具份额从 2026 年 1 月的 <b>67%</b> 降至 7 月的 <b>51%</b>。<b>绝对用户数仍在增长，相对份额却在下滑</b>——这正是「分发优势遇上产品代差」时的典型形态。</p><p style="margin-top:10px">另一面：2026 IDE 榜单中 VS Code 份额升至 <b>75.9%</b>（第九年第一）。Cursor 首年登场即 <b>17.9%</b> 排第六、Claude Code <b>9.7%</b>，但<b>并未侵蚀 VS Code</b>——大量开发者同时使用两者，Agent 工具正成为 IDE 之上的<b>第二工作层</b>而非替代品。</p></div>
+        <div class="icard rv rv-d3"><div class="icard-h"><span class="sq" style="background:var(--amber)"></span><span class="t">Gartner 2026 魔力象限</span></div><p><b>领导者象限</b>：GitHub、Anthropic、Cursor、OpenAI。<br><b>挑战者象限</b>（全球 12 家入围）：AWS、Google、阿里云 Qoder 等——Qoder 是其中唯一中国公司。</p><p style="margin-top:10px">中国 IDC 口径下市场规模 2025 年 ¥3.99 亿 → 2026 年底预计 ¥11.73 亿，<b>仅占全球约 1.5%</b>，量级差距显著。</p></div>
+      </div>
+    </div>
+
+    <div class="cmp-shell mb20 rv" id="cmp">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:4px">
+        <div>
+          <div class="chart-t" style="margin-bottom:4px">对手对比模式</div>
+          <div class="chart-d" style="margin-top:0">选择任意两家玩家并排比较关键指标，最多同时对比两家。</div>
+        </div>
+        <span class="tag qual"><i></i>交互工具</span>
+      </div>
+      <div class="cmp-pick" id="cmpPick"></div>
+      <div class="cmp-grid" id="cmpGrid"></div>
+      <div class="cmp-note" id="cmpNote"></div>
+    </div>
+
+    <div class="toolbar rv">
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
+        <input type="text" id="q" placeholder="搜索玩家、生态、变现方式…" aria-label="搜索">
+      </div>
+      <div class="fchips" id="fchips">
+        <button class="fchip on" data-f="all">全部</button>
+        <button class="fchip" data-f="leader">头部三家</button>
+        <button class="fchip" data-f="model">模型方系</button>
+        <button class="fchip" data-f="enterprise">企业向</button>
+        <button class="fchip" data-f="cn">中国玩家</button>
+      </div>
+    </div>
+
+    <div class="tbl-wrap rv">
+      <div class="tscroll">
+        <table id="pt">
+          <thead><tr><th style="min-width:150px">玩家</th><th>生态与背景</th><th>关键公开数据</th><th>定价结构</th><th>变现重心</th></tr></thead>
+          <tbody>
+            <tr data-cat="leader enterprise"><td class="nm"><span class="rk">1</span>GitHub Copilot</td><td>微软 + GitHub 生态；2022 年中公开发布；模型可切换（2026/2 起用 GPT-5.3-Codex）</td><td><b>4.7M</b> 付费订阅（26/1，+75% YoY）· <b>50M</b> 总用户（26/7）· 近 <b>14 万</b>组织 · Fortune 100 渗透 <b>90%</b> · 生成 GitHub <b>46%</b> 新代码</td><td>Pro $10/月（含 $10 Credits）· Pro+ $39/月 · Business $19/人/月 · Enterprise $39/人/月 · <b>26/6/1 起全量按量计费</b></td><td>企业席位 + 用量；组织级共享额度池</td></tr>
+            <tr data-cat="leader enterprise"><td class="nm"><span class="rk">2</span>Cursor</td><td>Anysphere；2022 年 MIT 四人创立；VS Code 分支重做；2025/11 自研 Composer 模型</td><td>ARR <b>$1B</b>(25/11) → <b>$2B</b>(26/2) → <b>~$4B</b>(26/6) · 2M+ 总用户 / 1M+ 付费 · 5 万企业团队 · 覆盖 <b>70%</b> Fortune 1000 · 3M 周活 · <b>1M+ DAU</b></td><td>Pro $20 / Pro+ $60 / Ultra $200 每月 · Business $40–120/人/月 · <b>3,000+ 客户年付 ≥$10 万</b></td><td>订阅 + 用量；企业约占收入 <b>60%</b></td></tr>
+            <tr data-cat="leader model enterprise"><td class="nm"><span class="rk">3</span>Claude Code</td><td>Anthropic；2025/5 面向公众开放；终端优先的自主编码智能体</td><td>ARR <b>$1B</b>(25/11) → <b>$2.5B</b>(26/2) → <b>$2.5B+</b> · 周活年内翻倍 · 商务订阅 <b>4 倍</b> · 企业收入占比 <b>&gt;50%</b> · 占 GitHub 公开提交 <b>4%</b></td><td>Max 套餐 $100–200/月 · 团队/企业版 · 与 Claude 订阅体系绑定</td><td>自有模型边际成本；企业席位 + API</td></tr>
+            <tr data-cat="model enterprise"><td class="nm"><span class="rk">4</span>Devin / Cognition</td><td>Cognition；自主编码智能体；已收购 Windsurf</td><td>Devin ARR <b>$73–155M</b> · Windsurf <b>~$82M</b> · 合并后企业 ARR 七周内 <b>+30%</b> · 估值 $10.2B(25/9) → 洽谈 <b>$25B</b></td><td>Devin Teams = <b>固定席位 + 共享按需 Credits</b> · 按工作量/复杂度定价</td><td>企业席位 + 用量组合</td></tr>
+            <tr data-cat="enterprise"><td class="nm"><span class="rk">5</span>Windsurf</td><td>原 Codeium；Cascade 智能体工作流引擎；已被 Cognition 收购</td><td>ARR <b>~$82M</b>（5 个月 2 倍）· 覆盖 <b>59%</b> Fortune 500</td><td>订阅 + 企业方案</td><td>随 Cognition 体系整合</td></tr>
+            <tr data-cat="model"><td class="nm"><span class="rk">6</span>OpenAI Codex</td><td>OpenAI；模型方直接下场；Gartner 领导者象限</td><td>未单独披露收入；与 OpenAI API 生态深度绑定</td><td>随 ChatGPT / API 生态计价</td><td>订阅 + API 用量</td></tr>
+            <tr data-cat="leader"><td class="nm"><span class="rk">7</span>Replit</td><td>云端 IDE + 智能体；最早实现毛利转正的玩家之一</td><td>连续 <b>1 年以上</b>毛利为正（CEO 2026 年表述）</td><td>智能体工作量定价 + 托管/数据库/部署等周边基础设施</td><td><b>多元变现</b>——不止卖 AI 交互本身</td></tr>
+            <tr data-cat="cn enterprise"><td class="nm"><span class="rk">8</span>阿里云 Qoder</td><td>阿里云；IDE + JetBrains 插件 + CLI 多形态；集成 Qwen/Kimi/GLM/DeepSeek</td><td>全球用户 <b>500 万+</b> · IDC 2025 中国份额 <b>47.6%</b> · Gartner 挑战者象限 · 150+ 安全合规认证</td><td>企业方案为主 · 支持本地/混合云/VPC 隔离部署</td><td>云生态导流 + 企业级合规溢价</td></tr>
+            <tr data-cat="enterprise"><td class="nm"><span class="rk">9</span>Amazon Q / Gemini Code</td><td>AWS / Google；云与 IDE 生态捆绑；Gartner 挑战者象限</td><td>依托云服务整体口径，未单独披露编码产品收入</td><td>云服务捆绑 + 按用量</td><td>生态导流为主</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="count-note"><span id="rowCount">显示 9 / 9 家玩家</span><span>数据来源见页脚来源清单 · 估算项已标注</span></div>
+      <div class="noresult" id="nores">未找到匹配的玩家。试试其他关键词，或点击「全部」重置筛选。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- 05 MONETIZATION ---------- -->
+<section id="monetization">
+  <div class="wrap">
+    <div class="ghost">05</div>
+    <div class="shead rv">
+      <div class="snumrow"><span class="snum">05 / Business Model</span><span class="srule"></span></div>
+      <h2>变现拆解：四层收入栈</h2>
+      <p class="sub">2026 年最重要的结构性变化：<b>第三层「用量计费」从弹性补充升级为计费中枢</b>。四层机制叠加，共同决定营收天花板与毛利弹性。</p>
+    </div>
+
+    <div class="stack mb20">
+      <div class="sl rv">
+        <div class="step">1</div>
+        <h4>个人订阅 <span style="font-size:11px;color:var(--ink-5);font-weight:600">流量入口</span></h4>
+        <p>面向独立开发者的固定月费，构建广覆盖基数与品牌心智。它更接近<b>获客产品</b>而非利润中心。</p>
+        <div class="pbox"><span class="t">真实价目 · Cursor</span>
+          <div class="row"><span>Pro</span><b>$20 / 月</b></div>
+          <div class="row"><span>Pro+</span><b>$60 / 月</b></div>
+          <div class="row"><span>Ultra</span><b>$200 / 月</b></div>
+        </div>
+        <div class="pbox" style="margin-top:9px"><span class="t">真实价目 · Copilot / Claude</span>
+          <div class="row"><span>Copilot Pro / Pro+</span><b>$10 / $39</b></div>
+          <div class="row"><span>Claude Max</span><b>$100–200</b></div>
+        </div>
+      </div>
+      <div class="sl rv rv-d1">
+        <div class="step">2</div>
+        <h4>企业席位 <span style="font-size:11px;color:var(--ink-5);font-weight:600">规模收入</span></h4>
+        <p>按人头计价，叠加管理后台、SSO、审计、合规与私有部署——<b>不按比例增加推理成本，因此是毛利最厚的一层</b>。</p>
+        <div class="pbox"><span class="t">真实价目</span>
+          <div class="row"><span>Copilot Business</span><b>$19 / 人 / 月</b></div>
+          <div class="row"><span>Copilot Enterprise</span><b>$39 / 人 / 月</b></div>
+          <div class="row"><span>Cursor Business</span><b>$40–120 / 人 / 月</b></div>
+          <div class="row"><span>Cursor 大客户</span><b>3,000+ 年付 ≥$10 万</b></div>
+        </div>
+      </div>
+      <div class="sl hero-card rv rv-d2">
+        <div class="step">3</div>
+        <h4>API / 用量计费 <span class="badge">计费中枢</span></h4>
+        <p><b>2026 年的决定性变化。</b>Agent 模式下「用多少算多少」成为常态，席位包无法承载重度使用。</p>
+        <div class="pbox"><span class="t">真实计费规则</span>
+          <div class="row"><span>1 GitHub AI Credit</span><b>$0.01</b></div>
+          <div class="row"><span>计价基础</span><b>模型 + token 消耗</b></div>
+          <div class="row"><span>含输入/输出/缓存</span><b>对齐公开 API 定价</b></div>
+          <div class="row"><span>企业促销（6–8月）</span><b>+$30 / +$70</b></div>
+          <div class="row"><span>补全 / Next Edit</span><b style="color:var(--emer-700)">不消耗额度</b></div>
+        </div>
+      </div>
+      <div class="sl rv rv-d3">
+        <div class="step">4</div>
+        <h4>模型差价 <span style="font-size:11px;color:var(--ink-5);font-weight:600">毛利来源</span></h4>
+        <p>对外定价与底层推理成本之间的价差。通过<b>自研模型 + 模型路由 + 缓存 + 低价开源模型</b>四手优化。</p>
+        <div class="pbox"><span class="t">实证 · Cursor 的对冲路径</span>
+          <div class="row"><span>2025/11</span><b>自研 Composer 上线</b></div>
+          <div class="row"><span>研发规模</span><b>约 20 名 AI 研究员</b></div>
+          <div class="row"><span>训练基座</span><b>DeepSeek / Kimi / Qwen</b></div>
+          <div class="row"><span>成果</span><b>Composer 1.5 已是第二热门模型</b></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart mb20 rv" data-chart>
+      <div class="chart-hd">
+        <div>
+          <div class="chart-t">收入结构转型：Copilot 计费机制变更时间线</div>
+          <div class="chart-d">2026 年 6 月 1 日是分水岭——Premium Request（按请求次数 + 模型乘数）正式退役，改为按 token 消耗计量的 AI Credits。基础订阅价格保持不变，变化的是「超出部分如何计价」。</div>
+        </div>
+        <span class="tag real"><i></i>GitHub 官方文档</span>
+      </div>
+      <svg viewBox="0 0 760 220" role="img" aria-label="Copilot 计费机制演进">
+        <line x1="60" y1="110" x2="720" y2="110" stroke="#E4E8EF" stroke-width="2"/>
+        <g class="hit">
+          <circle cx="90" cy="110" r="8" fill="#94A3B8"/><circle class="ring-h" cx="90" cy="110" r="8" fill="none" stroke="#94A3B8" stroke-width="2" data-tip="<b>2022 中 · 公开发布</b>$10/月 个人版起步，此阶段为纯固定订阅"/>
+          <circle cx="230" cy="110" r="8" fill="#F59E0B"/><circle class="ring-h" cx="230" cy="110" r="8" fill="none" stroke="#F59E0B" stroke-width="2" data-tip="<b>2023 · Premium Request 引入</b>每次模型交互计 1 PRU，模型越强乘数越高 · 沉重的早期信号：微软被曝单用户月均亏损 $20（重度用户最高 $80）"/>
+          <circle cx="380" cy="110" r="8" fill="#F59E0B"/><circle class="ring-h" cx="380" cy="110" r="8" fill="none" stroke="#F59E0B" stroke-width="2" data-tip="<b>2026/03 · 个体档调整</b>调整个人版方案并暂停部分档位购买，为计费切换铺路 · 4 月暂停新注册，至 6/17 才重开"/>
+          <circle cx="540" cy="110" r="12" fill="#4F46E5"/><circle class="ring-h" cx="540" cy="110" r="16" fill="none" stroke="#4F46E5" stroke-width="3" data-tip="<b>2026/06/01 · AI Credits 上线</b>按量计费正式生效：1 Credit = $0.01，成本取决于「模型 + token 消耗」<br><b>企业级：</b>组织共享额度池、轻度用户抵扣重度用户、可按成本中心设预算上限<br><b>促销：</b>Business +$30/月、Enterprise +$70/月（6–8月）"/>
+          <circle cx="700" cy="110" r="8" fill="#10B981"/><circle class="ring-h" cx="700" cy="110" r="8" fill="none" stroke="#10B981" stroke-width="2" data-tip="<b>2026/07/29 · 财报确认</b>Copilot 收入单季环比增长 60%+ —— GitHub 对此的归因之一正是「转向用量计费」"/>
+        </g>
+        <g font-size="10.5" font-weight="750" text-anchor="middle">
+          <text x="90" y="92" fill="#64748B">2022 中</text>
+          <text x="230" y="92" fill="#B45309">2023</text>
+          <text x="380" y="92" fill="#B45309">2026/03</text>
+          <text x="540" y="88" fill="#4F46E5" font-size="12">2026/06/01</text>
+          <text x="700" y="92" fill="#059669">2026/07</text>
+        </g>
+        <g font-size="10" fill="#A3AEBD" text-anchor="middle" font-weight="650">
+          <text x="90" y="134">公开发布</text><text x="230" y="134">PRU 计数</text><text x="380" y="134">档位调整</text>
+          <text x="540" y="138" fill="#4F46E5" font-weight="800">AI Credits 按量计费</text><text x="700" y="134">收入 +60% QoQ</text>
+        </g>
+        <g class="pop">
+          <rect x="360" y="168" width="360" height="34" rx="10" fill="#EEF2FF" stroke="#C7D2FE"/>
+          <text x="540" y="182" font-size="11" fill="#4338CA" text-anchor="middle" font-weight="800">价格不变，计价单位变了</text>
+          <text x="540" y="196" font-size="10" fill="#6366F1" text-anchor="middle" font-weight="650">Pro $10 / Pro+ $39 / Business $19 / Enterprise $39 —— 均含等值月度额度</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="g3">
+      <div class="card rv" style="padding:23px">
+        <div style="font-size:13px;font-weight:800;color:var(--emer-700);margin-bottom:11px;letter-spacing:.05em">为什么切换是必然的</div>
+        <p style="font-size:13.2px;color:var(--ink-3);line-height:1.75">GitHub 的理由很直白：Copilot 已从编辑器辅助工具演变为能执行<b>长时间、多步骤自主编码会话</b>的智能体平台，旧的 Premium Request 计数方式<b>「已难以为继」</b>。</p>
+        <p style="font-size:13.2px;color:var(--ink-3);line-height:1.75;margin-top:11px">微软同时承认 agentic usage「正在成为默认」，带来更高的算力与推理需求。翻译成商业语言：<b>成本结构变了，定价结构必须跟着变。</b></p>
+      </div>
+      <div class="card rv rv-d1" style="padding:23px">
+        <div style="font-size:13px;font-weight:800;color:var(--emer-700);margin-bottom:11px;letter-spacing:.05em">定价稳定性的代价</div>
+        <p style="font-size:13.2px;color:var(--ink-3);line-height:1.75">Cursor 的定价史是一份公开的压力测试：<b>2025/6</b> Pro 固定 500 请求改为 Credit 制度，价格不变但 Claude 系模型有效容量从 ~500 降至 ~225；<b>7 月</b> CEO 公开道歉并退款（单周超额 $350 案例）；<b>9 月</b> 取消 unlimited Auto。</p>
+        <p style="font-size:13.2px;color:var(--ink-3);line-height:1.75;margin-top:11px">2026/6 的 Teams 双轨重构（Standard / Premium 分层）是直接回应。<b>八个月三次调价</b>——这是套壳方在零售 API 价下的结构性困境。</p>
+      </div>
+      <div class="card rv rv-d2" style="padding:23px">
+        <div style="font-size:13px;font-weight:800;color:var(--emer-700);margin-bottom:11px;letter-spacing:.05em">为什么企业才是利润池</div>
+        <p style="font-size:13.2px;color:var(--ink-3);line-height:1.75">企业买的不只是模型质量，还有 <b>SSO、SCIM、隐私保证、可审计性、采购支持、消费控制、部署选择与策略执行</b>——这些能力<b>不按比例推高推理成本</b>，因此可以单独定价。</p>
+        <p style="font-size:13.2px;color:var(--ink-3);line-height:1.75;margin-top:11px">合同结构也在向此倾斜：GitHub 全组织共享额度池；Cursor 为企业客户预留共享用量；Devin Teams = 固定席位 + 共享按需额度。<b>数千人团队可用轻度用户对冲重度用户，而非按最坏情况给每个人定价。</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- 06 UNIT ECONOMICS ---------- -->
+<section id="unit">
+  <div class="wrap">
+    <div class="ghost">06</div>
+    <div class="shead rv">
+      <div class="snumrow"><span class="snum">06 / Unit Economics</span><span class="srule"></span></div>
+      <h2>单位经济与核心挑战</h2>
+      <p class="sub">这是整份报告中最反直觉的部分：<b>「推理成本是无底洞」这个流行叙事在数据上并不成立</b>。真正的成本差距来自「买 API」与「自有模型」的结构性不对称。</p>
+    </div>
+
+    <div class="econ mb20">
+      <div class="alert rv">
+        <div class="t">⚡ 关键事实核查：那个疯传的「$5,000/月」数字</div>
+        <div class="big">$5,000 → $500</div>
+        <p><b>流传的说法：</b>Forbes 报道 Cursor 内部分析发现，Anthropic 的 $200/月 Claude Code Max 订阅可消耗约 <b>$5,000</b> 计算量，被广泛当作 Anthropic 烧钱的证据。</p>
+        <p style="margin-top:12px"><b>但这个数字按零售 API 价计算，不是实际推理成本。</b>在 OpenRouter 等开放推理市场，同等规模开源模型的竞争性定价约为 Anthropic API 价的 <b>十分之一</b>——而这些供应商仍需覆盖 GPU 成本并盈利。据此推算，最重度用户的<b>实际推理成本约 $500</b>。</p>
+        <p style="margin-top:12px"><b>关键区分：</b>$5,000 对 <b style="color:var(--ink)">Cursor 是真实的</b>（必须按 Anthropic 零售 API 价采购），但对 <b style="color:var(--ink)">Anthropic 不是</b>。据称 Anthropic 官方数据显示平均用户每日 API 等价消费仅约 $6（月均约 $180），按十分之一实际成本计约 $18/月服务成本——对应 $20–200 的订阅价，<b>平均用户已可盈利</b>。</p>
+        <div class="sm">来源：Forbes 报道 + Martin Alderson（catchmetrics.io 联合创始人）分析 + aicostcheck.com 测算 · 转述自 blockbeats.info</div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div class="card rv rv-d1" style="padding:25px">
+          <div style="font-size:15.5px;font-weight:790;margin-bottom:15px">利润池正在向上迁移</div>
+          <div class="split">
+            <div class="sp good"><div class="h">✓ 企业账户</div><p><b>毛利为正。</b>大额合同、共享额度池、稳定性溢价支撑毛利。Cursor 企业客户约占收入 60%。</p></div>
+            <div class="sp bad"><div class="h">✗ 个人账户</div><p><b>仍在亏损。</b>个人开发者恰是能连续跑 Agent、加载巨型仓库、且刻意选用最贵前沿模型的重度用户。</p></div>
+          </div>
+          <p style="font-size:13.2px;color:var(--ink-3);line-height:1.75;margin-top:15px">TechCrunch 报道 Cursor 此前长期负毛利；引入自研模型 + 更廉价推理路由后，<b>达到「仅轻微的」整体毛利转正</b>。<b>这个结构说明的不是「AI 不赚钱」，而是「不控制模型的人不赚钱」。</b></p>
+        </div>
+        <div class="card rv rv-d2" style="padding:25px">
+          <div style="font-size:15.5px;font-weight:790;margin-bottom:13px">企业侧的成本治理已成标配</div>
+          <p style="font-size:13.2px;color:var(--ink-3);line-height:1.75">Stack Overflow 2026 调查显示成本压力已落到组织层面：</p>
+          <div class="mbar" style="margin-top:14px">
+            <div class="mrow"><div class="mhead"><span class="nm2">设置了用量限制</span><span class="vl" style="color:var(--indigo)">38%</span></div><div class="mtrack"><div class="mfill g" data-w="38"></div></div></div>
+            <div class="mrow"><div class="mhead"><span class="nm2">审查了支出数据</span><span class="vl" style="color:var(--indigo)">28%</span></div><div class="mtrack"><div class="mfill g" data-w="28"></div></div></div>
+            <div class="mrow"><div class="mhead"><span class="nm2">按工作类型分流模型</span><span class="vl" style="color:var(--indigo)">27%</span></div><div class="mtrack"><div class="mfill g" data-w="27"></div></div></div>
+            <div class="mrow"><div class="mhead"><span class="nm2">限制可用 AI 的范围</span><span class="vl" style="color:var(--indigo)">25%</span></div><div class="mtrack"><div class="mfill g" data-w="25"></div></div></div>
+            <div class="mrow"><div class="mhead"><span class="nm2">选择增加支出</span><span class="vl" style="color:var(--emer-600)">21%</span></div><div class="mtrack"><div class="mfill g" data-w="21"></div></div></div>
+          </div>
+          <p style="font-size:12.8px;color:var(--ink-3);line-height:1.72;margin-top:16px;padding-top:14px;border-top:1px solid var(--line-2)">但个人决策优先级相反：塑造 prompt 与选模型时，<b>质量（75%）远高于成本（38%）</b>。<b>这是一个「买的人不心疼、花的人不看价」的典型错配——也解释了为什么按量计费转型会遭遇阻力。</b></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs rv" id="econTabs">
+      <button class="tab on" data-t="gm"><i style="background:linear-gradient(135deg,#EF4444,#F59E0B)"></i>毛利率对比</button>
+      <button class="tab" data-t="arn"><i style="background:linear-gradient(135deg,#8B5CF6,#6366F1)"></i>生产力研究对照</button>
+      <button class="tab" data-t="sc"><i style="background:linear-gradient(135deg,#0EA5E9,#10B981)"></i>信任与安全缺口</button>
+    </div>
+
+    <div class="tpane on" data-p="gm">
+      <div class="tbl-wrap mb16">
+        <div class="tscroll">
+          <table>
+            <thead><tr><th style="min-width:130px">厂商</th><th>ARPU / 月</th><th>毛利率</th><th>CAC</th><th>LTV / CAC</th><th>主要成本结构</th></tr></thead>
+            <tbody>
+              <tr><td class="nm">GitHub Copilot <span class="tag est"><i></i>估算</span></td><td><b>$12</b></td><td><b>~55%</b></td><td>低（微软内部渠道）</td><td><b>&gt;10×</b></td><td>Azure 算力 + OpenAI 分成；6 月起用量计费部分转嫁推理成本</td></tr>
+              <tr><td class="nm">Cursor <span class="tag est"><i></i>估算</span></td><td><b>$22</b></td><td><b>~35% → 轻微转正</b></td><td>低（口碑自传播）</td><td><b>&gt;5×</b></td><td>第三方 API 曾占成本 70%；Composer 上线后结构性改善，<b>个人账户仍为负</b></td></tr>
+              <tr><td class="nm">Claude Code <span class="tag est"><i></i>估算</span></td><td><b>$40+</b></td><td><b>~65%</b></td><td>极低</td><td><b>&gt;15×</b></td><td>自有模型边际成本；实际推理约为零售 API 价的十分之一</td></tr>
+              <tr><td class="nm">Devin <span class="tag est"><i></i>估算</span></td><td><b>$500+</b></td><td><b>~45%</b></td><td>中（企业销售）</td><td><b>~3–5×</b></td><td>长任务算力 + 工程师调优 prompt</td></tr>
+              <tr><td class="nm">Replit <span class="tag est"><i></i>估算</span></td><td>—</td><td><b style="color:var(--emer-700)">已转正 &gt;1 年</b></td><td>—</td><td>—</td><td>自有基础设施 + 多品类变现（托管/数据库/部署）稀释单次 AI 交互成本</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <p style="font-size:11.5px;color:var(--ink-5);margin-bottom:24px;text-align:right">上表为行业研究机构与第三方分析的<b style="color:var(--ink-3)">估算值</b>，非各公司审计披露。Cursor 与 Claude Code 的方向性变化（毛利率从负到正）有公开报道支撑，具体数值未获公司确认。</p>
+      <div class="chart" data-chart>
+        <div class="chart-hd">
+          <div><div class="chart-t">毛利率横向对比（估算值）</div><div class="chart-d">条形长度按毛利率百分比绘制。Claude Code 因拥有自有模型而显著领先；Cursor 与 Copilot 需要向第三方采购模型，毛利率被结构性压制。</div></div>
+          <span class="tag est"><i></i>估算</span>
+        </div>
+        <svg viewBox="0 0 760 250" role="img" aria-label="毛利率对比">
+          <g font-size="12" font-weight="700" fill="#475569">
+            <text x="150" y="42" text-anchor="end">Claude Code</text>
+            <text x="150" y="88" text-anchor="end">GitHub Copilot</text>
+            <text x="150" y="134" text-anchor="end">Devin</text>
+            <text x="150" y="180" text-anchor="end">Cursor（早期）</text>
+          </g>
+          <line x1="160" y1="20" x2="160" y2="210" stroke="#E4E8EF" stroke-width="1.5"/>
+          <g class="hit">
+            <rect x="160" y="24" width="404" height="26" rx="7" fill="#059669" data-tip="<b>Claude Code · ~65%</b>自有模型，边际成本极低 · LTV/CAC &gt;15×，CAC 极低"/>
+            <rect x="160" y="70" width="342" height="26" rx="7" fill="#10B981" data-tip="<b>GitHub Copilot · ~55%</b>Azure 算力 + OpenAI 分成 · 6 月起用量计费部分转嫁推理成本"/>
+            <rect x="160" y="116" width="296" height="26" rx="7" fill="#F59E0B" data-tip="<b>Devin · ~45%</b>长任务算力开销高 · LTV/CAC ~3–5×，依赖企业销售"/>
+            <rect x="160" y="162" width="226" height="26" rx="7" fill="#EF4444" data-tip="<b>Cursor 早期 · ~35%</b>第三方 API 曾占成本 70%，年付 $6.5 亿 vs 收入 $5 亿"/>
+            <rect x="160" y="176" width="226" height="26" rx="7" fill="none"/>
+          </g>
+          <g font-size="12" font-weight="800">
+            <text x="574" y="42" fill="#047857">~65%</text><text x="512" y="88" fill="#047857">~55%</text>
+            <text x="466" y="134" fill="#B45309">~45%</text><text x="396" y="180" fill="#B91C1C">~35%</text>
+          </g>
+          <g stroke="#E4E8EF" stroke-width="1" stroke-dasharray="3 5">
+            <line x1="292" y1="20" x2="292" y2="200"/><line x1="424" y1="20" x2="424" y2="200"/><line x1="556" y1="20" x2="556" y2="200"/>
+          </g>
+          <g font-size="10" fill="#A3AEBD" text-anchor="middle"><text x="160" y="222">0%</text><text x="292" y="222">20%</text><text x="424" y="222">40%</text><text x="556" y="222">60%</text></g>
+          <text x="160" y="244" font-size="11" fill="#A3AEBD" font-weight="650">Cursor 现已转为「轻微整体毛利转正」（企业账户为正、个人账户仍亏），图中为自研模型上线前的水平</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="tpane" data-p="arn">
+      <div class="chart" data-chart>
+        <div class="chart-hd">
+          <div><div class="chart-t">生产力研究：正面证据与反证</div><div class="chart-d">这是全报告最需要「双面呈现」的部分——正向数字来自厂商与咨询机构的自有研究，负向数字来自独立第三方 METR。两者并不矛盾，差异来自<b>任务类型</b>与<b>开发者资历</b>。</div></div>
+          <span class="tag qual"><i></i>对照研究</span>
+        </div>
+        <div class="g2 mb20">
+          <div class="card" style="padding:22px;border-color:#A7F3D0;background:linear-gradient(160deg,var(--emer-50),var(--card) 70%)">
+            <div style="font-size:12px;font-weight:800;color:var(--emer-700);letter-spacing:.06em;margin-bottom:13px">✓ 提振证据</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:11px">
+              <li style="font-size:13px;line-height:1.7;padding-left:16px;position:relative;color:var(--ink-3)"><span style="position:absolute;left:0;color:var(--emer-600);font-weight:800">→</span><b>Microsoft Research 对照实验：</b>任务完成快 <b>55.8%</b>，PR 周期从 9.6 天降至 2.4 天（-75%）</li>
+              <li style="font-size:13px;line-height:1.7;padding-left:16px;position:relative;color:var(--ink-3)"><span style="position:absolute;left:0;color:var(--emer-600);font-weight:800">→</span><b>4,867 人随机对照试验：</b>完成任务 <b>+26.08%</b>、提交 <b>+13.55%</b>、构建 <b>+38.38%</b></li>
+              <li style="font-size:13px;line-height:1.7;padding-left:16px;position:relative;color:var(--ink-3)"><span style="position:absolute;left:0;color:var(--emer-600);font-weight:800">→</span><b>Google 内部研究：</b>周代码变更 <b>+7%</b>，辅助代码段部署后缺陷率低 <b>2–4%</b>（来自 AI 生成测试捕获边界情况）</li>
+              <li style="font-size:13px;line-height:1.7;padding-left:16px;position:relative;color:var(--ink-3)"><span style="position:absolute;left:0;color:var(--emer-600);font-weight:800">→</span><b>McKinsey（3,200 人/13 公司/14 周）：</b>规格清晰的执行层任务提速 <b>26–40%</b></li>
+            </ul>
+          </div>
+          <div class="card" style="padding:22px;border-color:#FECDD3;background:linear-gradient(160deg,var(--rose-50),var(--card) 70%)">
+            <div style="font-size:12px;font-weight:800;color:#B91C1C;letter-spacing:.06em;margin-bottom:13px">✗ 反证与边界</div>
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:11px">
+              <li style="font-size:13px;line-height:1.7;padding-left:16px;position:relative;color:var(--ink-3)"><span style="position:absolute;left:0;color:#DC2626;font-weight:800">→</span><b>METR 独立研究：</b>经验丰富的开发者在复杂新颖任务上<b>反而多耗 19% 时间</b></li>
+              <li style="font-size:13px;line-height:1.7;padding-left:16px;position:relative;color:var(--ink-3)"><span style="position:absolute;left:0;color:#DC2626;font-weight:800">→</span><b>McKinsey 同一研究：</b>架构决策、复杂分布式系统调试、安全审查上<b>无统计显著提升</b></li>
+              <li style="font-size:13px;line-height:1.7;padding-left:16px;position:relative;color:var(--ink-3)"><span style="position:absolute;left:0;color:#DC2626;font-weight:800">→</span><b>Anthropic 自有报告：</b>AI 已参与 <b>60%</b> 的工作，但开发者<b>完全委托仅 0–20%</b></li>
+              <li style="font-size:13px;line-height:1.7;padding-left:16px;position:relative;color:var(--ink-3)"><span style="position:absolute;left:0;color:#DC2626;font-weight:800">→</span><b>Gartner 提醒：</b>不要用「生成行数」「接受率」等活动指标评估成效——它们无法捕捉系统级生产率</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout">
+          <div class="n">ROI</div>
+          <div class="b">
+            <h4>把数字换算成钱：为什么企业预算这么好批</h4>
+            <p>按 <b>$20 万</b>年薪开发者计，Copilot Enterprise 席位为 <b>$468/年</b>。即使只兑现 27% 的提振（把 55.8% 砍半），也相当于 <b>$54,000</b> 等值产出——<b>115× 回报</b>；按完整的 55.8% 计则是 235×。</p>
+            <p><b>关键的分布特征：</b>提振集中在初中级工程师的工作上，而他们恰恰是大型企业工程团队的主体。这意味着 <b>AI 编程 ROI 最高的组织，正是初中级/资深比例偏大的团队</b>——这构成了绝大多数大型企业。这也意味着：以资深架构师为主的小型精英团队，反而可能感受不到同等收益。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tpane" data-p="sc">
+      <div class="chart" data-chart>
+        <div class="chart-hd">
+          <div><div class="chart-t">信任与安全：产品落地的真实障碍</div><div class="chart-d">开发者普遍「愿意但不信任」——高采用率与低信任度并存，是这个赛道最反常识的特征，也解释了为何企业合规能力（IP 赔偿、数据隔离、审计）比模型能力更能决定成交。</div></div>
+          <span class="tag real"><i></i>Stack Overflow 2026</span>
+        </div>
+        <div class="g2 mb20">
+          <div>
+            <div style="font-size:13px;font-weight:780;margin-bottom:14px">开发者信任光谱</div>
+            <div class="mbar">
+              <div class="mrow"><div class="mhead"><span class="nm2">在重要决策上信任 AI</span><span class="vl" style="color:var(--emer-600)">6.6%</span></div><div class="mtrack"><div class="mfill g" data-w="6.6"></div></div><div class="mnote">仅此一项构成「有条件信任」的上限</div></div>
+              <div class="mrow"><div class="mhead"><span class="nm2">认为来源标注重要</span><span class="vl" style="color:var(--indigo)">78.7%</span></div><div class="mtrack"><div class="mfill" style="background:linear-gradient(90deg,#4F46E5,#818CF8)" data-w="78.7"></div></div><div class="mnote">可追溯性是信任的前提条件</div></div>
+              <div class="mrow"><div class="mhead"><span class="nm2">完全不使用 AI 工具</span><span class="vl" style="color:#DC2626">17.2%</span></div><div class="mtrack"><div class="mfill b" data-w="17.2"></div></div></div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:780;margin-bottom:14px">质量与安全指标</div>
+            <div class="mbar">
+              <div class="mrow"><div class="mhead"><span class="nm2">Java 代码接受率（最高）</span><span class="vl" style="color:var(--emer-600)">61%</span></div><div class="mtrack"><div class="mfill g" data-w="61"></div></div></div>
+              <div class="mrow"><div class="mhead"><span class="nm2">整体代码接受率</span><span class="vl" style="color:var(--indigo)">27–30%</span></div><div class="mtrack"><div class="mfill" style="background:linear-gradient(90deg,#4F46E5,#818CF8)" data-w="29"></div></div><div class="mnote">约三分之一的建议被采纳</div></div>
+              <div class="mrow"><div class="mhead"><span class="nm2">Python 生成代码含安全弱点</span><span class="vl" style="color:#DC2626">29.1%</span></div><div class="mtrack"><div class="mfill b" data-w="29.1"></div></div></div>
+              <div class="mrow"><div class="mhead"><span class="nm2">部署组织强制人工审查</span><span class="vl" style="color:var(--amber-700)">90%</span></div><div class="mtrack"><div class="mfill m" data-w="90"></div></div><div class="mnote">审查成本被转移给了用户</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="g2">
+          <div class="card" style="padding:22px">
+            <div style="font-size:13.5px;font-weight:790;margin-bottom:11px">最大的两个挫败感</div>
+            <div class="mbar">
+              <div class="mrow"><div class="mhead"><span class="nm2">「AI 方案几乎对但不完全对」</span><span class="vl" style="color:#DC2626">66%</span></div><div class="mtrack"><div class="mfill b" data-w="66"></div></div></div>
+              <div class="mrow"><div class="mhead"><span class="nm2">「调试 AI 代码比自己写更费时」</span><span class="vl" style="color:#DC2626">45.2%</span></div><div class="mtrack"><div class="mfill b" data-w="45.2"></div></div></div>
+            </div>
+            <p style="font-size:12.8px;color:var(--ink-3);line-height:1.72;margin-top:16px;padding-top:14px;border-top:1px solid var(--line-2)">这两项构成了产品设计的核心矛盾：工具已经足够快，快到<b>产生了「接近正确」的输出</b>——而这恰恰是最消耗信任的形态。它比明显错误更难被发现，也更浪费审查时间。</p>
+          </div>
+          <div class="card" style="padding:22px">
+            <div style="font-size:13.5px;font-weight:790;margin-bottom:11px">Agent 的实际使用深度</div>
+            <div class="mbar">
+              <div class="mrow"><div class="mhead"><span class="nm2">每天使用 AI ≥4 小时</span><span class="vl" style="color:var(--indigo)">31%</span></div><div class="mtrack"><div class="mfill" style="background:linear-gradient(90deg,#4F46E5,#818CF8)" data-w="31"></div></div></div>
+              <div class="mrow"><div class="mhead"><span class="nm2">每天使用 AI ≥1 小时</span><span class="vl" style="color:var(--indigo)">80%</span></div><div class="mtrack"><div class="mfill" style="background:linear-gradient(90deg,#4F46E5,#818CF8)" data-w="80"></div></div></div>
+              <div class="mrow"><div class="mhead"><span class="nm2">使用自动 Agent 工作流</span><span class="vl" style="color:var(--emer-600)">26.2%</span></div><div class="mtrack"><div class="mfill g" data-w="26.2"></div></div></div>
+              <div class="mrow"><div class="mhead"><span class="nm2">明确无采用 Agent 计划</span><span class="vl" style="color:#DC2626">37.9%</span></div><div class="mtrack"><div class="mfill b" data-w="37.9"></div></div><div class="mnote">Agent 证明了价值，但尚未说服主流</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- 07 SWOT ---------- -->
+<section id="swot">
+  <div class="wrap">
+    <div class="ghost">07</div>
+    <div class="shead rv">
+      <div class="snumrow"><span class="snum">07 / SWOT</span><span class="srule"></span></div>
+      <h2>SWOT 与关键挑战</h2>
+      <p class="sub">赛道的结构性优势与脆弱性同时被放大：采用率高到接近饱和，护城河却薄到切换成本低。</p>
+    </div>
+
+    <div class="swot">
+      <div class="sw s rv">
+        <div class="hd"><span class="ic">S</span>优势 Strengths</div>
+        <ul>
+          <li><b>需求是刚需且高频</b><span class="q">83% 已使用，代码助手用户中 73% 每天使用；日活群体中 31% 每天用 ≥4 小时。黏性天然。</span></li>
+          <li><b>ROI 论证极其容易</b><span class="q">PR 周期 -75%、任务完成 +26–55.8%，企业多数在 3–6 个月内看到正回报。</span></li>
+          <li><b>企业预算明确、合规解锁点清晰</b><span class="q">IP 赔偿、数据不用于训练、组织级模型配置是打通企业法务的关键三件套。</span></li>
+          <li><b>增长速度快到前所未有</b><span class="q">Cursor 14 个月 40 倍，Claude Code 3 个月翻倍——历史上罕见的 B2B 爬坡速度。</span></li>
+        </ul>
+      </div>
+      <div class="sw w rv rv-d1">
+        <div class="hd"><span class="ic">W</span>劣势 Weaknesses</div>
+        <ul>
+          <li><b>毛利结构性受压</b><span class="q">按零售 API 价采购模型的一方（Cursor）个人账户仍为负毛利，只能靠自研模型与开源模型路由对冲。</span></li>
+          <li><b>底层模型依赖第三方</b><span class="q">模型方下场自营后，套壳方同时失去成本优势与产品叙事——这是最本质的脆弱性。</span></li>
+          <li><b>同质化严重、切换成本低</b><span class="q">开发者同时跑多个工具（VS Code 75.9% 未被侵蚀即证据）；定价频繁调整进一步削弱信任。</span></li>
+          <li><b>信任与安全缺口</b><span class="q">仅 6.6% 愿在重要决策上信任 AI；29.1% Python 生成代码含安全弱点，审查成本被转移给了用户。</span></li>
+        </ul>
+      </div>
+      <div class="sw o rv rv-d2">
+        <div class="hd"><span class="ic">O</span>机会 Opportunities</div>
+        <ul>
+          <li><b>从补全走向任务级自主交付</b><span class="q">Agent 现可在人类介入前完成约 20 个自主动作（六个月内翻倍）；Rakuten 在 1,250 万行 vLLM 代码库上 7 小时自主完成、99.9% 数值准确率。</span></li>
+          <li><b>长时程任务打开新经济性</b><span class="q">Agent 会话从数分钟延长到数小时乃至数天，使原本「不经济」的遗留代码迁移、大规模重构变得可行。</span></li>
+          <li><b>多智能体协同</b><span class="q">Gartner 记录多智能体系统咨询量从 2024Q1 到 2025Q2 激增 1,445%；57% 组织已部署多步智能体工作流。</span></li>
+          <li><b>企业合规与私有部署差异化</b><span class="q">SOC2 / GDPR / ISO27001、本地与 VPC 隔离部署，在金融等强监管行业构成真实壁垒。</span></li>
+          <li><b>按结果计费的可能性</b><span class="q">Replit 已按工作量定价并叠加基础设施变现，验证了「卖成果而非卖交互」的可行性。</span></li>
+        </ul>
+      </div>
+      <div class="sw t rv rv-d3">
+        <div class="hd"><span class="ic">T</span>威胁 Threats</div>
+        <ul>
+          <li><b>模型方下场（最高级别）</b><span class="q">Gartner 明确列为 2026 年第一大趋势：前沿模型厂商从上游供应商变为直接竞争者，Anthropic / OpenAI 与其客户同台。</span></li>
+          <li><b>大厂生态捆绑</b><span class="q">微软把 Copilot 嵌入整个开发者工作流；一个已在用 GitHub 的开发者等于半只脚已进 Copilot，激活成本只是开关与账单。</span></li>
+          <li><b>价格战与成本不可预测</b><span class="q">开发者已出现单月 $200 / $400 / 逾 $1,400 的超额账单报告；21% 组织选择增加支出，27% 已按工作类型分流模型。</span></li>
+          <li><b>供给侧过剩</b><span class="q">逾 800 家获投 AI 智能体初创公司，多数带编码产品，但收入集中度却已接近成熟市场——长尾几乎无生存空间。</span></li>
+          <li><b>企业采购集中化</b><span class="q">McKinsey 2026 调研显示成熟 AI 战略的组织正主动减少智能体供应商数量，每个工作流类别收敛到一到两家，惩罚仅有边际差异的后来者。</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- 08 OUTLOOK ---------- -->
+<section id="outlook">
+  <div class="wrap">
+    <div class="ghost">08</div>
+    <div class="shead rv">
+      <div class="snumrow"><span class="snum">08 / Outlook</span><span class="srule"></span></div>
+      <h2>趋势展望：未来三段式演进</h2>
+      <p class="sub">基于趋势生命周期映射与采用曲线的前瞻判断。以下为<b>场景式推演，非确定预测</b>。</p>
+    </div>
+
+    <div class="hz">
+      <div class="hzcard rv" style="--c:var(--indigo)">
+        <div class="hzpill"><i style="background:var(--indigo)"></i>近期 · NOW · 0–12 个月</div>
+        <h4>按量计费成为品类标配</h4>
+        <p>Copilot 已于 2026/6/1 完成切换，Cursor、Devin 均已采用 Credit 机制。<b>席位包将退化为「最低消费门槛」，用量成为真正的收入函数。</b></p>
+        <ul>
+          <li>组织级共享额度池 + 预算上限成为企业标配</li>
+          <li>模型路由从「高级功能」变为「成本治理基础设施」</li>
+          <li>补全类功能继续免费，用量层承接全部增量收入</li>
+          <li>厂商间计费透明度成为竞争维度（账单可预测性）</li>
+        </ul>
+      </div>
+      <div class="hzcard rv rv-d1" style="--c:#D97706">
+        <div class="hzpill"><i style="background:#D97706"></i>中期 · NEXT · 12–24 个月</div>
+        <h4>模型层与套壳层的最终裁决</h4>
+        <p>Gartner 提出的未解问题将给出答案：<b>若前沿模型性能持续快于编排技术演进，纵向整合者复利式扩大优势；若编码专用/蒸馏模型以显著更低成本达到「够用」，模型层将快速商品化，价值上移至工作流编排与开发者体验。</b></p>
+        <ul>
+          <li>自研模型从「对冲手段」变为「战略必需品」</li>
+          <li>企业采购集中化，每个工作流收敛到 1–2 家供应商</li>
+          <li>Agent 覆盖 SDLC 全域：代码评审、测试、验证、CI 生成</li>
+          <li>并购加速，行业进入 12–20 家规模玩家阶段</li>
+        </ul>
+      </div>
+      <div class="hzcard rv rv-d2" style="--c:var(--emer)">
+        <div class="hzpill"><i style="background:var(--emer)"></i>远期 · LATER · 24 个月+</div>
+        <h4>价值计量从「座位」转向「交付成果」</h4>
+        <p>Gartner 同时提醒：<b>不要用活动或数量指标（生成行数、接受率）评估智能体成效</b>。当 ROI 评估从任务层转向团队交付流与业务结果时，计费单位迟早跟随价值单位迁移。</p>
+        <ul>
+          <li>按成果/任务量计费，取代按席位与 Token</li>
+          <li>与 CI/CD、项目管理、需求系统深度整合</li>
+          <li>上下文工程成为核心资产（可信上下文 = 项目目标 85% + 代码文档 73%）</li>
+          <li>赢家由单位经济与留存壁垒决定，而非模型榜单排名</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="vc mt24 rv" style="margin-top:26px">
+      <div class="vcard">
+        <div class="ic" style="background:linear-gradient(135deg,var(--indigo),var(--indigo-700))">选</div>
+        <h5>如果你要选工具</h5>
+        <p>别只看榜单排名——看<b>组织级额度池、成本治理能力与合规认证</b>（SSO / IP 赔偿 / 数据隔离），这三项决定你第二年的账单和法务风险。同时预留预算弹性：Agent 模式的月度成本波动可能超出预期，已有开发者出现单月逾 $1,400 的超额账单报告。</p>
+      </div>
+      <div class="vcard">
+        <div class="ic" style="background:linear-gradient(135deg,var(--emer),var(--emer-600))">做</div>
+        <h5>如果你要做产品</h5>
+        <p>最值得押注的不是又一个补全工具，而是<b>成本效率</b>——模型路由、自研/蒸馏模型、上下文缓存。Gartner 指出的未解问题正是：当模型层商品化，<b>成本工程将成为应用层唯一可持续的护城河</b>。Cursor 用约 20 人做出 Composer 1.5，是目前唯一可验证的正面样本。</p>
+      </div>
+      <div class="vcard">
+        <div class="ic" style="background:linear-gradient(135deg,var(--amber),#D97706)">投</div>
+        <h5>如果你看投资</h5>
+        <p>估值锚已经变了。Cursor <b>$50B</b> 估值对应约 <b>25× ARR</b>，这个倍数只在「持续 3 倍级年增长 + 毛利持续改善」同时成立时才合理。<b>而 Copilot 份额从 67% 降到 51% 说明：这个赛道的分发优势正在以肉眼可见的速度贬值。</b></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /main -->
+
+<!-- ===================== FOOTER / SOURCES ===================== -->
+<footer id="sources"><div class="wrap">
+  <h3>来源清单</h3>
+  <div class="sub">本报告核心数据均来自公开可查资料，按「一手披露 / 权威媒体 / 机构报告 / 第三方分析」分级。估算类数据已在正文明确标注。共 26 项，悬停可复制引用。</div>
+  <div class="toolbar">
+    <div class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5" stroke-linecap="round"/></svg>
+      <input type="text" id="sq" placeholder="搜索来源、机构或关键词…" aria-label="搜索来源">
+    </div>
+  </div>
+  <div class="src-list" id="srcList">
+    <div class="src-item" data-k="stackoverflow survey adoption trust 调查 采用率"><div class="hd"><span class="num">01</span><div><span class="tt">Stack Overflow Annual Developer Survey 2026</span><span class="mm">官方新闻稿与数据页 · 2026/10/06 发布 · 30,000+ 受访者 / 169 国 / 103 题 · 采用率、信任度、成本治理、IDE 份额<br><a href="https://survey.stackoverflow.co/2026/ai/data" target="_blank" rel="noopener">survey.stackoverflow.co/2026/ai/data</a> · <a href="https://stackoverflow.co/company/press/archive/stack-overflow-annual-developer-survey-ai-trust-conditional" target="_blank" rel="noopener">stackoverflow.co 新闻稿</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="microsoft earnings 财报 订户 subscribers"><div class="hd"><span class="num">02</span><div><span class="tt">Microsoft FY26 Q2 / Q3 / Q4 Earnings Call</span><span class="mm">一手披露 · 4.7M 付费订阅（2026/1/28，+75% YoY）· 近 14 万组织与「企业订阅近 3 倍」（2026/4/29）· 50M 总用户与单季收入 +60%（2026/7/29）</span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="github docs credits 计费 billing"><div class="hd"><span class="num">03</span><div><span class="tt">GitHub Docs · Copilot 计费变更</span><span class="mm">一手文档 · 2026/6/1 起由 Premium Request 切换为 AI Credits 按量计费（模型 + token 消耗）<br><a href="https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/what-changed-with-billing" target="_blank" rel="noopener">docs.github.com</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="directions pricing credits 价格"><div class="hd"><span class="num">04</span><div><span class="tt">Directions on Microsoft · Copilot 转向按量计费</span><span class="mm">2026/4/27 官方博客解读 · 1 Credit = $0.01 · 各档位价目与促销额度（Business +$30、Enterprise +$70，6–8 月）· 分析员 Rob Sanfilippo 评论<br><a href="https://www.directionsonmicrosoft.com/github-copilot-to-move-to-usage-based-pricing-in-june/" target="_blank" rel="noopener">directionsonmicrosoft.com</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="gartner 市场规模 象限 quadrant"><div class="hd"><span class="num">05</span><div><span class="tt">Gartner · Magic Quadrant for Enterprise AI Coding Agents (2026)</span><span class="mm">机构报告 · 企业级市场年化 $9.8–11.0B（截至 2026/4）· 四大趋势（含模型方上移）· 象限归属：领导者 GitHub/Anthropic/Cursor/OpenAI，挑战者含 AWS/Google/阿里云 Qoder<br><a href="https://www.gartner.com/reprints?ct=260520&id=1-2NEACZCW&st=sb" target="_blank" rel="noopener">gartner.com</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="anthropic claude code series g"><div class="hd"><span class="num">06</span><div><span class="tt">Anthropic 官方 Series G 公告</span><span class="mm">一手披露 · $30B 融资 / $380B 估值 · 公司 run-rate $14B · Claude Code run-rate &gt;$2.5B（年初以来翻倍）· 周活翻倍 · 商务订阅 4 倍 · 企业占 CC 收入 &gt;50% · 年付 &gt;$100 万客户 7 倍增长<br><a href="https://www.anthropic.com/news/anthropic-raises-30-billion-series-g-funding-380-billion-post-money-valuation" target="_blank" rel="noopener">anthropic.com/news</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="cursor funding 融资 估值 techcrunch cnbc"><div class="hd"><span class="num">07</span><div><span class="tt">TechCrunch / CNBC / The Next Web · Cursor 融资与 ARR</span><span class="mm">权威媒体 · $50B 估值洽谈、$2B 募资、a16z + Thrive 领投、Nvidia 战投 · ARR 路径 $100M→$500M→$1B→$2B · 企业收入约 60% · 估值序列 $400M/2.6B/9B/29.3B<br><a href="https://thenextweb.com/news/cursor-anysphere-2-billion-funding-50-billion-valuation-ai-coding" target="_blank" rel="noopener">thenextweb.com</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="business model 商业模式 毛利 margin"><div class="hd"><span class="num">08</span><div><span class="tt">New Market Pitch · AI 代码助手商业模式分析</span><span class="mm">第三方分析 · Cursor ARR $2B(26/2) → $3B(26/4) → $4B(26/6) · TechCrunch 负毛利转轻微正毛利 · 企业 vs 个人毛利分化 · Replit 连续一年以上毛利为正<br><a href="https://newmarketpitch.com/blogs/news/ai-code-assistant-business-model" target="_blank" rel="noopener">newmarketpitch.com</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="forbes 成本 inference 推理 5000"><div class="hd"><span class="num">09</span><div><span class="tt">Forbes 报道 + Martin Alderson / aicostcheck.com 成本分析</span><span class="mm">第三方分析 · $200/月 Max 订阅对应约 $5,000 计算量（按零售 API 价）· 实际推理约为零售价十分之一 · Anthropic 官方口径平均用户日均 API 等价消费约 $6<br><a href="https://aicostcheck.com/blog/claude-code-real-cost-ai-inference-economics" target="_blank" rel="noopener">aicostcheck.com</a> · <a href="https://www.theblockbeats.info/flash/335586" target="_blank" rel="noopener">theblockbeats.info 转述</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="cb insights 市场规模 market sizing arr"><div class="hd"><span class="num">10</span><div><span class="tt">AgentMarketCap · AI 编码智能体市场规模</span><span class="mm">第三方测算 · CB Insights 口径 2026 年约 $8.5B、前三占 70%+ · 各家 ARR 汇总 · Context 经济学与长尾分析<br><a href="https://agentmarketcap.ai/blog/2026/04/14/ai-coding-agent-combined-arr-5b-market-sizing-q2-2026" target="_blank" rel="noopener">agentmarketcap.ai</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="anthropic trends 趋势 rakuten"><div class="hd"><span class="num">11</span><div><span class="tt">Anthropic · 2026 Agentic Coding Trends Report</span><span class="mm">机构报告 · Claude Code 轨迹与八大趋势 · AI 参与 60% 工作但全面委托仅 0–20% · Agent 自主动作约 20 次（六个月翻倍）· 57% 组织部署多步工作流 · Rakuten 1,250 万行代码库案例<br><a href="https://agentmarketcap.ai/blog/2026/04/05/anthropic-agentic-coding-trends-report-claude-code-eight-shifts" target="_blank" rel="noopener">摘要与案例</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="mckinsey productivity 生产力 developer velocity"><div class="hd"><span class="num">12</span><div><span class="tt">McKinsey · Developer Velocity Research (2025/10)</span><span class="mm">研究机构 · 3,200 名专业开发者 / 13 家公司 / 14 周 · 执行层任务提速 26–40%，架构决策与安全审查无统计显著提升</span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="microsoft research rct 实验 4867"><div class="hd"><span class="num">13</span><div><span class="tt">Microsoft Research 对照实验 + 随机对照试验汇总</span><span class="mm">学术/厂商研究 · 任务完成快 55.8%，PR 周期 9.6→2.4 天 · 4,867 人 RCT：任务 +26.08%、提交 +13.55%、构建 +38.38% · 接受率 27–30%（Java 61%）· Python 生成代码 29.1% 含安全弱点</span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="metr 反证 19%"><div class="hd"><span class="num">14</span><div><span class="tt">METR 研究 · 经验开发者生产率</span><span class="mm">独立研究 · 经验丰富的开发者在复杂新颖任务上反而多耗 19% 时间 —— 对「普遍提效」叙事的重要反证</span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="google research 缺陷率"><div class="hd"><span class="num">15</span><div><span class="tt">Google Research · 内部 AI 编码工具采用研究</span><span class="mm">企业一手研究 · 周代码变更 +7% · 辅助代码段部署后缺陷率低 2–4%（主要来自 AI 生成测试捕获边界情况）</span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="research and markets 市场规模 cagr"><div class="hd"><span class="num">16</span><div><span class="tt">Research and Markets · AI 代码生成市场</span><span class="mm">市场研究 · 2025 $11.8B → 2026E $16.13B → 2031E $78.97B，CAGR 37.39%<br><a href="https://www.sgpjbg.com/news/7217506.html" target="_blank" rel="noopener">多机构口径对比（含 Gartner / IIM / Mordor）</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="jetbrains 调查 productivity"><div class="hd"><span class="num">17</span><div><span class="tt">JetBrains Research (2026/05–07)</span><span class="mm">一手调研 · 15,000+ 职业开发者 · 90% 每周至少使用一次 AI 编程智能体 · 68% 已在工作中每天使用 · 美国约 91% / 中国约 30% · 平均生产力提升约 35%</span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="idc 中国 china qoder trae 份额"><div class="hd"><span class="num">18</span><div><span class="tt">IDC · 2025 中国 AI 编程市场份额报告</span><span class="mm">市场研究 · 中国市场规模 2025 ¥3.99 亿 → 2026 年底预计 ¥11.73 亿 · 阿里 Qoder 份额 47.6%；2026/6 口径 Trae 41.2% / Qoder CN 18.5% / 文心快码 12.3% · 通义灵码用户 2026/5 破 800 万<br><a href="https://www.jiemian.com/article/14788309.html" target="_blank" rel="noopener">界面新闻分析</a> · <a href="http://www.zqrb.cn/gscy/qiyexinxi/2026-06-26/A1782457281240.html" target="_blank" rel="noopener">证券日报</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="share 份额 67 51 pricing 对比"><div class="hd"><span class="num">19</span><div><span class="tt">Tech Insider / Tech Stack IPO · 三方工具横评 2026</span><span class="mm">第三方分析 · Copilot 份额从 67% 降至 51%（2026/01→07，Stack Overflow 数据引述）· Cursor 定价结构与超额账单报告 · Fortune 1000 覆盖率交叉验证<br><a href="https://tech-insider.org/au/claude-code-vs-cursor-vs-github-copilot-2026/" target="_blank" rel="noopener">tech-insider.org</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="copilot arr 收入 估算 axis financial"><div class="hd"><span class="num">20</span><div><span class="tt">AI Business · GitHub Copilot 财务梳理</span><span class="mm">第三方分析 · 微软从未披露 Copilot 收入；Axis Intelligence 估 $0.9–1.1B ARR，FT 下限 ≥$5.5 亿 · 明确更正流传的「$2B ARR」<br><a href="https://aibusiness.vc/b2b/github-copilot-2b-arr" target="_blank" rel="noopener">aibusiness.vc</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="mckinsey enterprise 采购 vendor consolidation"><div class="hd"><span class="num">21</span><div><span class="tt">McKinsey · 2026 Enterprise AI Survey</span><span class="mm">第三方引用 · 成熟 AI 战略的组织正主动减少智能体供应商数量，每个工作流类别收敛至 1–2 家 —— 惩罚边际差异的后来者</span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="cursor 定价 credit 事件 apology"><div class="hd"><span class="num">22</span><div><span class="tt">Pragmatic Engineer / Cursor 社区定价事件</span><span class="mm">第三方记录 · Cursor 2025/6 Credit 改版（容量 500→225）· 7 月公开道歉与退款 · 9 月取消 unlimited Auto · 2026/6 Teams 双轨重构<br><a href="http://ilzam.dev/notes/cursor-vs-claude-code-founder-pricing" target="_blank" rel="noopener">ilzam.dev 复盘</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="vaasblock 市场 market 4b"><div class="hd"><span class="num">23</span><div><span class="tt">VaaSBlock · AI 编码助手市场</span><span class="mm">第三方分析 · 品类年收入约 $4B 的保守口径 · 生产力研究三角验证（含注意事项）<br><a href="https://www.vaasblock.com/ai/ai-coding-assistants-market-github-copilot-cursor-2026/" target="_blank" rel="noopener">vaasblock.com</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="融资 tracxn cognition devin windsurf"><div class="hd"><span class="num">24</span><div><span class="tt">AI2Work · 2026 Agentic AI 融资快照</span><span class="mm">第三方汇总 · Tracxn：2026 至 4 月融资 $2.66B、同比 +143%、前十大占 71.2% 资本 · Cognition 估值洽谈 $25B · 收购 Windsurf 后企业 ARR 七周 +30%<br><a href="https://ai2.work/blog/agentic-ai-funding-concentrates-as-round-sizes-double-in-q1" target="_blank" rel="noopener">ai2.work</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="qoder 阿里 合规 认证"><div class="hd"><span class="num">25</span><div><span class="tt">阿里云 Qoder 官方披露 / Gartner 报道</span><span class="mm">厂商披露 · 全球用户 500 万+ · Gartner 2026 挑战者象限（唯一中国公司）· 150+ 安全合规认证 · 支持本地/混合云/VPC 隔离<br><a href="http://www.zqrb.cn/gscy/qiyexinxi/2026-06-26/A1782457281240.html" target="_blank" rel="noopener">证券日报报道</a></span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+    <div class="src-item" data-k="参考 reference 用户提供"><div class="hd"><span class="num">26</span><div><span class="tt">用户提供的参考报告</span><span class="mm">《代码的新经济：AI 编程工具商业模式研究》（2026 年 6 月）· 本报告的结构框架与章节设计沿用该参考；<b>其核心数据已被 2026 年 6 月后的公开披露大幅刷新</b>（Cursor 估值 $29.3B→$50B、Copilot 由席位制转向按量计费、Claude Code 收入规模反超 Cursor）</span></div></div><button class="cbtn" title="复制引用"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg></button></div>
+  </div>
+  <div class="noresult" id="srcNo" style="margin-top:20px">未找到匹配来源。</div>
+
+  <div class="foot">
+    <div>AI 编程工具赛道商业模式深度研究报告 · 2026 Q4 · 单文件 HTML</div>
+    <div>数据截至 2026 年 10 月 17 日 · 估算部分已明确标注 · 市场价格与财务数据变动频繁，引用时请核对最新披露</div>
+  </div>
+</div></footer>
+
+<button class="totop" id="totop" aria-label="回到顶部">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+(function(){
+'use strict';
+
+/* ========== THEME ========== */
+var root=document.documentElement, KEY='aicm-theme';
+function setTheme(t){
+  root.setAttribute('data-theme',t);
+  try{localStorage.setItem(KEY,t);}catch(e){}
+  var txt=document.getElementById('themeTxt');
+  if(txt) txt.textContent = t==='dark'?'浅色':'深色';
+  var ic=document.getElementById('themeIcon');
+  if(ic) ic.innerHTML = t==='dark'
+    ? '<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>'
+    : '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/>';
+  drawMesh();
+}
+var saved=null; try{saved=localStorage.getItem(KEY);}catch(e){}
+setTheme(saved || (window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
+document.getElementById('themeBtn').addEventListener('click',function(){
+  setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark');
+});
+
+/* ========== PROGRESS + SCROLLSPY ========== */
+var bar=document.getElementById('bar');
+var totop=document.getElementById('totop');
+var snLinks=[].slice.call(document.querySelectorAll('.sn-a[href^="#"]'));
+var secs=snLinks.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+var ticking=false;
+function onScroll(){
+  if(ticking) return; ticking=true;
+  requestAnimationFrame(function(){
+    var y=window.pageYOffset;
+    var m=document.documentElement.scrollHeight-window.innerHeight;
+    var pct=m>0?Math.max(0,Math.min(100,y/m*100)):0;
+    bar.style.width=pct+'%';
+    totop.classList.toggle('on', y>700);
+    if(railRead) railRead.querySelector('b').textContent=Math.round(pct)+'%';
+    var cur=null, probe=y+140;
+    secs.forEach(function(s){ if(s.offsetTop<=probe) cur=s.id; });
+    snLinks.forEach(function(a){
+      var isOn = a.getAttribute('href')==='#'+cur;
+      a.classList.toggle('on', isOn);
+      railItems.forEach(function(r){ r.btn.classList.toggle('on', r.id===cur); });
+      if(isOn && a.parentNode){
+        var nav=a.closest('.sn-scroll');
+        if(nav){
+          var ar=a.getBoundingClientRect(), nr=nav.getBoundingClientRect();
+          if(ar.top<nr.top+8 || ar.bottom>nr.bottom-8){
+            nav.scrollTop += (ar.top-nr.top) - nav.clientHeight/2 + ar.height/2;
+          }
+        }
+      }
+    });
+    ticking=false;
+  });
+}
+window.addEventListener('scroll',onScroll,{passive:true});
+window.addEventListener('resize',onScroll);
+onScroll();
+totop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+/* ========== REVEAL ========== */
+/* Fast-scrolling can jump past elements before the observer callback fires, and unobserve()
+   then leaves them permanently hidden. Solution: (1) observe per-element, (2) force-reveal
+   anything already above the fold, (3) sweep on scroll-end as a safety net. */
+var revs=[].slice.call(document.querySelectorAll('.rv'));
+function sweepReveals(){
+  revs.forEach(function(el){
+    if(el.classList.contains('in')) return;
+    var r=el.getBoundingClientRect();
+    if(r.top < window.innerHeight * 0.92 && r.bottom > 0){
+      el.classList.add('in');
+      if(revIO) revIO.unobserve(el);
+      drawChartIn(el);
+      cnts.forEach(function(c){ if(el.contains(c) && !c.dataset.done) animCount(c); });
+      mfillEls.forEach(function(f){ if(el.contains(f)) fillBar(f); });
+    }
+  });
+}
+if('IntersectionObserver' in window){
+  var revIO=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); revIO.unobserve(e.target); drawChartIn(e.target);} });
+  },{threshold:0, rootMargin:'0px 0px -6% 0px'});
+  revs.forEach(function(el){revIO.observe(el);});
+}else{ revs.forEach(function(el){el.classList.add('in');}); }
+
+/* ========== COUNTERS ========== */
+/* A fast scroll / background tab can suspend rAF mid-animation, leaving a WRONG number on
+   screen (e.g. "49%" instead of "83%"). Two guards:
+   (1) write the final value first, then animate up from 0;
+   (2) on visibilitychange / pagehide, snap every in-flight counter to its target. */
+function fmt(v,dec,suf){ return (dec? v.toFixed(dec) : Math.round(v).toLocaleString('en-US'))+suf; }
+var liveCounts=[];
+function animCount(el){
+  if(el.dataset.done) return;
+  el.dataset.done='1';
+  var to=parseFloat(el.getAttribute('data-cnt')), dec=parseInt(el.getAttribute('data-dec')||'0',10),
+      suf=el.getAttribute('data-suffix')||'';
+  el.textContent=fmt(to,dec,suf);           // guard: correct value even if animation never runs
+  liveCounts.push({el:el,to:to,dec:dec,suf:suf});
+  var dur=1400, st=null;
+  function step(ts){
+    if(!st) st=ts;
+    var p=Math.min((ts-st)/dur,1);
+    var e=1-Math.pow(1-p,3);
+    el.textContent=fmt(to*e,dec,suf);
+    if(p<1){ requestAnimationFrame(step); }
+    else{ el.textContent=fmt(to,dec,suf); var i=liveCounts.findIndex(function(c){return c.el===el;}); if(i>-1) liveCounts.splice(i,1); }
+  }
+  requestAnimationFrame(step);
+}
+function snapAllCounts(){
+  liveCounts.forEach(function(c){ c.el.textContent=fmt(c.to,c.dec,c.suf); });
+  liveCounts=[];
+}
+var cnts=[].slice.call(document.querySelectorAll('[data-cnt]'));
+if('IntersectionObserver' in window){
+  var io2=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ animCount(e.target); io2.unobserve(e.target);} });
+  },{threshold:.35});
+  cnts.forEach(function(el){io2.observe(el);});
+}else{ cnts.forEach(animCount); }
+
+/* ========== METER BARS ========== */
+function fillBar(el){
+  if(el.dataset.done) return;
+  el.dataset.done='1';
+  el.style.width=el.getAttribute('data-w')+'%';
+}
+var mfillEls=[].slice.call(document.querySelectorAll('.mfill[data-w]'));
+if('IntersectionObserver' in window){
+  var io3=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ fillBar(e.target); io3.unobserve(e.target);} });
+  },{threshold:.25});
+  mfillEls.forEach(function(el){io3.observe(el);});
+}else{ mfillEls.forEach(fillBar); }
+
+// safety net: any element scrolled past but never revealed (fast scroll / restored scroll pos)
+function revealAll(){ revs.forEach(function(el){el.classList.add('in');}); mfillEls.forEach(fillBar); snapAllCounts(); }
+var sweepT;
+window.addEventListener('scroll',function(){
+  clearTimeout(sweepT);
+  sweepT=setTimeout(sweepReveals,160);
+},{passive:true});
+window.addEventListener('load',function(){ setTimeout(sweepReveals,80); });
+setTimeout(sweepReveals,400);
+sweepReveals();
+// guarantee above-the-fold counters are correct immediately
+document.addEventListener('visibilitychange',function(){ if(document.hidden) snapAllCounts(); });
+window.addEventListener('pagehide',snapAllCounts);
+window.addEventListener('beforeprint',revealAll);
+window.addEventListener('afterprint',function(){ window.scrollTo(0,0); });
+
+
+/* ========== CHART SELF-DRAW ========== */
+/* The observed element may BE the chart (.chart.rv) or merely contain one — check both. */
+function drawChartIn(scope){
+  var targets=[];
+  if(scope && scope.matches && scope.matches('[data-chart]')) targets.push(scope);
+  if(scope && scope.querySelectorAll) targets=targets.concat([].slice.call(scope.querySelectorAll('[data-chart]')));
+  targets.forEach(function(c){
+    if(c.dataset.drawn) return; c.dataset.drawn='1';
+    c.querySelectorAll('.draw').forEach(function(p){ p.classList.add('go'); });
+    c.querySelectorAll('.draw-2').forEach(function(p){ p.classList.add('go'); });
+    setTimeout(function(){ c.querySelectorAll('.pop').forEach(function(p){ p.classList.add('go'); }); },180);
+  });
+}
+
+/* ========== ODOMETER ========== */
+/* Each digit is a 0-9 column translated by N em. Height must be locked to 1em or the
+   strip collapses and the whole 0-9 ladder becomes visible. Keep the static text as the
+   source of truth so a failure here can never show wrong numbers. */
+function buildOdo(el){
+  if(el.dataset.built) return;
+  var to=parseFloat(el.getAttribute('data-odo')), dec=parseInt(el.getAttribute('data-dec')||'0',10),
+      suf=el.getAttribute('data-suffix')||'';
+  var digits = dec>0 ? String(to.toFixed(dec)) : String(Math.round(to));
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.innerHTML='';
+  var idx=0;
+  digits.split('').forEach(function(ch){
+    if(ch==='.'){ var dot=document.createElement('span'); dot.textContent='.'; el.appendChild(dot); return; }
+    var strip=document.createElement('span'); strip.className='odo-strip';
+    var col=document.createElement('span');
+    for(var d=0;d<10;d++){ var s2=document.createElement('span'); s2.textContent=d; col.appendChild(s2); }
+    strip.appendChild(col);
+    el.appendChild(strip); idx++;
+    /* Measure one digit's real pixel height and drive both the clip box and the
+       translate from it. Using `em` here is unreliable because the inner spans
+       re-resolve font-size against their own inherited context. */
+    var digitH = col.firstElementChild ? col.firstElementChild.getBoundingClientRect().height : 0;
+    if(digitH>0){
+      strip.style.height = digitH+'px';
+      col.style.height = (digitH*10)+'px';
+      var target = parseInt(ch,10)*digitH;
+      col.style.transform='translateY(-'+target+'px)';
+      col.style.transition='none';
+      if(!reduce){
+        requestAnimationFrame(function(){
+          requestAnimationFrame(function(){
+            col.style.transition='transform .95s cubic-bezier(.22,1,.36,1) '+(idx*75)+'ms';
+          });
+        });
+      }
+    }
+  });
+  if(suf){ var sfx=document.createElement('span'); sfx.textContent=suf; el.appendChild(sfx); }
+  el.dataset.built='1';
+}
+[].slice.call(document.querySelectorAll('[data-odo]')).forEach(buildOdo);
+
+/* ========== COMMAND PALETTE ========== */
+var pal=document.getElementById('palette'), palInput=document.getElementById('palInput'), palList=document.getElementById('palList');
+var palItems=[], palIdx=0;
+function buildPal(qstr){
+  var qs=(qstr||'').toLowerCase().trim(), out=[];
+  var SEC_ALIAS={summary:'executive summary 摘要',metrics:'key metrics 指标 读数',growth:'growth curve 增长 曲线',competition:'competitive landscape 竞争 对比',monetization:'business model 变现 商业模式',unit:'unit economics 单位经济 成本',swot:'swot 挑战',outlook:'outlook 趋势 展望',sources:'sources 来源 引用'};
+  secs.forEach(function(s,i){
+    var nm=snLinks[i].textContent.replace(/^[0-9]+\s*/,'');
+    var h2=s.querySelector('h2'); var sub=h2?h2.textContent:'';
+    var alias=SEC_ALIAS[s.id]||'';
+    if(!qs||(nm+sub+' '+alias).toLowerCase().indexOf(qs)>-1){
+      out.push({g:'跳转章节',ic:'#4F46E5',c:'I',t:nm,t2:sub,fn:function(s){return function(){ s.scrollIntoView({behavior:'smooth'}); };}(s)});
+    }
+  });
+  [].slice.call(document.querySelectorAll('#srcList .src-item')).forEach(function(it){
+    var tt=it.querySelector('.tt').textContent, num=it.querySelector('.num').textContent;
+    if(!qs||((it.getAttribute('data-k')||'')+tt).toLowerCase().indexOf(qs)>-1){
+      out.push({g:'来源',ic:'#10B981',c:'S',t:tt,t2:'来源 #'+num,fn:function(it){return function(){ it.scrollIntoView({behavior:'smooth',block:'center'}); };}(it)});
+    }
+  });
+  var acts=[
+    {g:'操作',ic:'#0EA5E9',t:(root.getAttribute('data-theme')==='dark'?'切换到浅色主题':'切换到深色主题'),t2:'快捷键 T · theme',fn:function(){ setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); }},
+    {g:'操作',ic:'#F59E0B',t:'导出 PDF',t2:'快捷键 P · print export',fn:function(){ window.print(); }},
+    {g:'操作',ic:'#EC4899',t:'回到页面顶部',t2:'快捷键 Home · top',fn:function(){ window.scrollTo({top:0,behavior:'smooth'}); }},
+    {g:'操作',ic:'#8B5CF6',t:'打开玩家对比模式',t2:'竞争格局 · compare',fn:function(){ var c=document.getElementById('cmp'); if(c) c.scrollIntoView({behavior:'smooth'}); }}
+  ];
+  acts.forEach(function(a){ if(!qs||(a.t+a.t2).toLowerCase().indexOf(qs)>-1) out.push(a); });
+  palItems=out; palIdx=0;
+  if(!out.length){ palList.innerHTML='<div class="pal-empty">没有匹配结果</div>'; return; }
+  var html='', lastG='';
+  out.forEach(function(it,i){
+    if(it.g!==lastG){ html+='<div class="pal-group">'+it.g+'</div>'; lastG=it.g; }
+    html+='<div class="pal-item'+(i===0?' on':'')+'" data-i="'+i+'"><span class="ic" style="background:'+it.ic+'">'+it.c+'</span><span class="tx"><span class="t1">'+it.t+'</span><span class="t2">'+it.t2+'</span></span></div>';
+  });
+  palList.innerHTML=html;
+  palList.querySelectorAll('.pal-item').forEach(function(d){
+    d.addEventListener('click',function(){ runPal(parseInt(d.getAttribute('data-i'),10)); });
+  });
+}
+function movePal(d){
+  var els=palList.querySelectorAll('.pal-item');
+  if(!els.length) return;
+  palIdx=(palIdx+d+els.length)%els.length;
+  els.forEach(function(e,i){ e.classList.toggle('on',i===palIdx); });
+  els[palIdx].scrollIntoView({block:'nearest'});
+}
+function runPal(i){ if(!palItems[i]) return; palItems[i].fn(); closePal(); }
+function openPal(){ pal.classList.add('open'); palInput.value=''; buildPal(''); setTimeout(function(){palInput.focus();},40); }
+function closePal(){ pal.classList.remove('open'); }
+palInput.addEventListener('input',function(){ buildPal(palInput.value); });
+pal.addEventListener('click',function(e){ if(e.target===pal) closePal(); });
+/* keyboard nav inside the palette: ↑↓ move, Enter runs, Esc closes.
+   Handled on the palette element itself so it never conflicts with the global shortcuts. */
+pal.addEventListener('keydown',function(e){
+  if(e.key==='ArrowDown'){ e.preventDefault(); movePal(1); }
+  else if(e.key==='ArrowUp'){ e.preventDefault(); movePal(-1); }
+  else if(e.key==='Enter'){ e.preventDefault(); runPal(palIdx); }
+  else if(e.key==='Escape'){ e.preventDefault(); closePal(); }
+});
+var cmdBtn=document.getElementById('cmdBtn'); if(cmdBtn) cmdBtn.addEventListener('click',openPal);
+
+/* ========== COMPARE MODE ========== */
+var CMP=[
+  {n:'GitHub Copilot',c:'#4F46E5',u:'50M 总用户',p:'4.7M 付费',a:'$0.9–1.1B（估算）',e:'90% Fortune 100',pr:'$10–39 /月',m:'~55%'},
+  {n:'Cursor',c:'#10B981',u:'2M 总用户',p:'1M 付费',a:'~$4B',e:'70% Fortune 1000',pr:'$20–200 /月',m:'轻微转正'},
+  {n:'Claude Code',c:'#D97706',u:'GitHub 提交 4%',p:'未单独披露',a:'$2.5B+',e:'企业占比 >50%',pr:'$100–200 /月',m:'~65%'},
+  {n:'Devin / Cognition',c:'#8B5CF6',u:'未披露',p:'未披露',a:'$73–155M',e:'含 Windsurf 59% F500',pr:'$500+ /月',m:'~45%'},
+  {n:'Replit',c:'#14B8A6',u:'未披露',p:'未披露',a:'未披露',e:'未披露',pr:'按工作量',m:'已转正 >1 年'},
+  {n:'阿里云 Qoder',c:'#F97316',u:'500万+ 用户',p:'未披露',a:'未披露',e:'IDC 中国 47.6%',pr:'企业方案',m:'未披露'}
+];
+var cmpSel=[0,1];
+function cmpNote(A,B){
+  var pair=[A.n,B.n].sort().join('|');
+  if(pair==='Claude Code|Cursor') return '<b>同一收入量级，两种成本结构。</b>Claude Code 已凭自有模型拿到 ~65% 毛利率并反超 Cursor 成为收入第一；Cursor 靠 ~20 人自研 Composer + 接入 DeepSeek/Kimi/Qwen 把毛利从 -30% 拉回轻微转正。<b>这印证了报告的核心论点：不控制模型的一方，长期难以摆脱结构性毛利压制。</b>';
+  if(pair==='Cursor|GitHub Copilot') return '<b>分发 vs 产品的经典对立。</b>Copilot 用生态换规模——50M 总用户、Fortune 100 渗透 90%，激活成本几乎为零，但毛利率受制于第三方模型（~55%）。Cursor 用产品换溢价——ARR 已达 ~$4B、付费转化与客单价更高，却在 2025 年因零售 API 价长期负毛利。<b>对采购方：Copilot 赢在「不用做决策」，Cursor 赢在「值得付费」。</b>';
+  if(pair==='Devin / Cognition|Cursor') return '<b>路径差异大于规模差异。</b>Cursor 走「个人开发者自发扩散 → 企业转化」；Devin 走「自主智能体 → 企业高单价」，ARPU 高一个数量级但规模小得多。<b>前者验证产品力，后者验证交付价值——企业采购正在同时需要这两者。</b>';
+  return '<b>关键差异：'+A.n+' vs '+B.n+'。</b>对比时可留意三点——① 生态依赖度（是否需要第三方模型 API）② 企业渗透深度（席位能否规模化销售）③ 毛利率结构（自有模型 vs 零售采购）。<b>这三点共同决定了长期定价权归属。</b>';
+}
+function renderCmp(){
+  var pick=document.getElementById('cmpPick'); if(!pick) return;
+  pick.innerHTML=CMP.map(function(p,i){ return '<button type="button" data-i="'+i+'" class="'+(cmpSel.indexOf(i)>-1?'on':'')+'"><span class="sw" style="background:'+p.c+'"></span>'+p.n+'</button>'; }).join('');
+  pick.querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var i=parseInt(b.getAttribute('data-i'),10), k=cmpSel.indexOf(i);
+      if(k>-1){ if(cmpSel.length>1) cmpSel.splice(k,1); }
+      else { if(cmpSel.length>=2) cmpSel.shift(); cmpSel.push(i); }
+      renderCmp();
+    });
+  });
+  var A=CMP[cmpSel[0]], B=CMP[cmpSel[1]];
+  if(!A||!B) return;
+  var rowsDef=[['总用户规模',A.u,B.u],['付费用户',A.p,B.p],['年化收入',A.a,B.a],['企业渗透',A.e,B.e],['定价区间',A.pr,B.pr],['毛利率',A.m,B.m]];
+  document.getElementById('cmpGrid').innerHTML='<div class="hd"></div>'
+    +'<div class="hd"><span class="sw" style="background:'+A.c+'"></span>'+A.n+'</div>'
+    +'<div class="hd"><span class="sw" style="background:'+B.c+'"></span>'+B.n+'</div>'
+    +rowsDef.map(function(r){ return '<div class="lb">'+r[0]+'</div><div class="vl">'+r[1]+'</div><div class="vl">'+r[2]+'</div>'; }).join('');
+  document.getElementById('cmpNote').innerHTML=cmpNote(A,B);
+}
+renderCmp();
+
+/* ========== RAIL ========== */
+var railBox=document.getElementById('rail'), railItems=[], railRead=null;
+if(railBox){
+  secs.forEach(function(s){
+    var nm=document.querySelector('.sn-a[href="#'+s.id+'"]');
+    var label=nm?nm.textContent.replace(/^[0-9]+\s*/,''):s.id;
+    var b=document.createElement('button'); b.className='rail-item'; b.type='button';
+    b.innerHTML='<span class="rt">'+label+'</span><span class="rd"></span>';
+    b.addEventListener('click',function(){ s.scrollIntoView({behavior:'smooth',block:'start'}); });
+    railBox.appendChild(b);
+    railItems.push({btn:b,id:s.id});
+  });
+  railRead=document.createElement('div');
+  railRead.className='rail-read'; railRead.innerHTML='<b>0%</b>已读';
+  railBox.appendChild(railRead);
+}
+
+/* ========== TOOLTIPS ========== */
+/* Bind to the element that actually carries data-tip (a circle/rect/g), NOT the parent <g class="hit">,
+   whose bounding box spans the whole group — hovering its centre hits empty space and never fires. */
+var tip=document.getElementById('tip'), tipHost=null;
+function showTip(e){
+  var t=tipHost?tipHost.getAttribute('data-tip'):'';
+  if(!t) return;
+  tip.innerHTML=t;
+  tip.classList.add('on');
+  moveTip(e);
+}
+function moveTip(e){
+  if(!tip.classList.contains('on')) return;
+  var pad=14, w=tip.offsetWidth, h=tip.offsetHeight;
+  var x=e.clientX+pad, y=e.clientY+pad;
+  if(x+w>window.innerWidth-10) x=e.clientX-w-pad;
+  if(y+h>window.innerHeight-10) y=e.clientY-h-pad;
+  tip.style.left=Math.max(8,x)+'px'; tip.style.top=Math.max(8,y)+'px';
+}
+function hideTip(){ tip.classList.remove('on'); tipHost=null; }
+[].slice.call(document.querySelectorAll('[data-tip]')).forEach(function(el){
+  el.addEventListener('mouseenter',function(e){ tipHost=el; showTip(e); });
+  el.addEventListener('mousemove',moveTip);
+  el.addEventListener('mouseleave',hideTip);
+  // enlarge small targets so they are comfortable to hover / tap
+  if(el.getAttribute('data-hitpad')){ el.style.cursor='pointer'; }
+  else if(el.tagName.toLowerCase()==='rect'){
+    el.setAttribute('data-hitpad','1'); el.style.cursor='pointer';
+    var x=parseFloat(el.getAttribute('x')),y=parseFloat(el.getAttribute('y')),
+        w=parseFloat(el.getAttribute('width')),h=parseFloat(el.getAttribute('height'));
+    var padY=Math.max(12,(30-h)/2);
+    var pad2=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    pad2.setAttribute('x',x-6); pad2.setAttribute('y',y-padY);
+    pad2.setAttribute('width',w+12); pad2.setAttribute('height',h+padY*2);
+    pad2.setAttribute('fill','transparent'); pad2.style.cursor='pointer';
+    el.parentNode.insertBefore(pad2, el);
+    pad2.addEventListener('mouseenter',function(e){ tipHost=el; showTip(e); });
+    pad2.addEventListener('mousemove',moveTip);
+    pad2.addEventListener('mouseleave',hideTip);
+  }
+  else if(el.tagName.toLowerCase()==='circle'){
+    var r=parseFloat(el.getAttribute('r'))||6;
+    if(r<17){
+      el.setAttribute('data-hitpad','1'); el.style.cursor='pointer';
+      var cx=parseFloat(el.getAttribute('cx')),cy=parseFloat(el.getAttribute('cy'));
+      var pad3=document.createElementNS('http://www.w3.org/2000/svg','circle');
+      pad3.setAttribute('cx',cx); pad3.setAttribute('cy',cy);
+      pad3.setAttribute('r',Math.max(18,r+10));
+      pad3.setAttribute('fill','transparent'); pad3.style.cursor='pointer';
+      el.parentNode.insertBefore(pad3, el);
+      pad3.addEventListener('mouseenter',function(e){ tipHost=el; showTip(e); });
+      pad3.addEventListener('mousemove',moveTip);
+      pad3.addEventListener('mouseleave',hideTip);
+    }else{ el.style.cursor='pointer'; }
+  }
+  else{ el.style.cursor='pointer'; }
+  // touch: show on tap
+  el.addEventListener('touchstart',function(e){
+    var t0=e.touches[0];
+    tipHost=el; showTip({clientX:t0.clientX, clientY:t0.clientY});
+  },{passive:true});
+});
+document.addEventListener('touchstart',function(e){
+  if(!e.target.closest||!e.target.closest('[data-tip]')) hideTip();
+},{passive:true});
+
+/* ========== TABS ========== */
+[].slice.call(document.querySelectorAll('.tabs')).forEach(function(tabs){
+  tabs.addEventListener('click',function(e){
+    var b=e.target.closest('.tab'); if(!b) return;
+    var key=b.getAttribute('data-t');
+    [].slice.call(tabs.querySelectorAll('.tab')).forEach(function(x){x.classList.toggle('on',x===b);});
+    var scope=tabs.parentNode;
+    [].slice.call(scope.querySelectorAll('.tpane')).forEach(function(p){
+      p.classList.toggle('on', p.getAttribute('data-p')===key);
+    });
+    // replay counters + meters inside the newly shown pane
+    setTimeout(function(){
+      [].slice.call(scope.querySelectorAll('.tpane.on .mfill[data-w]')).forEach(function(el){
+        delete el.dataset.done; el.style.width='0'; void el.offsetWidth; fillBar(el);
+      });
+      [].slice.call(scope.querySelectorAll('.tpane.on [data-cnt]')).forEach(function(el){
+        delete el.dataset.done; animCount(el);
+      });
+    },70);
+  });
+});
+
+/* ========== PLAYER TABLE FILTER ========== */
+var q=document.getElementById('q'), chips=document.getElementById('fchips'),
+    rows=[].slice.call(document.querySelectorAll('#pt tbody tr')),
+    noRes=document.getElementById('nores'), curF='all';
+function applyFilter(){
+  var kw=(q&&q.value||'').toLowerCase().trim(), n=0;
+  rows.forEach(function(r){
+    var okF = curF==='all' || (r.getAttribute('data-cat')||'').indexOf(curF)>-1;
+    var okK = !kw || r.textContent.toLowerCase().indexOf(kw)>-1;
+    var show = okF && okK;
+    r.classList.toggle('hide', !show);
+    if(show) n++;
+  });
+  if(noRes) noRes.style.display = n? 'none':'block';
+  var rc=document.getElementById('rowCount'); if(rc) rc.textContent='显示 '+n+' / '+rows.length+' 家玩家';
+}
+if(q) q.addEventListener('input',applyFilter);
+if(chips) chips.addEventListener('click',function(e){
+  var c=e.target.closest('.fchip'); if(!c) return;
+  curF=c.getAttribute('data-f');
+  [].slice.call(chips.querySelectorAll('.fchip')).forEach(function(x){x.classList.toggle('on',x===c);});
+  applyFilter();
+});
+
+/* ========== SOURCE SEARCH ========== */
+var sq=document.getElementById('sq'), sItems=[].slice.call(document.querySelectorAll('#srcList .src-item')), srcNo=document.getElementById('srcNo');
+function applySrc(){
+  var kw=(sq&&sq.value||'').toLowerCase().trim(), n=0;
+  sItems.forEach(function(it){
+    var hay=(it.getAttribute('data-k')||'')+' '+it.textContent;
+    var show=!kw||hay.toLowerCase().indexOf(kw)>-1;
+    it.style.display=show?'':'none';
+    if(show) n++;
+  });
+  if(srcNo) srcNo.style.display=n?'none':'block';
+}
+if(sq) sq.addEventListener('input',applySrc);
+
+/* ========== COPY SOURCE ========== */
+[].slice.call(document.querySelectorAll('.cbtn')).forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var item=btn.closest('.src-item');
+    var num=item.querySelector('.num').textContent;
+    var tt=item.querySelector('.tt').textContent;
+    var mm=item.querySelector('.mm').textContent.replace(/\s+/g,' ').trim();
+    var txt='['+num+'] '+tt+' — '+mm;
+    var done=function(){
+      btn.classList.add('done');
+      btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+      setTimeout(function(){ btn.classList.remove('done'); btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>'; },1500);
+    };
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done).catch(function(){fallback(txt,done);});
+    }else fallback(txt,done);
+  });
+});
+function fallback(txt,cb){
+  var ta=document.createElement('textarea');
+  ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try{document.execCommand('copy'); cb();}catch(e){}
+  document.body.removeChild(ta);
+}
+
+/* ========== MOBILE MENU ========== */
+/* NOTE: the toggle lives INSIDE .sidenav, which is translated off-canvas below 1024px.
+   Therefore a fixed FAB is required — otherwise the button sits at x:-246 and is unclickable. */
+var sn=document.getElementById('sn'), scrim=document.getElementById('scrim'), fab=document.getElementById('fab');
+function closeMenu(){ sn.classList.remove('open'); scrim.style.opacity='0'; scrim.style.pointerEvents='none'; if(fab) fab.setAttribute('aria-expanded','false'); }
+function toggleMenu(){
+  var open=!sn.classList.contains('open');
+  sn.classList.toggle('open', open);
+  scrim.style.opacity=open?'1':'0';
+  scrim.style.pointerEvents=open?'auto':'none';
+  if(fab) fab.setAttribute('aria-expanded', open?'true':'false');
+}
+if(fab) fab.addEventListener('click',toggleMenu);
+var menuBtn=document.getElementById('menuBtn');
+if(menuBtn) menuBtn.addEventListener('click',toggleMenu);
+scrim.addEventListener('click',closeMenu);
+snLinks.forEach(function(a){ a.addEventListener('click',function(){ if(window.innerWidth<=1024) closeMenu(); }); });
+window.addEventListener('resize',function(){ if(window.innerWidth>1024) closeMenu(); });
+
+/* ========== PRINT ========== */
+document.getElementById('printBtn').addEventListener('click',function(e){ e.preventDefault(); window.print(); });
+window.addEventListener('keydown',function(e){
+  if(e.metaKey||e.ctrlKey){
+    if(e.key.toLowerCase()==='k'){ e.preventDefault(); pal.classList.contains('open')?closePal():openPal(); }
+    return;
+  }
+  if(e.target&&/INPUT|TEXTAREA/.test(e.target.tagName)){
+    if(e.key==='Escape'){ e.target.blur(); closePal(); closeMenu(); }
+    return;
+  }
+  if(e.altKey) return;
+  var k=e.key.toLowerCase();
+  if(k==='k'){ e.preventDefault(); openPal(); }
+  else if(k==='home'){ e.preventDefault(); window.scrollTo({top:0,behavior:'smooth'}); }
+  if(k==='t'){ setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'); }
+  else if(k==='p'){ e.preventDefault(); window.print(); }
+  else if(k==='/'){ e.preventDefault(); if(q) q.focus(); }
+  else if(k==='escape'){ closeMenu(); hideTip(); closePal(); }
+});
+
+/* ========== HERO MESH ========== */
+function drawMesh(){
+  var c=document.getElementById('mesh');
+  if(!c||!c.getContext) return;
+  var dark=root.getAttribute('data-theme')==='dark';
+  var dpr=Math.min(window.devicePixelRatio||1,2);
+  var w=c.offsetWidth||window.innerWidth, h=c.offsetHeight||window.innerHeight;
+  c.width=w*dpr; c.height=h*dpr;
+  var ctx=c.getContext('2d');
+  ctx.scale(dpr,dpr);
+  var N=5, pts=[], i, j;
+  var colors = dark
+    ? ['rgba(79,70,229,0.30)','rgba(16,185,129,0.20)','rgba(139,92,246,0.22)','rgba(14,165,233,0.16)','rgba(217,119,6,0.13)']
+    : ['rgba(79,70,229,0.13)','rgba(16,185,129,0.10)','rgba(139,92,246,0.09)','rgba(14,165,233,0.07)','rgba(217,119,6,0.06)'];
+  for(i=0;i<N;i++){
+    pts[i]=[];
+    for(j=0;j<N;j++){
+      pts[i][j]={x:(i/(N-1))*w, y:(j/(N-1))*h, ox:0, oy:0, vx:(Math.random()-0.5)*0.22, vy:(Math.random()-0.5)*0.22};
+    }
+  }
+  var running=true, t0=performance.now();
+  function loop(now){
+    if(!running){ return; }
+    var t=(now-t0)/1000;
+    ctx.clearRect(0,0,w,h);
+    for(i=0;i<N;i++)for(j=0;j<N;j++){
+      var p=pts[i][j];
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>w) p.vx*=-1;
+      if(p.y<0||p.y>h) p.vy*=-1;
+      p.ox=Math.sin(t*0.5+p.x*0.006)*26;
+      p.oy=Math.cos(t*0.42+p.y*0.007)*22;
+    }
+    for(i=0;i<N;i++)for(j=0;j<N;j++){
+      var p1=pts[i][j];
+      for(var k2=i;k2<N;k2++){
+        var p2=pts[k2][j];
+        var dx=(p1.x+p1.ox)-(p2.x+p2.ox), dy=(p1.y+p1.oy)-(p2.y+p2.oy);
+        var d=Math.sqrt(dx*dx+dy*dy);
+        if(d<190){
+          ctx.strokeStyle=colors[i];
+          ctx.globalAlpha=(1-d/190)*0.85;
+          ctx.lineWidth=1;
+          ctx.beginPath();
+          ctx.moveTo(p1.x+p1.ox, p1.y+p1.oy);
+          ctx.lineTo(p2.x+p2.ox, p2.y+p2.oy);
+          ctx.stroke();
+        }
+      }
+    }
+    ctx.globalAlpha=1;
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+  // pause when off-screen
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(en){
+      en.forEach(function(x){
+        if(x.isIntersecting && !running){ running=true; t0=performance.now(); requestAnimationFrame(loop); }
+        else if(!x.isIntersecting){ running=false; }
+      });
+    },{threshold:0.01}).observe(c);
+  }
+}
+var rt;
+window.addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(drawMesh,220); });
+
+})();
+</script>
+</body>
+</html>

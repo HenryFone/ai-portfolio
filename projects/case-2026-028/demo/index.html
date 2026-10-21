@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>极物数码 · 数码好物一站配齐</title>
+<meta name="description" content="极物数码——专注数码配件的精选电商：真无线降噪耳机、氮化镓快充、磁吸无线充电宝、静音机械键盘、智能运动手表等 16 款严选好物，正品保障，24 小时发货。">
+<meta property="og:title" content="极物数码 · 数码好物一站配齐">
+<meta property="og:description" content="16 款严选数码好物 · 正品保障 · 满 99 包邮 · 7 天无理由退换">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231652f0'/%3E%3Cpath d='M17.6 6 10 18h4.6l-1.8 8 9.4-13h-5.2l1.6-7z' fill='%23fff'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"极物数码","description":"专注数码配件的精选电商品牌","foundingDate":"2021","email":"support@jiwu-demo.com","telephone":"400-880-1234"}
+</script>
+<style>
+:root{
+  --bg:#ffffff; --bg-soft:#f5f6f8; --ink:#0f1419; --ink-2:#525c66; --ink-3:#8a939e;
+  --line:#e8eaef; --line-2:#f0f1f4;
+  --brand:#1652f0; --brand-deep:#0e3cd6; --brand-soft:#eef3ff; --brand-glow:rgba(22,82,240,.35);
+  --hot:#ff3b2f; --hot-2:#ff7a18; --gold:#ffb020; --ok:#15a34a;
+  --dark:#0b0f1a; --dark-2:#151b2c;
+  --r-l:20px; --r-m:14px; --r-s:10px;
+  --sh-1:0 1px 2px rgba(15,20,25,.05),0 10px 30px rgba(15,20,25,.07);
+  --sh-2:0 4px 12px rgba(15,20,25,.08),0 24px 60px rgba(15,20,25,.14);
+  --sh-pop:0 24px 80px rgba(11,15,26,.30);
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--brand);color:#fff}
+.wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+section{scroll-margin-top:92px}
+b,strong{font-weight:700}
+
+/* ---------- 头部 ---------- */
+.hdrwrap{position:fixed;top:0;left:0;right:0;z-index:60}
+.topbar{background:var(--dark);color:rgba(255,255,255,.82);font-size:12.5px;height:36px;display:flex;align-items:center;overflow:hidden;transition:height .3s var(--ease)}
+.hdrwrap.scrolled .topbar{height:0}
+.tb-track{display:flex;align-items:center;gap:0;white-space:nowrap;animation:marquee 30s linear infinite;will-change:transform}
+.tb-track>*{flex:none}
+.tb-item{padding:0 4px}
+.tb-dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.35);margin:0 22px}
+@keyframes marquee{to{transform:translateX(-50%)}}
+.hdr{height:68px;display:flex;align-items:center;color:#fff;transition:background .35s var(--ease),color .35s var(--ease),box-shadow .35s var(--ease)}
+.hdrwrap.scrolled .hdr{background:rgba(255,255,255,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:var(--ink);box-shadow:0 1px 0 var(--line),0 12px 32px rgba(15,20,25,.07)}
+.hdr-in{display:flex;align-items:center;gap:26px;width:100%}
+.logo{display:flex;align-items:center;gap:11px;flex:none}
+.logo svg{width:34px;height:34px;flex:none;filter:drop-shadow(0 4px 12px var(--brand-glow))}
+.logo-tx{display:flex;flex-direction:column;line-height:1.05}
+.logo-tx b{font-size:17.5px;font-weight:900;letter-spacing:.5px}
+.logo-tx i{font-style:normal;font-size:9px;letter-spacing:2.6px;opacity:.55;font-weight:600}
+.nav{display:flex;gap:4px;margin-left:6px}
+.nav a{position:relative;padding:8px 13px;font-size:14.5px;font-weight:600;border-radius:9px;opacity:.85;transition:.2s}
+.nav a:hover{opacity:1;background:rgba(127,140,160,.16)}
+.hdrwrap.scrolled .nav a:hover{background:var(--bg-soft)}
+.search{position:relative;flex:1;max-width:340px;margin-left:auto}
+.search-box{display:flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:12px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.16);transition:.25s}
+.hdrwrap.scrolled .search-box{background:var(--bg-soft);border-color:var(--line)}
+.search-box:focus-within{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4)}
+.hdrwrap.scrolled .search-box:focus-within{background:#fff;border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+.search-box svg{width:16px;height:16px;opacity:.6;flex:none}
+.search-box input{flex:1;min-width:0;background:none;border:none;outline:none;font-size:13.5px;color:inherit}
+.search-box input::placeholder{color:currentColor;opacity:.55}
+.qdrop{position:absolute;top:48px;left:0;right:0;background:#fff;border-radius:14px;box-shadow:var(--sh-2);border:1px solid var(--line);overflow:hidden;display:none;z-index:70}
+.qdrop.show{display:block;animation:popIn .25s var(--ease)}
+@keyframes popIn{from{opacity:0;transform:translateY(-6px)}}
+.qd-item{display:flex;align-items:center;gap:11px;padding:9px 13px;cursor:pointer;transition:.15s;color:var(--ink)}
+.qd-item:hover{background:var(--bg-soft)}
+.qd-item img{width:42px;height:42px;border-radius:9px;object-fit:cover;background:var(--bg-soft)}
+.qd-item .qd-tx{flex:1;min-width:0}
+.qd-item b{display:block;font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.qd-item .qd-tx span{font-size:12px;color:var(--ink-3)}
+.qd-item .qd-p{color:var(--hot);font-weight:800;font-size:13.5px}
+.qd-empty{padding:16px;text-align:center;color:var(--ink-3);font-size:13px}
+.acts{display:flex;align-items:center;gap:6px;flex:none}
+.ibtn{position:relative;width:41px;height:41px;border-radius:12px;display:flex;align-items:center;justify-content:center;transition:.2s}
+.ibtn:hover{background:rgba(127,140,160,.16)}
+.hdrwrap.scrolled .ibtn:hover{background:var(--bg-soft)}
+.ibtn svg{width:20px;height:20px}
+.cart-badge{position:absolute;top:4px;right:2px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--hot);color:#fff;font-size:10.5px;font-weight:800;display:flex;align-items:center;justify-content:center;transform:scale(0);transition:transform .3s var(--ease)}
+.cart-badge.on{transform:scale(1)}
+.cart-badge.bump{animation:bump .45s var(--ease)}
+@keyframes bump{35%{transform:scale(1.45)}70%{transform:scale(.92)}}
+.mbtn{display:none}
+.mnav{display:none;background:#fff;border-top:1px solid var(--line);box-shadow:var(--sh-2);padding:10px 28px 18px}
+.mnav.open{display:block;animation:slideD .3s var(--ease)}
+@keyframes slideD{from{opacity:0;transform:translateY(-8px)}}
+.mnav a{display:block;padding:13px 4px;font-weight:600;border-bottom:1px solid var(--line-2);color:var(--ink)}
+.mnav .m-search{margin:12px 0 4px}
+@media (max-width:640px){.search{display:none}.mnav .m-search{display:block}}
+@media (min-width:641px){.mnav .m-search{display:none}}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;height:600px;background:var(--dark);overflow:hidden}
+.slide{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .9s var(--ease)}
+.slide.active{opacity:1;pointer-events:auto}
+.slide-img{position:absolute;inset:0}
+.slide-img img{width:100%;height:100%;object-fit:cover;object-position:60% center;transform:scale(1.1);transition:transform 9s linear}
+.slide.active .slide-img img{transform:scale(1)}
+.slide-img::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(8,11,20,.95) 0%,rgba(8,11,20,.82) 36%,rgba(8,11,20,.28) 64%,rgba(8,11,20,0) 84%)}
+.slide-tx{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:center;max-width:620px;padding:0 28px;margin:0 auto;width:100%}
+.slide-tag{display:inline-flex;align-items:center;gap:8px;width:fit-content;padding:6px 14px;border-radius:99px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:12px;font-weight:700;letter-spacing:2.5px;margin-bottom:20px}
+.slide-tag i{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+.slide-tx h1{font-size:clamp(32px,4.4vw,54px);font-weight:900;line-height:1.12;letter-spacing:-.02em;color:#fff;margin-bottom:16px}
+.slide-tx h1 em{font-style:normal;background:linear-gradient(92deg,#7ea6ff,#b7ccff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.slide-sub{font-size:16.5px;color:rgba(255,255,255,.78);line-height:1.7;margin-bottom:10px;max-width:460px}
+.slide-note{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--gold);font-weight:700;margin-bottom:30px}
+.slide-note svg{width:15px;height:15px}
+.slide-cta{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 24px;border-radius:13px;font-weight:700;font-size:14px;transition:.25s var(--ease);white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn-brand{background:var(--brand);color:#fff;box-shadow:0 8px 24px var(--brand-glow)}
+.btn-brand:hover{background:var(--brand-deep);transform:translateY(-2px);box-shadow:0 14px 34px var(--brand-glow)}
+.btn-ink{background:var(--ink);color:#fff}
+.btn-ink:hover{background:#232a33;transform:translateY(-2px);box-shadow:var(--sh-1)}
+.btn-ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--ink);transform:translateY(-2px)}
+.btn-line-w{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.28);color:#fff}
+.btn-line-w:hover{background:rgba(255,255,255,.16)}
+.btn-lg{height:52px;font-size:15px;border-radius:15px}
+.btn[disabled]{opacity:.55;pointer-events:none}
+.slide-tx>*{opacity:0;transform:translateY(28px)}
+.slide.active .slide-tx>*{animation:txIn .85s var(--ease) both}
+.slide.active .slide-tx>*:nth-child(1){animation-delay:.12s}
+.slide.active .slide-tx>*:nth-child(2){animation-delay:.22s}
+.slide.active .slide-tx>*:nth-child(3){animation-delay:.32s}
+.slide.active .slide-tx>*:nth-child(4){animation-delay:.42s}
+.slide.active .slide-tx>*:nth-child(5){animation-delay:.52s}
+@keyframes txIn{to{opacity:1;transform:none}}
+.harr{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.22);color:#fff;display:flex;align-items:center;justify-content:center;transition:.25s;backdrop-filter:blur(6px)}
+.harr:hover{background:rgba(255,255,255,.22);transform:translateY(-50%) scale(1.06)}
+.harr svg{width:18px;height:18px}
+.harr.prev{left:26px}.harr.next{right:26px}
+.hero-dots{position:absolute;right:44px;bottom:38px;z-index:5;display:flex;gap:9px}
+.hero-dots button{width:9px;height:9px;border-radius:99px;background:rgba(255,255,255,.32);transition:.35s var(--ease)}
+.hero-dots button.on{width:30px;background:#fff}
+.hero-prog{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.1);z-index:5}
+.hero-prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--brand),#7ea6ff)}
+.hero-prog i.run{animation:prog 6s linear forwards}
+@keyframes prog{from{width:0}to{width:100%}}
+.hero-side{position:absolute;left:44px;bottom:38px;z-index:5;color:rgba(255,255,255,.5);font-size:11.5px;letter-spacing:2px;display:flex;align-items:center;gap:10px}
+.hero-side b{color:#fff;font-weight:800}
+
+/* ---------- 信任条 ---------- */
+.trust{border-bottom:1px solid var(--line);background:#fff}
+.trust-in{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:26px 0}
+.tru{display:flex;align-items:center;gap:13px;padding:0 10px}
+.tru+.tru{border-left:1px solid var(--line-2)}
+.tru-ic{width:44px;height:44px;border-radius:13px;background:var(--brand-soft);color:var(--brand);display:flex;align-items:center;justify-content:center;flex:none}
+.tru-ic svg{width:21px;height:21px}
+.tru b{display:block;font-size:14.5px}
+.tru span{font-size:12.5px;color:var(--ink-3)}
+
+/* ---------- 通用区块 ---------- */
+.sec{padding:78px 0}
+.sec-soft{background:var(--bg-soft)}
+.sec-dark{background:var(--dark);color:#fff}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:40px}
+.kicker{display:block;font-size:11.5px;font-weight:800;letter-spacing:3px;color:var(--brand);margin-bottom:11px;text-transform:uppercase}
+.kicker.light{color:#7ea6ff}
+.sec-head h2{font-size:clamp(25px,3vw,33px);font-weight:900;letter-spacing:-.01em;line-height:1.2}
+.sec-sub{margin-top:9px;color:var(--ink-2);font-size:14.5px}
+.sec-sub.light{color:rgba(255,255,255,.62)}
+.tlink{font-size:14px;font-weight:700;color:var(--brand);display:inline-flex;align-items:center;gap:5px;transition:gap .25s}
+.tlink:hover{gap:10px}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- 分类 ---------- */
+.cats{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.cat{position:relative;height:190px;border-radius:var(--r-l);overflow:hidden;color:#fff;transition:.35s var(--ease);box-shadow:var(--sh-1);display:block}
+.cat:hover{transform:translateY(-6px);box-shadow:var(--sh-2)}
+.cat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.cat:hover img{transform:scale(1.09)}
+.cat::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,13,22,.08) 20%,rgba(10,13,22,.82) 92%)}
+.cat-tx{position:absolute;left:16px;right:16px;bottom:15px;z-index:2}
+.cat-tx b{font-size:16px;font-weight:800;display:block}
+.cat-tx span{font-size:11.5px;opacity:.75}
+.cat-n{position:absolute;top:13px;right:14px;z-index:2;font-size:11px;font-weight:800;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);padding:3px 9px;border-radius:99px;backdrop-filter:blur(4px)}
+
+/* ---------- 秒杀 ---------- */
+.cd{display:flex;align-items:center;gap:7px;flex:none}
+.cd-lab{font-size:12.5px;color:rgba(255,255,255,.6);margin-right:4px}
+.cd b{min-width:44px;height:44px;padding:0 6px;border-radius:11px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:1px}
+.cd i{font-style:normal;color:var(--gold);font-weight:800;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:.25}}
+.cd.urgent b{color:#ff8d84;border-color:rgba(255,59,47,.4);background:rgba(255,59,47,.12)}
+.flash-row{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.fcard{background:var(--dark-2);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-l);padding:14px;display:flex;gap:14px;transition:.3s var(--ease);cursor:pointer}
+.fcard:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.2);box-shadow:0 22px 50px rgba(0,0,0,.4)}
+.fcard-img{width:104px;height:104px;border-radius:13px;overflow:hidden;flex:none;background:rgba(255,255,255,.05)}
+.fcard-img img{width:100%;height:100%;object-fit:cover}
+.fcard-tx{flex:1;min-width:0;display:flex;flex-direction:column}
+.fcard-tx b{font-size:14px;font-weight:700;color:#fff;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.45;min-height:41px}
+.fcard-bar{height:6px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden;margin:9px 0 6px}
+.fcard-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--hot-2),var(--hot));width:0;transition:width 1.1s var(--ease) .2s}
+.fcard-tx small{font-size:11px;color:rgba(255,255,255,.5)}
+.fcard-tx small b{color:var(--gold);font-size:11px}
+.fcard-p{margin-top:auto;display:flex;align-items:baseline;gap:7px}
+.fcard-p .p-now{font-size:20px}
+.fcard-p .p-old{font-size:11.5px}
+.fcard-btn{margin-top:10px;height:34px;border-radius:10px;background:linear-gradient(92deg,var(--hot-2),var(--hot));color:#fff;font-size:12.5px;font-weight:800;letter-spacing:1px;transition:.25s;width:100%}
+.fcard-btn:hover{filter:brightness(1.1);box-shadow:0 8px 22px rgba(255,59,47,.4)}
+.fcard-btn:active{transform:scale(.96)}
+
+/* ---------- 优惠券 ---------- */
+.coupons{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.coupon{position:relative;display:flex;background:linear-gradient(135deg,#fff7f2,#fff);border:1px solid #ffd9c4;border-radius:var(--r-l);overflow:hidden;transition:.3s var(--ease)}
+.coupon:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(255,90,40,.14)}
+.coupon::before,.coupon::after{content:"";position:absolute;width:15px;height:15px;border-radius:50%;background:var(--bg);border:1px solid #ffd9c4;left:158px;z-index:2}
+.coupon::before{top:-8px}.coupon::after{bottom:-8px}
+.cp-l{width:158px;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 8px;border-right:1.5px dashed #ffc9ad}
+.cp-l b{font-size:38px;font-weight:900;color:var(--hot);line-height:1;letter-spacing:-1px}
+.cp-l b i{font-style:normal;font-size:16px;font-weight:800;margin-right:2px}
+.cp-l span{margin-top:8px;font-size:11.5px;color:#c26a3f;font-weight:700}
+.cp-r{flex:1;padding:20px 22px;display:flex;flex-direction:column;justify-content:center;gap:10px}
+.cp-r p{font-size:12.5px;color:var(--ink-2);line-height:1.65}
+.cp-btn{height:36px;padding:0 20px;border-radius:10px;background:linear-gradient(92deg,var(--hot-2),var(--hot));color:#fff;font-size:13px;font-weight:800;transition:.25s;width:fit-content}
+.cp-btn:hover{filter:brightness(1.08);box-shadow:0 8px 20px rgba(255,59,47,.35)}
+.cp-btn:active{transform:scale(.95)}
+.cp-btn.claimed{background:#f1f2f5;color:var(--ink-3);box-shadow:none;cursor:default}
+
+/* ---------- 商品区 ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}
+.chip{height:37px;padding:0 18px;border-radius:99px;background:#fff;border:1.5px solid var(--line);font-size:13.5px;font-weight:600;color:var(--ink-2);transition:.22s var(--ease)}
+.chip:hover{border-color:var(--ink-3);color:var(--ink)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.sortbox{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--ink-2);flex:none}
+.sortbox select{height:38px;padding:0 32px 0 14px;border-radius:11px;border:1.5px solid var(--line);background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238a939e' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 13px center;appearance:none;-webkit-appearance:none;font-size:13.5px;font-weight:600;cursor:pointer;outline:none}
+.sortbox select:focus{border-color:var(--brand)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.card{position:relative;background:#fff;border:1px solid var(--line);border-radius:18px;padding:13px;transition:.32s var(--ease)}
+.card:hover{transform:translateY(-7px);box-shadow:var(--sh-2);border-color:transparent}
+.card-img{position:relative;border-radius:13px;background:var(--bg-soft);aspect-ratio:1/1;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform .55s var(--ease)}
+.card:hover .card-img img{transform:scale(1.08)}
+.badge{position:absolute;top:10px;left:10px;z-index:2;padding:3px 9px;border-radius:7px;font-size:11px;font-weight:800;letter-spacing:1px;color:#fff;background:var(--hot)}
+.badge.new{background:var(--brand)}
+.badge.drop{background:linear-gradient(92deg,#f5a623,#ff7a18)}
+.qvb{position:absolute;left:50%;bottom:11px;transform:translate(-50%,12px);opacity:0;z-index:2;height:35px;padding:0 17px;border-radius:99px;background:rgba(15,20,25,.86);color:#fff;font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:6px;backdrop-filter:blur(6px);transition:.3s var(--ease);white-space:nowrap}
+.qvb svg{width:13px;height:13px}
+.card:hover .qvb{opacity:1;transform:translate(-50%,0)}
+.card-tx{padding:13px 3px 3px}
+.card-tx h3{font-size:14.5px;font-weight:700;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:42px}
+.card-sub{font-size:12px;color:var(--ink-3);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-rate{display:flex;align-items:center;gap:5px;margin-top:7px;font-size:11.5px;color:var(--ink-3)}
+.stars{display:inline-flex;gap:1.5px}
+.stars svg{width:11px;height:11px}
+.card-foot{display:flex;align-items:flex-end;justify-content:space-between;margin-top:10px}
+.p-now{color:var(--hot);font-weight:900;font-size:21px;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.p-now i{font-style:normal;font-size:12.5px;font-weight:800;margin-right:1px}
+.p-old{color:var(--ink-3);font-size:12px;text-decoration:line-through;margin-left:6px}
+.add{width:37px;height:37px;border-radius:11px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;transition:.25s var(--ease);flex:none}
+.add svg{width:16px;height:16px}
+.add:hover{background:var(--brand);transform:scale(1.08);box-shadow:0 8px 20px var(--brand-glow)}
+.add:active{transform:scale(.92)}
+.add.done{background:var(--ok)}
+.sk-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:13px}
+.sk{background:linear-gradient(90deg,#eef0f3 25%,#f7f8fa 50%,#eef0f3 75%);background-size:200% 100%;animation:skm 1.2s infinite;border-radius:10px}
+@keyframes skm{to{background-position:-200% 0}}
+.sk-img{aspect-ratio:1/1;border-radius:13px}
+.sk-l1{height:13px;margin-top:14px;width:88%}
+.sk-l2{height:13px;margin-top:8px;width:60%}
+.sk-l3{height:22px;margin-top:12px;width:44%}
+.empty{text-align:center;padding:70px 20px;display:none}
+.empty.show{display:block}
+.empty-ic{font-size:44px;margin-bottom:14px}
+.empty b{display:block;font-size:16px;margin-bottom:8px}
+.empty p{color:var(--ink-3);font-size:13.5px;margin-bottom:20px}
+
+/* ---------- 品牌故事 ---------- */
+.brand-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.brand-img{position:relative;border-radius:26px;overflow:hidden;box-shadow:var(--sh-2)}
+.brand-img img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.brand-badge{position:absolute;left:20px;bottom:20px;background:rgba(11,15,26,.72);color:#fff;font-size:12px;font-weight:700;letter-spacing:1px;padding:9px 16px;border-radius:99px;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.18)}
+.brand-tx h2{font-size:clamp(24px,2.8vw,32px);font-weight:900;line-height:1.28;margin:10px 0 18px;letter-spacing:-.01em}
+.brand-tx p{color:var(--ink-2);font-size:14.5px;line-height:1.9;margin-bottom:26px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px}
+.stat{padding:16px 6px 14px;border-radius:15px;background:var(--bg-soft);text-align:center}
+.stat b{display:block;font-size:27px;font-weight:900;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.stat b em{font-style:normal;font-size:14px;color:var(--brand);margin-left:1px}
+.stat span{font-size:11.5px;color:var(--ink-3)}
+
+/* ---------- 口碑 ---------- */
+.revs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.rev{background:#fff;border-radius:18px;padding:24px;border:1px solid var(--line);transition:.3s var(--ease)}
+.rev:hover{transform:translateY(-5px);box-shadow:var(--sh-2);border-color:transparent}
+.rev-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.ava{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;flex:none}
+.ava.g1{background:linear-gradient(135deg,#1652f0,#5b8cff)}
+.ava.g2{background:linear-gradient(135deg,#ff7a18,#ffb020)}
+.ava.g3{background:linear-gradient(135deg,#0f9d58,#4cd08a)}
+.rev-top b{display:block;font-size:14px}
+.rev-top span{font-size:11.5px;color:var(--ink-3)}
+.rev-stars{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.rev-stars .stars svg{width:13px;height:13px}
+.rev-stars em{font-style:normal;font-size:11px;color:var(--ok);font-weight:700;background:#eafaf0;padding:2px 8px;border-radius:6px}
+.rev p{font-size:13.5px;color:var(--ink-2);line-height:1.8}
+.rev-item{margin-top:14px;padding-top:13px;border-top:1px dashed var(--line);font-size:11.5px;color:var(--ink-3);display:flex;align-items:center;gap:7px}
+.rev-item img{width:26px;height:26px;border-radius:7px;object-fit:cover}
+.rate-big{text-align:right;flex:none}
+.rate-big b{font-size:44px;font-weight:900;letter-spacing:-1px;line-height:1}
+.rate-big b i{font-style:normal;color:var(--gold);font-size:22px}
+.rate-big span{display:block;font-size:12px;color:var(--ink-3);margin-top:3px}
+
+/* ---------- FAQ ---------- */
+.faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:start}
+.faq-side h2{font-size:clamp(24px,2.8vw,32px);font-weight:900;margin:10px 0 16px}
+.faq-side p{color:var(--ink-2);font-size:14px;line-height:1.9}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:21px 2px;cursor:pointer;font-weight:700;font-size:15px}
+.faq-q .fx{flex:none;width:26px;height:26px;border-radius:8px;background:var(--bg-soft);color:var(--ink-2);display:flex;align-items:center;justify-content:center;transition:.3s var(--ease);font-size:16px;font-weight:400}
+.faq-item.open .fx{transform:rotate(45deg);background:var(--brand);color:#fff}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .38s var(--ease)}
+.faq-item.open .faq-a{max-height:220px}
+.faq-a p{padding:0 2px 22px;color:var(--ink-2);font-size:14px;line-height:1.9}
+
+/* ---------- CTA ---------- */
+.cta{background:radial-gradient(900px 400px at 15% 0%,rgba(22,82,240,.35),transparent 60%),radial-gradient(700px 380px at 88% 100%,rgba(255,122,24,.22),transparent 60%),var(--dark);color:#fff;padding:74px 0}
+.cta-in{display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.cta h2{font-size:clamp(24px,2.8vw,32px);font-weight:900;margin-bottom:10px}
+.cta p{color:rgba(255,255,255,.65);font-size:14.5px;max-width:520px}
+.sub{display:flex;gap:10px;flex:none}
+.sub input{height:52px;width:300px;border-radius:15px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#fff;padding:0 18px;font-size:14px;outline:none;transition:.25s}
+.sub input::placeholder{color:rgba(255,255,255,.45)}
+.sub input:focus{border-color:var(--brand);background:rgba(255,255,255,.13);box-shadow:0 0 0 3px rgba(22,82,240,.3)}
+
+/* ---------- 页脚 ---------- */
+footer{background:var(--dark);color:rgba(255,255,255,.62);border-top:1px solid rgba(255,255,255,.07)}
+.ft-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:44px;padding:64px 0 48px}
+.ft-brand .logo{color:#fff;margin-bottom:18px}
+.ft-brand p{font-size:13px;line-height:1.9;max-width:300px}
+.ft-tel{margin-top:18px;display:flex;align-items:center;gap:10px;color:#fff;font-weight:800;font-size:19px;letter-spacing:.5px}
+.ft-tel svg{width:18px;height:18px;color:var(--gold)}
+.ft-col h4{color:#fff;font-size:14px;font-weight:800;margin-bottom:18px;letter-spacing:.5px}
+.ft-col a{display:block;font-size:13px;padding:6px 0;transition:.2s}
+.ft-col a:hover{color:#fff;transform:translateX(3px)}
+.ft-pay{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+.ft-pay i{width:52px;height:26px;border-radius:6px;border:1px solid rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font-style:normal;font-size:10.5px;font-weight:700;color:rgba(255,255,255,.75)}
+.ft-bottom{border-top:1px solid rgba(255,255,255,.07);padding:22px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12px;color:rgba(255,255,255,.4)}
+
+/* ---------- 购物车抽屉 ---------- */
+.scrim{position:fixed;inset:0;background:rgba(11,15,26,.52);z-index:85;opacity:0;pointer-events:none;transition:opacity .35s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:432px;max-width:100%;background:#fff;z-index:90;transform:translateX(103%);transition:transform .45s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;box-shadow:-24px 0 70px rgba(11,15,26,.22)}
+.drawer.open{transform:none}
+.dr-head{display:flex;align-items:center;justify-content:space-between;padding:20px 22px;border-bottom:1px solid var(--line)}
+.dr-head h3{font-size:16.5px;font-weight:800}
+.dr-head h3 i{font-style:normal;color:var(--ink-3);font-weight:600;font-size:13px;margin-left:4px}
+.xbtn{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--ink-2);transition:.2s}
+.xbtn:hover{background:var(--bg-soft);color:var(--ink)}
+.dr-body{flex:1;overflow-y:auto;padding:16px 22px}
+.ci{display:flex;gap:13px;padding:14px 0;border-bottom:1px solid var(--line-2);animation:ciIn .35s var(--ease)}
+@keyframes ciIn{from{opacity:0;transform:translateX(24px)}}
+.ci.out{animation:ciOut .3s var(--ease) forwards}
+@keyframes ciOut{to{opacity:0;transform:translateX(40px);height:0;padding:0;margin:0}}
+.ci img{width:82px;height:82px;border-radius:12px;object-fit:cover;background:var(--bg-soft);flex:none}
+.ci-tx{flex:1;min-width:0}
+.ci-tx b{font-size:13.5px;font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.45}
+.ci-tx .ci-p{color:var(--hot);font-weight:900;font-size:15px;margin-top:5px;font-variant-numeric:tabular-nums}
+.ci-tx .ci-p s{color:var(--ink-3);font-weight:400;font-size:11px;margin-left:5px}
+.stepper{display:inline-flex;align-items:center;gap:2px;border:1.5px solid var(--line);border-radius:10px;padding:2px;margin-top:9px}
+.stepper button{width:26px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;color:var(--ink-2);transition:.15s}
+.stepper button:hover{background:var(--bg-soft);color:var(--ink)}
+.stepper b{min-width:30px;text-align:center;font-size:13px;font-variant-numeric:tabular-nums}
+.ci-del{align-self:flex-start;color:var(--ink-3);font-size:11.5px;padding:4px;transition:.2s}
+.ci-del:hover{color:var(--hot)}
+.cart-empty{text-align:center;padding:80px 20px}
+.cart-empty .empty-ic{font-size:46px}
+.cart-empty b{display:block;margin:10px 0 6px;font-size:15px}
+.cart-empty p{color:var(--ink-3);font-size:13px;margin-bottom:22px}
+.dr-foot{border-top:1px solid var(--line);padding:18px 22px 22px;background:#fff}
+.dr-row{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2);padding:4px 0}
+.dr-row b{color:var(--ink);font-variant-numeric:tabular-nums}
+.dr-row.total{padding-top:10px;margin-top:6px;border-top:1px dashed var(--line);font-size:14px;color:var(--ink)}
+.dr-row.total b{color:var(--hot);font-size:22px;font-weight:900}
+.dr-foot .btn{width:100%;margin-top:14px}
+.ship-tip{font-size:11.5px;color:var(--ok);background:#eafaf0;border-radius:8px;padding:6px 10px;margin-top:8px;text-align:center}
+
+/* ---------- 弹窗通用 ---------- */
+.mask{position:fixed;inset:0;background:rgba(11,15,26,.56);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:100;display:none;align-items:center;justify-content:center;padding:22px;opacity:0;transition:opacity .3s}
+.mask.show{display:flex;opacity:1}
+.dialog{position:relative;background:#fff;border-radius:24px;width:100%;max-width:880px;max-height:90vh;overflow:auto;transform:translateY(20px) scale(.97);transition:.35s var(--ease);box-shadow:var(--sh-pop)}
+.mask.show .dialog{transform:none}
+.dialog-x{position:absolute;top:14px;right:14px;z-index:5;background:rgba(255,255,255,.85);backdrop-filter:blur(4px)}
+.dialog-x:hover{background:var(--bg-soft)}
+
+/* 商品速览 */
+.qv-grid{display:grid;grid-template-columns:1fr 1.1fr}
+.qv-imgbox{position:relative;background:var(--bg-soft)}
+.qv-imgbox img{width:100%;height:100%;object-fit:cover;min-height:440px}
+.qv-imgtag{position:absolute;top:16px;left:16px;padding:5px 12px;border-radius:8px;background:var(--ink);color:#fff;font-size:11.5px;font-weight:800;letter-spacing:1.5px}
+.qv-info{padding:34px 32px 28px}
+.qv-badge{display:inline-block;padding:3px 10px;border-radius:7px;font-size:11px;font-weight:800;letter-spacing:1px;color:#fff;background:var(--hot);margin-bottom:12px}
+.qv-info h3{font-size:22px;font-weight:900;line-height:1.35;letter-spacing:-.01em}
+.qv-sub{color:var(--ink-3);font-size:13px;margin-top:6px}
+.qv-rate{display:flex;align-items:center;gap:8px;margin:12px 0 16px;font-size:12px;color:var(--ink-3)}
+.qv-price{display:flex;align-items:baseline;gap:4px;padding:14px 16px;background:linear-gradient(92deg,#fff5f0,#fff8f4);border:1px solid #ffe3d3;border-radius:14px;margin-bottom:18px}
+.qv-price .p-now{font-size:30px}
+.qv-specs{list-style:none;margin-bottom:20px}
+.qv-specs li{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px dashed var(--line-2);font-size:13px}
+.qv-specs li span{color:var(--ink-3);flex:none}
+.qv-specs li b{font-weight:600;text-align:right}
+.qv-qty{display:flex;align-items:center;gap:14px;margin-bottom:20px;font-size:13px;color:var(--ink-2)}
+.qv-qty .stepper{margin-top:0}
+.qv-qty .stepper button{width:32px;height:28px}
+.qv-btns{display:flex;gap:12px}
+.qv-btns .btn{flex:1}
+.qv-svc{margin-top:16px;display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-3)}
+.qv-svc span{display:inline-flex;align-items:center;gap:4px}
+.qv-svc svg{width:12px;height:12px;color:var(--ok)}
+
+/* 结算 */
+.co{padding:34px}
+.co h3{font-size:20px;font-weight:900;margin-bottom:24px}
+.co-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:30px}
+.co-block{margin-bottom:24px}
+.co-lab{display:block;font-size:12px;font-weight:800;letter-spacing:1.5px;color:var(--ink-3);margin-bottom:12px}
+.addr{display:grid;gap:12px}
+.addr label{display:grid;gap:6px;font-size:12.5px;color:var(--ink-2)}
+.addr input,.au-form input{height:44px;border-radius:11px;border:1.5px solid var(--line);padding:0 14px;font-size:14px;outline:none;transition:.2s;background:#fff;width:100%}
+.addr input:focus,.au-form input:focus{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+.pays{display:grid;gap:10px}
+.pay{display:flex;align-items:center;gap:11px;padding:13px 15px;border:1.5px solid var(--line);border-radius:13px;cursor:pointer;transition:.2s;font-size:14px;font-weight:700}
+.pay input{accent-color:var(--brand);width:16px;height:16px}
+.pay i{font-style:normal;font-size:10.5px;font-weight:800;color:var(--brand);background:var(--brand-soft);padding:2px 7px;border-radius:6px;margin-left:auto}
+.pay:hover{border-color:var(--ink-3)}
+.pay.on{border-color:var(--brand);background:var(--brand-soft)}
+.co-right{background:var(--bg-soft);border-radius:18px;padding:22px;align-self:start;position:sticky;top:0}
+.co-items{max-height:210px;overflow-y:auto;margin-bottom:14px}
+.co-item{display:flex;align-items:center;gap:11px;padding:8px 0}
+.co-item img{width:46px;height:46px;border-radius:10px;object-fit:cover;background:#fff}
+.co-item b{flex:1;font-size:12.5px;font-weight:600;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.co-item span{font-size:12px;color:var(--ink-2);font-variant-numeric:tabular-nums;flex:none}
+.co-row{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2);padding:5px 0}
+.co-row b{color:var(--ink);font-variant-numeric:tabular-nums}
+.co-row.ok b{color:var(--hot)}
+.co-row.total{margin-top:8px;padding-top:12px;border-top:1px dashed #d8dce4;font-size:14px;color:var(--ink);font-weight:700}
+.co-row.total b{color:var(--hot);font-size:24px;font-weight:900}
+.co-note{font-size:11px;color:var(--ink-3);text-align:center;margin-top:10px}
+.co-done{text-align:center;padding:50px 30px 44px}
+.done-ic{width:74px;height:74px;border-radius:50%;background:#eafaf0;color:var(--ok);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;animation:pop .5s var(--ease)}
+@keyframes pop{from{transform:scale(.4);opacity:0}}
+.done-ic svg{width:34px;height:34px}
+.co-done h3{font-size:24px;margin-bottom:10px}
+.co-done p{font-size:13.5px;color:var(--ink-2);margin-bottom:6px}
+.co-done p b{color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:.5px}
+.done-eta{margin-bottom:26px!important}
+.done-eta b{color:var(--brand)!important}
+.done-btns{display:flex;gap:12px;justify-content:center;margin-top:8px}
+
+/* 登录注册 */
+.au{padding:34px;max-width:430px}
+.au-tabs{display:flex;gap:6px;background:var(--bg-soft);padding:4px;border-radius:13px;margin-bottom:26px}
+.au-tabs button{flex:1;height:38px;border-radius:10px;font-size:14px;font-weight:700;color:var(--ink-2);transition:.25s}
+.au-tabs button.on{background:#fff;color:var(--ink);box-shadow:var(--sh-1)}
+.au-form{display:grid;gap:14px}
+.au-form label{display:grid;gap:6px;font-size:12.5px;color:var(--ink-2)}
+.au-err{font-size:12.5px;color:var(--hot);min-height:16px}
+.au-tip{font-size:11.5px;color:var(--ink-3);text-align:center;margin-top:16px}
+
+/* 订单 */
+.od{padding:34px;max-width:560px}
+.od h3{font-size:20px;font-weight:900;margin-bottom:20px}
+.order{display:flex;gap:13px;align-items:center;border:1px solid var(--line);border-radius:15px;padding:13px;margin-bottom:12px}
+.order img{width:54px;height:54px;border-radius:11px;object-fit:cover;background:var(--bg-soft)}
+.order-tx{flex:1;min-width:0}
+.order-tx b{display:block;font-size:13.5px}
+.order-tx span{font-size:11.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.order-st{font-size:11.5px;font-weight:800;color:var(--brand);background:var(--brand-soft);padding:4px 10px;border-radius:7px;flex:none}
+.order-empty{text-align:center;padding:50px 0;color:var(--ink-3);font-size:13.5px}
+
+/* 用户面板 */
+.upanel{position:fixed;top:78px;right:24px;width:250px;background:#fff;border-radius:17px;box-shadow:var(--sh-2);border:1px solid var(--line);z-index:95;padding:8px;opacity:0;transform:translateY(-8px) scale(.97);pointer-events:none;transition:.28s var(--ease)}
+.upanel.show{opacity:1;transform:none;pointer-events:auto}
+.up-head{padding:13px 13px 15px;border-bottom:1px solid var(--line-2);margin-bottom:6px}
+.up-head b{font-size:14.5px;display:block}
+.up-head span{font-size:11.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.up-item{display:flex;align-items:center;justify-content:space-between;width:100%;padding:11px 13px;border-radius:10px;font-size:13.5px;font-weight:600;transition:.18s;text-align:left}
+.up-item:hover{background:var(--bg-soft)}
+.up-item i{font-style:normal;font-size:11px;font-weight:800;color:#fff;background:var(--hot);border-radius:8px;padding:1px 7px}
+.up-item.danger{color:var(--hot)}
+.up-item.danger:hover{background:#fff1ef}
+
+/* ---------- Toast / 回顶 / 浮条 ---------- */
+.toasts{position:fixed;top:86px;left:50%;transform:translateX(-50%);z-index:130;display:flex;flex-direction:column;gap:10px;align-items:center;pointer-events:none}
+.toast{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);box-shadow:var(--sh-2);border-radius:13px;padding:11px 18px;font-size:13.5px;font-weight:600;animation:tdown .4s var(--ease);max-width:86vw}
+.toast.hide{animation:tup .3s var(--ease) forwards}
+@keyframes tdown{from{opacity:0;transform:translateY(-16px) scale(.95)}}
+@keyframes tup{to{opacity:0;transform:translateY(-12px) scale(.96)}}
+.toast .tic{width:21px;height:21px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.toast .tic svg{width:11px;height:11px}
+.toast.ok .tic{background:#eafaf0;color:var(--ok)}
+.toast.err .tic{background:#fff1ef;color:var(--hot)}
+.toast.info .tic{background:var(--brand-soft);color:var(--brand)}
+#toTop{position:fixed;right:24px;bottom:26px;width:46px;height:46px;border-radius:14px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;z-index:70;opacity:0;transform:translateY(12px);pointer-events:none;transition:.35s var(--ease);box-shadow:var(--sh-2)}
+#toTop.on{opacity:1;transform:none;pointer-events:auto}
+#toTop:hover{background:var(--brand)}
+#toTop svg{width:17px;height:17px}
+.ticker{position:fixed;left:22px;bottom:22px;z-index:70;display:flex;align-items:center;gap:11px;background:#fff;border-radius:15px;box-shadow:var(--sh-2);border:1px solid var(--line);padding:10px 16px 10px 11px;opacity:0;transform:translateY(16px);pointer-events:none;transition:.45s var(--ease);max-width:300px}
+.ticker.on{opacity:1;transform:none}
+.ticker .tk-ava{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--brand),#5b8cff);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.ticker b{display:block;font-size:12.5px}
+.ticker span{font-size:11px;color:var(--ink-3)}
+.ticker small{margin-left:auto;font-size:10px;color:var(--ink-3);flex:none}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:1080px){
+  .cats{grid-template-columns:repeat(3,1fr)}
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .flash-row{grid-template-columns:repeat(2,1fr)}
+  .revs{grid-template-columns:repeat(2,1fr)}
+  .brand-grid{grid-template-columns:1fr;gap:36px}
+  .faq-grid{grid-template-columns:1fr;gap:34px}
+  .nav{display:none}
+  .mbtn{display:flex}
+  .search{max-width:230px}
+}
+@media (max-width:860px){
+  .coupons{grid-template-columns:1fr}
+  .co-grid{grid-template-columns:1fr}
+  .co-right{position:static}
+  .qv-grid{grid-template-columns:1fr}
+  .qv-imgbox img{min-height:300px;max-height:340px}
+  .qv-info{padding:26px 22px}
+  .cta-in{flex-direction:column;align-items:flex-start}
+  .sub input{width:100%;flex:1}
+  .sub{width:100%}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:30px}
+  .trust-in{grid-template-columns:repeat(2,1fr);gap:14px}
+  .tru+.tru{border-left:none}
+}
+@media (max-width:640px){
+  .wrap{padding:0 18px}
+  .sec{padding:56px 0}
+  .hero{height:520px}
+  .cats{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:repeat(2,1fr);gap:14px}
+  .flash-row{grid-template-columns:1fr}
+  .revs{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .sec-head{flex-direction:column;align-items:flex-start;gap:18px}
+  .rate-big{text-align:left}
+  .slide-tx{max-width:100%}
+  .harr{display:none}
+  .hero-side{display:none}
+  .hero-dots{right:50%;transform:translateX(50%)}
+  .drawer{width:100%}
+  .ft-grid{grid-template-columns:1fr;gap:26px;padding:44px 0 34px}
+  .ticker{left:14px;right:14px;bottom:14px;max-width:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="hdrwrap" id="hdrwrap">
+  <div class="topbar">
+    <div class="tb-track" id="tbTrack"></div>
+  </div>
+  <header class="hdr">
+    <div class="wrap hdr-in">
+      <a class="logo" href="#top" aria-label="极物数码首页">
+        <svg viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#1652f0"/><path d="M17.6 6 10 18h4.6l-1.8 8 9.4-13h-5.2l1.6-7z" fill="#fff"/></svg>
+        <span class="logo-tx"><b>极物数码</b><i>JIWU DIGITAL</i></span>
+      </a>
+      <nav class="nav">
+        <a href="#top">首页</a>
+        <a href="#categories">分类</a>
+        <a href="#flash">限时秒杀</a>
+        <a href="#products">全部商品</a>
+        <a href="#brand">品牌故事</a>
+        <a href="#faq">帮助</a>
+      </nav>
+      <div class="search" id="searchBox">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="q" type="text" placeholder="搜索耳机、充电器、键盘…" autocomplete="off">
+        </div>
+        <div class="qdrop" id="qDrop"></div>
+      </div>
+      <div class="acts">
+        <button class="ibtn" id="userBtn" aria-label="用户中心">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c1.2-3.6 4-5.4 7.5-5.4s6.3 1.8 7.5 5.4"/></svg>
+        </button>
+        <button class="ibtn" id="cartBtn" aria-label="购物车">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.4 11.2a1.8 1.8 0 0 0 1.8 1.4h8.4a1.8 1.8 0 0 0 1.8-1.3L21 8H6"/><circle cx="10" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </button>
+        <button class="ibtn mbtn" id="mBtn" aria-label="菜单">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mnav" id="mNav">
+      <a href="#categories">商品分类</a>
+      <a href="#flash">限时秒杀</a>
+      <a href="#products">全部商品</a>
+      <a href="#brand">品牌故事</a>
+      <a href="#faq">常见问题</a>
+      <div class="m-search">
+        <div class="search-box" style="background:var(--bg-soft);border-color:var(--line);color:var(--ink)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          <input id="q2" type="text" placeholder="搜索商品…" autocomplete="off">
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<main>
+  <!-- Hero -->
+  <section class="hero" id="top">
+    <div id="slides"></div>
+    <button class="harr prev" id="heroPrev" aria-label="上一张">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <button class="harr next" id="heroNext" aria-label="下一张">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+    <div class="hero-dots" id="heroDots"></div>
+    <div class="hero-side"><span>SCROLL</span><b>01 / 03</b></div>
+    <div class="hero-prog"><i id="heroProg"></i></div>
+  </section>
+
+  <!-- 信任条 -->
+  <section class="trust">
+    <div class="wrap trust-in">
+      <div class="tru reveal">
+        <div class="tru-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.6-3 8.4-7 9.5C8 19.4 5 15.6 5 11V6z"/><path d="M9.3 11.8l2 2 3.4-3.6"/></svg></div>
+        <div><b>正品保障</b><span>授权渠道直供 · 假一赔十</span></div>
+      </div>
+      <div class="tru reveal">
+        <div class="tru-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg></div>
+        <div><b>满 99 顺丰包邮</b><span>工作日 16:00 前当日发</span></div>
+      </div>
+      <div class="tru reveal">
+        <div class="tru-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15.5-6.3M21 12a9 9 0 0 1-15.5 6.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg></div>
+        <div><b>7 天无理由退换</b><span>15 天质量问题换新</span></div>
+      </div>
+      <div class="tru reveal">
+        <div class="tru-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="13" width="4" height="6" rx="2"/><rect x="17" y="13" width="4" height="6" rx="2"/></svg></div>
+        <div><b>2 年质保 · 专属客服</b><span>400-880-1234 · 9:00–21:00</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 分类 -->
+  <section class="sec" id="categories">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <span class="kicker">Categories</span>
+          <h2>按品类逛</h2>
+          <p class="sec-sub">6 大场景分类，快速找到你要的那一件</p>
+        </div>
+        <a class="tlink" href="#products">查看全部 16 款商品 →</a>
+      </div>
+      <div class="cats" id="catGrid"></div>
+    </div>
+  </section>
+
+  <!-- 秒杀 -->
+  <section class="sec sec-dark" id="flash">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <span class="kicker light">Flash Sale</span>
+          <h2>限时秒杀</h2>
+          <p class="sec-sub light">每日 0 点上新 · 抢完即止</p>
+        </div>
+        <div class="cd" id="cd">
+          <span class="cd-lab">距本场结束</span>
+          <b id="cdH">00</b><i>:</i><b id="cdM">00</b><i>:</i><b id="cdS">00</b>
+        </div>
+      </div>
+      <div class="flash-row" id="flashRow"></div>
+    </div>
+  </section>
+
+  <!-- 优惠券 -->
+  <section class="sec" id="coupons">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <span class="kicker">Coupons</span>
+          <h2>领券再下单，更省</h2>
+          <p class="sec-sub">结算时自动为你优选可用券</p>
+        </div>
+      </div>
+      <div class="coupons" id="couponRow"></div>
+    </div>
+  </section>
+
+  <!-- 商品 -->
+  <section class="sec sec-soft" id="products">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <span class="kicker">Hot Picks</span>
+          <h2>热门商品</h2>
+          <p class="sec-sub">16 款严选好物 · 编辑实测推荐</p>
+        </div>
+        <div class="sortbox">
+          <span>排序</span>
+          <select id="sortSel">
+            <option value="default">综合推荐</option>
+            <option value="new">新品优先</option>
+            <option value="priceAsc">价格从低到高</option>
+            <option value="priceDesc">价格从高到低</option>
+            <option value="sold">销量优先</option>
+          </select>
+        </div>
+      </div>
+      <div class="chips" id="chips"></div>
+      <div class="grid" id="grid"></div>
+      <div class="empty" id="empty">
+        <div class="empty-ic">🔍</div>
+        <b>没有找到相关商品</b>
+        <p>换个关键词，或看看其他分类</p>
+        <button class="btn btn-ink" id="resetFilter">重置筛选</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 品牌故事 -->
+  <section class="sec" id="brand">
+    <div class="wrap brand-grid">
+      <div class="brand-img reveal">
+        <img src="assets/brand-story.jpg" alt="极物数码选品工作台" loading="lazy">
+        <span class="brand-badge">EST. 2021 · 5 轮实测选品</span>
+      </div>
+      <div class="brand-tx reveal">
+        <span class="kicker">Brand Story</span>
+        <h2>我们只挑<br>「用得久」的数码好物</h2>
+        <p>极物数码是一家专注数码配件的精选电商品牌。我们相信，好的配件不该是消耗品——每一件上架商品，都要经过选品团队 5 轮实测：耐用性、兼容性、安全性、手感与性价比。不追参数内卷，只做经得起时间考验的好设计。</p>
+        <div class="stats" id="stats">
+          <div class="stat"><b><span class="cnt" data-to="32">0</span><em>万+</em></b><span>累计用户</span></div>
+          <div class="stat"><b><span class="cnt" data-to="4.9" data-dec="1">0</span></b><span>综合评分</span></div>
+          <div class="stat"><b><span class="cnt" data-to="98.6" data-dec="1">0</span><em>%</em></b><span>买家好评率</span></div>
+          <div class="stat"><b><span class="cnt" data-to="24">0</span><em>h</em></b><span>发货承诺</span></div>
+        </div>
+        <button class="btn btn-ghost" id="storyBtn">了解选品标准 →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 口碑 -->
+  <section class="sec sec-soft" id="reviews">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div>
+          <span class="kicker">Reviews</span>
+          <h2>买家说</h2>
+          <p class="sec-sub">来自已购用户的真实反馈（节选）</p>
+        </div>
+        <div class="rate-big"><b>4.9<i>★</i></b><span>综合评分 · 2.4 万条评价</span></div>
+      </div>
+      <div class="revs" id="revRow"></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sec" id="faq">
+    <div class="wrap faq-grid">
+      <div class="faq-side reveal">
+        <span class="kicker">Help</span>
+        <h2>常见问题</h2>
+        <p>没找到答案？<br>客服热线 400-880-1234<br>工作日 9:00–21:00 在线</p>
+      </div>
+      <div class="faq-list" id="faqList"></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="wrap cta-in">
+      <div class="reveal">
+        <h2>新品与优惠，第一时间知道</h2>
+        <p>订阅极物周刊：每周一封，只推真正值得买的新品与底价券，不打扰、可随时退订。</p>
+      </div>
+      <form class="sub reveal" id="subForm">
+        <input id="subEmail" type="email" placeholder="输入邮箱地址" aria-label="邮箱地址">
+        <button class="btn btn-brand btn-lg" type="submit">订阅周刊</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="ft-grid">
+      <div class="ft-brand">
+        <a class="logo" href="#top">
+          <svg viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#1652f0"/><path d="M17.6 6 10 18h4.6l-1.8 8 9.4-13h-5.2l1.6-7z" fill="#fff"/></svg>
+          <span class="logo-tx"><b>极物数码</b><i>JIWU DIGITAL</i></span>
+        </a>
+        <p>严选数码好物，一站配齐。每一件商品，都经得起 5 轮实测与时间考验。</p>
+        <div class="ft-tel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+          400-880-1234
+        </div>
+        <div class="ft-pay"><i>微信支付</i><i>支付宝</i><i>云闪付</i><i>花呗分期</i></div>
+      </div>
+      <div class="ft-col">
+        <h4>关于极物</h4>
+        <a href="#brand">品牌故事</a><a href="#brand">选品标准</a><a href="#faq">加入我们</a><a href="#faq">联系我们</a>
+      </div>
+      <div class="ft-col">
+        <h4>购物指南</h4>
+        <a href="#faq">配送方式</a><a href="#faq">支付方式</a><a href="#faq">会员权益</a><a href="#coupons">优惠券说明</a>
+      </div>
+      <div class="ft-col">
+        <h4>服务支持</h4>
+        <a href="#faq">售后政策</a><a href="#faq">退换货流程</a><a href="#faq">常见问题</a><a href="#faq">投诉建议</a>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span>© 2026 极物数码（深圳）科技有限公司 · 粤ICP备2026101514号-1</span>
+      <span>本站为演示站点 · 商品、价格与订单均为模拟数据</span>
+    </div>
+  </div>
+</footer>
+
+<!-- 购物车抽屉 -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="cartDrawer" aria-label="购物车">
+  <div class="dr-head">
+    <h3>购物车<i id="cartCount2">共 0 件</i></h3>
+    <button class="xbtn" id="cartClose" aria-label="关闭">×</button>
+  </div>
+  <div class="dr-body" id="cartBody"></div>
+  <div class="dr-foot" id="cartFoot">
+    <div class="dr-row"><span>商品金额</span><b id="cartSub">¥0</b></div>
+    <div class="dr-row"><span>运费</span><b id="cartShip">¥0</b></div>
+    <div class="dr-row total"><span>合计</span><b id="cartTotal">¥0</b></div>
+    <div class="ship-tip" id="shipTip"></div>
+    <button class="btn btn-brand btn-lg" id="checkoutBtn">去结算</button>
+  </div>
+</aside>
+
+<!-- 商品速览 -->
+<div class="mask" id="qvMask">
+  <div class="dialog">
+    <button class="xbtn dialog-x" id="qvClose" aria-label="关闭">×</button>
+    <div class="qv-grid">
+      <div class="qv-imgbox"><img id="qvImg" alt="商品图片"><span class="qv-imgtag" id="qvImgTag" hidden></span></div>
+      <div class="qv-info">
+        <span class="qv-badge" id="qvBadge" hidden></span>
+        <h3 id="qvName"></h3>
+        <p class="qv-sub" id="qvSub"></p>
+        <div class="qv-rate"><span class="stars" id="qvStars"></span><i id="qvRateTx"></i></div>
+        <div class="qv-price"><span class="p-now" id="qvPrice"></span><s class="p-old" id="qvOrig"></s></div>
+        <ul class="qv-specs" id="qvSpecs"></ul>
+        <div class="qv-qty"><span>数量</span>
+          <div class="stepper"><button id="qvMinus" aria-label="减少">−</button><b id="qvQty">1</b><button id="qvPlus" aria-label="增加">＋</button></div>
+        </div>
+        <div class="qv-btns">
+          <button class="btn btn-ink" id="qvAdd">加入购物车</button>
+          <button class="btn btn-brand" id="qvBuy">立即购买</button>
+        </div>
+        <div class="qv-svc">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>正品保障</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>7 天无理由</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>2 年质保</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 结算 -->
+<div class="mask" id="coMask">
+  <div class="dialog co">
+    <button class="xbtn dialog-x" id="coClose" aria-label="关闭">×</button>
+    <div id="coStep1">
+      <h3>确认订单</h3>
+      <div class="co-grid">
+        <div class="co-left">
+          <div class="co-block">
+            <span class="co-lab">收货地址</span>
+            <div class="addr">
+              <label>联系人<input id="addrName" value="张先生"></label>
+              <label>手机号<input id="addrPhone" value="00000000000" maxlength="11"></label>
+              <label>详细地址<input id="addrText" value="广东省深圳市南山区科技园南路 88 号 极物大厦 8 楼"></label>
+            </div>
+          </div>
+          <div class="co-block">
+            <span class="co-lab">支付方式</span>
+            <div class="pays" id="pays">
+              <label class="pay on"><input type="radio" name="pay" value="微信支付" checked><b>微信支付</b><i>推荐</i></label>
+              <label class="pay"><input type="radio" name="pay" value="支付宝"><b>支付宝</b></label>
+              <label class="pay"><input type="radio" name="pay" value="云闪付"><b>云闪付</b></label>
+            </div>
+          </div>
+        </div>
+        <div class="co-right">
+          <div class="co-items" id="coItems"></div>
+          <div class="co-row"><span>商品金额</span><b id="coSub">¥0</b></div>
+          <div class="co-row"><span>运费</span><b id="coShip">¥0</b></div>
+          <div class="co-row ok" id="coCouponRow" hidden><span>优惠券</span><b id="coCoupon">-¥0</b></div>
+          <div class="co-row total"><span>应付总额</span><b id="coTotal">¥0</b></div>
+          <button class="btn btn-brand btn-lg" id="coSubmit" style="width:100%">提交订单</button>
+          <p class="co-note">演示站点：不会产生真实支付</p>
+        </div>
+      </div>
+    </div>
+    <div id="coStep2" hidden>
+      <div class="co-done">
+        <div class="done-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+        <h3>下单成功</h3>
+        <p>订单号 <b id="orderNo"></b></p>
+        <p class="done-eta">预计 <b>明天 18:00</b> 前送达 · 顺丰速运</p>
+        <div class="done-btns">
+          <button class="btn btn-ink" id="viewOrders">查看订单</button>
+          <button class="btn btn-brand" id="coDone">继续购物</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 登录注册 -->
+<div class="mask" id="auMask">
+  <div class="dialog au">
+    <button class="xbtn dialog-x" id="auClose" aria-label="关闭">×</button>
+    <div class="au-tabs">
+      <button class="on" id="tabLogin">登录</button>
+      <button id="tabReg">注册</button>
+    </div>
+    <form class="au-form" id="loginForm">
+      <label>手机号<input id="loginPhone" maxlength="11" placeholder="请输入 11 位手机号" autocomplete="tel"></label>
+      <label>密码<input id="loginPwd" type="password" placeholder="请输入密码" autocomplete="current-password"></label>
+      <p class="au-err" id="loginErr"></p>
+      <button class="btn btn-brand btn-lg" type="submit">登 录</button>
+      <button class="btn btn-ghost" type="button" id="demoBtn">一键登录演示账号</button>
+    </form>
+    <form class="au-form" id="regForm" hidden>
+      <label>手机号<input id="regPhone" maxlength="11" placeholder="请输入 11 位手机号"></label>
+      <label>设置密码<input id="regPwd" type="password" placeholder="6–20 位密码"></label>
+      <label>确认密码<input id="regPwd2" type="password" placeholder="再次输入密码"></label>
+      <p class="au-err" id="regErr"></p>
+      <button class="btn btn-brand btn-lg" type="submit">注 册</button>
+    </form>
+    <p class="au-tip">演示站点：账号仅存储于本机浏览器</p>
+  </div>
+</div>
+
+<!-- 我的订单 -->
+<div class="mask" id="odMask">
+  <div class="dialog od">
+    <button class="xbtn dialog-x" id="odClose" aria-label="关闭">×</button>
+    <h3>我的订单</h3>
+    <div id="orderList"></div>
+  </div>
+</div>
+
+<!-- 用户面板 -->
+<div class="upanel" id="userPanel">
+  <div class="up-head" id="upHead"></div>
+  <button class="up-item" id="upOrders">我的订单 <i id="upOrderN">0</i></button>
+  <button class="up-item" id="upCoupons">我的优惠券 <i id="upCouponN">0</i></button>
+  <button class="up-item danger" id="upLogout">退出登录</button>
+</div>
+
+<div class="toasts" id="toasts"></div>
+<button id="toTop" aria-label="回到顶部">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 12l6-6 6 6"/></svg>
+</button>
+<div class="ticker" id="ticker">
+  <div class="tk-ava" id="tkAva">深</div>
+  <div><b id="tkTx"></b><span id="tkSub"></span></div>
+  <small>刚刚</small>
+</div>
+
+<script>
+(function(){
+"use strict";
+/* ================= 数据 ================= */
+var SEED = {
+  categories: [
+    {id:"audio", name:"耳机音频", desc:"降噪 / 高解析", img:"assets/product-earbuds.jpg"},
+    {id:"charge", name:"充电储能", desc:"快充 / 无线充", img:"assets/product-charger.jpg"},
+    {id:"phone", name:"手机配件", desc:"磁吸 / 耐用车线", img:"assets/product-phonecase.jpg"},
+    {id:"computer", name:"电脑外设", desc:"效率 / 手感", img:"assets/product-keyboard.jpg"},
+    {id:"wear", name:"智能穿戴", desc:"健康 / 运动监测", img:"assets/product-watch.jpg"},
+    {id:"car", name:"车充周边", desc:"出行 / 导航充电", img:"assets/product-carcharger.jpg"}
+  ],
+  products: [
+    {id:"p1", name:"声波 Pro 真无线降噪耳机", sub:"主动降噪 · 35h 续航", cat:"audio", price:399, orig:499, img:"assets/product-earbuds.jpg", badge:"热销", rating:4.9, reviews:3268, sold:12800,
+      specs:[["降噪深度","-48dB 自适应"],["续航","8 + 28 小时"],["蓝牙","5.4 · 双设备连接"],["防护","IP55 防汗防水"]]},
+    {id:"p2", name:"静界 头戴式主动降噪耳机", sub:"双馈降噪 · 40mm 生物振膜", cat:"audio", price:899, orig:1099, img:"assets/product-headphones.jpg", badge:"新品", rating:4.8, reviews:1152, sold:8600,
+      specs:[["降噪深度","-45dB 双馈混合"],["续航","60 小时"],["编解码","LDAC 高解析"],["重量","258g 轻量设计"]]},
+    {id:"p3", name:"律动 Mini 便携蓝牙音箱", sub:"挂在包上的小派对", cat:"audio", price:199, orig:259, img:"assets/product-speaker.jpg", badge:"", rating:4.7, reviews:892, sold:6500,
+      specs:[["扬声器","10W 全频单元"],["续航","20 小时"],["防护","IP67 防尘防水"],["重量","220g"]]},
+    {id:"p4", name:"氮化镓 65W 双口快充充电器", sub:"笔电手机一口搞定", cat:"charge", price:129, orig:169, img:"assets/product-charger.jpg", badge:"热销", rating:4.9, reviews:4521, sold:23000,
+      specs:[["最大功率","65W"],["接口","USB-C × 2"],["协议","PD3.0 / PPS / QC4+"],["体积","较普通充电器 -40%"]]},
+    {id:"p5", name:"磁吸超薄 10000mAh 无线充电宝", sub:"贴上就充，告别线材", cat:"charge", price:219, orig:279, img:"assets/product-powerbank.jpg", badge:"", rating:4.8, reviews:2340, sold:11000,
+      specs:[["容量","10000mAh"],["磁吸无线","15W"],["有线输出","22.5W"],["厚度","12.8mm 超薄"]]},
+    {id:"p6", name:"三合一磁吸无线充电板", sub:"手表耳机，一排配齐", cat:"charge", price:249, orig:329, img:"assets/product-pad.jpg", badge:"新品", rating:4.8, reviews:756, sold:4200,
+      specs:[["手机充","15W 磁吸"],["手表充","2.5W"],["耳机充","5W"],["收纳","可折叠设计"]]},
+    {id:"p7", name:"磁吸磨砂手机保护壳", sub:"手感与磁力全都要", cat:"phone", price:69, orig:99, img:"assets/product-phonecase.jpg", badge:"", rating:4.7, reviews:1876, sold:9800,
+      specs:[["磁吸","N52 强磁阵列"],["防摔","1.5m 军工级"],["手感","微砂防指纹"],["兼容","支持 MagSafe"]]},
+    {id:"p8", name:"编织 USB-C 100W 数据线 1.5m", sub:"一根用三年的线", cat:"phone", price:49, orig:69, img:"assets/product-cable.jpg", badge:"热销", rating:4.9, reviews:6123, sold:35000,
+      specs:[["快充","100W PD"],["传输","480Mbps"],["接头","编织线身 + 铝合金"],["寿命","2 万次弯折"]]},
+    {id:"p9", name:"全屏覆盖钢化膜套装（2 片装）", sub:"手残党贴膜救星", cat:"phone", price:39, orig:59, img:"assets/product-protector.jpg", badge:"", rating:4.6, reviews:945, sold:7200,
+      specs:[["硬度","9H"],["覆盖","全屏无白边"],["附赠","定位框 + 清洁包"],["片数","2 片装"]]},
+    {id:"p10", name:"铝合金折叠桌面支架", sub:"给脖子放个假", cat:"computer", price:89, orig:119, img:"assets/product-stand.jpg", badge:"", rating:4.8, reviews:1520, sold:8900,
+      specs:[["材质","6063 铝合金"],["高度","7 档可调"],["适配","4–13 英寸设备"],["收纳","折叠仅 1.8cm"]]},
+    {id:"p11", name:"轻语 无线机械键盘", sub:"办公室静音派", cat:"computer", price:349, orig:429, img:"assets/product-keyboard.jpg", badge:"热销", rating:4.8, reviews:1288, sold:7600,
+      specs:[["轴体","静音红轴"],["连接","蓝牙 + 2.4G 双模"],["续航","200 小时"],["布局","84 键紧凑"]]},
+    {id:"p12", name:"云感 静音无线鼠标", sub:"深夜赶稿不吵人", cat:"computer", price:129, orig:169, img:"assets/product-mouse.jpg", badge:"", rating:4.7, reviews:1104, sold:6300,
+      specs:[["DPI","800–4000"],["微动","静音微动"],["连接","蓝牙双模"],["重量","58g 轻量"]]},
+    {id:"p13", name:"悦动 智能运动手表", sub:"24h 健康管家", cat:"wear", price:599, orig:799, img:"assets/product-watch.jpg", badge:"直降200", rating:4.8, reviews:986, sold:5400,
+      specs:[["屏幕","1.43 英寸 AMOLED"],["运动模式","120+ 种"],["续航","14 天"],["防水","5ATM"]]},
+    {id:"p14", name:"运动硅胶替换表带（2 条）", sub:"出汗也不闷痒", cat:"wear", price:59, orig:79, img:"assets/product-watch.jpg", badge:"", rating:4.6, reviews:432, sold:3100,
+      specs:[["材质","氟橡胶"],["安装","快拆设计"],["颜色","2 色可选"],["适配","悦动全系"]]},
+    {id:"p15", name:"车载磁吸无线充电器", sub:"导航充电一把抓", cat:"car", price:159, orig:199, img:"assets/product-carcharger.jpg", badge:"新品", rating:4.8, reviews:688, sold:4500,
+      specs:[["功率","15W 无线快充"],["适配","4.7–6.9 英寸"],["夹臂","电动感应"],["取机","一键弹开"]]},
+    {id:"p16", name:"双口车载快充 + 编织线套装", sub:"后排也能快充", cat:"car", price:99, orig:139, img:"assets/product-charger.jpg", badge:"", rating:4.7, reviews:756, sold:5200,
+      specs:[["功率","45W + 18W"],["接口","USB-C × 2"],["附赠","1.2m 编织线"],["兼容","PD / QC 协议"]]}
+  ],
+  banners: [
+    {img:"assets/banner-1.jpg", tag:"新品首发", title:"声波 Pro <em>真无线降噪耳机</em>", sub:"-48dB 自适应深度降噪，35 小时超长续航。通勤、办公、运动，一副全部接管。", note:"首发直降 ¥100 · 限时 3 天", cta:"立即抢购", cta2:"看看充电专场", action:{type:"product", id:"p1"}},
+    {img:"assets/banner-2.jpg", tag:"充电专场", title:"氮化镓 <em>65W 快充家族</em>", sub:"一个充电头，搞定手机、笔电与手表。体积缩小 40，功率一分不减。", note:"专场满 499 减 60", cta:"逛充电专场", cta2:"领券中心", action:{type:"category", id:"charge"}},
+    {img:"assets/banner-3.jpg", tag:"新品齐发", title:"智能生活 <em>一站配齐</em>", sub:"运动手表、静音键盘、车载快充全新上架，新人再享满 99 减 15。", note:"注册即领 ¥15 无门槛券", cta:"逛新品", cta2:"全部商品", action:{type:"new"}}
+  ],
+  coupons: [
+    {id:"c1", off:20, min:199, scope:"全场通用", desc:"全品类可用 · 每人限领 1 张"},
+    {id:"c2", off:60, min:499, scope:"充电专场", desc:"耳机 / 充电 / 储能专场可用"},
+    {id:"c3", off:15, min:99, scope:"新人专享", desc:"注册即享 · 首单可用"}
+  ],
+  reviews: [
+    {name:"陈先生", city:"深圳", rating:5, text:"耳机降噪比想象中猛，地铁里基本听不到人声。包装也讲究，送人有面子。", item:"声波 Pro 真无线降噪耳机", img:"assets/product-earbuds.jpg"},
+    {name:"林女士", city:"杭州", rating:5, text:"给老公买的键盘，静音轴在办公室用完全不尴尬，续航也顶。", item:"轻语 无线机械键盘", img:"assets/product-keyboard.jpg"},
+    {name:"王同学", city:"成都", rating:4, text:"充电头体积小得离谱，带出去再也不用拖板砖了，就是希望多送一根线。", item:"氮化镓 65W 双口快充充电器", img:"assets/product-charger.jpg"},
+    {name:"赵女士", city:"北京", rating:5, text:"手表戴了 14 天还有电，睡眠监测挺准，表带要能多几个颜色就更好了。", item:"悦动 智能运动手表", img:"assets/product-watch.jpg"},
+    {name:"刘先生", city:"广州", rating:5, text:"第二次在这家买，发货快，客服响应也快，有问题直接换新，省心。", item:"磁吸超薄 10000mAh 无线充电宝", img:"assets/product-powerbank.jpg"},
+    {name:"周同学", city:"武汉", rating:5, text:"钢化膜套装贴得比我上次花 30 块贴的还完美，神器名不虚传。", item:"全屏覆盖钢化膜套装", img:"assets/product-protector.jpg"}
+  ],
+  faqs: [
+    ["商品都是正品吗？","所有商品由品牌方及一级授权渠道直供，支持官方防伪查询，假一赔十。每件商品入库前还会经过外观与功能抽检。"],
+    ["什么时候发货？","工作日 16:00 前下单当日发出，顺丰 / 京东配送，全国大部分地区次日达。周末及节假日订单顺延至下一工作日发货。"],
+    ["可以退换货吗？","支持 7 天无理由退换（商品需保持完好、附件齐全）；15 天内出现质量问题直接换新；整机享 2 年质保。"],
+    ["可以开发票吗？","支持电子普通发票与增值税专用发票。下单时备注抬头，或签收后联系客服补开，1 个工作日内出具。"],
+    ["会员有什么权益？","注册即会员：专属会员价、生日专属券、积分抵现、新品优先购，以及每年两次免费保养清洁服务。"]
+  ],
+  users: [{phone:"00000000000", pwd:"demo1234", name:"演示用户"}],
+  flash: [
+    {id:"p1", pct:78},
+    {id:"p2", pct:91},
+    {id:"p13", pct:64},
+    {id:"p5", pct:83}
+  ]
+};
+
+/* ================= 工具 ================= */
+function $(s){return document.querySelector(s)}
+function $all(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
+var LS = {
+  get:function(k,d){try{var v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},
+  set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+function fmtSold(n){return n>=10000?(n/10000).toFixed(1).replace(/\.0$/,"")+"万":String(n)}
+function fmtPrice(n){return "¥"+n}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function starSVG(type){
+  if(type==="full") return '<svg viewBox="0 0 24 24" fill="#ffb020"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4l-5.8 3-1.1-6.4L.4 9.4l6.5-.9z"/></svg>';
+  if(type==="half") return '<svg viewBox="0 0 24 24"><defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="0"><stop offset="50%" stop-color="#ffb020"/><stop offset="50%" stop-color="#e3e6eb"/></linearGradient></defs><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4l-5.8 3-1.1-6.4L.4 9.4l6.5-.9z" fill="url(#hg)"/></svg>';
+  return '<svg viewBox="0 0 24 24" fill="#e3e6eb"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4L12 17.4l-5.8 3-1.1-6.4L.4 9.4l6.5-.9z"/></svg>';
+}
+function stars(r){
+  var s="",full=Math.floor(r),half=r-full>=0.35?1:0;
+  for(var i=0;i<5;i++) s+=starSVG(i<full?"full":(i===full&&half?"half":"empty"));
+  return s;
+}
+function toast(msg,type){
+  type=type||"ok";
+  var ic = type==="ok"?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
+        : type==="err"?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 8v8M12 5h.01"/></svg>';
+  var el=document.createElement("div");
+  el.className="toast "+type;
+  el.innerHTML='<span class="tic">'+ic+"</span><span>"+esc(msg)+"</span>";
+  $("#toasts").appendChild(el);
+  setTimeout(function(){el.classList.add("hide");setTimeout(function(){el.remove()},320)},2400);
+}
+
+/* ================= 状态 ================= */
+if(!LS.get("dm_boot")){
+  LS.set("dm_categories",SEED.categories);
+  LS.set("dm_products",SEED.products);
+  LS.set("dm_banners",SEED.banners);
+  LS.set("dm_coupons",SEED.coupons);
+  LS.set("dm_reviews",SEED.reviews);
+  LS.set("dm_users",SEED.users);
+  LS.set("dm_boot",1);
+}
+var products=LS.get("dm_products",SEED.products);
+var categories=LS.get("dm_categories",SEED.categories);
+var coupons=LS.get("dm_coupons",SEED.coupons);
+var reviews=LS.get("dm_reviews",SEED.reviews);
+var banners=LS.get("dm_banners",SEED.banners);
+var state={user:LS.get("dm_session",null),cart:LS.get("dm_cart",[]),claimed:LS.get("dm_claimed",[]),orders:LS.get("dm_orders",[]),cat:"all",kw:"",sort:"default",slide:0,qvId:null,qvQty:1};
+function saveCart(){LS.set("dm_cart",state.cart);renderCartBadge()}
+function saveSession(){LS.set("dm_session",state.user)}
+function saveOrders(){LS.set("dm_orders",state.orders)}
+function saveClaimed(){LS.set("dm_claimed",state.claimed)}
+function P(id){for(var i=0;i<products.length;i++) if(products[i].id===id) return products[i];return null}
+function catName(id){var c=categories.filter(function(x){return x.id===id})[0];return c?c.name:""}
+
+/* ================= 头部 ================= */
+(function(){
+  var items=["新用户注册立领 ¥15 无门槛券","全场满 99 顺丰包邮","7 天无理由退换 · 2 年质保","工作日 16:00 前下单当日发货","正品保障 · 授权渠道直供"];
+  var html=items.map(function(t){return '<span class="tb-item">'+esc(t)+"</span>"}).join('<span class="tb-dot"></span>');
+  $("#tbTrack").innerHTML=html+'<span class="tb-dot"></span>'+html;
+  var wrap=$("#hdrwrap");
+  function onScroll(){
+    wrap.classList.toggle("scrolled",window.scrollY>40);
+    $("#toTop").classList.toggle("on",window.scrollY>560);
+  }
+  window.addEventListener("scroll",onScroll,{passive:true});onScroll();
+  $("#toTop").addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"})});
+  $("#mBtn").addEventListener("click",function(){$("#mNav").classList.toggle("open")});
+  $all("#mNav a").forEach(function(a){a.addEventListener("click",function(){$("#mNav").classList.remove("open")})});
+})();
+
+/* ================= Hero 轮播 ================= */
+var slideTimer=null;
+function renderHero(){
+  var html="";
+  banners.forEach(function(b,i){
+    html+='<div class="slide'+(i===0?" active":"")+'" data-i="'+i+'">'
+      +'<div class="slide-img"><img src="'+b.img+'" alt="'+esc(b.tag)+'"></div>'
+      +'<div class="slide-tx">'
+      +'<span class="slide-tag"><i></i>'+esc(b.tag)+"</span>"
+      +"<h1>"+b.title+"</h1>"
+      +'<p class="slide-sub">'+esc(b.sub)+"</p>"
+      +'<p class="slide-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.5 13.5H11L9.5 22 19 10h-6.5z"/></svg>'+esc(b.note)+"</p>"
+      +'<div class="slide-cta"><button class="btn btn-brand btn-lg" data-hero="'+i+'">'+esc(b.cta)+'</button>'
+      +'<button class="btn btn-line-w btn-lg" data-hero2="'+i+'">'+esc(b.cta2)+"</button></div>"
+      +"</div></div>";
+  });
+  $("#slides").innerHTML=html;
+  $("#heroDots").innerHTML=banners.map(function(_,i){return '<button data-dot="'+i+'" class="'+(i===0?"on":"")+'" aria-label="第 '+(i+1)+' 张"></button>'}).join("");
+  $all("[data-hero]").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var b=banners[+btn.getAttribute("data-hero")];
+      heroAction(b.action);
+    });
+  });
+  $all("[data-hero2]").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      var i=+btn.getAttribute("data-hero2");
+      if(i===0){setFilter("charge")}
+      else if(i===1){document.getElementById("coupons").scrollIntoView({behavior:"smooth"})}
+      else{document.getElementById("products").scrollIntoView({behavior:"smooth"})}
+    });
+  });
+  $all("[data-dot]").forEach(function(d){d.addEventListener("click",function(){goSlide(+d.getAttribute("data-dot"))})});
+  startAuto();
+}
+function heroAction(a){
+  if(!a)return;
+  if(a.type==="product"){openQV(a.id)}
+  else if(a.type==="category"){setFilter(a.id)}
+  else if(a.type==="new"){
+    state.sort="new";$("#sortSel").value="new";
+    state.cat="all";renderChips();renderProducts();
+    document.getElementById("products").scrollIntoView({behavior:"smooth"});
+  }
+}
+function goSlide(i){
+  var slides=$all("#slides .slide");
+  if(!slides.length)return;
+  state.slide=(i+slides.length)%slides.length;
+  slides.forEach(function(s,idx){s.classList.toggle("active",idx===state.slide)});
+  $all("[data-dot]").forEach(function(d,idx){d.classList.toggle("on",idx===state.slide)});
+  $(".hero-side b").textContent=("0"+(state.slide+1)).slice(-2)+" / "+("0"+slides.length).slice(-2);
+  var prog=$("#heroProg");
+  prog.classList.remove("run");void prog.offsetWidth;prog.classList.add("run");
+}
+function startAuto(){
+  clearInterval(slideTimer);
+  var prog=$("#heroProg");
+  prog.classList.remove("run");void prog.offsetWidth;prog.classList.add("run");
+  slideTimer=setInterval(function(){goSlide(state.slide+1)},6000);
+}
+$("#heroPrev").addEventListener("click",function(){goSlide(state.slide-1);startAuto()});
+$("#heroNext").addEventListener("click",function(){goSlide(state.slide+1);startAuto()});
+(function(){
+  var x0=null;
+  var hero=$("#top");
+  hero.addEventListener("touchstart",function(e){x0=e.touches[0].clientX},{passive:true});
+  hero.addEventListener("touchend",function(e){
+    if(x0===null)return;
+    var dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>48){goSlide(state.slide+(dx<0?1:-1));startAuto()}
+    x0=null;
+  },{passive:true});
+})();
+
+/* ================= 分类 ================= */
+function renderCats(){
+  $("#catGrid").innerHTML=categories.map(function(c,i){
+    var n=products.filter(function(p){return p.cat===c.id}).length;
+    return '<button class="cat reveal" data-cat="'+c.id+'" style="transition-delay:'+i*60+'ms">'
+      +'<img src="'+c.img+'" alt="'+esc(c.name)+'" loading="lazy">'
+      +'<span class="cat-n">'+n+" 款</span>"
+      +'<span class="cat-tx"><b>'+esc(c.name)+"</b><span>"+esc(c.desc)+"</span></span></button>";
+  }).join("");
+  $all("[data-cat]").forEach(function(b){b.addEventListener("click",function(){setFilter(b.getAttribute("data-cat"))})});
+}
+
+/* ================= 秒杀 ================= */
+function renderFlash(){
+  $("#flashRow").innerHTML=SEED.flash.map(function(f){
+    var p=P(f.id);if(!p)return"";
+    var pct=Math.round((p.sold/(p.sold+900))*100);
+    return '<div class="fcard reveal" data-flash="'+p.id+'">'
+      +'<div class="fcard-img"><img src="'+p.img+'" alt="'+esc(p.name)+'" loading="lazy"></div>'
+      +'<div class="fcard-tx"><b>'+esc(p.name)+"</b>"
+      +'<div class="fcard-bar"><i data-pct="'+pct+'"></i></div>'
+      +"<small>已抢 <b>"+pct+"%</b> · 库存紧张</small>"
+      +'<div class="fcard-p"><span class="p-now"><i>¥</i>'+p.price+'</span><s class="p-old">¥'+p.orig+'</s></div>'
+      +'<button class="fcard-btn" data-flashadd="'+p.id+'">马上抢</button>'
+      +"</div></div>";
+  }).join("");
+  $all("[data-flashadd]").forEach(function(b){b.addEventListener("click",function(e){e.stopPropagation();addToCart(b.getAttribute("data-flashadd"),1)})});
+  $all("[data-flash]").forEach(function(c){c.addEventListener("click",function(){openQV(c.getAttribute("data-flash"))})});
+  requestAnimationFrame(function(){
+    $all(".fcard-bar i").forEach(function(i){i.style.width=i.getAttribute("data-pct")+"%"});
+  });
+}
+function tickCD(){
+  var end=new Date();end.setHours(24,0,0,0);
+  var diff=Math.max(0,end-Date.now());
+  var h=Math.floor(diff/3600000),m=Math.floor(diff/60000)%60,s=Math.floor(diff/1000)%60;
+  $("#cdH").textContent=("0"+h).slice(-2);
+  $("#cdM").textContent=("0"+m).slice(-2);
+  $("#cdS").textContent=("0"+s).slice(-2);
+  $("#cd").classList.toggle("urgent",h<1);
+}
+setInterval(tickCD,1000);tickCD();
+
+/* ================= 优惠券 ================= */
+function renderCoupons(){
+  $("#couponRow").innerHTML=coupons.map(function(c,i){
+    var got=state.claimed.indexOf(c.id)>=0;
+    return '<div class="coupon reveal" style="transition-delay:'+i*70+'ms">'
+      +'<div class="cp-l"><b><i>¥</i>'+c.off+"</b><span>满 "+c.min+" 可用</span></div>"
+      +'<div class="cp-r"><p><b>'+esc(c.scope)+"</b><br>"+esc(c.desc)+"</p>"
+      +'<button class="cp-btn'+(got?" claimed":"")+'" data-cp="'+c.id+'">'+(got?"已领取 ✓":"立即领取")+"</button></div></div>";
+  }).join("");
+  $all("[data-cp]").forEach(function(b){
+    b.addEventListener("click",function(){
+      var id=b.getAttribute("data-cp");
+      if(state.claimed.indexOf(id)>=0)return;
+      state.claimed.push(id);saveClaimed();
+      b.classList.add("claimed");b.textContent="已领取 ✓";
+      var c=coupons.filter(function(x){return x.id===id})[0];
+      toast("已领取「满 "+c.min+" 减 "+c.off+"」券，结算自动使用","ok");
+      renderUserArea();
+    });
+  });
+}
+
+/* ================= 商品列表 ================= */
+function filtered(){
+  var list=products.slice();
+  if(state.cat!=="all") list=list.filter(function(p){return p.cat===state.cat});
+  if(state.kw){
+    var k=state.kw.toLowerCase();
+    list=list.filter(function(p){return (p.name+p.sub+catName(p.cat)).toLowerCase().indexOf(k)>=0});
+  }
+  if(state.sort==="priceAsc") list.sort(function(a,b){return a.price-b.price});
+  else if(state.sort==="priceDesc") list.sort(function(a,b){return b.price-a.price});
+  else if(state.sort==="sold") list.sort(function(a,b){return b.sold-a.sold});
+  else if(state.sort==="new"){
+    list.sort(function(a,b){
+      var wa=a.badge?1:0,wb=b.badge?1:0;
+      return wb-wa;
+    });
+  }
+  return list;
+}
+function renderChips(){
+  var items=[{id:"all",name:"全部"}].concat(categories);
+  $("#chips").innerHTML=items.map(function(c){
+    return '<button class="chip'+(state.cat===c.id?" on":"")+'" data-chip="'+c.id+'">'+esc(c.name)+"</button>";
+  }).join("");
+  $all("[data-chip]").forEach(function(b){b.addEventListener("click",function(){setFilter(b.getAttribute("data-chip"))})});
+}
+function setFilter(cat){
+  state.cat=cat;state.kw="";
+  $("#q").value="";$("#qDrop").classList.remove("show");
+  renderChips();renderProducts();
+  var el=document.getElementById("products");
+  if(el)el.scrollIntoView({behavior:"smooth"});
+}
+function renderProducts(){
+  var list=filtered();
+  var grid=$("#grid");
+  $("#empty").classList.toggle("show",list.length===0);
+  if(list.length===0){grid.innerHTML="";return}
+  grid.innerHTML=list.map(function(p,i){
+    var badge=p.badge?'<span class="badge '+(p.badge==="新品"?"new":(p.badge.indexOf("直降")===0?"drop":""))+'">'+esc(p.badge)+"</span>":"";
+    return '<div class="card reveal" style="transition-delay:'+Math.min(i*45,320)+'ms" data-card="'+p.id+'">'
+      +'<div class="card-img">'+badge
+      +'<img src="'+p.img+'" alt="'+esc(p.name)+'" loading="lazy">'
+      +'<button class="qvb" data-qv="'+p.id+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12s3.5-6.5 10-6.5S22 12 22 12s-3.5 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/></svg>速览</button></div>'
+      +'<div class="card-tx"><h3>'+esc(p.name)+"</h3>"
+      +'<p class="card-sub">'+esc(p.sub)+"</p>"
+      +'<div class="card-rate"><span class="stars">'+stars(p.rating)+"</span>"+p.rating+" · "+fmtSold(p.reviews)+"人评价 · 已售 "+fmtSold(p.sold)+"</div>"
+      +'<div class="card-foot"><span><span class="p-now"><i>¥</i>'+p.price+'</span><s class="p-old">¥'+p.orig+'</s></span>'
+      +'<button class="add" data-add="'+p.id+'" aria-label="加入购物车"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>'
+      +"</div></div></div>";
+  }).join("");
+  $all("[data-qv]").forEach(function(b){b.addEventListener("click",function(e){e.stopPropagation();openQV(b.getAttribute("data-qv"))})});
+  $all("[data-add]").forEach(function(b){
+    b.addEventListener("click",function(e){
+      e.stopPropagation();
+      addToCart(b.getAttribute("data-add"),1,b);
+    });
+  });
+  $all("[data-card]").forEach(function(c){c.addEventListener("click",function(){openQV(c.getAttribute("data-card"))})});
+  observeReveal();
+}
+function showSkeleton(){
+  var html="";
+  for(var i=0;i<8;i++) html+='<div class="sk-card"><div class="sk sk-img"></div><div class="sk sk-l1"></div><div class="sk sk-l2"></div><div class="sk sk-l3"></div></div>';
+  $("#grid").innerHTML=html;
+}
+$("#sortSel").addEventListener("change",function(){state.sort=this.value;renderProducts()});
+$("#resetFilter").addEventListener("click",function(){
+  state.cat="all";state.kw="";state.sort="default";
+  $("#sortSel").value="default";$("#q").value="";
+  renderChips();renderProducts();
+});
+
+/* ================= 搜索 ================= */
+function bindSearch(inputSel){
+  var input=$(inputSel);
+  input.addEventListener("input",function(){
+    var v=input.value.trim();
+    state.kw=v;
+    if(!v){$("#qDrop").classList.remove("show");renderProducts();return}
+    var k=v.toLowerCase();
+    var hits=products.filter(function(p){return (p.name+p.sub+catName(p.cat)).toLowerCase().indexOf(k)>=0}).slice(0,5);
+    var drop=$("#qDrop");
+    if(!hits.length){drop.innerHTML='<div class="qd-empty">没有找到「'+esc(v)+'」相关商品</div>'}
+    else{
+      drop.innerHTML=hits.map(function(p){
+        return '<div class="qd-item" data-qd="'+p.id+'"><img src="'+p.img+'" alt=""><span class="qd-tx"><b>'+esc(p.name)+"</b><span>"+esc(p.sub)+'</span></span><span class="qd-p">¥'+p.price+"</span></div>";
+      }).join("");
+      $all("[data-qd]").forEach(function(it){it.addEventListener("click",function(){drop.classList.remove("show");openQV(it.getAttribute("data-qd"))})});
+    }
+    drop.classList.add("show");
+    renderProducts();
+  });
+  input.addEventListener("keydown",function(e){
+    if(e.key==="Escape"){input.blur();$("#qDrop").classList.remove("show")}
+    if(e.key==="Enter"){
+      $("#qDrop").classList.remove("show");
+      state.cat="all";renderChips();renderProducts();
+      document.getElementById("products").scrollIntoView({behavior:"smooth"});
+    }
+  });
+  input.addEventListener("blur",function(){setTimeout(function(){$("#qDrop").classList.remove("show")},160)});
+}
+bindSearch("#q");
+bindSearch("#q2");
+document.addEventListener("click",function(e){
+  if(!e.target.closest("#searchBox"))$("#qDrop").classList.remove("show");
+});
+
+/* ================= 速览弹窗 ================= */
+function openQV(id){
+  var p=P(id);if(!p)return;
+  state.qvId=id;state.qvQty=1;
+  $("#qvImg").src=p.img;
+  $("#qvImg").alt=p.name;
+  var tag=$("#qvImgTag");
+  if(p.badge){tag.hidden=false;tag.textContent=p.badge}else{tag.hidden=true}
+  var badge=$("#qvBadge");
+  if(p.badge){badge.hidden=false;badge.textContent=p.badge}else{badge.hidden=true}
+  $("#qvName").textContent=p.name;
+  $("#qvSub").textContent=p.sub;
+  $("#qvStars").innerHTML=stars(p.rating);
+  $("#qvRateTx").textContent=p.rating+" 分 · "+fmtSold(p.reviews)+" 人评价 · 已售 "+fmtSold(p.sold);
+  $("#qvPrice").innerHTML="<i>¥</i>"+p.price;
+  $("#qvOrig").textContent="¥"+p.orig;
+  $("#qvSpecs").innerHTML=p.specs.map(function(s){return "<li><span>"+esc(s[0])+"</span><b>"+esc(s[1])+"</b></li>"}).join("");
+  $("#qvQty").textContent="1";
+  openMask("#qvMask");
+}
+$("#qvClose").addEventListener("click",function(){closeMask("#qvMask")});
+$("#qvMask").addEventListener("click",function(e){if(e.target===this)closeMask("#qvMask")});
+$("#qvMinus").addEventListener("click",function(){state.qvQty=Math.max(1,state.qvQty-1);$("#qvQty").textContent=state.qvQty});
+$("#qvPlus").addEventListener("click",function(){state.qvQty=Math.min(99,state.qvQty+1);$("#qvQty").textContent=state.qvQty});
+$("#qvAdd").addEventListener("click",function(){
+  addToCart(state.qvId,state.qvQty,true);
+  closeMask("#qvMask");
+  toast("已加入购物车","ok");
+});
+$("#qvBuy").addEventListener("click",function(){
+  addToCart(state.qvId,state.qvQty,true);
+  closeMask("#qvMask");
+  openCheckout();
+});
+
+/* ================= 购物车 ================= */
+function addToCart(id,qty,silent){
+  var p=P(id);if(!p)return;
+  var found=null;
+  state.cart.forEach(function(it){if(it.id===id)found=it});
+  if(found){found.qty+=qty}else{state.cart.push({id:id,qty:qty})}
+  saveCart();
+  var badge=$("#cartBadge");
+  badge.classList.remove("bump");void badge.offsetWidth;badge.classList.add("bump");
+  if(!silent){
+    var card=$('[data-add="'+id+'"]');
+    if(card){
+      card.classList.add("done");
+      card.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+      setTimeout(function(){
+        card.classList.remove("done");
+        card.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+      },1100);
+    }
+    var img=$('[data-card="'+id+'"] .card-img img');
+    if(img)flyToCart(img);
+    toast("已加入购物车："+p.name,"ok");
+  }
+}
+function flyToCart(imgEl){
+  var cart=$("#cartBtn");
+  var a=imgEl.getBoundingClientRect(),b=cart.getBoundingClientRect();
+  var clone=document.createElement("img");
+  clone.src=imgEl.src;
+  clone.style.cssText="position:fixed;z-index:200;left:"+a.left+"px;top:"+a.top+"px;width:"+a.width+"px;height:"+a.height+"px;object-fit:cover;border-radius:14px;transition:all .62s cubic-bezier(.5,-0.25,.7,1);pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.25)";
+  document.body.appendChild(clone);
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    clone.style.left=(b.left+b.width/2-18)+"px";
+    clone.style.top=(b.top+b.height/2-18)+"px";
+    clone.style.width="36px";clone.style.height="36px";clone.style.opacity=".25";clone.style.borderRadius="50%";
+  })});
+  setTimeout(function(){clone.remove()},680);
+}
+function cartCount(){return state.cart.reduce(function(n,it){return n+it.qty},0)}
+function cartSub(){return state.cart.reduce(function(n,it){var p=P(it.id);return n+(p?p.price*it.qty:0)},0)}
+function renderCartBadge(){
+  var n=cartCount();
+  var badge=$("#cartBadge");
+  badge.textContent=n>99?"99+":n;
+  badge.classList.toggle("on",n>0);
+  $("#cartCount2").textContent="共 "+n+" 件";
+}
+function renderCart(){
+  var body=$("#cartBody"),foot=$("#cartFoot");
+  if(!state.cart.length){
+    body.innerHTML='<div class="cart-empty"><div class="empty-ic">🛒</div><b>购物车还是空的</b><p>去挑几件心动好物吧</p><button class="btn btn-brand" id="goShop">去逛逛</button></div>';
+    $("#goShop").addEventListener("click",function(){closeCart();document.getElementById("products").scrollIntoView({behavior:"smooth"})});
+    foot.style.display="none";
+  }else{
+    foot.style.display="block";
+    body.innerHTML=state.cart.map(function(it){
+      var p=P(it.id);if(!p)return"";
+      return '<div class="ci" data-ci="'+p.id+'">'
+        +'<img src="'+p.img+'" alt="'+esc(p.name)+'">'
+        +'<div class="ci-tx"><b>'+esc(p.name)+"</b>"
+        +'<div class="ci-p">'+fmtPrice(p.price)+"<s>¥"+p.orig+"</s></div>"
+        +'<div class="stepper"><button data-minus="'+p.id+'" aria-label="减少">−</button><b>'+it.qty+'</b><button data-plus="'+p.id+'" aria-label="增加">＋</button></div>'
+        +"</div>"
+        +'<button class="ci-del" data-del="'+p.id+'">删除</button></div>';
+    }).join("");
+    $all("[data-minus]").forEach(function(b){b.addEventListener("click",function(){setQty(b.getAttribute("data-minus"),-1)})});
+    $all("[data-plus]").forEach(function(b){b.addEventListener("click",function(){setQty(b.getAttribute("data-plus"),1)})});
+    $all("[data-del]").forEach(function(b){
+      b.addEventListener("click",function(){
+        var id=b.getAttribute("data-del");
+        var row=$('[data-ci="'+id+'"]');
+        if(row)row.classList.add("out");
+        setTimeout(function(){
+          state.cart=state.cart.filter(function(it){return it.id!==id});
+          saveCart();renderCart();
+        },280);
+        toast("已移除商品","info");
+      });
+    });
+    var sub=cartSub(),ship=sub>=99?0:8;
+    $("#cartSub").textContent=fmtPrice(sub);
+    $("#cartShip").textContent=ship?fmtPrice(ship):"免运费";
+    $("#cartTotal").textContent=fmtPrice(sub+ship);
+    $("#shipTip").textContent=ship?("还差 "+(99-sub)+" 元享包邮"):"已享满 99 包邮 ✓";
+  }
+  renderCartBadge();
+}
+function setQty(id,d){
+  state.cart.forEach(function(it){
+    if(it.id===id){
+      it.qty+=d;
+      if(it.qty<1)it.qty=1;
+    }
+  });
+  saveCart();renderCart();
+}
+function openCart(){$("#cartDrawer").classList.add("open");$("#scrim").classList.add("on");renderCart()}
+function closeCart(){$("#cartDrawer").classList.remove("open");$("#scrim").classList.remove("on")}
+$("#cartBtn").addEventListener("click",openCart);
+$("#cartClose").addEventListener("click",closeCart);
+$("#scrim").addEventListener("click",closeCart);
+
+/* ================= 结算 ================= */
+function bestCoupon(sub){
+  var best=null;
+  state.claimed.forEach(function(id){
+    var c=coupons.filter(function(x){return x.id===id})[0];
+    if(c&&sub>=c.min&&(!best||c.off>best.off))best=c;
+  });
+  return best;
+}
+function openCheckout(){
+  if(!state.cart.length){toast("购物车是空的，先去挑几件吧","err");return}
+  var sub=cartSub(),ship=sub>=99?0:8;
+  var cp=bestCoupon(sub);
+  $("#coItems").innerHTML=state.cart.map(function(it){
+    var p=P(it.id);if(!p)return"";
+    return '<div class="co-item"><img src="'+p.img+'" alt=""><b>'+esc(p.name)+"</b><span>¥"+p.price+" × "+it.qty+"</span></div>";
+  }).join("");
+  $("#coSub").textContent=fmtPrice(sub);
+  $("#coShip").textContent=ship?fmtPrice(ship):"免运费";
+  if(cp){$("#coCouponRow").hidden=false;$("#coCoupon").textContent="-¥"+cp.off}
+  else{$("#coCouponRow").hidden=true}
+  $("#coTotal").textContent=fmtPrice(Math.max(0,sub+ship-(cp?cp.off:0)));
+  $("#coStep1").hidden=false;$("#coStep2").hidden=true;
+  openMask("#coMask");
+}
+$("#checkoutBtn").addEventListener("click",function(){closeCart();openCheckout()});
+$("#coClose").addEventListener("click",function(){closeMask("#coMask")});
+$("#coMask").addEventListener("click",function(e){if(e.target===this)closeMask("#coMask")});
+$("#coDone").addEventListener("click",function(){closeMask("#coMask")});
+$all(".pay").forEach(function(label){
+  label.addEventListener("click",function(){
+    $all(".pay").forEach(function(l){l.classList.remove("on")});
+    label.classList.add("on");
+    label.querySelector("input").checked=true;
+  });
+});
+$("#coSubmit").addEventListener("click",function(){
+  var name=$("#addrName").value.trim(),phone=$("#addrPhone").value.trim(),addr=$("#addrText").value.trim();
+  if(!name){toast("请填写联系人","err");return}
+  if(!/^1\d{10}$/.test(phone)){toast("请填写正确的 11 位手机号","err");return}
+  if(addr.length<8){toast("请填写详细收货地址","err");return}
+  var btn=this;
+  btn.disabled=true;btn.textContent="提交中…";
+  setTimeout(function(){
+    var sub=cartSub(),ship=sub>=99?0:8;
+    var cp=bestCoupon(sub);
+    var total=Math.max(0,sub+ship-(cp?cp.off:0));
+    var pay=$(".pay.on input").value;
+    var no="JW"+new Date().toISOString().slice(0,10).replace(/-/g,"")+Math.random().toString(36).slice(2,6).toUpperCase();
+    state.orders.unshift({
+      no:no,ts:Date.now(),pay:pay,addr:name+" · "+phone+" · "+addr,
+      items:state.cart.map(function(it){var p=P(it.id);return {id:it.id,name:p.name,img:p.img,price:p.price,qty:it.qty}}),
+      total:total,status:"待发货"
+    });
+    saveOrders();
+    state.cart=[];saveCart();renderCart();
+    if(cp){state.claimed=state.claimed.filter(function(x){return x!==cp.id});saveClaimed();renderCoupons()}
+    $("#orderNo").textContent=no;
+    $("#coStep1").hidden=true;$("#coStep2").hidden=false;
+    btn.disabled=false;btn.textContent="提交订单";
+    renderUserArea();
+    toast("下单成功，订单已生成","ok");
+  },900);
+});
+$("#viewOrders").addEventListener("click",function(){closeMask("#coMask");openOrders()});
+
+/* ================= 登录注册 ================= */
+function openMask(sel){var m=$(sel);m.classList.add("show");document.body.style.overflow="hidden"}
+function closeMask(sel){var m=$(sel);m.classList.remove("show");if(!$all(".mask.show").length)document.body.style.overflow=""}
+function openAuth(){openMask("#auMask")}
+$("#auClose").addEventListener("click",function(){closeMask("#auMask")});
+$("#auMask").addEventListener("click",function(e){if(e.target===this)closeMask("#auMask")});
+$("#tabLogin").addEventListener("click",function(){this.classList.add("on");$("#tabReg").classList.remove("on");$("#loginForm").hidden=false;$("#regForm").hidden=true});
+$("#tabReg").addEventListener("click",function(){this.classList.add("on");$("#tabLogin").classList.remove("on");$("#regForm").hidden=false;$("#loginForm").hidden=true});
+$("#loginForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  var phone=$("#loginPhone").value.trim(),pwd=$("#loginPwd").value;
+  var err=$("#loginErr");
+  if(!/^1\d{10}$/.test(phone)){err.textContent="请输入正确的 11 位手机号";return}
+  if(!pwd){err.textContent="请输入密码";return}
+  var users=LS.get("dm_users",[]);
+  var u=users.filter(function(x){return x.phone===phone&&x.pwd===pwd})[0];
+  if(!u){err.textContent="手机号或密码不正确，可用演示账号登录";return}
+  err.textContent="";
+  state.user={phone:u.phone,name:u.name};saveSession();
+  closeMask("#auMask");renderUserArea();
+  toast("欢迎回来，"+(u.name||u.phone),"ok");
+});
+$("#demoBtn").addEventListener("click",function(){
+  $("#loginPhone").value="00000000000";
+  $("#loginPwd").value="demo1234";
+  $("#loginErr").textContent="";
+  toast("已填入演示账号，点击登录即可","info");
+});
+$("#regForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  var phone=$("#regPhone").value.trim(),p1=$("#regPwd").value,p2=$("#regPwd2").value;
+  var err=$("#regErr");
+  if(!/^1\d{10}$/.test(phone)){err.textContent="请输入正确的 11 位手机号";return}
+  if(p1.length<6||p1.length>20){err.textContent="密码需 6–20 位";return}
+  if(p1!==p2){err.textContent="两次输入的密码不一致";return}
+  var users=LS.get("dm_users",[]);
+  if(users.filter(function(x){return x.phone===phone}).length){err.textContent="该手机号已注册，请直接登录";return}
+  users.push({phone:phone,pwd:p1,name:"用户"+phone.slice(-4)});
+  LS.set("dm_users",users);
+  err.textContent="";
+  state.user={phone:phone,name:"用户"+phone.slice(-4)};saveSession();
+  closeMask("#auMask");renderUserArea();
+  toast("注册成功，已自动登录","ok");
+});
+
+/* ================= 用户面板 ================= */
+function renderUserArea(){
+  if(state.user){
+    $("#upHead").innerHTML="<b>"+esc(state.user.name)+"</b><span>"+state.user.phone.replace(/(\d{3})\d{4}(\d{4})/,"$1****$2")+" · 会员</span>";
+    $("#upOrderN").textContent=state.orders.length;
+    $("#upCouponN").textContent=state.claimed.length;
+    $("#upCoupons").style.display=state.claimed.length?"":"none";
+  }else{
+    $("#upHead").innerHTML="<b>访客</b><span>登录后享会员价与订单查询</span>";
+    $("#upOrders").style.display="none";
+    $("#upCoupons").style.display="none";
+    $("#upLogout").style.display="none";
+    return;
+  }
+  $("#upOrders").style.display="";
+  $("#upLogout").style.display="";
+}
+$("#userBtn").addEventListener("click",function(e){
+  e.stopPropagation();
+  if(!state.user){openAuth();return}
+  $("#userPanel").classList.toggle("show");
+});
+document.addEventListener("click",function(e){
+  if(!e.target.closest("#userPanel")&&!e.target.closest("#userBtn"))$("#userPanel").classList.remove("show");
+});
+$("#upLogout").addEventListener("click",function(){
+  state.user=null;saveSession();
+  $("#userPanel").classList.remove("show");
+  toast("已退出登录","info");
+});
+$("#upOrders").addEventListener("click",function(){$("#userPanel").classList.remove("show");openOrders()});
+$("#upCoupons").addEventListener("click",function(){
+  $("#userPanel").classList.remove("show");
+  if(!state.claimed.length){toast("还没有可用优惠券，去领券中心看看","info");return}
+  var txt=state.claimed.map(function(id){var c=coupons.filter(function(x){return x.id===id})[0];return c?("满"+c.min+"减"+c.off):""}).join(" / ");
+  toast("当前持有："+txt,"ok");
+});
+function openOrders(){
+  var list=$("#orderList");
+  if(!state.orders.length){
+    list.innerHTML='<div class="order-empty">还没有订单，去挑几件好物吧</div>';
+  }else{
+    list.innerHTML=state.orders.map(function(o){
+      var first=o.items[0];
+      var names=o.items.map(function(i){return i.name}).join("、");
+      var d=new Date(o.ts);
+      var date=d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)+" "+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2);
+      return '<div class="order"><img src="'+first.img+'" alt="">'
+        +'<div class="order-tx"><b>'+esc(names)+(o.items.length>1?" 等 "+o.items.length+" 件":"")+"</b>"
+        +"<span>"+o.no+" · "+date+" · "+esc(o.pay)+"</span></div>"
+        +'<span class="order-st">'+esc(o.status)+"</span>"
+        +'<b style="font-size:14px;flex:none">'+fmtPrice(o.total)+"</b></div>";
+    }).join("");
+  }
+  openMask("#odMask");
+}
+$("#odClose").addEventListener("click",function(){closeMask("#odMask")});
+$("#odMask").addEventListener("click",function(e){if(e.target===this)closeMask("#odMask")});
+
+/* ================= 口碑 / FAQ / 订阅 ================= */
+function renderReviews(){
+  $("#revRow").innerHTML=reviews.map(function(r,i){
+    var g=(i%3)+1;
+    return '<div class="rev reveal" style="transition-delay:'+i*70+'ms">'
+      +'<div class="rev-top"><span class="ava g'+g+'">'+esc(r.name.charAt(0))+"</span>"
+      +"<div><b>"+esc(r.name)+"</b><span>"+esc(r.city)+" · 已购用户</span></div></div>"
+      +'<div class="rev-stars"><span class="stars">'+stars(r.rating)+'</span><em>✓ 已验证购买</em></div>'
+      +"<p>"+esc(r.text)+"</p>"
+      +'<div class="rev-item"><img src="'+r.img+'" alt="">买了：'+esc(r.item)+"</div></div>";
+  }).join("");
+}
+function renderFaq(){
+  $("#faqList").innerHTML=SEED.faqs.map(function(f,i){
+    return '<div class="faq-item reveal'+(i===0?" open":"")+'" style="transition-delay:'+i*50+'ms">'
+      +'<div class="faq-q">'+esc(f[0])+'<span class="fx">＋</span></div>'
+      +'<div class="faq-a"><p>'+esc(f[1])+"</p></div></div>";
+  }).join("");
+  $all(".faq-q").forEach(function(q){
+    q.addEventListener("click",function(){
+      var item=q.parentElement;
+      var open=item.classList.contains("open");
+      $all(".faq-item").forEach(function(x){x.classList.remove("open")});
+      if(!open)item.classList.add("open");
+    });
+  });
+}
+$("#subForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  var v=$("#subEmail").value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){toast("请输入正确的邮箱地址","err");return}
+  $("#subEmail").value="";
+  toast("订阅成功！新品与底价券将发往你的邮箱","ok");
+});
+$("#storyBtn").addEventListener("click",function(){
+  toast("选品标准：耐用 / 兼容 / 安全 / 手感 / 性价比，5 轮实测全部通过才上架","info");
+});
+
+/* ================= 弹窗管理 ================= */
+document.addEventListener("keydown",function(e){
+  if(e.key!=="Escape")return;
+  var open=$all(".mask.show").pop();
+  if(open){open.classList.remove("show");document.body.style.overflow=""}
+  else if($("#cartDrawer").classList.contains("open")){closeCart()}
+  else if($("#userPanel").classList.contains("show")){$("#userPanel").classList.remove("show")}
+});
+
+/* ================= 滚动显现 / 数字动画 ================= */
+var io=null;
+function observeReveal(){
+  if(!io){
+    io=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){
+          en.target.classList.add("in");
+          if(en.target.id==="stats")countUpAll();
+          io.unobserve(en.target);
+        }
+      });
+    },{threshold:.12});
+  }
+  $all(".reveal:not(.in)").forEach(function(el){io.observe(el)});
+}
+function countUpAll(){
+  $all(".cnt").forEach(function(el){
+    if(el.dataset.done)return;
+    el.dataset.done="1";
+    var to=parseFloat(el.dataset.to),dec=parseInt(el.dataset.dec||"0",10),t0=null;
+    function step(ts){
+      if(!t0)t0=ts;
+      var k=Math.min(1,(ts-t0)/1100);
+      var e=1-Math.pow(1-k,4);
+      el.textContent=(to*e).toFixed(dec);
+      if(k<1)requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+/* ================= 购买动态浮条 ================= */
+(function(){
+  var data=[
+    {c:"深圳",n:"138****6721",p:"声波 Pro 真无线降噪耳机"},
+    {c:"杭州",n:"159****3388",p:"氮化镓 65W 双口快充充电器"},
+    {c:"成都",n:"186****0917",p:"悦动 智能运动手表"},
+    {c:"北京",n:"137****5520",p:"轻语 无线机械键盘"},
+    {c:"广州",n:"150****7734",p:"编织 USB-C 100W 数据线"},
+    {c:"武汉",n:"133****2165",p:"三合一磁吸无线充电板"}
+  ];
+  var shown=0;
+  setInterval(function(){
+    if(shown>=4||document.hidden)return;
+    var d=data[Math.floor(Math.random()*data.length)];
+    $("#tkAva").textContent=d.c.charAt(0);
+    $("#tkTx").textContent=d.c+" "+d.n+" 刚刚下单";
+    $("#tkSub").textContent=d.p;
+    var tk=$("#ticker");
+    tk.classList.add("on");
+    setTimeout(function(){tk.classList.remove("on")},4200);
+    shown++;
+  },17000);
+})();
+
+/* ================= 启动 ================= */
+renderHero();
+renderCats();
+renderFlash();
+renderCoupons();
+renderChips();
+renderReviews();
+renderFaq();
+renderUserArea();
+showSkeleton();
+setTimeout(function(){renderProducts();renderCart()},420);
+observeReveal();
+})();
+</script>
+</body>
+</html>

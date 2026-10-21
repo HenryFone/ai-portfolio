@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>产品服务 — 云图智联</title>
+<meta name="description" content="云图智联产品服务：AI 视觉质检平台、工厂数据中台、设备智能运维与全周期实施服务。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231f66e0'/%3E%3Ctext x='16' y='22' font-size='16' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'%3E云%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<noscript><style>.reveal{opacity:1;transform:none}.ppanel{display:grid !important}</style></noscript>
+</head>
+<body>
+<main>
+  <!-- ================= 页头 ================= -->
+  <section class="page-hero">
+    <div class="wrap">
+      <div class="crumbs"><a href="index.html">首页</a> / 产品服务</div>
+      <div class="kicker">PRODUCTS & SERVICES</div>
+      <h1>三大产品线<br><em>+ 全周期服务</em></h1>
+      <p class="sub">覆盖制造业智能化改造的每一个环节——从产线末端的一只相机，到经营驾驶舱的一块大屏。</p>
+    </div>
+  </section>
+
+  <!-- ================= 产品切换 ================= -->
+  <section class="section tight">
+    <div class="wrap">
+      <div class="ptabs reveal" role="tablist" aria-label="产品切换">
+        <button class="active" role="tab" aria-selected="true" data-tab="p1">云图·智检</button>
+        <button role="tab" aria-selected="false" data-tab="p2">云图·数擎</button>
+        <button role="tab" aria-selected="false" data-tab="p3">云图·慧维</button>
+        <button role="tab" aria-selected="false" data-tab="p4">实施与客户成功</button>
+      </div>
+
+      <!-- 智检 -->
+      <div class="ppanel active" id="p1" role="tabpanel">
+        <div>
+          <h3>云图·智检 AI 视觉质检平台</h3>
+          <div class="tagline">替代人眼复检 · 漏检率 &lt; 0.3%</div>
+          <p>面向产线末端的智能质检系统，支持划痕、凹陷、色差、缺角等 40 余类缺陷检测。小样本学习让新缺陷类型 30 分钟内完成模型迭代，无需算法团队驻场。</p>
+          <ul>
+            <li>单工位检测节拍最快 60ms，匹配高速产线</li>
+            <li>与 MES / ERP 无缝对接，自动分拣与追溯</li>
+            <li>国产化部署，支持离线工厂环境</li>
+          </ul>
+          <table class="spec-table">
+            <tr><th>缺陷类型</th><td>40+ 类，可自定义扩展</td></tr>
+            <tr><th>检出率 / 漏检率</th><td>99.2% / &lt; 0.3%</td></tr>
+            <tr><th>单工位节拍</th><td>60–300ms</td></tr>
+            <tr><th>模型迭代</th><td>新缺陷 30 分钟上线</td></tr>
+          </table>
+        </div>
+        <!-- 对比滑块 -->
+        <div class="compare" id="compare" aria-label="人工目检与 AI 智检效果对比">
+          <div class="pane" id="paneAI">
+            <svg viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <rect width="400" height="320" fill="#f1f5fb"/>
+              <g stroke="#dfe7f2" stroke-width="1">
+                <path d="M50 0V320M100 0V320M150 0V320M200 0V320M250 0V320M300 0V320M350 0V320"/>
+                <path d="M0 40H400M0 80H400M0 120H400M0 160H400M0 200H400M0 240H400M0 280H400"/>
+              </g>
+              <rect x="40" y="40" width="320" height="240" rx="12" fill="#ffffff" stroke="#b8c7dd" stroke-width="1.5"/>
+              <circle cx="140" cy="140" r="46" fill="#e7eefa" stroke="#9fb3cd" stroke-width="2"/>
+              <circle cx="140" cy="140" r="10" fill="#7d93b5"/>
+              <rect x="220" y="110" width="110" height="16" rx="5" fill="#e9eff8" stroke="#b8c7dd"/>
+              <rect x="220" y="146" width="80" height="16" rx="5" fill="#e9eff8" stroke="#b8c7dd"/>
+              <rect x="220" y="182" width="98" height="16" rx="5" fill="#e9eff8" stroke="#b8c7dd"/>
+              <path d="M70 240 q30 -18 60 0 t60 0" stroke="#9fb3cd" stroke-width="5" fill="none" stroke-linecap="round"/>
+              <!-- AI 标注 -->
+              <g font-family="Consolas, monospace" font-size="11">
+                <rect x="98" y="98" width="84" height="84" rx="4" fill="none" stroke="#dd8a00" stroke-width="2"/>
+                <rect x="98" y="76" width="96" height="18" rx="3" fill="#dd8a00"/>
+                <text x="106" y="89" fill="#ffffff">划痕 L12 · 96.4%</text>
+                <rect x="222" y="106" width="104" height="24" rx="4" fill="none" stroke="#dd8a00" stroke-width="2"/>
+                <rect x="222" y="84" width="88" height="18" rx="3" fill="#dd8a00"/>
+                <text x="230" y="97" fill="#ffffff">脏污 D03 · 91.8%</text>
+                <rect x="60" y="228" width="140" height="24" rx="4" fill="none" stroke="#12a06a" stroke-width="2"/>
+                <rect x="60" y="206" width="52" height="18" rx="3" fill="#12a06a"/>
+                <text x="68" y="219" fill="#ffffff">PASS</text>
+              </g>
+            </svg>
+            <span class="cap r">AI 智检 · 0.3s</span>
+          </div>
+          <div class="pane" id="paneHuman">
+            <svg viewBox="0 0 400 320" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <defs>
+                <filter id="tired" x="-10%" y="-10%" width="120%" height="120%">
+                  <feGaussianBlur stdDeviation="1.1"/>
+                </filter>
+              </defs>
+              <g filter="url(#tired)" opacity=".82">
+                <rect width="400" height="320" fill="#eef2f8"/>
+                <g stroke="#e6ebf4" stroke-width="1">
+                  <path d="M50 0V320M100 0V320M150 0V320M200 0V320M250 0V320M300 0V320M350 0V320"/>
+                  <path d="M0 40H400M0 80H400M0 120H400M0 160H400M0 200H400M0 240H400M0 280H400"/>
+                </g>
+                <rect x="40" y="40" width="320" height="240" rx="12" fill="#f4f7fb" stroke="#d3dde9"/>
+                <circle cx="140" cy="140" r="46" fill="#eef2f8" stroke="#ccd7e4" stroke-width="2"/>
+                <circle cx="140" cy="140" r="10" fill="#b3c1d2"/>
+                <rect x="220" y="110" width="110" height="16" rx="5" fill="#f1f4f9" stroke="#d3dde9"/>
+                <rect x="220" y="146" width="80" height="16" rx="5" fill="#f1f4f9" stroke="#d3dde9"/>
+                <rect x="220" y="182" width="98" height="16" rx="5" fill="#f1f4f9" stroke="#d3dde9"/>
+                <path d="M70 240 q30 -18 60 0 t60 0" stroke="#ccd7e4" stroke-width="5" fill="none" stroke-linecap="round"/>
+              </g>
+              <!-- 人眼遗漏 -->
+              <g font-family="Consolas, monospace" font-size="11">
+                <circle cx="142" cy="140" r="4" fill="#dd8a00" opacity=".5"/>
+                <text x="196" y="292" fill="#8494ac">人眼复检 · 疲劳漏检 ↑</text>
+              </g>
+            </svg>
+            <span class="cap l">人工目检 · 疲劳波动</span>
+          </div>
+          <div class="divider" id="cmpDivider"></div>
+          <div class="knob" id="cmpKnob">⇔</div>
+        </div>
+      </div>
+
+      <!-- 数擎 -->
+      <div class="ppanel" id="p2" role="tabpanel">
+        <div>
+          <h3>云图·数擎 工厂数据中台</h3>
+          <div class="tagline">一个口径看全厂 · 良率节拍一屏掌握</div>
+          <p>打通 MES、ERP、SCADA 与 PLC 数据，建立统一的指标中心与数据资产目录。管理层驾驶舱、车间看板、移动端报表三位一体，让数据真正参与日常决策。</p>
+          <ul>
+            <li>预置 200+ 制造业指标模板，开箱即用</li>
+            <li>亚秒级查询响应，支撑千人并发用数</li>
+            <li>行级权限与操作审计，满足等保要求</li>
+          </ul>
+          <table class="spec-table">
+            <tr><th>指标模板</th><td>200+，支持自定义</td></tr>
+            <tr><th>数据源接入</th><td>MES / ERP / SCADA / PLC 等 12 类</td></tr>
+            <tr><th>查询响应</th><td>P95 &lt; 1s</td></tr>
+            <tr><th>部署方式</th><td>私有化 / 混合云</td></tr>
+          </table>
+        </div>
+        <div class="p-visual" style="border:1px solid var(--line);border-radius:12px;background:var(--bg-2);padding:24px;display:grid;gap:14px;align-content:center;min-height:280px">
+          <div style="font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.14em">REALTIME DASHBOARD · 今日概览</div>
+          <div style="display:flex;gap:14px;align-items:flex-end;height:150px">
+            <div style="flex:1;background:linear-gradient(180deg,var(--accent-deep),var(--accent));border-radius:6px 6px 0 0;height:62%"></div>
+            <div style="flex:1;background:linear-gradient(180deg,var(--accent-deep),var(--accent));border-radius:6px 6px 0 0;height:78%"></div>
+            <div style="flex:1;background:linear-gradient(180deg,var(--accent-deep),var(--accent));border-radius:6px 6px 0 0;height:54%"></div>
+            <div style="flex:1;background:linear-gradient(180deg,var(--accent-deep),var(--accent));border-radius:6px 6px 0 0;height:88%"></div>
+            <div style="flex:1;background:linear-gradient(180deg,var(--accent-deep),var(--accent));border-radius:6px 6px 0 0;height:71%"></div>
+            <div style="flex:1;background:linear-gradient(180deg,var(--accent-deep),var(--accent));border-radius:6px 6px 0 0;height:95%"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;color:var(--text-2)">
+            <span>良率 <b style="color:var(--pass)">99.42%</b></span>
+            <span>节拍 <b style="color:var(--accent)">12.4s</b></span>
+            <span>能耗 <b style="color:var(--text)">-8.3%</b></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 慧维 -->
+      <div class="ppanel" id="p3" role="tabpanel">
+        <div>
+          <h3>云图·慧维 设备智能运维</h3>
+          <div class="tagline">提前 7 天预警 · 非计划停机下降 60%</div>
+          <p>基于振动、电流、温度多源信号的设备健康评估与故障预测系统，覆盖电机、泵阀、机床主轴等核心设备。把「坏了再修」变成「坏前预警」。</p>
+          <ul>
+            <li>边缘网关即插即用，老旧设备无需改造</li>
+            <li>故障根因自动定位，维修建议同步推送</li>
+            <li>备件库存联动，平均缩短维修等待 40%</li>
+          </ul>
+          <table class="spec-table">
+            <tr><th>覆盖设备</th><td>电机 / 泵阀 / 主轴等 9 类</td></tr>
+            <tr><th>预警提前量</th><td>平均 7 天</td></tr>
+            <tr><th>信号通道</th><td>振动 / 电流 / 温度 32 路</td></tr>
+            <tr><th>响应时效</th><td>48 小时现场响应</td></tr>
+          </table>
+        </div>
+        <div style="border:1px solid var(--line);border-radius:12px;background:var(--bg-2);padding:24px;min-height:280px;display:grid;gap:16px;align-content:center">
+          <div style="font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.14em">DEVICE HEALTH · 主轴 #M-03</div>
+          <svg viewBox="0 0 400 150" style="width:100%" aria-hidden="true">
+            <g stroke="#dbe4f0" stroke-width="1">
+              <path d="M0 30H400M0 60H400M0 90H400M0 120H400"/>
+            </g>
+            <path d="M0 110 L40 108 L80 112 L120 60 L160 100 L200 96 L240 40 L280 92 L320 88 L360 30 L400 84 L400 150 L0 150 Z" fill="rgba(31,102,224,.10)"/>
+            <path d="M0 110 L40 108 L80 112 L120 60 L160 100 L200 96 L240 40 L280 92 L320 88 L360 30 L400 84" fill="none" stroke="#1f66e0" stroke-width="2.5" stroke-linejoin="round"/>
+            <line x1="360" y1="0" x2="360" y2="150" stroke="#dd8a00" stroke-width="1.5" stroke-dasharray="4 4"/>
+            <circle cx="360" cy="30" r="5" fill="#dd8a00" stroke="#ffffff" stroke-width="1.5"/>
+            <text x="300" y="22" font-family="Consolas, monospace" font-size="11" fill="#a86500">预警 · 轴承早期磨损</text>
+            <text x="8" y="140" font-family="Consolas, monospace" font-size="10" fill="#6c7d99">近 30 天振动趋势</text>
+          </svg>
+          <div style="display:flex;gap:10px;font-family:var(--mono);font-size:12px">
+            <span style="color:var(--pass);border:1px solid rgba(18,160,106,.42);border-radius:99px;padding:3px 12px">健康度 82%</span>
+            <span style="color:var(--warn);border:1px solid rgba(221,138,0,.45);border-radius:99px;padding:3px 12px">建议 14 日内检修</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 服务 -->
+      <div class="ppanel" id="p4" role="tabpanel">
+        <div>
+          <h3>全周期实施与客户成功服务</h3>
+          <div class="tagline">平均 6 周完成首条产线智能化改造</div>
+          <p>从需求调研、方案设计、部署实施到效果验收与持续运营，配备行业顾问 + 交付工程师 + 客户成功经理的三人小组，全程陪伴。</p>
+          <ul>
+            <li>免费产线勘测与 ROI 评估报告</li>
+            <li>7×24 远程监测 + 48 小时现场响应</li>
+            <li>每季度效果复盘，持续优化模型</li>
+          </ul>
+          <table class="spec-table">
+            <tr><th>首条产线周期</th><td>平均 6 周</td></tr>
+            <tr><th>服务团队</th><td>行业顾问 + 交付 + 客户成功</td></tr>
+            <tr><th>响应时效</th><td>7×24 远程 / 48h 现场</td></tr>
+            <tr><th>效果复盘</th><td>每季度一次</td></tr>
+          </table>
+        </div>
+        <div style="border:1px solid var(--line);border-radius:12px;background:var(--bg-2);padding:24px;min-height:280px;display:grid;gap:12px;align-content:center">
+          <div style="font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.14em">DELIVERY TIMELINE · 6 周改造路线</div>
+          <div style="display:grid;gap:10px;font-family:var(--mono);font-size:12.5px;color:var(--text-2)">
+            <div style="display:flex;align-items:center;gap:12px"><span style="color:var(--accent);width:56px">W1</span><span style="flex:1;height:8px;border-radius:99px;background:linear-gradient(90deg,var(--accent-deep),var(--accent));width:100%"></span><span>勘测与方案</span></div>
+            <div style="display:flex;align-items:center;gap:12px"><span style="color:var(--accent);width:56px">W2-3</span><span style="flex:1;height:8px;border-radius:99px;background:linear-gradient(90deg,var(--accent-deep),var(--accent));width:82%"></span><span>光学设计与打样</span></div>
+            <div style="display:flex;align-items:center;gap:12px"><span style="color:var(--accent);width:56px">W4-5</span><span style="flex:1;height:8px;border-radius:99px;background:linear-gradient(90deg,var(--accent-deep),var(--accent));width:64%"></span><span>部署与联调</span></div>
+            <div style="display:flex;align-items:center;gap:12px"><span style="color:var(--accent);width:56px">W6</span><span style="flex:1;height:8px;border-radius:99px;background:linear-gradient(90deg,var(--accent-deep),var(--accent));width:40%"></span><span>验收与培训</span></div>
+          </div>
+          <div style="font-family:var(--mono);font-size:12px;color:var(--pass)">✓ 不影响现有产线正常生产</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="section tight">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">FAQ</div>
+        <h2>常见问题</h2>
+      </div>
+      <div class="faq reveal">
+        <details>
+          <summary>老旧产线改造会影响正常生产吗？</summary>
+          <div class="a">不会。我们采用「并联式」部署：新工位与现有人工复检并行运行 2–4 周，验证稳定后再切换，全过程不停产。</div>
+        </details>
+        <details>
+          <summary>缺陷样本很少，模型能训练出来吗？</summary>
+          <div class="a">可以。小样本学习 + 数据增强技术，通常 50–200 张缺陷图即可完成首版模型；新缺陷类型 30 分钟内完成迭代，无需算法团队驻场。</div>
+        </details>
+        <details>
+          <summary>数据安全如何保障？</summary>
+          <div class="a">支持全私有化部署，数据不出工厂；云端版本采用传输与存储加密、行级权限与完整操作审计，满足等保要求。</div>
+        </details>
+        <details>
+          <summary>投入产出周期大概多久？</summary>
+          <div class="a">按已交付项目统计，替代人眼复检工位的平均回收期为 8–14 个月；我们会在勘测阶段出具针对您产线的 ROI 评估报告。</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="section tight">
+    <div class="wrap">
+      <div class="cta-panel reveal">
+        <div class="scanline" aria-hidden="true"></div>
+        <div class="kicker" style="justify-content:center">FREE ASSESSMENT</div>
+        <h2>不确定哪套方案适合您的产线？</h2>
+        <p>留下需求，获取免费产线勘测与定制化方案建议。</p>
+        <a class="btn lg" href="contact.html">预约免费勘测<span class="arr">→</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="js/common.js"></script>
+<script>
+/* ---------- 产品 Tab 切换 ---------- */
+document.querySelectorAll('.ptabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.ptabs button').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false') })
+    document.querySelectorAll('.ppanel').forEach(p => p.classList.remove('active'))
+    btn.classList.add('active')
+    btn.setAttribute('aria-selected', 'true')
+    document.getElementById(btn.dataset.tab).classList.add('active')
+    if (window.__observeReveals) window.__observeReveals()
+  })
+});
+
+/* ---------- 对比滑块（人工 vs AI） ---------- */
+(function () {
+  const box = document.getElementById('compare')
+  if (!box) return
+  const divider = document.getElementById('cmpDivider')
+  const knob = document.getElementById('cmpKnob')
+  const ai = document.getElementById('paneAI')
+  const human = document.getElementById('paneHuman')
+  let pos = 0.5, dragging = false
+
+  function apply() {
+    /* AI 层为底（完整显示），人工层裁剪在左侧，拖动改变人工/AI 的可视比例 */
+    human.style.clipPath = `inset(0 ${(1 - pos) * 100}% 0 0)`
+    divider.style.left = (pos * 100) + '%'
+    knob.style.left = (pos * 100) + '%'
+  }
+  function setFromEvent(e) {
+    const r = box.getBoundingClientRect()
+    const x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left
+    pos = Math.min(0.96, Math.max(0.04, x / r.width))
+    apply()
+  }
+  box.addEventListener('pointerdown', e => { dragging = true; box.setPointerCapture(e.pointerId); setFromEvent(e) })
+  box.addEventListener('pointermove', e => { if (dragging) setFromEvent(e) })
+  box.addEventListener('pointerup', () => dragging = false)
+  box.addEventListener('pointercancel', () => dragging = false)
+  /* 键盘可达 */
+  knob.tabIndex = 0
+  knob.setAttribute('role', 'slider')
+  knob.setAttribute('aria-label', '对比滑块：拖动或使用左右方向键')
+  knob.setAttribute('aria-valuemin', '0'); knob.setAttribute('aria-valuemax', '100'); knob.setAttribute('aria-valuenow', '50')
+  knob.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') { pos = Math.max(0.04, pos - 0.05); apply(); knob.setAttribute('aria-valuenow', Math.round(pos * 100)); e.preventDefault() }
+    if (e.key === 'ArrowRight') { pos = Math.min(0.96, pos + 0.05); apply(); knob.setAttribute('aria-valuenow', Math.round(pos * 100)); e.preventDefault() }
+  })
+  apply()
+})()
+</script>
+</body>
+</html>

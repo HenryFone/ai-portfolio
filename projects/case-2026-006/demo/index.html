@@ -1,0 +1,2364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="消费级 AI 笔记 App 竞品分析：Notion、Obsidian、Mem、Craft、Apple Notes 六维能力、机会矩阵、功能对拆与差异化定位。">
+<title>AI 笔记竞品图谱 · 2026 Q4 战略定位报告</title>
+<style>
+/* ============================================================
+   0. 设计令牌 · 浅色靛蓝
+   ============================================================ */
+:root{
+  --bg:#f5f6fc;
+  --bg-2:#ffffff;
+  --surface:#ffffff;
+  --surface-2:#fafbff;
+  --ink:#101430;
+  --ink-2:#3f4869;
+  --ink-3:#6a7495;
+  --ink-4:#98a1bd;
+  --line:rgba(30,41,99,.10);
+  --line-2:rgba(70,86,190,.26);
+  --indigo:#4f46e5;
+  --indigo-l:#4338ca;
+  --indigo-d:#312e81;
+  --indigo-soft:#eef0ff;
+  --cyan:#0e7490;
+  --cyan-l:#0891b2;
+  --cyan-soft:#e6f7fb;
+  --amber:#b45309;
+  --amber-soft:#fef3e2;
+  --violet:#7c3aed;
+  --rose:#e11d48;
+  --mint:#059669;
+  --mono:ui-monospace,"SF Mono","JetBrains Mono","Cascadia Mono","Roboto Mono",Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC","Segoe UI",Inter,sans-serif;
+  --r:18px;
+  --maxw:1240px;
+  --pad:24px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --shadow-s:0 1px 2px rgba(16,20,48,.04),0 6px 16px -8px rgba(30,41,99,.14);
+  --shadow-m:0 2px 4px rgba(16,20,48,.03),0 18px 38px -24px rgba(30,41,99,.30);
+  --shadow-l:0 30px 70px -40px rgba(30,41,99,.42);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:14px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4,h5,h6,p,figure,ul,ol{margin:0;padding:0}
+ul,ol{list-style:none}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+svg{display:block}
+::selection{background:rgba(79,70,229,.18);color:var(--ink)}
+:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;border-radius:4px}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(80,92,140,.20);border-radius:10px;border:3px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:rgba(80,92,140,.36)}
+
+/* ============================================================
+   1. 背景层
+   ============================================================ */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:linear-gradient(180deg,#f7f8fd 0%,#f4f5fb 42%,#f6f7fd 100%)}
+.bg-grid{
+  position:absolute;inset:-10%;
+  background-image:
+    linear-gradient(rgba(79,70,229,.062) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(79,70,229,.062) 1px,transparent 1px),
+    linear-gradient(rgba(79,70,229,.028) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(79,70,229,.028) 1px,transparent 1px);
+  background-size:96px 96px,96px 96px,24px 24px,24px 24px;
+  -webkit-mask-image:radial-gradient(ellipse 82% 66% at 50% 2%,#000 4%,rgba(0,0,0,.35) 55%,transparent 84%);
+  mask-image:radial-gradient(ellipse 82% 66% at 50% 2%,#000 4%,rgba(0,0,0,.35) 55%,transparent 84%);
+}
+.bg-aurora{position:absolute;border-radius:50%;filter:blur(90px);will-change:transform}
+.a1{width:820px;height:640px;left:-200px;top:-260px;
+  background:radial-gradient(circle,rgba(99,102,241,.16),transparent 66%);
+  animation:drift1 28s ease-in-out infinite alternate}
+.a2{width:700px;height:560px;right:-160px;top:-180px;
+  background:radial-gradient(circle,rgba(6,182,212,.13),transparent 68%);
+  animation:drift2 34s ease-in-out infinite alternate}
+.a3{width:900px;height:760px;left:30%;top:56%;
+  background:radial-gradient(circle,rgba(124,58,237,.07),transparent 70%);
+  animation:drift1 44s ease-in-out infinite alternate-reverse}
+@keyframes drift1{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(70px,50px,0) scale(1.12)}}
+@keyframes drift2{from{transform:translate3d(0,0,0) scale(1.06)}to{transform:translate3d(-60px,70px,0) scale(.94)}}
+.bg-noise{
+  position:absolute;inset:0;opacity:.022;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.spotlight{
+  position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0;transition:opacity .6s;
+  background:radial-gradient(560px circle at var(--mx,50%) var(--my,10%),rgba(79,70,229,.055),transparent 70%);
+}
+body.has-pointer .spotlight{opacity:1}
+
+/* ============================================================
+   2. 顶部：进度条 / 导航
+   ============================================================ */
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:70;background:transparent}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--indigo),#06b6d4);
+  box-shadow:0 0 12px rgba(79,70,229,.5);transition:width .1s linear}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;height:62px;display:flex;align-items:center;
+  background:rgba(248,249,254,.72);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);
+  border-bottom:1px solid transparent;transition:border-color .3s,background .3s,box-shadow .3s}
+.nav.stuck{border-bottom-color:var(--line);background:rgba(250,251,255,.9);
+  box-shadow:0 8px 24px -22px rgba(30,41,99,.5)}
+.nav-in{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 var(--pad);display:flex;align-items:center;gap:20px}
+.brand{display:flex;align-items:center;gap:11px;white-space:nowrap;min-width:0}
+.brand-mark{width:26px;height:26px;position:relative;flex-shrink:0}
+.brand-mark::before,.brand-mark::after{content:"";position:absolute;inset:0;border-radius:7px}
+.brand-mark::before{transform:rotate(45deg) scale(.70);
+  background:linear-gradient(135deg,#4f46e5,#0891b2);box-shadow:0 4px 12px -4px rgba(79,70,229,.6)}
+.brand-mark::after{transform:rotate(45deg) scale(.34);background:#fff}
+.brand-txt{font-size:12.5px;font-weight:600;letter-spacing:.01em;line-height:1.2;color:var(--ink)}
+.brand-txt em{display:block;font-style:normal;font-family:var(--mono);font-size:9.5px;color:var(--ink-4);
+  letter-spacing:.16em;margin-top:3px;text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:1px;margin-left:auto;overflow:hidden}
+.nav-links a{position:relative;font-size:12px;color:var(--ink-3);padding:7px 9px;border-radius:7px;
+  transition:color .2s,background .2s;white-space:nowrap}
+.nav-links a:hover{color:var(--ink);background:rgba(79,70,229,.06)}
+.nav-links a.on{color:var(--indigo-l);font-weight:600}
+.nav-links a.on::after{content:"";position:absolute;left:9px;right:9px;bottom:1px;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,transparent,var(--indigo),transparent)}
+.nav-act{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.kbd-btn{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;color:var(--ink-3);
+  border:1px solid var(--line);background:#fff;padding:5px 9px;border-radius:7px;transition:.2s;
+  box-shadow:0 1px 2px rgba(16,20,48,.04)}
+.kbd-btn:hover{color:var(--ink);border-color:var(--line-2);background:#fff;box-shadow:var(--shadow-s)}
+.kbd-btn kbd{font-family:var(--mono);font-size:10px;background:#f1f2f9;border:1px solid var(--line);border-radius:4px;
+  padding:0 4px;line-height:15px;color:var(--ink-3)}
+.icon-btn{width:31px;height:31px;display:grid;place-items:center;border:1px solid var(--line);border-radius:7px;
+  color:var(--ink-3);transition:.2s;background:#fff;box-shadow:0 1px 2px rgba(16,20,48,.04)}
+.icon-btn:hover{color:var(--indigo);border-color:var(--line-2);box-shadow:var(--shadow-s)}
+.icon-btn svg{width:14px;height:14px}
+
+/* ============================================================
+   3. 布局骨架
+   ============================================================ */
+main{position:relative;z-index:2}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+section{position:relative;padding:76px 0;scroll-margin-top:80px}
+section+section{padding-top:0}
+.sec-head{display:grid;grid-template-columns:74px 1fr;gap:20px;align-items:start;margin-bottom:28px}
+.sec-num{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--indigo);
+  padding-top:6px;position:relative}
+.sec-num::after{content:"";display:block;width:26px;height:1px;margin-top:10px;
+  background:linear-gradient(90deg,var(--indigo),transparent)}
+.sec-kicker{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--ink-4);
+  text-transform:uppercase;margin-bottom:9px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sec-kicker i{width:4px;height:4px;border-radius:50%;background:var(--mint);box-shadow:0 0 7px rgba(5,150,105,.6);
+  display:inline-block}
+.sec-t{font-size:clamp(22px,2.5vw,31px);line-height:1.32;font-weight:700;letter-spacing:-.025em;color:#0d1129}
+.sec-t span{display:inline-block;font-size:.55em;font-weight:400;color:var(--ink-3);letter-spacing:0;
+  margin-left:10px;vertical-align:2px}
+.sec-d{font-size:13px;color:var(--ink-3);line-height:1.85;margin-top:9px;max-width:780px}
+.sec-d b{color:var(--ink-2);font-weight:600}
+
+/* 面板 */
+.panel{position:relative;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+  background:var(--surface);
+  box-shadow:inset 0 1px 0 #fff,var(--shadow-m)}
+.panel-hd{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#fdfdff,#fafbff)}
+.panel-hd>b{font-size:13px;font-weight:600;letter-spacing:.01em;color:var(--ink)}
+.panel-hd .tag{margin-left:auto;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;color:var(--ink-4);
+  border:1px solid var(--line);border-radius:5px;padding:2px 7px;text-transform:uppercase;white-space:nowrap;
+  background:#fff}
+.panel-hd .dot{width:6px;height:6px;border-radius:50%;background:var(--mint);
+  box-shadow:0 0 0 3px rgba(5,150,105,.12);flex-shrink:0}
+.panel-bd{padding:20px}
+
+/* 通用小件 */
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.hl{color:var(--ink);font-weight:600}
+.cyan{color:var(--cyan-l)}
+.amber{color:var(--amber)}
+.dim{color:var(--ink-4)}
+.divider{height:1px;background:linear-gradient(90deg,var(--line-2),var(--line) 30%,transparent)}
+
+/* ============================================================
+   4. HERO
+   ============================================================ */
+.hero{padding:126px 0 52px;position:relative}
+.hero-in{display:grid;grid-template-columns:1fr 400px;gap:40px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.18em;color:var(--indigo-l);text-transform:uppercase;margin-bottom:20px;
+  border:1px solid rgba(79,70,229,.20);border-radius:999px;padding:5px 13px;background:rgba(79,70,229,.05)}
+.eyebrow i{width:5px;height:5px;border-radius:50%;background:var(--mint);
+  box-shadow:0 0 0 3px rgba(5,150,105,.14);animation:blink 2.6s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-size:clamp(34px,4.5vw,60px);line-height:1.1;font-weight:700;letter-spacing:-.04em;margin-bottom:20px;
+  color:#0c1029}
+h1 .ln{display:block;overflow:hidden;padding-bottom:.04em}
+h1 .ln>span{display:block;transform:translateY(106%);animation:lineUp 1.05s var(--ease) forwards}
+h1 .ln:nth-child(1)>span{animation-delay:.06s}
+h1 .ln:nth-child(2)>span{animation-delay:.16s}
+@keyframes lineUp{to{transform:translateY(0)}}
+h1 em{font-style:normal;position:relative;background:linear-gradient(96deg,#4338ca 0%,#4f46e5 40%,#0891b2 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+
+.lede{font-size:clamp(13.5px,1.4vw,15px);color:var(--ink-2);line-height:1.9;max-width:648px}
+.lede b{color:var(--ink);font-weight:600}
+.lede .sep{color:var(--ink-4);margin:0 6px}
+.meta-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;
+  color:var(--ink-3);border:1px solid var(--line);border-radius:999px;padding:4px 11px;
+  background:#fff;letter-spacing:.02em;box-shadow:0 1px 2px rgba(16,20,48,.03)}
+.chip b{color:var(--indigo-l);font-weight:600}
+
+/* 轨道装饰 */
+.orbit{position:relative;width:400px;height:400px;justify-self:center}
+.orbit .ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(79,70,229,.10)}
+.orbit .r1{inset:6%;animation:spin 36s linear infinite;border-style:dashed;border-color:rgba(79,70,229,.24)}
+.orbit .r2{inset:21%;animation:spin 26s linear infinite reverse;border-color:rgba(8,145,178,.26)}
+.orbit .r3{inset:36%;border-color:rgba(79,70,229,.20);box-shadow:0 0 60px -20px rgba(79,70,229,.25) inset}
+.orbit .r1::after,.orbit .r2::after{content:"";position:absolute;top:-3px;left:50%;width:6px;height:6px;
+  border-radius:50%;background:var(--indigo);box-shadow:0 0 10px rgba(79,70,229,.55)}
+.orbit .r2::after{background:var(--cyan-l);box-shadow:0 0 10px rgba(8,145,178,.55)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.orbit-core{position:absolute;inset:36%;border-radius:50%;
+  background:radial-gradient(circle at 38% 32%,rgba(79,70,229,.13),rgba(8,145,178,.05) 58%,#fff 74%);
+  display:grid;place-items:center;text-align:center;box-shadow:inset 0 0 30px rgba(79,70,229,.08)}
+.orbit-core b{display:block;font-family:var(--mono);font-size:32px;font-weight:600;letter-spacing:-.04em;color:#1b2050}
+.orbit-core em{display:block;font-style:normal;font-family:var(--mono);font-size:8px;letter-spacing:.16em;
+  color:var(--ink-4);margin-top:3px;text-transform:uppercase;line-height:1.5}
+.orbit-ticks{position:absolute;inset:0;animation:spin 70s linear infinite}
+.orbit-ticks i{position:absolute;left:50%;top:0;width:1px;height:8px;background:rgba(79,70,229,.22);
+  transform-origin:0 200px}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:44px;background:var(--line);
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-s)}
+.kpi{background:#fff;padding:18px 20px 17px;position:relative;transition:background .3s}
+.kpi:hover{background:#fdfdff}
+.kpi-num{font-family:var(--mono);font-size:clamp(22px,2.4vw,29px);font-weight:600;letter-spacing:-.035em;
+  color:#151a3d;display:flex;align-items:baseline;gap:2px;font-variant-numeric:tabular-nums}
+.kpi-num s{text-decoration:none;font-size:.48em;color:var(--ink-4);margin-left:3px;letter-spacing:0}
+.kpi-lb{font-size:11.5px;color:var(--ink-4);margin-top:8px;line-height:1.6}
+.kpi-lb b{color:var(--ink-3);font-weight:500}
+.kpi-bar{margin-top:10px;height:3px;background:#f0f1f8;border-radius:3px;overflow:hidden}
+.kpi-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--indigo),#06b6d4);
+  border-radius:3px;transition:width 1.4s var(--ease)}
+
+/* TL;DR */
+.tldr{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.tldr-i{position:relative;border:1px solid var(--line);border-radius:12px;padding:16px 18px 15px 44px;
+  background:#fff;transition:.28s;box-shadow:0 1px 2px rgba(16,20,48,.03)}
+.tldr-i:hover{background:#fff;border-color:var(--line-2);transform:translateY(-2px);box-shadow:var(--shadow-s)}
+.tldr-i b{position:absolute;left:14px;top:15px;width:20px;height:20px;display:grid;place-items:center;
+  font-family:var(--mono);font-size:10px;color:var(--indigo-l);border:1px solid rgba(79,70,229,.22);
+  border-radius:5px;background:var(--indigo-soft)}
+.tldr-i h4{font-size:12.5px;font-weight:600;color:#171c3f;margin-bottom:5px;letter-spacing:.01em}
+.tldr-i p{font-size:11.5px;color:var(--ink-3);line-height:1.75}
+/* ============================================================
+   5. 格局速览 · Bento 卡
+   ============================================================ */
+.bento{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.pcard{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;
+  padding:16px 16px 14px;display:flex;flex-direction:column;overflow:hidden;
+  transition:transform .35s var(--ease),box-shadow .35s,border-color .3s;
+  box-shadow:0 1px 2px rgba(16,20,48,.03);will-change:transform}
+.pcard::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--pc);opacity:.85}
+.pcard::after{content:"";position:absolute;top:-40px;right:-40px;width:120px;height:120px;border-radius:50%;
+  background:var(--pc);opacity:.045;filter:blur(6px);transition:opacity .35s}
+.pcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-m);border-color:rgba(70,86,190,.22)}
+.pcard:hover::after{opacity:.09}
+.pc-top{display:flex;align-items:center;gap:8px;margin-bottom:11px}
+.pc-rank{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--ink-4);
+  border:1px solid var(--line);border-radius:4px;padding:1px 5px;background:#fff}
+.pc-top .tg{margin-left:auto;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;color:var(--pc);
+  text-transform:uppercase;opacity:.95}
+.pc-name{display:flex;align-items:baseline;gap:7px}
+.pc-name h3{font-size:16px;font-weight:700;letter-spacing:-.02em;color:#0f1433}
+.pc-name .avg{margin-left:auto;font-family:var(--mono);font-size:17px;font-weight:600;color:var(--pc);
+  letter-spacing:-.03em;line-height:1}
+.pc-sub{font-size:11px;color:var(--ink-3);margin-top:4px;line-height:1.5;min-height:32px}
+.pc-bars{display:grid;gap:5px;margin-top:10px;padding-top:11px;border-top:1px dashed var(--line)}
+.pc-bar{display:grid;grid-template-columns:26px 1fr 22px;gap:7px;align-items:center}
+.pc-bar span{font-family:var(--mono);font-size:9px;color:var(--ink-4);letter-spacing:.02em}
+.pc-bar .t{height:4px;border-radius:3px;background:#f1f2f9;overflow:hidden}
+.pc-bar .t i{display:block;height:100%;width:0;border-radius:3px;background:var(--pc);
+  transition:width 1s var(--ease);opacity:.82}
+.pc-bar b{font-family:var(--mono);font-size:9.5px;color:var(--ink-2);font-weight:500;text-align:right}
+.pc-foot{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:11px;
+  padding-top:9px;border-top:1px solid var(--line);font-size:10px;color:var(--ink-4)}
+.pc-foot b{font-family:var(--mono);font-size:10.5px;color:var(--ink-2);font-weight:600}
+
+/* 领跑者条 */
+.leaders{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:12px;box-shadow:var(--shadow-s)}
+.leader{background:#fff;padding:13px 14px;transition:background .25s}
+.leader:hover{background:#fbfbff}
+.leader .k{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--ink-4);text-transform:uppercase}
+.leader .v{display:flex;align-items:center;gap:6px;margin-top:7px}
+.leader .v i{width:6px;height:6px;border-radius:2px;flex-shrink:0}
+.leader .v b{font-size:12.5px;font-weight:600;color:#141936}
+.leader .v s{margin-left:auto;text-decoration:none;font-family:var(--mono);font-size:12px;
+  font-weight:600;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.leader .g{font-family:var(--mono);font-size:9px;color:var(--ink-4);margin-top:4px}
+.leader .g em{font-style:normal;color:var(--mint)}
+
+.note-line{position:relative;margin-top:12px;font-size:11.5px;color:var(--ink-4);line-height:1.8;padding-left:12px;max-width:1000px}
+.note-line::before{content:"";position:absolute;left:0;top:3px;bottom:3px;width:2px;border-radius:2px;background:linear-gradient(180deg,var(--indigo),rgba(8,145,178,.3))}
+
+/* ============================================================
+   6. 雷达
+   ============================================================ */
+.radar-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:1px;background:var(--line)}
+.radar-stage{position:relative;padding:10px 12px;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 48%,#fff,#fcfcff 70%)}
+.radar-stage svg{width:100%;max-width:560px;height:auto;overflow:visible}
+.radar-side{padding:16px;display:flex;flex-direction:column;gap:7px;background:var(--surface-2)}
+.hint{font-size:11px;color:var(--ink-4);padding:2px 4px 7px;display:flex;align-items:center;gap:7px;line-height:1.5}
+.hint i{width:5px;height:5px;border-radius:50%;background:var(--cyan-l);
+  box-shadow:0 0 0 3px rgba(8,145,178,.1);flex-shrink:0}
+.prow{border:1px solid transparent;border-radius:10px;padding:9px 11px;cursor:pointer;transition:.22s;
+  background:#fff;position:relative}
+.prow:hover{background:#fcfcff;border-color:var(--line);box-shadow:0 4px 12px -8px rgba(30,41,99,.3)}
+.prow.focus{background:#fff;border-color:var(--line-2);box-shadow:0 8px 22px -16px rgba(79,70,229,.5)}
+.prow.focus::before{content:"";position:absolute;left:-1px;top:9px;bottom:9px;width:2px;border-radius:2px;
+  background:var(--pc)}
+.prow-h{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.prow-h .dt{width:7px;height:7px;border-radius:2px;flex-shrink:0}
+.prow-h b{font-size:12.5px;font-weight:600;letter-spacing:.01em;color:#141936}
+.prow-h .tg{font-size:9px;color:var(--ink-4);font-family:var(--mono);letter-spacing:.06em}
+.prow-h .avg{margin-left:auto;font-family:var(--mono);font-size:14px;font-weight:600;color:#1a2044}
+.prow-h .avg s{text-decoration:none;font-size:8.5px;color:var(--ink-4);margin-right:2px;font-weight:400}
+.mini{display:grid;grid-template-columns:repeat(3,1fr);gap:2px 8px;margin-bottom:6px}
+.mini div{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;color:var(--ink-4);
+  border-bottom:1px dashed rgba(30,41,99,.08);padding-bottom:1px;line-height:1.5}
+.mini div s{text-decoration:none;color:var(--ink-2);font-weight:500}
+.bar{height:3px;border-radius:3px;background:#f1f2f9;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:3px;width:0;transition:width 1.1s var(--ease)}
+.legend-note{font-size:10.5px;color:var(--ink-4);line-height:1.7;padding:10px 4px 0;
+  border-top:1px dashed var(--line);margin-top:3px}
+.legend-note b{color:var(--ink-3)}
+
+/* 悬浮提示 */
+.tip{position:absolute;z-index:20;min-width:186px;background:rgba(255,255,255,.98);
+  border:1px solid var(--line);border-radius:10px;padding:10px 12px;pointer-events:none;
+  box-shadow:0 16px 40px -18px rgba(30,41,99,.45),0 1px 0 #fff inset;
+  opacity:0;transform:translate(-50%,-8px) scale(.97);transition:opacity .16s,transform .16s;
+  backdrop-filter:blur(8px)}
+.tip.on{opacity:1;transform:translate(-50%,-12px) scale(1)}
+.tip-t{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--ink-4);
+  text-transform:uppercase;margin-bottom:7px;display:flex;justify-content:space-between;gap:10px}
+.tip-t b{color:var(--indigo-l);font-weight:600}
+.tip-r{display:grid;grid-template-columns:8px 1fr auto;gap:6px;align-items:center;font-size:11px;
+  padding:2.5px 0;color:var(--ink-2)}
+.tip-r i{width:6px;height:6px;border-radius:2px}
+.tip-r s{text-decoration:none;font-family:var(--mono);font-weight:600;color:var(--ink);font-size:11px}
+.tip-r .tb{height:3px;border-radius:2px;background:#eef0f7;overflow:hidden;grid-column:2/-1;margin-top:-2px}
+.tip-r .tb i{display:block;height:100%;width:100%;border-radius:2px}
+
+/* 单维排行 */
+.dimrank{border-top:1px solid var(--line);padding:16px 20px 18px;background:var(--surface-2)}
+.dr-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.dr-head .t{font-size:12.5px;font-weight:600;color:var(--ink)}
+.dr-head .s{font-family:var(--mono);font-size:9.5px;color:var(--ink-4);letter-spacing:.1em}
+.dr-tabs{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.dr-tab{font-size:11px;color:var(--ink-3);padding:5px 10px;border-radius:7px;border:1px solid transparent;
+  transition:.2s;white-space:nowrap}
+.dr-tab:hover{color:var(--ink);background:#fff;border-color:var(--line)}
+.dr-tab.on{color:#fff;background:var(--indigo);border-color:var(--indigo);
+  box-shadow:0 6px 14px -8px rgba(79,70,229,.8)}
+.dr-body{display:grid;grid-template-columns:1fr 250px;gap:20px;align-items:start}
+.dr-rows{display:grid;gap:8px}
+.dr-row{display:grid;grid-template-columns:96px 1fr 42px;gap:10px;align-items:center}
+.dr-row .nm{font-size:11.5px;color:var(--ink-2);display:flex;align-items:center;gap:6px;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.dr-row .nm i{width:5px;height:5px;border-radius:1px;flex-shrink:0}
+.dr-row .tr{height:7px;border-radius:4px;background:#f0f1f8;overflow:hidden}
+.dr-row .tr i{display:block;height:100%;border-radius:4px;width:0;transition:width .7s var(--ease);
+  background:var(--pc);opacity:.5}
+.dr-row.lead .tr i{opacity:1;box-shadow:0 0 0 1px rgba(255,255,255,.6) inset}
+.dr-row .vv{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);text-align:right;font-weight:500}
+.dr-row.lead .vv{color:var(--ink);font-weight:700}
+.dr-row.lead .nm{color:var(--ink);font-weight:600}
+.dr-insight{border-left:1px solid var(--line);padding-left:18px;font-size:11.5px;color:var(--ink-3);
+  line-height:1.85}
+.dr-insight b{color:var(--indigo-l);font-weight:600}
+.dr-insight .lead-nm{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink-4);
+  display:block;margin-bottom:5px;text-transform:uppercase}
+
+/* ============================================================
+   7. 矩阵
+   ============================================================ */
+.mx-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:1px;background:var(--line)}
+.mx-stage{position:relative;padding:8px 10px;display:flex;align-items:center;background:#fcfcff}
+.mx-stage svg{width:100%;height:auto;overflow:visible}
+.mx-side{padding:18px;background:var(--surface-2);display:flex;flex-direction:column;gap:12px}
+.mx-block h5{font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:var(--indigo);
+  text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:8px}
+.mx-block h5::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.mx-block p{font-size:11.5px;color:var(--ink-3);line-height:1.8}
+.mx-block p b{color:var(--ink);font-weight:600}
+.mx-block.gap{background:linear-gradient(135deg,rgba(8,145,178,.055),rgba(79,70,229,.045));
+  border:1px solid rgba(8,145,178,.20);border-radius:11px;padding:13px 14px}
+.mx-block.gap h5{color:var(--cyan-l)}
+.mx-block.gap h5::after{background:linear-gradient(90deg,rgba(8,145,178,.28),transparent)}
+.verdict{border:1px dashed var(--line-2);border-radius:10px;padding:11px 13px;background:#fff}
+.verdict .vh{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--ink-4);
+  text-transform:uppercase;margin-bottom:6px;display:flex;justify-content:space-between;gap:8px}
+.verdict .vt{font-size:11.5px;color:var(--ink-2);line-height:1.75}
+.verdict .vt b{color:var(--indigo-l)}
+.verdict .vq{font-family:var(--mono);font-size:10px;color:var(--ink-4);margin-top:7px}
+.reset-btn{font-size:10.5px;color:var(--ink-3);border:1px solid var(--line);border-radius:6px;
+  padding:3px 8px;background:#fff;transition:.2s}
+.reset-btn:hover{color:var(--indigo);border-color:var(--line-2)}
+
+/* ============================================================
+   8. 功能表
+   ============================================================ */
+.tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.filters{display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid var(--line);
+  flex-wrap:wrap;background:var(--surface-2)}
+.fbtn{font-size:11px;color:var(--ink-3);padding:5px 10px;border-radius:7px;border:1px solid var(--line);
+  background:#fff;transition:.18s;white-space:nowrap}
+.fbtn:hover{color:var(--ink);border-color:var(--line-2)}
+.fbtn.on{color:#fff;background:var(--indigo);border-color:var(--indigo);box-shadow:0 6px 14px -9px rgba(79,70,229,.9)}
+.fsp{width:1px;height:18px;background:var(--line);margin:0 2px}
+.search{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:7px;
+  padding:4px 9px;background:#fff;transition:.2s;min-width:158px}
+.search:focus-within{border-color:var(--line-2);box-shadow:0 0 0 3px rgba(79,70,229,.07)}
+.search svg{width:12px;height:12px;color:var(--ink-4);flex-shrink:0}
+.search input{border:0;outline:0;background:transparent;font-size:11.5px;color:var(--ink);width:100%;
+  font-family:var(--sans)}
+.search input::placeholder{color:var(--ink-4)}
+.sw{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--ink-3);cursor:pointer;
+  user-select:none;white-space:nowrap}
+.sw input{position:absolute;opacity:0;pointer-events:none}
+.sw .tr{width:28px;height:16px;border-radius:9px;background:#e6e8f2;position:relative;transition:.22s;flex-shrink:0}
+.sw .tr::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;
+  background:#fff;box-shadow:0 1px 3px rgba(16,20,48,.25);transition:.22s}
+.sw input:checked+.tr{background:var(--indigo)}
+.sw input:checked+.tr::after{transform:translateX(12px)}
+.cnt{margin-left:auto;font-family:var(--mono);font-size:10px;color:var(--ink-4);white-space:nowrap}
+.cnt b{color:var(--indigo-l);font-weight:600}
+
+.ftable{--cols:minmax(230px,1.5fr) repeat(5,minmax(74px,1fr))}
+.frow{display:grid;grid-template-columns:var(--cols);gap:6px;align-items:center;padding:7px 16px;
+  border-bottom:1px solid rgba(30,41,99,.055);transition:background .15s}
+.frow:hover{background:#fbfcff}
+.frow.hide{display:none}
+.frow:last-child{border-bottom:0}
+.fhead{position:relative;z-index:2;background:rgba(252,253,255,.98);
+  border-bottom:1px solid var(--line);padding-top:11px;padding-bottom:11px}
+.fhead .fc{font-size:11.5px;color:var(--ink-2);font-weight:600;display:flex;flex-direction:column;
+  align-items:center;gap:2px;line-height:1.3}
+.fhead .fc:first-child{flex-direction:row;justify-content:flex-start;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.14em;color:var(--ink-4);text-transform:uppercase;font-weight:400}
+.fhead .fc .nm{display:flex;align-items:center;gap:5px}
+.fhead .fc .dt{width:6px;height:6px;border-radius:2px}
+.fhead .fc .cov{font-family:var(--mono);font-size:8.5px;color:var(--ink-4);letter-spacing:.02em;font-weight:400}
+.fhead .fc .cov em{font-style:normal;color:var(--indigo-l)}
+.fgroup{padding:8px 16px;background:#f6f7fd;border-bottom:1px solid var(--line);
+  font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--indigo);text-transform:uppercase;
+  display:flex;align-items:center;gap:9px}
+.fgroup::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(79,70,229,.16),transparent)}
+.fgroup.hide{display:none}
+.fname{font-size:12px;color:#2b3157;line-height:1.45;display:flex;align-items:center;gap:6px}
+.fname .q{font-family:var(--mono);font-size:9px;color:var(--ink-4);border:1px solid var(--line);border-radius:50%;
+  width:14px;height:14px;display:grid;place-items:center;flex-shrink:0;cursor:help;background:#fff}
+.fc-cell{display:flex;justify-content:center}
+.pill{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font-size:10.5px;line-height:1;
+  font-weight:700;transition:.18s;cursor:default}
+.pill.full{color:#3730a3;background:#eef0ff;border:1px solid rgba(79,70,229,.28);font-size:12px}
+.pill.part{color:#b45309;background:#fef7ec;border:1px solid rgba(180,83,9,.22)}
+.pill.none{color:#b6bccd;background:#fafbfe;border:1px solid rgba(30,41,99,.06)}
+.frow:hover .pill.full{background:#e6e9ff;border-color:rgba(79,70,229,.45)}
+.frow:hover .pill.part{background:#fdefdc}
+.fempty{padding:28px;text-align:center;font-size:12px;color:var(--ink-4);display:none}
+.fempty.on{display:block}
+.flegend{display:flex;gap:18px;padding:12px 16px;flex-wrap:wrap;font-size:11px;color:var(--ink-4);
+  border-top:1px solid var(--line);align-items:center;background:#fcfdff}
+.flegend span{display:flex;align-items:center;gap:6px}
+.flegend .pill{width:17px;height:17px;font-size:8px;border-radius:5px}
+.flegend .note{margin-left:auto;font-size:10.5px;color:var(--ink-4)}
+
+/* 指标表 */
+.mtbl{--cols:minmax(140px,.9fr) repeat(5,minmax(118px,1fr))}
+.mtbl .frow{padding:10px 16px}
+.mtbl .fc{font-size:11.5px;color:#2f3559;line-height:1.55}
+.mtbl .fc:first-child{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--ink-4);
+  text-transform:uppercase}
+.mtbl .frow:last-child{border-bottom:0}
+/* ============================================================
+   9. 价格
+   ============================================================ */
+.price-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:1px;background:var(--line)}
+.cost-list{padding:18px 20px 6px;display:grid;gap:16px}
+.cost-scale{display:grid;grid-template-columns:82px 1fr 58px;gap:12px;margin-top:2px}
+.cost-scale>div{grid-column:2;display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;color:var(--ink-4);padding-top:6px;border-top:1px dashed var(--line)}
+.cost-row{display:grid;grid-template-columns:82px 1fr 58px;gap:12px;align-items:center}
+.cost-row .nm{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--ink-2);font-weight:500}
+.cost-row .nm i{width:5px;height:5px;border-radius:2px;flex-shrink:0}
+.cost-tr{position:relative;height:24px;display:flex;align-items:center}
+.cost-tr .rail{position:absolute;inset:0;border-radius:4px;background:
+  repeating-linear-gradient(90deg,#f4f5fb 0 1px,transparent 1px 25%)}
+.cost-tr .b{display:block;height:9px;border-radius:3px;width:0;transition:width 1s var(--ease);opacity:.85;position:relative}
+.cost-tr .b.zero{width:6px!important;height:6px;border-radius:50%}
+.cost-row .val{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink);text-align:right}
+.cost-row .val em{font-style:normal;font-size:9px;color:var(--ink-4);font-weight:400}
+.cost-note{font-size:11.5px;color:var(--ink-3);line-height:1.8;padding:0 20px 18px;border-top:1px dashed var(--line);
+  padding-top:13px;margin:0 20px 0;padding-left:0;padding-right:0}
+.cost-note b{color:var(--indigo-l)}
+.price-side{padding:18px;background:var(--surface-2);display:flex;flex-direction:column;gap:12px}
+.price-stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+.price-stat .k{font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--ink-4);text-transform:uppercase}
+.price-stat .v{font-family:var(--mono);font-size:19px;font-weight:600;color:#151a3d;margin-top:3px;letter-spacing:-.02em}
+.price-stat .v em{font-style:normal;font-size:10px;color:var(--ink-4);font-weight:400;margin-left:3px}
+.price-stat .s{font-size:10.5px;color:var(--ink-4);margin-top:2px;line-height:1.5}
+
+/* ============================================================
+   10. 两两对拆
+   ============================================================ */
+.pk{display:grid;grid-template-columns:324px 1fr;gap:1px;background:var(--line)}
+.pk-left{padding:18px;background:var(--surface-2);display:flex;flex-direction:column;gap:14px}
+.pk-pick .lb{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--ink-4);
+  text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.pk-pick .lb i{width:6px;height:6px;border-radius:2px}
+.pick-row{display:flex;flex-wrap:wrap;gap:4px}
+.pick-chip{font-size:10px;color:var(--ink-3);padding:4px 7px;border-radius:6px;border:1px solid var(--line);
+  background:#fff;transition:.16s;white-space:nowrap}
+.pick-chip:hover{border-color:var(--line-2);color:var(--ink)}
+.pick-chip.on{color:#fff;background:var(--ac);border-color:var(--ac)}
+.pk-vs{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9px;letter-spacing:.16em;
+  color:var(--ink-4)}
+.pk-vs::before,.pk-vs::after{content:"";flex:1;height:1px;background:var(--line)}
+.pk-right{padding:16px 20px 18px;background:#fff}
+.tug{display:grid;gap:7px}
+.tug-row{display:grid;grid-template-columns:38px 1fr 38px;gap:8px;align-items:center}
+.tug-row .lv,.tug-row .rv{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-align:center;
+  font-variant-numeric:tabular-nums;transition:color .3s;font-weight:500}
+.tug-row .lv.win{color:var(--ca);font-weight:700}
+.tug-row .rv.win{color:var(--cb);font-weight:700}
+.tug-tr{position:relative;height:22px;display:flex;align-items:center}
+.tug-tr::before{content:"";position:absolute;left:50%;top:1px;bottom:1px;width:1px;background:var(--line)}
+.tug-tr::after{content:attr(data-lb);position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  font-size:9px;color:var(--ink-4);background:#fff;padding:0 4px;font-family:var(--mono)}
+.tug-b{position:absolute;height:7px;border-radius:4px;top:50%;transform:translateY(-50%);
+  transition:width .6s var(--ease),background .3s;opacity:.55}
+.tug-b.l{right:50%;border-radius:4px 0 0 4px}
+.tug-b.r{left:50%;border-radius:0 4px 4px 0}
+.tug-b.dim{opacity:.22}
+.tug-b.win{opacity:1;box-shadow:0 0 0 1px rgba(255,255,255,.5) inset}
+.tug-cap{display:grid;grid-template-columns:38px 1fr 38px;gap:8px;margin-bottom:2px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--ink-4);text-transform:uppercase}
+.tug-cap .a{color:var(--ca);text-align:center;font-weight:600}
+.tug-cap .b{color:var(--cb);text-align:center;font-weight:600}
+.pk-summary{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);
+  display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+.pk-score{display:flex;gap:10px;align-items:center}
+.pk-score .s{text-align:center}
+.pk-score .s b{display:block;font-family:var(--mono);font-size:21px;font-weight:600;letter-spacing:-.03em;line-height:1.1}
+.pk-score .s em{display:block;font-style:normal;font-family:var(--mono);font-size:8px;color:var(--ink-4);
+  letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
+.pk-score .vs{font-family:var(--mono);font-size:9px;color:var(--ink-4);letter-spacing:.1em;padding-top:8px}
+.pk-verdict{font-size:11.5px;color:var(--ink-3);line-height:1.75}
+.pk-verdict b{color:var(--ink);font-weight:600}
+.pk-verdict .w{color:var(--indigo-l);font-weight:600}
+
+/* ============================================================
+   11. 定位档案
+   ============================================================ */
+.dossiers{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.dos{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;
+  display:flex;flex-direction:column;overflow:hidden;transition:.3s var(--ease);
+  box-shadow:0 1px 2px rgba(16,20,48,.03)}
+.dos:hover{transform:translateY(-4px);box-shadow:var(--shadow-m);border-color:rgba(70,86,190,.2)}
+.dos::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--pc);opacity:.85}
+.dos-h{display:flex;align-items:center;gap:7px;margin-bottom:10px}
+.dos-h i{width:7px;height:7px;border-radius:2px}
+.dos-h b{font-size:13.5px;font-weight:700;letter-spacing:-.015em;color:#0f1433;white-space:nowrap}
+.dos-h span{margin-left:auto;font-family:var(--mono);font-size:7.5px;letter-spacing:.04em;color:var(--ink-4);white-space:nowrap}
+.dos-q{font-size:12px;color:var(--ink-2);line-height:1.6;font-weight:500;min-height:38px;
+  border-left:2px solid var(--pc);padding-left:8px;margin-bottom:11px}
+.dos-q em{font-style:normal;color:var(--ink-4);font-weight:400}
+.dos-rows{display:grid;gap:7px;flex:1}
+.dos-r{display:grid;gap:1px}
+.dos-r .k{font-family:var(--mono);font-size:8px;letter-spacing:.12em;color:var(--ink-4);text-transform:uppercase}
+.dos-r .v{font-size:10.5px;color:var(--ink-3);line-height:1.6}
+.dos-r .v b{color:var(--ink-2);font-weight:600}
+.dos-risk{margin-top:10px;padding-top:9px;border-top:1px dashed var(--line);font-size:10px;color:var(--ink-4);
+  line-height:1.55;display:flex;gap:6px}
+.dos-risk::before{content:"⚠";color:var(--amber);font-size:9px;line-height:1.7}
+.dos-metrics{display:flex;gap:8px;margin-top:9px;font-family:var(--mono);font-size:9px;color:var(--ink-4)}
+.dos-metrics s{text-decoration:none;color:var(--ink-2);font-weight:600}
+
+/* ============================================================
+   12. 结论
+   ============================================================ */
+.ops{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.op{border:1px solid var(--line);border-radius:14px;padding:20px;background:#fff;position:relative;
+  overflow:hidden;transition:.3s;box-shadow:0 1px 2px rgba(16,20,48,.03)}
+.op:hover{border-color:var(--line-2);box-shadow:var(--shadow-m);transform:translateY(-3px)}
+.op::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--indigo),transparent 80%);opacity:.55}
+.op .n{font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:var(--indigo);margin-bottom:10px;
+  display:flex;align-items:center;gap:7px}
+.op .n i{width:5px;height:5px;border-radius:50%;background:var(--indigo);box-shadow:0 0 0 3px rgba(79,70,229,.12)}
+.op h4{font-size:15px;line-height:1.5;margin-bottom:9px;font-weight:700;letter-spacing:-.015em;color:#0f1433}
+.op p{font-size:11.5px;color:var(--ink-3);line-height:1.85}
+.op .ev{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);font-size:10.5px;color:var(--ink-4);
+  line-height:1.7}
+.op .ev b{color:var(--indigo-l);font-weight:600}
+
+.final{margin-top:14px;border:1px solid rgba(8,145,178,.22);border-radius:16px;overflow:hidden;
+  background:linear-gradient(135deg,#f7fdff,#f9f9ff 52%,#fff);box-shadow:var(--shadow-s)}
+.final-hd{padding:15px 22px;border-bottom:1px solid rgba(8,145,178,.14);display:flex;align-items:center;gap:11px;
+  flex-wrap:wrap;background:rgba(8,145,178,.03)}
+.final-hd b{font-size:13.5px;font-weight:600}
+.final-hd .sp{font-family:var(--mono);font-size:9px;letter-spacing:.14em;color:var(--cyan-l);
+  border:1px solid rgba(8,145,178,.25);padding:2px 8px;border-radius:5px;background:#fff}
+.final-bd{padding:22px;display:grid;grid-template-columns:1.05fr 1fr;gap:24px}
+.quote{font-size:16px;line-height:1.8;color:#131838;font-weight:600;letter-spacing:-.01em}
+.quote em{font-style:normal;color:var(--cyan-l);background:linear-gradient(180deg,transparent 62%,rgba(8,145,178,.12) 62%)}
+.final-bd .sub{font-size:11.5px;color:var(--ink-3);margin-top:11px;line-height:1.8}
+.do-dont{display:grid;gap:10px}
+.dd{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff}
+.dd h6{font-family:var(--mono);font-size:9px;letter-spacing:.14em;margin-bottom:7px;color:var(--ink-4);
+  text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.dd.do h6{color:var(--mint)}
+.dd.dont h6{color:var(--rose)}
+.dd ul{display:grid;gap:4px}
+.dd li{font-size:11px;color:var(--ink-3);line-height:1.6;padding-left:13px;position:relative}
+.dd li::before{content:"›";position:absolute;left:0;color:var(--ink-4);font-weight:700}
+.dd.do li::before{content:"✓";color:var(--mint);font-size:9px}
+.dd.dont li::before{content:"×";color:var(--rose);font-size:11px}
+.dd li b{color:var(--ink-2);font-weight:600}
+
+.star{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.star-i{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#fff}
+.star-i .k{font-family:var(--mono);font-size:8.5px;letter-spacing:.14em;color:var(--ink-4);text-transform:uppercase}
+.star-i .v{font-family:var(--mono);font-size:19px;font-weight:600;color:#151a3d;margin-top:4px;letter-spacing:-.02em}
+.star-i .d{font-size:10.5px;color:var(--ink-4);margin-top:3px;line-height:1.6}
+
+/* 路线图 */
+.road{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.phase{position:relative;border:1px solid var(--line);border-radius:12px;padding:15px 16px;background:#fff;
+  overflow:hidden}
+.phase::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--indigo),rgba(8,145,178,.5));opacity:calc(1 - var(--d,0)*.3)}
+.phase .ph{display:flex;align-items:baseline;gap:7px;margin-bottom:9px}
+.phase .ph b{font-family:var(--mono);font-size:10px;color:var(--indigo);letter-spacing:.1em}
+.phase .ph span{font-size:11px;color:var(--ink-4);font-family:var(--mono)}
+.phase h5{font-size:12.5px;font-weight:600;margin-bottom:7px;color:#141936}
+.phase ul{display:grid;gap:4px}
+.phase li{font-size:10.5px;color:var(--ink-3);line-height:1.6;padding-left:11px;position:relative}
+.phase li::before{content:"";position:absolute;left:0;top:7px;width:4px;height:1px;background:var(--line-2)}
+.phase .m{margin-top:9px;padding-top:8px;border-top:1px dashed var(--line);font-size:9.5px;color:var(--ink-4);
+  font-family:var(--mono);line-height:1.6}
+.phase .m b{color:var(--indigo-l);font-weight:600}
+
+/* ============================================================
+   13. FOOTER
+   ============================================================ */
+footer{border-top:1px solid var(--line);padding:40px 0 54px;margin-top:60px;position:relative;z-index:2;
+  background:rgba(255,255,255,.4)}
+.f-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:32px;font-size:11px;color:var(--ink-4);line-height:1.95}
+.f-grid h6{font-family:var(--mono);font-size:9px;letter-spacing:.16em;color:var(--indigo);margin-bottom:7px;
+  text-transform:uppercase}
+.f-grid b{color:var(--ink-3);font-weight:500}
+.f-bot{margin-top:24px;padding-top:14px;border-top:1px dashed var(--line);display:flex;justify-content:space-between;
+  font-family:var(--mono);font-size:9.5px;color:var(--ink-4);flex-wrap:wrap;gap:8px;letter-spacing:.06em}
+
+/* ============================================================
+   14. 命令面板
+   ============================================================ */
+.cmdk{position:fixed;inset:0;z-index:100;display:none;align-items:flex-start;justify-content:center;
+  padding-top:12vh;background:rgba(24,30,60,.28);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.cmdk.on{display:flex}
+.cmdk-box{width:min(540px,92vw);background:#fff;border:1px solid var(--line);border-radius:14px;
+  box-shadow:0 40px 90px -30px rgba(20,28,70,.5);overflow:hidden;
+  animation:cmdIn .22s var(--ease)}
+@keyframes cmdIn{from{opacity:0;transform:translateY(-10px) scale(.98)}to{opacity:1;transform:none}}
+.cmdk-in{display:flex;align-items:center;gap:9px;padding:13px 16px;border-bottom:1px solid var(--line)}
+.cmdk-in svg{width:14px;height:14px;color:var(--ink-4)}
+.cmdk-in input{flex:1;border:0;outline:0;font-size:13.5px;color:var(--ink);background:transparent}
+.cmdk-in input::placeholder{color:var(--ink-4)}
+.cmdk-in kbd{font-family:var(--mono);font-size:9px;color:var(--ink-4);border:1px solid var(--line);
+  border-radius:4px;padding:1px 5px}
+.cmdk-list{max-height:320px;overflow:auto;padding:6px}
+.cmdk-i{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:8px;cursor:pointer;
+  font-size:12.5px;color:var(--ink-2)}
+.cmdk-i:hover,.cmdk-i.sel{background:var(--indigo-soft);color:var(--indigo-d)}
+.cmdk-i .n{font-family:var(--mono);font-size:9.5px;color:var(--ink-4);width:18px}
+.cmdk-i .ty{margin-left:auto;font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;color:var(--ink-4);
+  text-transform:uppercase}
+.cmdk-i.sel .n,.cmdk-i.sel .ty{color:var(--indigo)}
+.cmdk-ft{padding:8px 14px;border-top:1px solid var(--line);display:flex;gap:14px;font-size:10px;
+  color:var(--ink-4);background:var(--surface-2)}
+.cmdk-ft b{font-family:var(--mono);color:var(--ink-3)}
+
+/* 回到顶部 */
+.to-top{position:fixed;right:26px;bottom:26px;z-index:55;width:38px;height:38px;border-radius:50%;
+  background:#fff;border:1px solid var(--line);color:var(--ink-3);display:grid;place-items:center;
+  box-shadow:0 10px 26px -14px rgba(30,41,99,.5);opacity:0;pointer-events:none;
+  transform:translateY(8px);transition:.28s var(--ease)}
+.to-top.on{opacity:1;pointer-events:auto;transform:none}
+.to-top:hover{color:var(--indigo);border-color:var(--line-2);transform:translateY(-2px)}
+.to-top svg{width:15px;height:15px}
+
+/* ============================================================
+   15. 动效
+   ============================================================ */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .75s var(--ease),transform .75s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal[data-d="1"]{transition-delay:.06s}
+.reveal[data-d="2"]{transition-delay:.12s}
+.reveal[data-d="3"]{transition-delay:.18s}
+.reveal[data-d="4"]{transition-delay:.24s}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:.95}}
+@keyframes dashmove{to{stroke-dashoffset:-60}}
+.pulse{animation:pulse 3.4s ease-in-out infinite}
+.dashmove{animation:dashmove 5s linear infinite}
+
+/* ============================================================
+   16. 响应式
+   ============================================================ */
+@media(max-width:1180px){
+  .nav-links a{padding:7px 7px;font-size:11.5px}
+  .bento{grid-template-columns:repeat(3,1fr)}
+  .dossiers{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:1040px){
+  .hero-in{grid-template-columns:1fr}
+  .orbit{display:none}
+  .radar-grid,.mx-grid,.price-grid,.pk{grid-template-columns:1fr}
+  .radar-side,.mx-side,.price-side{border-top:1px solid var(--line)}
+  .leaders{grid-template-columns:repeat(3,1fr)}
+  .dr-body{grid-template-columns:1fr}
+  .dr-insight{border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:12px}
+  .final-bd{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+@media(max-width:880px){
+  :root{--pad:18px}
+  section{padding:60px 0}
+  .hero{padding-top:106px}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .tldr{grid-template-columns:1fr}
+  .ops,.star,.road{grid-template-columns:1fr}
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .dossiers{grid-template-columns:repeat(2,1fr)}
+  .f-grid{grid-template-columns:1fr;gap:20px}
+  .sec-head{grid-template-columns:1fr;gap:6px}
+  .sec-num{display:flex;align-items:center;gap:10px;padding-top:0}
+  .sec-num::after{width:30px;margin-top:0}
+  .kbd-btn,.icon-btn.print{display:none}
+  .pk-summary{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  :root{--pad:14px}
+  .bento,.dossiers{grid-template-columns:1fr}
+  .leaders{grid-template-columns:repeat(2,1fr)}
+  .mtbl{min-width:640px}
+  .ftable{min-width:640px}
+  .final-bd{padding:18px}
+  .filters{gap:6px;padding:10px 12px}
+  .search{min-width:120px;flex:1}
+  .cnt{width:100%;margin-left:0;text-align:right}
+  .fhead{top:58px}
+  .tug-row{grid-template-columns:30px 1fr 30px}
+  .tug-cap{grid-template-columns:30px 1fr 30px;font-size:8px}
+  .cost-row{grid-template-columns:66px 1fr 48px;gap:8px}
+  .price-side{padding:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+  h1 .ln>span{transform:none}
+}
+@media print{
+  .reveal{opacity:1!important;transform:none!important}
+  .nav,.bg,.spotlight,.progress,.cmdk,.tip,.icon-btn{display:none!important}
+  body{background:#fff;color:#111}
+  section{padding:26px 0;break-inside:avoid}
+  .panel,.pcard,.op,.dos{box-shadow:none;break-inside:avoid}
+  .fhead{position:static}
+  h1{font-size:34px}
+}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true">
+  <div class="bg-aurora a1"></div>
+  <div class="bg-aurora a2"></div>
+  <div class="bg-aurora a3"></div>
+  <div class="bg-grid"></div>
+  <div class="bg-noise"></div>
+</div>
+<div class="spotlight" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><i id="progBar"></i></div>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top" aria-label="回到顶部">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-txt">AI 笔记竞品图谱<em>Competitive Landscape</em></span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#overview" data-sec="overview">01 概览</a>
+      <a href="#radar" data-sec="radar">02 雷达</a>
+      <a href="#matrix" data-sec="matrix">03 矩阵</a>
+      <a href="#features" data-sec="features">04 功能</a>
+      <a href="#price" data-sec="price">05 价格</a>
+      <a href="#pk" data-sec="pk">06 对拆</a>
+      <a href="#positioning" data-sec="positioning">07 定位</a>
+      <a href="#insight" data-sec="insight">08 结论</a>
+    </div>
+    <div class="nav-act">
+      <button class="kbd-btn" id="cmdBtn" aria-label="打开快速跳转">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
+        跳转 <kbd>⌘K</kbd>
+      </button>
+      <button class="icon-btn print" id="printBtn" aria-label="打印或导出 PDF" title="打印 / 导出 PDF">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 6V2.5h8V6M4 12H2.5V6.5h11V12H12"/><rect x="4" y="9.5" width="8" height="4"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-in">
+      <div>
+        <div class="eyebrow"><i></i>Competitive Intelligence · 2026 Q4</div>
+        <h1>
+          <span class="ln"><span>五款产品的能力边界</span></span>
+          <span class="ln"><span>与一个<em>空着的位置</em></span></span>
+        </h1>
+        <p class="lede">
+          横评 <b>Notion、Obsidian、Mem、Craft、Apple Notes</b> 的六项核心能力。
+          这不是排行榜<span class="sep">/</span>它回答一个更具体的问题：<b>当 AI 把功能表拉平之后，下一款赢家应该站在哪个坐标上？</b>
+        </p>
+        <div class="meta-chips">
+          <span class="chip">样本 <b>5</b> 款</span>
+          <span class="chip">维度 <b>6</b> 项</span>
+          <span class="chip">能力 <b>18</b> 项</span>
+          <span class="chip">评分口径 <b>0–100</b></span>
+          <span class="chip">数据截至 <b>2026-10</b></span>
+        </div>
+      </div>
+      <div class="orbit" aria-hidden="true">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="ring r3"></div>
+        <div class="orbit-ticks" id="orbitTicks"></div>
+        <div class="orbit-core"><div><b>5×6</b><em>Products × Dimensions</em></div></div>
+      </div>
+    </div>
+
+    <div class="kpis reveal" id="kpis">
+      <div class="kpi">
+        <div class="kpi-num"><span data-to="7.2" data-dec="1" data-pre="$" data-suf="B">$7.2B</span></div>
+        <div class="kpi-lb">2026 全球笔记 / PKM 软件市场<br><b>2030 预计 $12.4B</b></div>
+        <div class="kpi-bar"><i data-fill="58"></i></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num"><span data-to="8.2" data-dec="1" data-suf=" 亿">8.2 亿</span></div>
+        <div class="kpi-lb">全球笔记类应用活跃用户<br><b>Apple Notes 约 3.5 亿 MAU</b></div>
+        <div class="kpi-bar"><i data-fill="82"></i></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num"><span data-to="64" data-suf="%">64%</span></div>
+        <div class="kpi-lb">付费订阅者已在用应用内 AI<br><b>做摘要、转录与检索</b></div>
+        <div class="kpi-bar"><i data-fill="64"></i></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-num"><span data-to="4.8" data-dec="1" data-suf="%">4.8%</span></div>
+        <div class="kpi-lb">行业免费转付费率<br><b>增长几乎全部发生在免费档</b></div>
+        <div class="kpi-bar"><i data-fill="19"></i></div>
+      </div>
+    </div>
+
+    <div class="tldr reveal">
+      <div class="tldr-i"><b>1</b><h4>AI 已从差异点变成入场券</h4>
+        <p>五款 AI 分全部 ≥55，连最保守的 Apple Notes 也靠系统级能力过线。还在宣传「我们有 AI」，等于没有卖点。</p></div>
+      <div class="tldr-i"><b>2</b><h4>最大的空位：强 AI × 零门槛 × 全端</h4>
+        <p>矩阵右下角无人占位。Mem 够智能但不全端也不便宜，Apple Notes 够无感却被生态锁死——三者交集仍是空白。</p></div>
+      <div class="tldr-i"><b>3</b><h4>免费档决定增长，可迁移决定留存</h4>
+        <p>4.8% 的转化率说明获客全在免费档；22% 知识工作者明确偏好本地纯文本——数据主权正在变成消费级卖点。</p></div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= 01 概览 ================= -->
+<section id="overview">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-num">01</div>
+      <div>
+        <div class="sec-kicker"><i></i>Landscape Overview</div>
+        <h2 class="sec-t">格局速览 <span>先看坐标，再看细节</span></h2>
+        <p class="sec-d">五款产品的六维均分落在 <b>68–78</b> 的窄区间——差距不在「谁更强」，而在<b>强在哪一维、弱在哪一维</b>。下面每张卡片都可直接读出能力形状。</p>
+      </div>
+    </div>
+
+    <div class="bento reveal" id="bento"></div>
+    <div class="leaders reveal" id="leaders"></div>
+    <p class="note-line">Apple 独揽同步、易用、价格三项第一，但三项都是「减少摩擦」而非「增强能力」；真正的能力型维度（AI、关联、协作）分别由 Mem、Obsidian、Notion 拿走。<b style="color:var(--ink-2)">没有一个产品在两类维度上同时领先</b>——这正是空位存在的原因。</p>
+  </div>
+</section>
+
+<!-- ================= 02 雷达 ================= -->
+<section id="radar">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-num">02</div>
+      <div>
+        <div class="sec-kicker"><i></i>Capability Radar</div>
+        <h2 class="sec-t">六维能力雷达 <span>形状比分数更重要</span></h2>
+        <p class="sec-d">按「消费级用户真实可感知的能力」加权，而非功能数量。悬停任一维度可查看五家横向对比；点击右侧产品行可单独聚焦。</p>
+      </div>
+    </div>
+
+    <div class="panel reveal">
+      <div class="panel-hd"><span class="dot"></span><b>能力分布</b><span class="tag">Score 0–100</span></div>
+      <div class="radar-grid">
+        <div class="radar-stage" id="radarStage">
+          <svg id="radarSvg" viewBox="0 0 560 560" role="img" aria-label="五款 AI 笔记产品六维能力雷达图"></svg>
+          <div class="tip" id="radarTip" role="tooltip"></div>
+        </div>
+        <div class="radar-side" id="radarSide"></div>
+      </div>
+      <div class="dimrank">
+        <div class="dr-head">
+          <span class="t">单维排行</span>
+          <span class="s">/ DIMENSION RANKING</span>
+          <div class="dr-tabs" id="dimTabs"></div>
+        </div>
+        <div class="dr-body">
+          <div class="dr-rows" id="dimRows"></div>
+          <div class="dr-insight" id="dimInsight"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 矩阵 ================= -->
+<section id="matrix">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-num">03</div>
+      <div>
+        <div class="sec-kicker"><i></i>Opportunity Matrix</div>
+        <h2 class="sec-t">机会矩阵 <span>AI 智能化 × 上手门槛</span></h2>
+        <p class="sec-d">横轴 = AI 智能化程度（右 = 更强）；纵轴 = 上手门槛（上 = 越难）。理想象限是右下角「强 AI + 零门槛」——目前仍是空位。<b>拖动青色圆点</b>，把你设想的产品放进矩阵，看它落在哪。</p>
+      </div>
+    </div>
+
+    <div class="panel reveal">
+      <div class="panel-hd"><span class="dot"></span><b>定位坐标</b><span class="tag">2×2 Matrix · 可拖拽</span></div>
+      <div class="mx-grid">
+        <div class="mx-stage" id="mxStage">
+          <svg id="matrixSvg" viewBox="0 0 620 560" role="img" aria-label="AI 智能化与上手门槛的机会矩阵"></svg>
+          <div class="tip" id="mxTip" role="tooltip"></div>
+        </div>
+        <div class="mx-side">
+          <div class="mx-block">
+            <h5>象限解读</h5>
+            <p><b>左上 · 重投入低回报</b>：门槛高又不够智能，已是历史区。<br>
+               <b>右上 · 极客向</b>：Obsidian、Notion 在此——能力强，但要求用户先付学习成本。<br>
+               <b>左下 · 默认入口</b>：几乎被清空。AI 不达标的产品，这个时代连入口都守不住。<br>
+               <b>右下 · 强 AI 低门槛</b>：Mem 与 Craft 只摸到边缘。</p>
+          </div>
+          <div class="mx-block gap">
+            <h5>空位即机会</h5>
+            <p><b>Mem</b> 方向最对——零整理、自动关联，但被 25 条笔记的免费档与 $99 的 Proactive 挡住；<b>Apple Notes</b> 门槛最低、用户最多，却被锁在苹果生态且几乎没有关联能力。谁能把 <b>Mem 级智能</b>装进 <b>Apple Notes 级无感</b>，同时开放全端，谁就握住下一代增量。</p>
+          </div>
+          <div class="verdict" id="mxVerdict">
+            <div class="vh"><span>你的产品落点</span><button class="reset-btn" id="mxReset">重置</button></div>
+            <div class="vt">拖动图上的<b>青色圆点</b>，这里会实时显示你所在象限、最近竞品与可执行判断。</div>
+            <div class="vq">X 50 · Y 50</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 04 功能 ================= -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-num">04</div>
+      <div>
+        <div class="sec-kicker"><i></i>Feature Matrix</div>
+        <h2 class="sec-t">功能对比矩阵 <span>18 项能力 · 客观标注</span></h2>
+        <p class="sec-d">勾叉之外更看「做到什么程度」。竞品的强项如实标注——一份永远自己赢的对比表没有决策价值。可按分组筛选、搜索，或只看差异项。</p>
+      </div>
+    </div>
+
+    <div class="panel reveal">
+      <div class="panel-hd"><span class="dot"></span><b>能力清单</b><span class="tag">Feature Matrix</span></div>
+      <div class="filters">
+        <button class="fbtn on" data-g="all">全部</button>
+        <button class="fbtn" data-g="AI 能力">AI</button>
+        <button class="fbtn" data-g="知识关联">关联</button>
+        <button class="fbtn" data-g="协作">协作</button>
+        <button class="fbtn" data-g="平台 · 数据">平台</button>
+        <button class="fbtn" data-g="商业化">商业</button>
+        <span class="fsp"></span>
+        <label class="search">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
+          <input type="search" id="fsearch" placeholder="搜索能力…" aria-label="搜索能力">
+        </label>
+        <label class="sw"><input type="checkbox" id="fdiff"><span class="tr"></span>只看差异</label>
+        <span class="cnt" id="fcount">显示 <b>18</b> / 18 项</span>
+      </div>
+      <div class="tbl-scroll">
+        <div class="ftable">
+          <div class="frow fhead">
+            <div class="fc">功能 / 能力</div>
+            <div class="fc"><span class="nm"><i class="dt" style="background:#4f46e5"></i>Notion</span><span class="cov" id="cov-notion">12/18</span></div>
+            <div class="fc"><span class="nm"><i class="dt" style="background:#9333ea"></i>Obsidian</span><span class="cov" id="cov-obsidian">10/18</span></div>
+            <div class="fc"><span class="nm"><i class="dt" style="background:#0e7490"></i>Mem</span><span class="cov" id="cov-mem">10/18</span></div>
+            <div class="fc"><span class="nm"><i class="dt" style="background:#b45309"></i>Craft</span><span class="cov" id="cov-craft">9/18</span></div>
+            <div class="fc"><span class="nm"><i class="dt" style="background:#64748b"></i>Apple Notes</span><span class="cov" id="cov-apple">7/18</span></div>
+          </div>
+          <div id="fbody"></div>
+          <div class="fempty" id="fempty">没有匹配的能力项，试试清空筛选条件。</div>
+        </div>
+      </div>
+      <div class="flegend">
+        <span><i class="pill full">✓</i> 原生完整支持</span>
+        <span><i class="pill part">◐</i> 部分支持 / 需插件或高阶档</span>
+        <span><i class="pill none">—</i> 不支持 / 无对应能力</span>
+        <span class="note">覆盖度 = 完整支持 + 部分支持折算 0.5</span>
+      </div>
+    </div>
+
+    <div class="panel reveal" style="margin-top:14px">
+      <div class="panel-hd"><b>关键商业与覆盖指标</b><span class="tag">Pricing &amp; Reach · 2026-10</span></div>
+      <div class="tbl-scroll">
+        <div class="ftable mtbl">
+          <div class="frow fhead">
+            <div class="fc">指标</div>
+            <div class="fc">Notion</div>
+            <div class="fc">Obsidian</div>
+            <div class="fc">Mem</div>
+            <div class="fc">Craft</div>
+            <div class="fc">Apple Notes</div>
+          </div>
+          <div id="metricRows"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 05 价格 ================= -->
+<section id="price">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-num">05</div>
+      <div>
+        <div class="sec-kicker"><i></i>Pricing Reality</div>
+        <h2 class="sec-t">价格不是数字，是门槛 <span>真实用上 AI 的月成本</span></h2>
+        <p class="sec-d">宣传页上的「起价」通常不含 AI。下图按<b>个人真实用上核心 AI 功能的最低月费</b>计——这才是用户掏钱时的心理价位。</p>
+      </div>
+    </div>
+
+    <div class="panel reveal">
+      <div class="panel-hd"><span class="dot"></span><b>AI 使用成本</b><span class="tag">USD / Month</span></div>
+      <div class="price-grid">
+        <div>
+          <div class="cost-list" id="costList"></div>
+          <div class="cost-note">Notion 的 AI 不在 $12 的 Plus 档，<b>$24 / 席位</b>才是全量入口；Mem 的 Pro 是 $12，但主动式能力要 <b>$99</b>；Obsidian 与 Apple Notes 为 <b>$0</b>——一个要自建、一个被生态锁定。<b>价格墙的位置，决定了免费档能不能完成验证。</b></div>
+        </div>
+        <div class="price-side">
+          <div class="price-stat"><div class="k">五家 AI 门槛中位数</div><div class="v">$10<em>/ 月</em></div><div class="s">若剔除两个 $0，中位数升至 $12</div></div>
+          <div class="price-stat"><div class="k">免费档可直接用 AI</div><div class="v">2<em>/ 5 家</em></div><div class="s">Apple Notes（系统级）、Obsidian（自带 Key）</div></div>
+          <div class="price-stat"><div class="k">免费档容量落差</div><div class="v">25<em>条 vs 无限</em></div><div class="s">Mem 免费档仅 25 条笔记，低于一次真实试用所需</div></div>
+          <div class="price-stat"><div class="k">个人档 → AI 档差价</div><div class="v">+$12<em>/ 月</em></div><div class="s">Notion 从 Plus $12 升到 Business $24 才解锁全量 AI</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 06 对拆 ================= -->
+<section id="pk">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-num">06</div>
+      <div>
+        <div class="sec-kicker"><i></i>Head to Head</div>
+        <h2 class="sec-t">两两对拆 <span>差距到底在哪一维</span></h2>
+        <p class="sec-d">平均分接近，不代表可以互相替代。选择任意两款产品，看六个维度的真实差距与胜负结构。</p>
+      </div>
+    </div>
+
+    <div class="panel reveal">
+      <div class="panel-hd"><span class="dot"></span><b>逐维对比</b><span class="tag">Delta Analysis</span></div>
+      <div class="pk">
+        <div class="pk-left">
+          <div class="pk-pick">
+            <div class="lb"><i id="dotA" style="background:#4f46e5"></i>产品 A</div>
+            <div class="pick-row" id="pickA"></div>
+          </div>
+          <div class="pk-pick">
+            <div class="lb"><i id="dotB" style="background:#0e7490"></i>产品 B</div>
+            <div class="pick-row" id="pickB"></div>
+          </div>
+          <div class="pk-vs">VS</div>
+          <p style="font-size:10.5px;color:var(--ink-4);line-height:1.7">对比基于六维评分，不代表整体优劣。切换产品即时重算。</p>
+        </div>
+        <div class="pk-right">
+          <div class="tug-cap"><span></span><span class="a" id="capA">A</span><span class="b" id="capB">B</span></div>
+          <div class="tug" id="tugBody"></div>
+          <div class="pk-summary">
+            <div class="pk-score">
+              <div class="s"><b id="pkAvgA">78</b><em>均分 A</em></div>
+              <div class="vs">VS</div>
+              <div class="s"><b id="pkAvgB">73</b><em>均分 B</em></div>
+            </div>
+            <div class="pk-verdict" id="pkVerdict"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 07 定位 ================= -->
+<section id="positioning">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-num">07</div>
+      <div>
+        <div class="sec-kicker"><i></i>Positioning Dossier</div>
+        <h2 class="sec-t">五份定位档案 <span>为谁、解决什么、会死在哪</span></h2>
+        <p class="sec-d">定位越清晰，越知道哪里不能打、哪里可以打。每张档案都标出该产品最危险的一件事——那是它的防守盲区。</p>
+      </div>
+    </div>
+    <div class="dossiers reveal" id="dossiers"></div>
+  </div>
+</section>
+
+<!-- ================= 08 结论 ================= -->
+<section id="insight">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-num">08</div>
+      <div>
+        <div class="sec-kicker"><i></i>Strategic Conclusion</div>
+        <h2 class="sec-t">差异化机会结论 <span>该往哪打、为谁打、凭什么赢</span></h2>
+        <p class="sec-d">不堆功能，只回答三个问题。每条结论都挂一个可验证的证据。</p>
+      </div>
+    </div>
+
+    <div class="ops reveal">
+      <div class="op">
+        <div class="n"><i></i>机会一 / WHERE</div>
+        <h4>把「AI 整理」做成默认动作，<br>而不是一个需要被点击的按钮</h4>
+        <p>头部产品的 AI 大多以「侧边栏 / 对话框」存在，用户必须先意识到「我该问 AI 了」。真正的增量在零唤起：自动归类、自动反链、主动召回。用户要的不是更多 AI 按钮，而是更少的整理动作——降的是认知成本，不是增功能数。</p>
+        <div class="ev">证据｜<b>Mem 是唯一把「零文件夹」做成核心架构</b>的产品，也是本次唯一 AI 分 ≥90 者；但免费档仅 25 条笔记，把验证门槛抬到了付费之后。</div>
+      </div>
+      <div class="op">
+        <div class="n"><i></i>机会二 / WHO</div>
+        <h4>主攻「非极客 · 非苹果全家桶」<br>的跨端大众，而非和巨头抢极客</h4>
+        <p>Obsidian 与 Notion 已牢牢占住高门槛重度用户，正面硬刚要付出极高的心智成本。而 Apple Notes 的 3.5 亿 MAU 里，有大量用户是被「预装 + 免费」而非「能力」留住的。矩阵右下空位正指向这片被忽视的中间地带。</p>
+        <div class="ev">证据｜<b>矩阵右下角（强 AI × 低门槛）尚无占位者</b>；Obsidian 门槛 88、Notion 72，均落在高门槛区。</div>
+      </div>
+      <div class="op">
+        <div class="n"><i></i>机会三 / HOW</div>
+        <h4>用「免费可用 + 可带走」<br>做增长引擎，而不是靠 AI 收溢价</h4>
+        <p>行业免费转付费率仅 4.8%，获客几乎全部发生在免费档；同时 22% 知识工作者明确偏好本地纯文本存储。把 AI 锁进最高价档（Notion 要 Business $24/月才给全量 AI）是在用最贵的功能挡住最大的漏斗。</p>
+        <div class="ev">证据｜<b>Obsidian 2026 年起连商用也免费</b>，仅同步收 $5/月；Notion AI 的真正门槛是 <b>$24 / 席位</b>，而非 $12。</div>
+      </div>
+    </div>
+
+    <div class="final reveal">
+      <div class="final-hd"><span class="sp">Positioning</span><b>定位建议与范围边界</b></div>
+      <div class="final-bd">
+        <div>
+          <p class="quote">面向 25–40 岁、跨 macOS / Windows / Android 的知识工作者：<em>不做更好的编辑器，做更少的整理动作</em>。</p>
+          <p class="sub">一句话定位：一个零整理、全端、免费可用的 AI 笔记——你只管记，剩下的交给它。<br>
+            这个位置同时避开 Notion 的协作主战场、Obsidian 的插件护城河、Craft 的排版审美领地，也不与 Apple 争夺系统入口。</p>
+          <div class="star">
+            <div class="star-i"><div class="k">北极星指标</div><div class="v">≥35%</div><div class="d">每周同时发生「记录 + 检索」的用户占比</div></div>
+            <div class="star-i"><div class="k">免费转付费</div><div class="v">8%</div><div class="d">行业均值 4.8% 的 1.7 倍</div></div>
+            <div class="star-i"><div class="k">导出流失率</div><div class="v">&lt;3%</div><div class="d">可带走反而降低流失，而非加速流失</div></div>
+          </div>
+        </div>
+        <div class="do-dont">
+          <div class="dd do">
+            <h6>三个必须做到</h6>
+            <ul>
+              <li><b>默认自动归类</b>与自动反链，不设「AI 按钮」</li>
+              <li><b>全端一致 + 离线可写</b>，数据可整包导出为纯文本</li>
+              <li><b>免费档即可用核心 AI</b>，付费卖容量与端侧算力</li>
+            </ul>
+          </div>
+          <div class="dd dont">
+            <h6>三个明确不做（Non-goals）</h6>
+            <ul>
+              <li><b>不做团队协作与数据库</b>——Notion 主战场，投入产出比最差</li>
+              <li><b>不做插件市场</b>——Obsidian 护城河，且会拖垮零门槛定位</li>
+              <li><b>不做重排版与网页发布</b>——Craft 领地，只做导出兼容</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="road reveal">
+      <div class="phase"><div class="ph"><b>PHASE 01</b><span>0–30 天</span></div>
+        <h5>验证「零整理」是否成立</h5>
+        <ul><li>单端 MVP：快速记录 + 自动聚类</li><li>10 位目标用户日记式测试</li><li>手动标注对照，测归类准确率</li></ul>
+        <div class="m">验证指标｜<b>归类采纳率 ≥ 70%</b>，否则回退到半自动</div>
+      </div>
+      <div class="phase" style="--d:1"><div class="ph"><b>PHASE 02</b><span>31–60 天</span></div>
+        <h5>把免费 AI 做成闭环</h5>
+        <ul><li>全库问答 + 语义召回上线</li><li>免费档不设条数上限</li><li>纯文本一键导出</li></ul>
+        <div class="m">验证指标｜<b>7 日留存 ≥ 45%</b>，AI 周使用率 ≥ 60%</div>
+      </div>
+      <div class="phase" style="--d:2"><div class="ph"><b>PHASE 03</b><span>61–90 天</span></div>
+        <h5>全端与增长</h5>
+        <ul><li>Windows / Android 同步上线</li><li>端侧模型处理敏感内容</li><li>按容量与算力分层定价</li></ul>
+        <div class="m">验证指标｜<b>跨端用户占比 ≥ 30%</b>，付费转化 8%</div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div>
+        <h6>数据来源</h6>
+        <b>市场规模与用户</b>：Gartner Digital Workplace Software、IDC Software Tracker、Sensor Tower（2026）<br>
+        <b>定价与功能</b>：notion.com/pricing、obsidian.md/pricing、get.mem.ai/pricing、craft.do/pricing、Apple Support（均于 2026-10 复核）<br>
+        <b>能力评分</b>：官方文档 + 公开评测 + 用户反馈综合，按消费级可感知度加权
+      </div>
+      <div>
+        <h6>口径说明</h6>
+        六维评分为 0–100 的<b>主观横向评估</b>，用于定位比较而非精确排名；同一产品在不同人群中的分值会有偏移。价格按美元月付口径折算，未含区域定价差异（Craft 中国区 ¥699 / 年）。
+      </div>
+      <div>
+        <h6>使用建议</h6>
+        本页用于<b>战略定位讨论</b>，不适合作为采购比价表。竞品能力每季度变化，评分建议随版本迭代复核。
+      </div>
+    </div>
+    <div class="f-bot">
+      <span>AI NOTES COMPETITIVE LANDSCAPE / 2026-10-17</span>
+      <span>5 PRODUCTS · 6 DIMENSIONS · 18 FEATURES</span>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="回到顶部" title="回到顶部">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 13V4M3.5 8.5L8 4l4.5 4.5"/></svg>
+</button>
+
+<div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="快速跳转">
+  <div class="cmdk-box">
+    <div class="cmdk-in">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
+      <input id="cmdInput" placeholder="跳转到章节或产品…" autocomplete="off">
+      <kbd>ESC</kbd>
+    </div>
+    <div class="cmdk-list" id="cmdList"></div>
+    <div class="cmdk-ft"><span><b>↑↓</b> 选择</span><span><b>Enter</b> 跳转</span><span><b>Esc</b> 关闭</span></div>
+  </div>
+</div>
+<script>
+(function(){
+'use strict';
+
+/* ============================================================
+   数据层
+   ============================================================ */
+var DIMS = [
+  {k:'ai',    label:'AI 能力',    short:'AI',   desc:'生成、摘要、问答与自动整理的深度'},
+  {k:'link',  label:'知识关联',   short:'关联', desc:'双链、图谱与语义关联的强度'},
+  {k:'collab',label:'协作',       short:'协作', desc:'多人编辑、评论与权限管理'},
+  {k:'sync',  label:'跨端同步',   short:'同步', desc:'终端覆盖与同步一致性'},
+  {k:'ux',    label:'易用性',     short:'易用', desc:'从打开到记下第一条的摩擦'},
+  {k:'price', label:'价格友好度', short:'价格', desc:'免费档可用度与 AI 门槛'}
+];
+
+var P = [
+  {id:'notion', name:'Notion', tag:'ALL-IN-ONE', color:'#4f46e5', s:[86,76,94,88,68,56],
+   ai:86, barrier:72, users:100e6, cost:24, free:'个人不限块',
+   pos:'全能工作台型企业笔记',
+   desc:'把文档、数据库、协作揉成一个可搭建的工作空间。2026 年 AI 整体打包进 Business（$24/月），能力最强，也把 AI 变成了一道价格墙。',
+   who:'团队与「什么都想放一处」的重度用户',
+   why:'文档 + 数据库 + 流程，一个空间全包',
+   risk:'用户只需要「记一笔」时，它显得过重',
+   strong:'协作 94', weak:'价格 56'},
+  {id:'obsidian', name:'Obsidian', tag:'LOCAL-FIRST', color:'#9333ea', s:[58,96,44,66,55,90],
+   ai:58, barrier:88, users:3e6, cost:0, free:'功能全开',
+   pos:'本地优先的知识图谱',
+   desc:'纯文本 Markdown + 双链 + 插件生态，把数据主权还给用户。2026 年起个人与商用均免费，AI 靠社区插件自建。',
+   who:'在意数据主权与长期归档的知识工作者',
+   why:'本地纯文本 + 双链 + 插件，数据完全自有',
+   risk:'大众把「可配置」感知为「要折腾」',
+   strong:'关联 96', weak:'协作 44'},
+  {id:'mem', name:'Mem', tag:'AI-NATIVE', color:'#0e7490', s:[92,84,58,72,78,52],
+   ai:92, barrier:42, users:0.5e6, cost:12, free:'仅 25 条笔记',
+   pos:'AI 自组织收件箱',
+   desc:'零文件夹：Smart Tags 自动归类，Mem Chat 直接问答全库。方向最对，但免费档仅 25 条笔记，Proactive $99/月劝退大众。',
+   who:'不想整理、只想输入的信息过载者',
+   why:'零文件夹，自动归类并回答全库',
+   risk:'定价把验证期用户挡在门外',
+   strong:'AI 92', weak:'价格 52'},
+  {id:'craft', name:'Craft', tag:'DESIGN-FIRST', color:'#b45309', s:[66,68,76,84,92,70],
+   ai:66, barrier:32, users:1.2e6, cost:10, free:'1500 块 / 50 点',
+   pos:'苹果生态的文档美学',
+   desc:'原生质感与精致排版，把「写得好看」做到极致。AI 以配额形式（50 点/月）轻量嵌入，够用但不构成壁垒。',
+   who:'苹果生态里在意「好看」的创作者',
+   why:'原生排版与文档美学的极致',
+   risk:'审美是差异化，也是天花板',
+   strong:'易用 92', weak:'AI 66'},
+  {id:'apple', name:'Apple Notes', tag:'SYSTEM-LEVEL', color:'#64748b', s:[55,42,62,94,96,100],
+   ai:55, barrier:8, users:350e6, cost:0, free:'全功能',
+   pos:'系统级零摩擦入口',
+   desc:'预装、免费、零学习成本，3.5 亿 MAU 的默认入口。iOS 26 让端侧 AI（改写/摘要/转写）免费可用，但锁死苹果生态，且没有反链与图谱。',
+   who:'所有苹果用户，尤其非工具爱好者',
+   why:'零安装、零学习、端侧 AI 免费',
+   risk:'一旦出现跨端需求，用户会头也不回地离开',
+   strong:'价格 100', weak:'关联 42'}
+];
+P.forEach(function(p){ p.avg = Math.round(p.s.reduce(function(a,b){return a+b;},0)/p.s.length); });
+function byId(id){ for(var i=0;i<P.length;i++){ if(P[i].id===id) return P[i]; } return P[0]; }
+
+var FEATURES = [
+  {g:'AI 能力', rows:[
+    ['AI 写作 / 改写 / 补全', ['full','part','full','full','full'], '行内续写、重写语气与语法修正'],
+    ['全库自然语言问答',      ['full','part','full','part','none'], '跨笔记检索并生成带引用的回答'],
+    ['自动整理 / 智能打标',   ['part','none','full','none','none'], '无需手动建文件夹或标签的自动归类'],
+    ['语音转写 + 自动摘要',   ['full','part','full','part','full'], '录音转文字并生成结构化摘要'],
+    ['端侧 / 本地模型推理',   ['none','part','none','none','full'], '敏感内容不出设备，离线可用']
+  ]},
+  {g:'知识关联', rows:[
+    ['双向链接 / 反向链接',   ['part','full','full','part','none'], '从一页顺着链接回到所有提及处'],
+    ['知识图谱可视化',        ['none','full','part','none','none'], '把笔记之间的关系画成可探索的图'],
+    ['语义检索（按意思找）',  ['full','part','full','part','part'], '记不住关键词也能按意思命中'],
+    ['关联自动发现 / 推荐',   ['part','none','full','part','none'], '写入时主动提示「这页和那页有关」']
+  ]},
+  {g:'协作', rows:[
+    ['实时多人协作编辑',      ['full','none','part','full','part'], '多人同时编辑同一页面'],
+    ['评论 / @提及 / 任务',   ['full','none','part','full','none'], '围绕内容完成讨论与分工'],
+    ['团队空间与权限管理',    ['full','part','part','full','none'], '按团队隔离空间并分配权限']
+  ]},
+  {g:'平台 · 数据', rows:[
+    ['离线可用',              ['part','full','none','full','full'], '断网仍可读写，不依赖云端'],
+    ['数据可导出 / 可迁移',   ['part','full','part','part','part'], '整库导出为通用格式，不被锁定'],
+    ['开放 API / 插件生态',   ['part','full','part','part','none'], '用插件或接口扩展自有工作流']
+  ]},
+  {g:'商业化', rows:[
+    ['AI 含在个人可负担档位', ['none','part','full','part','full'], '不升级到最贵档也能用核心 AI'],
+    ['免费版可长期使用',      ['part','full','none','part','full'], '免费档足以完成真实试用'],
+    ['无需登录 / 零配置',     ['none','part','part','part','full'], '打开即写，不先经历注册与配置']
+  ]}
+];
+
+var METRICS = [
+  ['终端覆盖', ['全端<br>Web / 桌面 / 移动','全端<br>需装客户端，无 Web','全端<br>含 Web 版','苹果优先<br>+ Web / Windows','仅苹果生态']],
+  ['AI 所在档位', ['Business <span class="amber">$24/月</span>','插件 + 自备 Key','Pro <span class="cyan">$12/月</span>','Plus 配额 50 点/月','<span class="cyan">免费</span>（系统级）']],
+  ['个人付费起价', ['$12/月<br><span class="dim">AI 需 $24</span>','<span class="cyan">$0</span><br><span class="dim">同步 $5/月</span>','$12/月<br><span class="dim">Proactive $99</span>','$10/月<br><span class="dim">¥699/年</span>','<span class="cyan">$0</span>']],
+  ['免费版可用度', ['中<br><span class="dim">个人不限块</span>','<span class="cyan">极高</span><br><span class="dim">功能全开</span>','低<br><span class="dim">25 条笔记</span>','中<br><span class="dim">1500 块</span>','<span class="cyan">极高</span><br><span class="dim">全功能</span>']],
+  ['规模参考', ['1 亿+ 用户','数百万（估）','&lt;100 万（估）','约百万级（估）','<span class="hl">3.5 亿 MAU</span>']]
+];
+
+var DIM_INSIGHT = {
+  ai:'Mem 以 92 领先，但领先第二名只有 6 分——AI 已是同质化能力。真正的差别不在「有没有」，而在「是否需要用户先想起来去点它」。',
+  link:'Obsidian 96 与 Apple Notes 42 相差 54 分，是全表最大的单维落差。关联能力仍是唯一难以被系统级能力追平的护城河。',
+  collab:'Notion 94 一骑绝尘，Craft 76 紧随；Obsidian 44 说明它主动放弃了协作——这是取舍，不是缺陷。',
+  sync:'Apple 94 靠系统生态拿到最高分，Mem 72 是纯云端产品的上限。真正的分水岭不在「有没有 App」，而在「断网还能不能写」。',
+  ux:'Apple 96 与 Obsidian 55 相差 41 分。上手门槛的关键不在界面美丑，而在「要不要先理解一套模型」。',
+  price:'Apple 100、Obsidian 90——一个靠预装，一个靠开源。中间三家的价格墙，恰好挡住了最大的那个漏斗。'
+};
+
+/* ============================================================
+   工具
+   ============================================================ */
+var NS = 'http://www.w3.org/2000/svg';
+function $(s,c){ return (c||document).querySelector(s); }
+function $$(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); }
+function el(tag, attrs, kids){
+  var n = document.createElementNS(NS, tag);
+  if(attrs) for(var k in attrs){ if(attrs[k]!==null && attrs[k]!==undefined) n.setAttribute(k, attrs[k]); }
+  if(kids) kids.forEach(function(c){ n.appendChild(c); });
+  return n;
+}
+function txt(x,y,str,opt){
+  opt = opt || {};
+  var t = el('text',{x:x,y:y,fill:opt.fill||'#5b658a','font-size':opt.size||12,
+    'text-anchor':opt.anchor||'middle',
+    'font-family': opt.mono ? 'ui-monospace,Consolas,monospace' : "-apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif",
+    'font-weight':opt.weight||400,'letter-spacing':opt.ls||0});
+  t.textContent = str;
+  return t;
+}
+function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ============================================================
+   01 · 概览
+   ============================================================ */
+(function buildBento(){
+  var host = $('#bento');
+  var ranked = P.slice().sort(function(a,b){ return b.avg - a.avg; });
+  host.innerHTML = ranked.map(function(p, i){
+    var bars = p.s.map(function(v, j){
+      return '<div class="pc-bar"><span>'+DIMS[j].short+'</span>'+
+        '<div class="t"><i data-w="'+v+'" style="background:'+p.color+'"></i></div>'+
+        '<b>'+v+'</b></div>';
+    }).join('');
+    return '<article class="pcard" style="--pc:'+p.color+'" data-id="'+p.id+'">'+
+      '<div class="pc-top"><span class="pc-rank">#'+(i+1)+'</span><span class="tg">'+p.tag+'</span></div>'+
+      '<div class="pc-name"><h3>'+p.name+'</h3><span class="avg">'+p.avg+'</span></div>'+
+      '<div class="pc-sub">'+p.pos+'</div>'+
+      '<div class="pc-bars">'+bars+'</div>'+
+      '<div class="pc-foot"><span>AI 门槛</span><b>'+(p.cost?('$'+p.cost+'/月'):'免费')+'</b></div>'+
+      '</article>';
+  }).join('');
+
+  // 领跑者
+  var lead = $('#leaders');
+  lead.innerHTML = DIMS.map(function(d, j){
+    var sorted = P.slice().sort(function(a,b){ return b.s[j]-a.s[j]; });
+    var top = sorted[0], second = sorted[1], gap = top.s[j]-second.s[j];
+    return '<div class="leader"><div class="k">'+d.label+'</div>'+
+      '<div class="v"><i style="background:'+top.color+'"></i><b>'+top.name+'</b><s>'+top.s[j]+'</s></div>'+
+      '<div class="g">领先 <em>+'+gap+'</em> · 次席 '+second.name+'</div></div>';
+  }).join('');
+
+  // 卡片进入后填充条
+  setTimeout(function(){
+    $$('.pc-bar .t i', host).forEach(function(i){
+      i.style.width = i.getAttribute('data-w') + '%';
+    });
+  }, 380);
+
+  // 轻量倾斜
+  if(!reduce && window.matchMedia('(hover:hover)').matches){
+    $$('.pcard', host).forEach(function(card){
+      card.addEventListener('pointermove', function(e){
+        var r = card.getBoundingClientRect();
+        var dx = (e.clientX - r.left)/r.width - .5;
+        var dy = (e.clientY - r.top)/r.height - .5;
+        card.style.transform = 'translateY(-4px) rotateX('+(-dy*3).toFixed(2)+'deg) rotateY('+(dx*3.4).toFixed(2)+'deg)';
+      });
+      card.addEventListener('pointerleave', function(){ card.style.transform = ''; });
+    });
+  }
+})();
+
+/* ============================================================
+   02 · 雷达
+   ============================================================ */
+var RSC = {cx:280, cy:280, R:192, LR:236};
+var radarSvg = $('#radarSvg'), radarStage = $('#radarStage'), radarTip = $('#radarTip');
+var focusId = null, hoverId = null;
+var rGroups = {}, grow = 1, radarStarted = false;
+
+function angle(i){ return (-90 + i*60) * Math.PI/180; }
+
+(function buildRadar(){
+  radarSvg.innerHTML = '';
+  var defs = el('defs');
+  var f = el('filter',{id:'softGlow',x:'-40%',y:'-40%',width:'180%',height:'180%'});
+  f.appendChild(el('feGaussianBlur',{stdDeviation:'4',result:'b'}));
+  var m = el('feMerge');
+  m.appendChild(el('feMergeNode',{in:'b'}));
+  m.appendChild(el('feMergeNode',{in:'SourceGraphic'}));
+  f.appendChild(m);
+  defs.appendChild(f);
+  radarSvg.appendChild(defs);
+
+  // 环
+  for(var r=1;r<=5;r++){
+    var rad = RSC.R*r/5, pts=[];
+    for(var i=0;i<6;i++){
+      var a=angle(i);
+      pts.push((RSC.cx+Math.cos(a)*rad).toFixed(2)+','+(RSC.cy+Math.sin(a)*rad).toFixed(2));
+    }
+    radarSvg.appendChild(el('polygon',{points:pts.join(' '),fill: r===5?'rgba(79,70,229,.015)':'none',
+      stroke: r===5?'rgba(79,70,229,.22)':'rgba(30,41,99,.11)','stroke-width':1,
+      'stroke-dasharray': r===5?'none':'3 6'}));
+  }
+  // 轴线 + 高亮线
+  var hlLines=[];
+  for(var j=0;j<6;j++){
+    var ang=angle(j);
+    radarSvg.appendChild(el('line',{x1:RSC.cx,y1:RSC.cy,
+      x2:RSC.cx+Math.cos(ang)*RSC.R, y2:RSC.cy+Math.sin(ang)*RSC.R,
+      stroke:'rgba(30,41,99,.10)','stroke-width':1}));
+    var hl=el('line',{x1:RSC.cx,y1:RSC.cy,
+      x2:RSC.cx+Math.cos(ang)*RSC.R, y2:RSC.cy+Math.sin(ang)*RSC.R,
+      stroke:'#4f46e5','stroke-width':1.4,'stroke-linecap':'round','stroke-opacity':0});
+    hl.style.transition='stroke-opacity .2s';
+    radarSvg.appendChild(hl);
+    hlLines.push(hl);
+  }
+  // 刻度
+  [25,50,75,100].forEach(function(v){
+    radarSvg.appendChild(txt(RSC.cx+5, RSC.cy - RSC.R*v/100 + 3, String(v),
+      {size:8.5, fill:'rgba(106,116,149,.62)', anchor:'start', mono:true}));
+  });
+
+  // 轴标签 + 命中区
+  DIMS.forEach(function(d,i){
+    var a=angle(i);
+    var lx=RSC.cx+Math.cos(a)*RSC.LR;
+    var ly=RSC.cy+Math.sin(a)*RSC.LR;
+    var anchor = Math.abs(Math.cos(a))<.12 ? 'middle' : (Math.cos(a)>0?'start':'end');
+    var best=0; P.forEach(function(p){ best=Math.max(best,p.s[i]); });
+
+    var g = el('g',{style:'cursor:help'});
+    var label = txt(lx, ly, d.label, {size:12.5, fill:'#2f3659', anchor:anchor, weight:600});
+    var sub = txt(lx, ly + 15, '最高 '+best,
+      {size:8.5, fill:'rgba(106,116,149,.8)', anchor:anchor, mono:true});
+    g.appendChild(label); g.appendChild(sub);
+
+    var w = d.label.length*13 + 34;
+    var rx = anchor==='middle' ? lx-w/2 : (anchor==='start' ? lx-10 : lx-w+10);
+    var ry = ly - 15;
+    var hit = el('rect',{x:rx,y:ry,width:w,height:34,fill:'transparent'});
+    hit.style.pointerEvents='all';
+    g.insertBefore(hit, label);
+    g.style.pointerEvents='all';
+    g.addEventListener('pointerenter', function(){
+      showDimTip(i, lx, ly);
+      label.setAttribute('fill','#4f46e5');
+      if(hlLines[i]) hlLines[i].setAttribute('stroke-opacity','.38');
+    });
+    g.addEventListener('pointerleave', function(){
+      hideTip(radarTip);
+      label.setAttribute('fill','#2f3659');
+      if(hlLines[i]) hlLines[i].setAttribute('stroke-opacity','0');
+    });
+    radarSvg.appendChild(g);
+  });
+
+  var gP = el('g',{id:'rProducts'});
+  radarSvg.appendChild(gP);
+
+  function draw(){
+    gP.innerHTML='';
+    rGroups = {};
+    var ordered = P.slice().sort(function(a,b){
+      if(focusId){ if(a.id===focusId) return 1; if(b.id===focusId) return -1; }
+      return 0;
+    });
+    ordered.forEach(function(p){
+      var isF = focusId===p.id;
+      var pts = p.s.map(function(v,i){
+        var a=angle(i), rad=RSC.R*v/100*grow;
+        return (RSC.cx+Math.cos(a)*rad).toFixed(2)+','+(RSC.cy+Math.sin(a)*rad).toFixed(2);
+      });
+      var g = el('g',{class:'r-g'});
+      g.setAttribute('data-id', p.id);
+      var poly = el('polygon',{points:pts.join(' '),
+        fill:p.color, 'fill-opacity': isF?.14:.045,
+        stroke:p.color, 'stroke-width': isF?2.3:1.6, 'stroke-linejoin':'round',
+        'stroke-opacity': isF?.98:.78});
+      if(isF) poly.setAttribute('filter','url(#softGlow)');
+      g.appendChild(poly);
+      p.s.forEach(function(v,i){
+        var a=angle(i), rad=RSC.R*v/100*grow;
+        g.appendChild(el('circle',{cx:RSC.cx+Math.cos(a)*rad, cy:RSC.cy+Math.sin(a)*rad,
+          r:isF?3.5:2.4, fill:'#fff', stroke:p.color, 'stroke-width':isF?2.2:1.5}));
+        if(isF && grow>.98){
+          var lr=rad+13;
+          g.appendChild(txt(RSC.cx+Math.cos(a)*lr, RSC.cy+Math.sin(a)*lr+3, String(v),
+            {size:9.5, fill:p.color, mono:true, weight:600,
+             anchor: Math.abs(Math.cos(a))<.15?'middle':(Math.cos(a)>0?'start':'end')}));
+        }
+      });
+      gP.appendChild(g);
+      rGroups[p.id]=g;
+    });
+  }
+  function applyHover(){
+    Object.keys(rGroups).forEach(function(id){
+      var g = rGroups[id];
+      g.style.opacity = (hoverId && hoverId!==id) ? .18 : 1;
+      g.style.transition = 'opacity .25s';
+    });
+  }
+  function startAnim(){
+    if(radarStarted) return;
+    radarStarted = true;
+    if(reduce){ grow=1; draw(); return; }
+    var t0=null;
+    function step(ts){
+      if(!t0) t0=ts;
+      var t=Math.min((ts-t0)/950,1);
+      grow = 1-Math.pow(1-t,3);
+      draw();
+      if(t<1) requestAnimationFrame(step);
+    }
+    grow=0.001; draw();
+    requestAnimationFrame(step);
+  }
+  grow=1; draw();
+
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ startAnim(); io.disconnect(); } });
+    },{threshold:.2});
+    io.observe(radarSvg);
+  } else { startAnim(); }
+
+  window.__radarRedraw = function(){ grow = 1; draw(); };
+
+  function showDimTip(i, lx, ly){
+    var sorted = P.slice().sort(function(a,b){ return b.s[i]-a.s[i]; });
+    var best = sorted[0].s[i];
+    var html = '<div class="tip-t"><span>'+DIMS[i].label+'</span><b>最高 '+best+'</b></div>';
+    html += sorted.map(function(p){
+      return '<div class="tip-r"><i style="background:'+p.color+'"></i><span>'+p.name+'</span><s>'+p.s[i]+'</s>'+
+        '<div class="tb"><i style="width:'+p.s[i]+'%;background:'+p.color+'"></i></div></div>';
+    }).join('');
+    radarTip.innerHTML = html;
+    var r = radarSvg.getBoundingClientRect(), sr = radarStage.getBoundingClientRect();
+    var k = r.width/560;
+    var a = angle(i);
+    var tx = RSC.cx + Math.cos(a)*RSC.R*0.52;
+    var ty = RSC.cy + Math.sin(a)*RSC.R*0.52;
+    var px = r.left - sr.left + tx*k;
+    var py = r.top - sr.top + ty*k;
+    radarTip.style.left = clamp(px, 110, sr.width-110)+'px';
+    radarTip.style.top = clamp(py, 90, sr.height-90)+'px';
+    radarTip.classList.add('on');
+  }
+})();
+
+function hideTip(t){ t.classList.remove('on'); }
+
+/* 右侧产品面板 */
+function buildRadarSide(){
+  var host = $('#radarSide');
+  var hint = document.createElement('div');
+  hint.className='hint';
+  hint.innerHTML='<i></i>悬停维度看横向对比 · 点击产品聚焦并展开分值';
+  host.innerHTML='';
+  host.appendChild(hint);
+
+  P.forEach(function(p){
+    var row=document.createElement('div');
+    row.className='prow'+(focusId===p.id?' focus':'');
+    row.style.setProperty('--pc',p.color);
+    var chips='';
+    for(var i=0;i<6;i++){
+      chips += '<div><span>'+DIMS[i].short+'</span><s>'+p.s[i]+'</s></div>';
+    }
+    row.innerHTML =
+      '<div class="prow-h"><span class="dt" style="background:'+p.color+'"></span>'+
+      '<b>'+p.name+'</b><span class="tg">'+p.tag+'</span>'+
+      '<span class="avg"><s>均</s>'+p.avg+'</span></div>'+
+      '<div class="mini">'+chips+'</div>'+
+      '<div class="bar"><i style="background:'+p.color+'"></i></div>';
+    row.addEventListener('pointerenter', function(){ hoverId=p.id; applyHoverSafe(); });
+    row.addEventListener('pointerleave', function(){ hoverId=null; applyHoverSafe(); });
+    row.addEventListener('click', function(){
+      focusId = (focusId===p.id)?null:p.id;
+      if(window.__radarRedraw) window.__radarRedraw();
+      buildRadarSide();
+    });
+    host.appendChild(row);
+    var bar=row.querySelector('.bar i');
+    setTimeout(function(){ bar.style.width=p.avg+'%'; }, 60);
+  });
+
+  var note=document.createElement('div');
+  note.className='legend-note';
+  note.innerHTML='均分为六维算术平均，只表示<b>覆盖广度</b>，不代表产品好坏——单维度的极端优势往往比均分更能决定用户选择。';
+  host.appendChild(note);
+}
+function applyHoverSafe(){
+  Object.keys(rGroups).forEach(function(id){
+    var g=rGroups[id];
+    g.style.transition='opacity .25s';
+    g.style.opacity=(hoverId && hoverId!==id)?.18:1;
+  });
+}
+buildRadarSide();
+
+/* ============================================================
+   02b · 单维排行
+   ============================================================ */
+var dimIdx = 0;
+(function buildDimRank(){
+  var tabs=$('#dimTabs'), rows=$('#dimRows'), insight=$('#dimInsight');
+  tabs.innerHTML = DIMS.map(function(d,i){
+    return '<button class="dr-tab'+(i===0?' on':'')+'" data-i="'+i+'">'+d.label+'</button>';
+  }).join('');
+  tabs.addEventListener('click', function(e){
+    var b=e.target.closest('.dr-tab'); if(!b) return;
+    dimIdx=+b.getAttribute('data-i');
+    $$('.dr-tab',tabs).forEach(function(t){ t.classList.toggle('on', +t.getAttribute('data-i')===dimIdx); });
+    render();
+  });
+
+  function render(){
+    var sorted=P.slice().sort(function(a,b){ return b.s[dimIdx]-a.s[dimIdx]; });
+    var gap=sorted[0].s[dimIdx]-sorted[1].s[dimIdx];
+    rows.innerHTML = sorted.map(function(p,i){
+      return '<div class="dr-row'+(i===0?' lead':'')+'" style="--pc:'+p.color+'">'+
+        '<span class="nm"><i style="background:'+p.color+'"></i>'+p.name+'</span>'+
+        '<div class="tr"><i data-w="'+p.s[dimIdx]+'"></i></div>'+
+        '<span class="vv">'+p.s[dimIdx]+'</span></div>';
+    }).join('');
+    insight.innerHTML = '<span class="lead-nm">'+DIMS[dimIdx].label+' · 领先幅度 +'+gap+'</span>'+
+      DIM_INSIGHT[DIMS[dimIdx].k];
+    requestAnimationFrame(function(){
+      $$('.dr-row .tr i',rows).forEach(function(i){ i.style.width=i.getAttribute('data-w')+'%'; });
+    });
+  }
+  render();
+})();
+/* ============================================================
+   03 · 机会矩阵（含可拖拽定位点）
+   ============================================================ */
+(function buildMatrix(){
+  var svg = $('#matrixSvg'), stage = $('#mxStage'), tip = $('#mxTip');
+  var X0=54, X1=596, Y0=54, Y1=486;
+  function mx(v){ return X0 + v/100*(X1-X0); }
+  function my(v){ return Y1 - v/100*(Y1-Y0); }
+
+  var defs = el('defs');
+  var grad = el('linearGradient',{id:'gapFill',x1:'0',y1:'0',x2:'1',y2:'1'});
+  grad.appendChild(el('stop',{offset:'0','stop-color':'#0891b2','stop-opacity':'.12'}));
+  grad.appendChild(el('stop',{offset:'1','stop-color':'#4f46e5','stop-opacity':'.04'}));
+  defs.appendChild(grad);
+  svg.appendChild(defs);
+
+  var qx=mx(50), qy=my(50);
+  svg.appendChild(el('rect',{x:X0,y:Y0,width:qx-X0,height:qy-Y0,fill:'rgba(100,116,139,.035)'}));
+  svg.appendChild(el('rect',{x:qx,y:Y0,width:X1-qx,height:qy-Y0,fill:'rgba(79,70,229,.045)'}));
+  svg.appendChild(el('rect',{x:X0,y:qy,width:qx-X0,height:Y1-qy,fill:'rgba(100,116,139,.02)'}));
+  svg.appendChild(el('rect',{x:qx,y:qy,width:X1-qx,height:Y1-qy,fill:'rgba(8,145,178,.055)'}));
+
+  for(var gv=0; gv<=100; gv+=25){
+    svg.appendChild(el('line',{x1:mx(gv),y1:Y0,x2:mx(gv),y2:Y1,stroke:'rgba(30,41,99,.07)','stroke-width':1,'stroke-dasharray':'2 6'}));
+    svg.appendChild(el('line',{x1:X0,y1:my(gv),x2:X1,y2:my(gv),stroke:'rgba(30,41,99,.07)','stroke-width':1,'stroke-dasharray':'2 6'}));
+  }
+  svg.appendChild(el('rect',{x:X0,y:Y0,width:X1-X0,height:Y1-Y0,fill:'none',stroke:'rgba(79,70,229,.18)','stroke-width':1}));
+  svg.appendChild(el('line',{x1:qx,y1:Y0,x2:qx,y2:Y1,stroke:'rgba(79,70,229,.30)','stroke-width':1.1,'stroke-dasharray':'6 5'}));
+  svg.appendChild(el('line',{x1:X0,y1:qy,x2:X1,y2:qy,stroke:'rgba(79,70,229,.30)','stroke-width':1.1,'stroke-dasharray':'6 5'}));
+
+  // 象限标签
+  svg.appendChild(txt(X0+14, Y0+22, '重投入 · 低回报', {size:10, anchor:'start', fill:'#98a1bd', mono:true, ls:.6}));
+  svg.appendChild(txt(X1-14, Y0+22, '极客向 · 强能力', {size:10, anchor:'end', fill:'#4338ca', mono:true, ls:.6}));
+  svg.appendChild(txt(X0+14, Y1-12, '默认入口 · 弱智能', {size:10, anchor:'start', fill:'#98a1bd', mono:true, ls:.6}));
+
+  // 机会空位
+  var cxG=mx(79), cyG=my(27);
+  var gGap=el('g');
+  gGap.appendChild(el('ellipse',{cx:cxG,cy:cyG,rx:82,ry:46,fill:'url(#gapFill)',
+    stroke:'rgba(8,145,178,.5)','stroke-width':1.3,'stroke-dasharray':'7 6',class:'dashmove'}));
+  gGap.appendChild(el('ellipse',{cx:cxG,cy:cyG,rx:82,ry:46,fill:'none',
+    stroke:'rgba(8,145,178,.28)','stroke-width':1,class:'pulse'}));
+  gGap.appendChild(txt(cxG, cyG-3, '机会空位', {size:12, fill:'#0e7490', weight:700}));
+  gGap.appendChild(txt(cxG, cyG+13, '强 AI × 零门槛', {size:9, fill:'rgba(14,116,144,.75)', mono:true}));
+  svg.appendChild(gGap);
+
+  // 气泡
+  function bubbleR(u){ return clamp(8 + 6*Math.log10(u/1e5), 11, 28); }
+  function fmtUsers(u){
+    if(u>=1e8) return (u/1e8).toFixed(u>=2e8?0:1)+' 亿';
+    if(u>=1e4) return Math.round(u/1e4)+' 万';
+    return Math.round(u);
+  }
+  P.forEach(function(p){
+    var x=mx(p.ai), y=my(p.barrier), r=bubbleR(p.users);
+    var g=el('g',{style:'cursor:pointer'});
+    g.appendChild(el('circle',{cx:x,cy:y,r:r+9,fill:p.color,'fill-opacity':'.055'}));
+    g.appendChild(el('circle',{cx:x,cy:y,r:r,fill:p.color,'fill-opacity':'.16',
+      stroke:p.color,'stroke-width':1.6,'stroke-opacity':'.85'}));
+    g.appendChild(el('circle',{cx:x,cy:y,r:Math.max(3,r*.3),fill:p.color,'fill-opacity':'.22'}));
+    g.appendChild(el('circle',{cx:x,cy:y,r:2.6,fill:p.color}));
+    svg.appendChild(g);
+
+    var labelY = y - r - 9;
+    if(labelY < Y0+16) labelY = y + r + 16;
+    var anchor='middle';
+    if(x>X1-50) anchor='end';
+    svg.appendChild(txt(anchor==='end'?x+r*0.6:x, labelY, p.name,
+      {size:11.5, fill:'#242a4d', weight:600, anchor:anchor}));
+
+    g.addEventListener('pointerenter', function(){
+      g.querySelectorAll('circle')[1].setAttribute('stroke-width','2.6');
+      var html='<div class="tip-t"><span>'+p.tag+'</span><b>'+p.avg+' 均分</b></div>'+
+        '<div class="tip-r"><i style="background:'+p.color+'"></i><span>'+p.name+'</span><s>'+p.ai+' AI</s></div>'+
+        '<div class="tip-r"><i style="background:'+p.color+';opacity:.35"></i><span>上手门槛</span><s>'+p.barrier+'</s></div>'+
+        '<div class="tip-r"><i style="background:'+p.color+';opacity:.2"></i><span>用户规模</span><s>'+fmtUsers(p.users)+'</s></div>';
+      tip.innerHTML=html;
+      var sr=stage.getBoundingClientRect(), cr=svg.getBoundingClientRect(), k=cr.width/620;
+      var px=cr.left-sr.left+x*k, py=cr.top-sr.top+(y-r-4)*k;
+      tip.style.left=clamp(px,105,sr.width-105)+'px';
+      tip.style.top=clamp(py,95,10000)+'px';
+      tip.classList.add('on');
+    });
+    g.addEventListener('pointerleave', function(){
+      g.querySelectorAll('circle')[1].setAttribute('stroke-width','1.6');
+      hideTip(tip);
+    });
+  });
+
+  // 轴标题
+  svg.appendChild(txt((X0+X1)/2, Y1+34, 'AI 智能化程度  →', {size:11.5, fill:'#5b658a', weight:600}));
+  var ya = txt(0,0,'↑ 上手门槛（越上越难）',{size:10.5, fill:'#5b658a', weight:600, anchor:'middle'});
+  ya.setAttribute('transform','translate(20,'+((Y0+Y1)/2)+') rotate(-90)');
+  svg.appendChild(ya);
+  svg.appendChild(txt(X0, Y1+52, '气泡大小 ≈ 用户规模 · 悬停查看详情', {size:9, fill:'#98a1bd', anchor:'start', mono:true}));
+
+  /* --- 可拖拽定位点 --- */
+  var puck={x:88, y:12};
+  var gPuck=el('g',{style:'cursor:grab'});
+  gPuck.appendChild(el('circle',{cx:0,cy:0,r:18,fill:'rgba(8,145,178,.10)',stroke:'rgba(8,145,178,.35)',
+    'stroke-width':1,'stroke-dasharray':'3 3',class:'pulse'}));
+  gPuck.appendChild(el('circle',{cx:0,cy:0,r:9,fill:'#fff',stroke:'#0891b2','stroke-width':2}));
+  gPuck.appendChild(el('circle',{cx:0,cy:0,r:3.2,fill:'#0891b2'}));
+  gPuck.appendChild(txt(0,30,'你的位置',{size:9, fill:'#0e7490', weight:600, mono:true}));
+  svg.appendChild(gPuck);
+
+  function placePuck(){
+    gPuck.setAttribute('transform','translate('+mx(puck.x)+','+my(puck.y)+')');
+    updateVerdict();
+  }
+  function updateVerdict(){
+    var ai=Math.round(puck.x), bar=Math.round(puck.y);
+    var quad, qt, advice;
+    if(ai>=50 && bar<50){ quad='机会象限 · 强 AI × 低门槛'; qt='opportunity';
+      advice='这里没有强势占位者，你真正的对手是用户的旧习惯。要比的不是功能清单，而是「从打开到第一次自动关联」的秒数。'; }
+    else if(ai>=50 && bar>=50){ quad='极客象限 · 强 AI × 高门槛'; qt='geek';
+      advice='能力强、门槛也高，会被拿去和 Notion / Obsidian 比配置。除非在关联能力上有绝对优势，否则先砍掉一半设置项。'; }
+    else if(ai<50 && bar<50){ quad='入口象限 · 弱 AI × 低门槛'; qt='entry';
+      advice='用户会留下，但很难付费——AI 不足意味着可替代性极高，最终只能靠预装或免费守住位置。'; }
+    else { quad='危险象限 · 弱 AI × 高门槛'; qt='danger';
+      advice='既不智能又难上手，这是历史产品的位置。要么往右下走，要么换一条赛道。'; }
+
+    var nearest=null, nd=1e9;
+    P.forEach(function(p){
+      var d=Math.sqrt(Math.pow(p.ai-ai,2)+Math.pow(p.barrier-bar,2));
+      if(d<nd){ nd=d; nearest=p; }
+    });
+    var box=$('#mxVerdict');
+    var head=box.querySelector('.vh span');
+    head.textContent='你的产品落点 · '+quad.split(' · ')[0];
+    head.style.color = qt==='opportunity' ? '#0e7490' : (qt==='danger' ? '#b91c1c' : '#4338ca');
+    box.querySelector('.vt').innerHTML = advice +
+      ' 最近的在位者是 <b>'+nearest.name+'</b>，坐标距离 '+nd.toFixed(0)+'。';
+    box.querySelector('.vq').textContent = 'X '+ai+' · Y '+bar+' · 门槛越低越靠下';
+  }
+
+  var dragging=false;
+  function toSvg(e){
+    var pt=svg.createSVGPoint();
+    pt.x=e.clientX; pt.y=e.clientY;
+    var loc=pt.matrixTransform(svg.getScreenCTM().inverse());
+    return loc;
+  }
+  gPuck.addEventListener('pointerdown', function(e){
+    dragging=true;
+    gPuck.style.cursor='grabbing';
+    e.preventDefault();
+    if(svg.setPointerCapture){ try{ svg.setPointerCapture(e.pointerId); }catch(err){} }
+  });
+  svg.addEventListener('pointermove', function(e){
+    if(!dragging) return;
+    var loc=toSvg(e);
+    var ai=clamp((loc.x-X0)/(X1-X0)*100, 2, 98);
+    var bar=clamp((Y1-loc.y)/(Y1-Y0)*100, 2, 98);
+    puck.x=ai; puck.y=bar;
+    gPuck.setAttribute('transform','translate('+mx(ai)+','+my(bar)+')');
+  });
+  function endDrag(e){
+    if(!dragging) return;
+    dragging=false;
+    gPuck.style.cursor='grab';
+    if(svg.releasePointerCapture && e && e.pointerId!==undefined){
+      try{ svg.releasePointerCapture(e.pointerId); }catch(err){}
+    }
+    updateVerdict();
+  }
+  svg.addEventListener('pointerup', endDrag);
+  svg.addEventListener('pointercancel', endDrag);
+  svg.style.touchAction='none';
+
+  $('#mxReset').addEventListener('click', function(){
+    puck.x=88; puck.y=12; placePuck();
+  });
+  placePuck();
+})();
+
+/* ============================================================
+   04 · 功能表
+   ============================================================ */
+(function buildFeatures(){
+  var body=$('#fbody'), empty=$('#fempty'), cnt=$('#fcount');
+  var state={g:'all', q:'', diff:false};
+  var groups=[];
+
+  body.innerHTML='';
+  FEATURES.forEach(function(grp){
+    var h=document.createElement('div');
+    h.className='fgroup'; h.textContent=grp.g; h.setAttribute('data-g',grp.g);
+    body.appendChild(h);
+    var rows=[];
+    grp.rows.forEach(function(r){
+      var same = r[1].every(function(v){ return v===r[1][0]; });
+      var row=document.createElement('div');
+      row.className='frow';
+      row.setAttribute('data-g',grp.g);
+      row.setAttribute('data-name',r[0]);
+      row.setAttribute('data-diff', same?'0':'1');
+      row.title = r[2];
+      var html='<div class="fname">'+r[0]+'</div>';
+      r[1].forEach(function(v,pi){
+        var sym=v==='full'?'✓':(v==='part'?'◐':'—');
+        var label=v==='full'?'完整支持':(v==='part'?'部分支持':'不支持');
+        html+='<div class="fc-cell"><i class="pill '+v+'" title="'+P[pi].name+'：'+label+'">'+sym+'</i></div>';
+      });
+      row.innerHTML=html;
+      body.appendChild(row);
+      rows.push(row);
+    });
+    groups.push({h:h, rows:rows});
+  });
+
+  function coverage(row){
+    var st=row.__st;
+    if(!st){ return 0; }
+    return st;
+  }
+
+  function apply(){
+    var shown=0;
+    var sums={};
+    P.forEach(function(p){ sums[p.id]={full:0, part:0}; });
+
+    groups.forEach(function(g){
+      var vis=0;
+      g.rows.forEach(function(row, ri){
+        var okG = state.g==='all' || row.getAttribute('data-g')===state.g;
+        var okQ = !state.q || row.getAttribute('data-name').indexOf(state.q)>=0;
+        var okD = !state.diff || row.getAttribute('data-diff')==='1';
+        var show = okG && okQ && okD;
+        row.classList.toggle('hide', !show);
+        if(show){
+          vis++; shown++;
+          var cells=row.querySelectorAll('.pill');
+          P.forEach(function(p,pi){
+            var v=cells[pi].className.replace('pill ','');
+            if(v==='full') sums[p.id].full++;
+            else if(v==='part') sums[p.id].part+=0.5;
+          });
+        }
+      });
+      g.h.classList.toggle('hide', vis===0);
+    });
+
+    P.forEach(function(p){
+      var s=sums[p.id], v=s.full+s.part;
+      var elv=$('#cov-'+p.id);
+      if(elv) elv.innerHTML='<em>'+ (v%1?v.toFixed(1):v) +'</em>/'+shown;
+    });
+
+    cnt.innerHTML='显示 <b>'+shown+'</b> / 18 项';
+    empty.classList.toggle('on', shown===0);
+  }
+
+  $$('.fbtn').forEach(function(b){
+    b.addEventListener('click', function(){
+      $$('.fbtn').forEach(function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      state.g=b.getAttribute('data-g');
+      apply();
+    });
+  });
+  $('#fsearch').addEventListener('input', function(e){
+    state.q=e.target.value.trim();
+    apply();
+  });
+  $('#fdiff').addEventListener('change', function(e){
+    state.diff=e.target.checked;
+    apply();
+  });
+  apply();
+
+  // 指标表
+  var mr=$('#metricRows');
+  mr.innerHTML = METRICS.map(function(m){
+    return '<div class="frow"><div class="fc">'+m[0]+'</div>'+
+      m[1].map(function(v){ return '<div class="fc">'+v+'</div>'; }).join('')+'</div>';
+  }).join('');
+})();
+
+/* ============================================================
+   05 · 价格
+   ============================================================ */
+(function buildPrice(){
+  var host=$('#costList');
+  var max=24;
+  host.innerHTML = P.slice().sort(function(a,b){ return b.cost-a.cost; }).map(function(p){
+    var pct = p.cost/max*100;
+    return '<div class="cost-row">'+
+      '<span class="nm"><i style="background:'+p.color+'"></i>'+p.name+'</span>'+
+      '<div class="cost-tr"><div class="rail"></div><i class="b'+(p.cost===0?' zero':'')+'" data-w="'+pct+'" style="background:'+p.color+'"></i></div>'+
+      '<span class="val">'+(p.cost===0?'免费':'$'+p.cost)+'<em>'+(p.cost===0?'':'/月')+'</em></span>'+
+      '</div>';
+  }).join('') + '<div class="cost-scale"><div><span>$0</span><span>$8</span><span>$16</span><span>$24</span></div></div>';
+
+  setTimeout(function(){
+    $$('.cost-tr .b', host).forEach(function(b){
+      if(b.classList.contains('zero')) return;
+      b.style.width=b.getAttribute('data-w')+'%';
+    });
+  }, 420);
+})();
+
+/* ============================================================
+   06 · 两两对拆
+   ============================================================ */
+(function buildPK(){
+  var A='notion', B='mem';
+  var pickA=$('#pickA'), pickB=$('#pickB'), tug=$('#tugBody');
+
+  function chips(){
+    var h='';
+    P.forEach(function(p){
+      var on=A===p.id;
+      h+='<button class="pick-chip'+(on?' on':'')+'"'+(on?' style="background:'+p.color+';border-color:'+p.color+';color:#fff"':'')+' data-id="'+p.id+'">'+p.name+'</button>';
+    });
+    pickA.innerHTML=h;
+    h='';
+    P.forEach(function(p){
+      var on=B===p.id;
+      h+='<button class="pick-chip'+(on?' on':'')+'"'+(on?' style="background:'+p.color+';border-color:'+p.color+';color:#fff"':'')+' data-id="'+p.id+'">'+p.name+'</button>';
+    });
+    pickB.innerHTML=h;
+  }
+  pickA.addEventListener('click', function(e){
+    var b=e.target.closest('.pick-chip'); if(!b) return;
+    var id=b.getAttribute('data-id');
+    if(id===B){ B=A; }
+    A=id; render();
+  });
+  pickB.addEventListener('click', function(e){
+    var b=e.target.closest('.pick-chip'); if(!b) return;
+    var id=b.getAttribute('data-id');
+    if(id===A){ A=B; }
+    B=id; render();
+  });
+
+  function render(){
+    chips();
+    var a=byId(A), b=byId(B);
+    $('#dotA').style.background=a.color;
+    $('#dotB').style.background=b.color;
+    $('#capA').textContent=a.name;
+    $('#capB').textContent=b.name;
+    $('#capA').style.color=a.color;
+    $('#capB').style.color=b.color;
+    $('#pkAvgA').textContent=a.avg;
+    $('#pkAvgB').textContent=b.avg;
+    $('#pkAvgA').style.color=a.color;
+    $('#pkAvgB').style.color=b.color;
+
+    tug.style.setProperty('--ca',a.color);
+    tug.style.setProperty('--cb',b.color);
+
+    var winsA=[], winsB=[], maxGap=0, gapDim='';
+    var html='';
+    DIMS.forEach(function(d,i){
+      var va=a.s[i], vb=b.s[i];
+      var aw=va>=vb, bw=vb>=va;
+      if(va>vb) winsA.push(d.label);
+      if(vb>va) winsB.push(d.label);
+      var g=Math.abs(va-vb);
+      if(g>maxGap){ maxGap=g; gapDim=d.label; }
+      html+='<div class="tug-row">'+
+        '<span class="lv'+(aw?' win':'')+'" style="--ca:'+a.color+'">'+va+'</span>'+
+        '<div class="tug-tr" data-lb="'+d.short+'">'+
+          '<i class="tug-b l'+(aw?' win':'')+'" style="width:'+(va/100*50)+'%;background:'+a.color+'"></i>'+
+          '<i class="tug-b r'+(bw?' win':'')+'" style="width:'+(vb/100*50)+'%;background:'+b.color+'"></i>'+
+        '</div>'+
+        '<span class="rv'+(bw?' win':'')+'" style="--cb:'+b.color+'">'+vb+'</span>'+
+      '</div>';
+    });
+    tug.innerHTML=html;
+
+    var avgD=a.avg-b.avg;
+    var lead=avgD>0?a:b;
+    var txt='';
+    if(winsA.length && winsB.length){
+      txt+='<b>'+a.name+'</b> 在 '+winsA.join('、')+' 占优；<b>'+b.name+'</b> 的强项集中在 '+winsB.join('、')+'。';
+      txt+=' 其中 <span class="w">'+gapDim+'</span> 的差距最大，达到 '+maxGap+' 分。';
+    } else if(winsA.length){
+      txt+='<b>'+a.name+'</b> 在全部六维上不弱于对手，六个维度全胜。';
+    } else if(winsB.length){
+      txt+='<b>'+b.name+'</b> 在全部六维上不弱于对手，六个维度全胜。';
+    } else {
+      txt+='两款产品六维评分完全相同，差异只存在于实现方式与生态。';
+    }
+    if(Math.abs(avgD)<=5){
+      txt+=' 均分仅差 '+Math.abs(avgD)+' 分，<b>替代性较高</b>——选择应由「哪一维是你的关键场景」决定，而不是总分。';
+    } else {
+      txt+=' 均分差 '+Math.abs(avgD)+' 分，<b>'+lead.name+'</b> 的能力覆盖更完整；劣势方需要用价格或体验补偿。';
+    }
+    if(a.s[5]>b.s[5] && a.s[4]>b.s[4]){
+      txt+=' 面向大众用户时，<b>'+a.name+'</b> 的免费档与低门槛更友好。';
+    } else if(b.s[5]>a.s[5] && b.s[4]>a.s[4]){
+      txt+=' 面向大众用户时，<b>'+b.name+'</b> 的免费档与低门槛更友好。';
+    }
+    $('#pkVerdict').innerHTML=txt;
+  }
+  render();
+})();
+
+/* ============================================================
+   07 · 定位档案
+   ============================================================ */
+(function buildDossiers(){
+  var host=$('#dossiers');
+  host.innerHTML=P.map(function(p,i){
+    return '<article class="dos" style="--pc:'+p.color+'">'+
+      '<div class="dos-h"><i style="background:'+p.color+'"></i><b>'+p.name+'</b><span>'+p.tag+'</span></div>'+
+      '<div class="dos-q">'+p.pos+'</div>'+
+      '<div class="dos-rows">'+
+        '<div class="dos-r"><span class="k">为谁</span><span class="v">'+p.who+'</span></div>'+
+        '<div class="dos-r"><span class="k">解决什么</span><span class="v">'+p.why+'</span></div>'+
+        '<div class="dos-r"><span class="k">软肋</span><span class="v"><b>'+p.weak+'</b></span></div>'+
+      '</div>'+
+      '<div class="dos-risk">'+p.risk+'</div>'+
+      '<div class="dos-metrics"><span>AI <s>'+p.ai+'</s></span><span>门槛 <s>'+p.barrier+'</s></span><span>均分 <s>'+p.avg+'</s></span></div>'+
+      '</article>';
+  }).join('');
+})();
+
+/* ============================================================
+   08 · 交互杂项
+   ============================================================ */
+// 轨道刻度
+(function(){
+  var box=$('#orbitTicks'); if(!box) return;
+  var h='';
+  for(var i=0;i<40;i++){ h+='<i style="transform:rotate('+(i*9)+'deg)"></i>'; }
+  box.innerHTML=h;
+})();
+
+// 背景聚光
+(function(){
+  if(reduce || !window.matchMedia('(hover:hover)').matches) return;
+  var raf=null, mx=0, my=0;
+  window.addEventListener('pointermove', function(e){
+    mx=e.clientX; my=e.clientY;
+    if(!document.body.classList.contains('has-pointer')) document.body.classList.add('has-pointer');
+    if(raf) return;
+    raf=requestAnimationFrame(function(){
+      document.documentElement.style.setProperty('--mx',mx+'px');
+      document.documentElement.style.setProperty('--my',my+'px');
+      raf=null;
+    });
+  }, {passive:true});
+})();
+
+// 滚动进度 + 导航高亮
+(function(){
+  var bar=$('#progBar'), nav=$('#nav');
+  var links=$$('.nav-links a');
+  var secs=links.map(function(a){ return document.getElementById(a.getAttribute('data-sec')); });
+  var ticking=false;
+  function upd(){
+    var y=window.scrollY || window.pageYOffset;
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(h>0? clamp(y/h*100,0,100):0)+'%';
+    nav.classList.toggle('stuck', y>8);
+    var idx=0;
+    for(var i=0;i<secs.length;i++){
+      if(secs[i] && secs[i].offsetTop-140 <= y) idx=i;
+    }
+    links.forEach(function(a,i){ a.classList.toggle('on', i===idx); });
+    ticking=false;
+  }
+  window.addEventListener('scroll', function(){
+    if(!ticking){ ticking=true; requestAnimationFrame(upd); }
+  }, {passive:true});
+  upd();
+})();
+
+// 滚动显现
+(function(){
+  var els=$$('.reveal');
+  if(!('IntersectionObserver' in window)){
+    els.forEach(function(e){ e.classList.add('in'); });
+    return;
+  }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:.08, rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(e){ io.observe(e); });
+  setTimeout(function(){ els.forEach(function(e){ e.classList.add('in'); }); }, 2400);
+})();
+
+// KPI 数字
+(function(){
+  var nums=$$('.kpi-num span[data-to]');
+  var bars=$$('.kpi-bar i');
+  function run(node){
+    if(node.getAttribute('data-run')) return;
+    node.setAttribute('data-run','1');
+    var to=parseFloat(node.getAttribute('data-to'));
+    var pre=node.getAttribute('data-pre')||'';
+    var suf=node.getAttribute('data-suf')||'';
+    var dec=parseInt(node.getAttribute('data-dec')||'0',10);
+    var t0=Date.now(), dur=1150;
+    var timer=setInterval(function(){
+      var t=Math.min((Date.now()-t0)/dur,1);
+      var e=1-Math.pow(1-t,3);
+      var v=to*e;
+      node.textContent=pre+(dec?v.toFixed(dec):Math.round(v))+suf;
+      if(t>=1) clearInterval(timer);
+    },16);
+  }
+  if(reduce){
+    nums.forEach(function(n){
+      var to=parseFloat(n.getAttribute('data-to'));
+      var dec=parseInt(n.getAttribute('data-dec')||'0',10);
+      n.textContent=(n.getAttribute('data-pre')||'')+(dec?to.toFixed(dec):Math.round(to))+(n.getAttribute('data-suf')||'');
+    });
+    bars.forEach(function(b){ b.style.width=b.getAttribute('data-fill')+'%'; });
+    return;
+  }
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){ run(e.target); io.unobserve(e.target); }
+    });
+  },{threshold:.5});
+  nums.forEach(function(n){ io.observe(n); });
+  bars.forEach(function(b){ setTimeout(function(){ b.style.width=b.getAttribute('data-fill')+'%'; }, 300); });
+  setTimeout(function(){
+    nums.forEach(function(n){
+      if(!n.getAttribute('data-run')){
+        var to=parseFloat(n.getAttribute('data-to'));
+        var dec=parseInt(n.getAttribute('data-dec')||'0',10);
+        n.textContent=(n.getAttribute('data-pre')||'')+(dec?to.toFixed(dec):Math.round(to))+(n.getAttribute('data-suf')||'');
+      }
+    });
+  }, 2600);
+})();
+
+// 回到顶部
+(function(){
+  var b=$('#toTop');
+  if(!b) return;
+  window.addEventListener('scroll', function(){
+    b.classList.toggle('on', (window.scrollY||0) > 700);
+  }, {passive:true});
+  b.addEventListener('click', function(){
+    window.scrollTo({top:0, behavior: reduce?'auto':'smooth'});
+  });
+})();
+
+// 打印
+(function(){
+  var b=$('#printBtn');
+  if(b) b.addEventListener('click', function(){ window.print(); });
+})();
+
+/* ============================================================
+   09 · 命令面板
+   ============================================================ */
+(function commandPalette(){
+  var root=$('#cmdk'), input=$('#cmdInput'), list=$('#cmdList');
+  var openBtn=$('#cmdBtn');
+  var secs=[
+    ['overview','01 格局速览','章节'],['radar','02 六维雷达','章节'],
+    ['matrix','03 机会矩阵','章节'],['features','04 功能矩阵','章节'],
+    ['price','05 价格门槛','章节'],['pk','06 两两对拆','章节'],
+    ['positioning','07 定位档案','章节'],['insight','08 机会结论','章节']
+  ];
+  var items=secs.map(function(s){ return {id:s[0], name:s[1], type:s[2], act:'sec'}; })
+    .concat(P.map(function(p){ return {id:p.id, name:p.name, type:'产品', act:'product'}; }));
+  var filtered=items.slice(), sel=0;
+
+  function render(){
+    if(!filtered.length){
+      list.innerHTML='<div class="cmdk-i" style="cursor:default;color:#98a1bd">没有匹配项</div>';
+      return;
+    }
+    list.innerHTML=filtered.map(function(it,i){
+      return '<div class="cmdk-i'+(i===sel?' sel':'')+'" data-i="'+i+'">'+
+        '<span class="n">'+(it.act==='product'?'◆':'#')+'</span>'+it.name+
+        '<span class="ty">'+it.type+'</span></div>';
+    }).join('');
+  }
+  function filter(q){
+    q=q.trim().toLowerCase();
+    filtered = !q ? items.slice() : items.filter(function(it){ return it.name.toLowerCase().indexOf(q)>=0; });
+    sel=0; render();
+  }
+  function open(){
+    root.classList.add('on'); input.value=''; filter(''); sel=0; render();
+    setTimeout(function(){ input.focus(); },30);
+  }
+  function close(){ root.classList.remove('on'); }
+  function go(it){
+    close();
+    if(it.act==='sec'){
+      var s=document.getElementById(it.id);
+      if(s) window.scrollTo({top:s.offsetTop-68, behavior: reduce?'auto':'smooth'});
+    } else {
+      focusId=it.id;
+      if(window.__radarRedraw) window.__radarRedraw();
+      buildRadarSide();
+      var r=document.getElementById('radar');
+      if(r) window.scrollTo({top:r.offsetTop-68, behavior: reduce?'auto':'smooth'});
+    }
+  }
+
+  openBtn.addEventListener('click', open);
+  root.addEventListener('click', function(e){ if(e.target===root) close(); });
+  input.addEventListener('input', function(){ filter(input.value); });
+  list.addEventListener('click', function(e){
+    var i=e.target.closest('.cmdk-i'); if(!i) return;
+    var idx=+i.getAttribute('data-i');
+    if(filtered[idx]) go(filtered[idx]);
+  });
+  document.addEventListener('keydown', function(e){
+    var meta = e.metaKey || e.ctrlKey;
+    if(meta && e.key.toLowerCase()==='k'){ e.preventDefault(); root.classList.contains('on')?close():open(); return; }
+    if(!root.classList.contains('on')) return;
+    if(e.key==='Escape'){ close(); }
+    else if(e.key==='ArrowDown'){ e.preventDefault(); sel=Math.min(sel+1,filtered.length-1); render(); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); sel=Math.max(sel-1,0); render(); }
+    else if(e.key==='Enter'){ e.preventDefault(); if(filtered[sel]) go(filtered[sel]); }
+  });
+})();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>个人中心 — 云图智联</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231f66e0'/%3E%3Ctext x='16' y='22' font-size='16' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'%3E云%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+</head>
+<body>
+<main class="user-page">
+  <!-- 未登录 -->
+  <div class="panel" id="loginPanel" style="display:none">
+    <div class="empty" style="padding:64px 0">
+      <div style="font-size:40px;margin-bottom:16px">🔒</div>
+      当前未登录，<a href="login.html" style="color:var(--accent)">点此登录</a> 后查看个人中心。
+    </div>
+  </div>
+
+  <!-- 已登录 -->
+  <template id="userTpl">
+    <div class="user-hero">
+      <div class="avatar" id="avatarBox">U</div>
+      <div style="flex:1;position:relative;z-index:1">
+        <b id="uName">—</b>
+        <span id="uEmail">—</span><br>
+        <span id="uSince"></span>
+      </div>
+      <div style="position:relative;z-index:1">
+        <input type="file" id="avatarInput" accept="image/png,image/jpeg,image/webp" style="display:none">
+        <button class="btn ghost" id="btnAvatar" type="button">更换头像</button>
+      </div>
+    </div>
+
+    <div class="user-stats">
+      <div class="s"><b id="stMsg">0</b><span>我的留言</span></div>
+      <div class="s"><b id="stFile">0</b><span>我的上传文件</span></div>
+      <div class="s"><b id="stShared">0</b><span>可下载企业资料</span></div>
+    </div>
+
+    <div class="panel">
+      <h2>企业资料下载 <span class="mono">// SHARED FILES</span></h2>
+      <div class="file-list" id="sharedFiles"></div>
+    </div>
+
+    <div class="panel">
+      <h2>我的留言 <span class="mono">// MY INQUIRIES</span></h2>
+      <div id="msgList"></div>
+      <div style="margin-top:20px">
+        <a class="btn ghost" href="contact.html">提交新留言</a>
+      </div>
+    </div>
+  </template>
+</main>
+
+<script src="js/common.js"></script>
+<script>
+;(async () => {
+  const me = await api('/api/me')
+  const user = me.ok && me.data.user
+  if (!user) { document.getElementById('loginPanel').style.display = ''; return }
+  document.getElementById('userTpl').innerHTML && document.querySelector('.user-page').appendChild(document.getElementById('userTpl').content.cloneNode(true))
+
+  document.getElementById('uName').textContent = user.name || user.email
+  document.getElementById('uEmail').textContent = user.email
+  document.getElementById('uSince').textContent = '注册时间 ' + (user.createdAt || '').slice(0, 10)
+  const box = document.getElementById('avatarBox')
+  if (user.avatar) box.innerHTML = `<img src="${user.avatar}" alt="头像">`
+
+  document.getElementById('btnAvatar').onclick = () => document.getElementById('avatarInput').click()
+  document.getElementById('avatarInput').onchange = async function () {
+    const file = this.files[0]
+    if (!file) return
+    if (file.size > 5 * 1024 * 1024) return toast('图片不能超过 5MB')
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      headers: { 'X-Filename': encodeURIComponent(file.name), 'X-Purpose': 'avatar', 'Content-Type': file.type },
+      body: file
+    })
+    const j = await res.json()
+    if (j.ok) { box.innerHTML = `<img src="${j.data.url}" alt="头像">`; toast('头像已更新') }
+    else toast(j.error || '上传失败')
+  }
+
+  // 共享资料
+  const sf = await api('/api/files/shared')
+  const list = document.getElementById('sharedFiles')
+  const files = sf.ok ? sf.data.files : []
+  document.getElementById('stShared').textContent = files.length
+  list.innerHTML = files.length ? files.map(f => `
+    <div class="f">
+      <span class="ext">${escapeHtml((f.name.split('.').pop() || 'file').slice(0, 4))}</span>
+      <span class="n">${escapeHtml(f.name)}</span>
+      <span class="s">${fmtSize(f.size)}</span>
+      <a class="dl" href="${f.url}" download>下载 ↓</a>
+    </div>`).join('') : '<div class="empty">暂无共享资料</div>'
+
+  // 我的留言 + 我的文件
+  const mm = await api('/api/messages')
+  const ml = document.getElementById('msgList')
+  const msgs = mm.ok ? mm.data.messages : []
+  document.getElementById('stMsg').textContent = msgs.length
+  ml.innerHTML = msgs.length ? '<div class="msg-list">' + msgs.map(m => `
+    <div class="m">
+      <div class="head"><span>${escapeHtml((m.createdAt || '').replace('T', ' ').slice(0, 16))}</span><span>${escapeHtml(m.name)}</span></div>
+      <div>${escapeHtml(m.content)}</div>
+      ${m.attachment ? `<div class="att">附件：<a href="${m.attachment.url}" download>${escapeHtml(m.attachment.name)}</a></div>` : ''}
+    </div>`).join('') + '</div>' : '<div class="empty">还没有留言记录，<a href="contact.html" style="color:var(--accent)">去提交第一条</a></div>'
+
+  const mf = await api('/api/files/mine')
+  const mine = mf.ok ? mf.data.files : []
+  document.getElementById('stFile').textContent = mine.length
+  if (mine.length) {
+    const panel = document.querySelector('.user-page')
+    const div = document.createElement('div')
+    div.className = 'panel'
+    div.innerHTML = `<h2>我的上传 <span class="mono">// MY UPLOADS</span></h2>
+      <div class="file-list">${mine.map(f => `
+        <div class="f">
+          <span class="ext">${escapeHtml((f.name.split('.').pop() || 'file').slice(0, 4))}</span>
+          <span class="n">${escapeHtml(f.name)}</span>
+          <span class="s">${fmtSize(f.size)}</span>
+          <a class="dl" href="${f.path}" download>下载 ↓</a>
+        </div>`).join('')}</div>`
+    panel.appendChild(div)
+  }
+})()
+</script>
+</body>
+</html>

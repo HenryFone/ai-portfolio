@@ -1,0 +1,4444 @@
+<!DOCTYPE html>
+<html data-page-node-id="Xu98XMqWI7VYnfmb0gnMD4" lang="zh-CN">
+<head data-page-node-id="YEGJIZUvd5r7Vqrd2HDNca">
+
+<meta data-page-node-id="AchnVFh0txqnAGonzuIADg" charset="UTF-8">
+<meta data-page-node-id="Nbr9IqKbDvI37KjZ1BGUrd" content="width=device-width, initial-scale=1.0" name="viewport">
+<meta name="theme-color" content="#F3F5FA">
+<title data-page-node-id="QohX6m5cLKgrozohidG4bx" data-pnid-children="860uQsdQNcz3PmL3ybezHg">工位分配工具</title>
+<style data-page-node-id="nDsowLKNoqOFwb020Dq5bj" data-pnid-children="lso7qGNlFrmQbNSxS8L7gF">
+  /* ========================================================
+     Design Tokens · 工位分配工具 v3
+     ======================================================== */
+  :root{
+    --bg:#F3F5FA; --bg-grad:radial-gradient(1200px 500px at 75% -180px, rgba(90,120,255,.10), transparent 60%);
+    --surface:#FFFFFF; --surface-2:#F8F9FC; --surface-3:#F1F3F9;
+    --line:#E7EAF1; --line-2:#EEF0F6; --line-strong:#D8DDE8;
+    --text:#191F2E; --text-2:#545D70; --text-3:#8B93A5; --text-4:#AEB4C2;
+    --primary:#3D64F4; --primary-deep:#2B4ED6; --primary-soft:#EEF2FF; --primary-line:#CDD9FF;
+    --accent:#12B886;
+    --danger:#E5484D; --danger-soft:#FEECEC;
+    --ok:#0F9D6E; --ok-soft:#E7F7F1;
+    --warn:#D9822B; --warn-soft:#FFF4E6;
+    --radius:14px; --radius-sm:9px;
+    --sh-1:0 1px 2px rgba(18,24,42,.05);
+    --sh-2:0 1px 2px rgba(18,24,42,.05),0 10px 30px -6px rgba(18,24,42,.10);
+    --sh-3:0 24px 70px -12px rgba(18,24,42,.30);
+    --glass:rgba(255,255,255,.86);
+    /* 画布 / 工位配色（跟随主题） */
+    --paper:#FFFFFF; --paper-line:#E5E9F1; --canvas-dot:#DFE4EE;
+    --seat-free-bg:#FFFFFF; --seat-free-line:#DFE4EE; --seat-free-txt:#A7AEBE;
+    --seat-name:#1B2130;
+    --zone-txt:#8D96A9; --zone-pill-bg:#F4F6FB; --zone-pill-line:#E3E8F1;
+    --fac-def-bg:#F6F3EA; --fac-def-line:#DCD3BE; --fac-def-txt:#8A7B57;
+    --fac-meet-bg:#F2EFE6; --fac-meet-line:#D8CFBA; --fac-meet-txt:#7E7355;
+    --fac-tea-bg:#E9F5F0; --fac-tea-line:#C4E0D4; --fac-tea-txt:#41785F;
+    --fac-oth-bg:#F1F2F7; --fac-oth-line:#DCE0EA; --fac-oth-txt:#7A8293;
+    --stage-bg:#EEF1F7;
+  }
+  html[data-theme="dark"]{
+    --bg:#12151D; --bg-grad:radial-gradient(1200px 500px at 75% -180px, rgba(96,124,255,.14), transparent 60%);
+    --surface:#1A1E29; --surface-2:#20242F; --surface-3:#262B38;
+    --line:#282E3C; --line-2:#232837; --line-strong:#39415496;
+    --line-strong:#394154;
+    --text:#E9ECF4; --text-2:#A6AEBF; --text-3:#79839A; --text-4:#5A6478;
+    --primary:#6B8AFF; --primary-deep:#8FA6FF; --primary-soft:#232B45; --primary-line:#38497E;
+    --accent:#2FD1A0;
+    --danger:#F26D72; --danger-soft:#3A2326;
+    --ok:#38C793; --ok-soft:#173229;
+    --warn:#E8A04C; --warn-soft:#3A2D1B;
+    --sh-1:0 1px 2px rgba(0,0,0,.35);
+    --sh-2:0 1px 2px rgba(0,0,0,.4),0 10px 30px -6px rgba(0,0,0,.5);
+    --sh-3:0 24px 70px -12px rgba(0,0,0,.65);
+    --glass:rgba(26,30,41,.86);
+    --paper:#20242F; --paper-line:#2E3442; --canvas-dot:#2C3240;
+    --seat-free-bg:#262B38; --seat-free-line:#39404F; --seat-free-txt:#727D92;
+    --seat-name:#EAEFF9;
+    --zone-txt:#7E88A0; --zone-pill-bg:#242936; --zone-pill-line:#333A4A;
+    --fac-def-bg:#2A2A33; --fac-def-line:#454252; --fac-def-txt:#C2B280;
+    --fac-meet-bg:#2B2833; --fac-meet-line:#4A4258; --fac-meet-txt:#C7B98A;
+    --fac-tea-bg:#20302B; --fac-tea-line:#37554A; --fac-tea-txt:#7BD0AE;
+    --fac-oth-bg:#252936; --fac-oth-line:#3B4152; --fac-oth-txt:#95A0B8;
+    --stage-bg:#151823;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","HarmonyOS Sans SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",Roboto,sans-serif;
+    background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;overflow:hidden;
+  }
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;background:var(--bg-grad);z-index:0}
+  button{font-family:inherit;font-size:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+  [hidden]{display:none!important}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:8px;border:3px solid transparent;background-clip:content-box}
+  ::-webkit-scrollbar-thumb:hover{background:var(--text-4);background-clip:content-box;border:3px solid transparent}
+  ::-webkit-scrollbar-track{background:transparent}
+  .ic{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  .kbd{
+    display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;
+    border-radius:5px;border:1px solid var(--line-strong);border-bottom-width:2px;background:var(--surface);
+    font-size:10.5px;font-weight:600;color:var(--text-3);font-family:ui-monospace,Menlo,Consolas,monospace;
+  }
+
+  /* ---------- app frame ---------- */
+  .app{height:100%;display:flex;flex-direction:column;position:relative;z-index:1}
+  .app::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:3px;z-index:40;
+    background:linear-gradient(90deg,#5B7CFF,#9B6BFF 38%,#12B886 100%);
+  }
+
+  /* ---------- topbar ---------- */
+  .topbar{
+    flex:none;height:64px;display:flex;align-items:center;gap:18px;
+    padding:0 20px;background:var(--surface);border-bottom:1px solid var(--line);
+    position:relative;z-index:30;
+  }
+  .brand{display:flex;align-items:center;gap:12px;min-width:0}
+  .logo{
+    width:38px;height:38px;border-radius:11px;flex:none;position:relative;overflow:hidden;
+    background:linear-gradient(140deg,#5B7CFF,#2A4BD8);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 12px rgba(61,100,244,.35),inset 0 1px 0 rgba(255,255,255,.35);
+  }
+  .logo svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .brand h1{margin:0;font-size:16px;font-weight:700;letter-spacing:.2px;white-space:nowrap}
+  .brand h1 i{font-style:normal;color:var(--primary);font-weight:700}
+  .brand p{margin:1px 0 0;color:var(--text-3);font-size:11.5px;white-space:nowrap;letter-spacing:.2px}
+
+  .stats{display:flex;align-items:center;gap:0;margin-left:8px;flex:1;min-width:0;overflow:hidden}
+  .stat{padding:0 18px;border-left:1px solid var(--line-2);min-width:76px;position:relative}
+  .stat:first-child{border-left:none;padding-left:8px}
+  .stat b{display:flex;align-items:baseline;gap:3px;font-size:20px;font-weight:740;letter-spacing:-.4px;font-variant-numeric:tabular-nums;line-height:1.2}
+  .stat b u{text-decoration:none;font-size:11px;font-weight:600;color:var(--text-4)}
+  .stat span{display:block;font-size:11px;color:var(--text-3);white-space:nowrap;margin-top:1px;letter-spacing:.2px}
+  .stat .meter{margin-top:5px;height:3px;border-radius:2px;background:var(--surface-3);overflow:hidden;width:64px}
+  .stat .meter u{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,#5B7CFF,#2A4BD8);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+  .stat.hl b{color:var(--primary)}
+  .stat.warn b{color:var(--warn)}
+  .stat.ok b{color:var(--ok)}
+
+  .topbar-actions{display:flex;align-items:center;gap:8px;flex:none;margin-left:auto}
+  .sync{
+    display:flex;align-items:center;gap:6px;height:30px;padding:0 11px;border-radius:20px;
+    background:var(--ok-soft);color:#0B7A55;font-size:11.5px;font-weight:600;white-space:nowrap;letter-spacing:.2px;
+  }
+  html[data-theme="dark"] .sync{color:var(--ok)}
+  .sync i{width:6px;height:6px;border-radius:50%;background:var(--ok);display:block;box-shadow:0 0 0 3px rgba(15,157,110,.15)}
+  .sync.busy{background:var(--primary-soft);color:var(--primary-deep)}
+  .sync.busy i{background:var(--primary);box-shadow:0 0 0 3px rgba(61,100,244,.15);animation:pulse 1s infinite}
+  .sync.err{background:var(--danger-soft);color:var(--danger)}
+  .sync.err i{background:var(--danger);box-shadow:0 0 0 3px rgba(229,72,77,.15)}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:6px;
+    height:32px;padding:0 13px;border-radius:var(--radius-sm);
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--text);
+    font-size:13px;font-weight:550;white-space:nowrap;transition:all .15s;
+  }
+  .btn:hover{background:var(--surface-2);border-color:var(--text-4);transform:translateY(-1px);box-shadow:var(--sh-1)}
+  .btn:active{transform:translateY(0)}
+  .btn.primary{
+    background:linear-gradient(180deg,#5B7CFF,#3D64F4);border-color:transparent;color:#fff;
+    box-shadow:0 4px 12px rgba(61,100,244,.32),inset 0 1px 0 rgba(255,255,255,.25);
+  }
+  .btn.primary:hover{filter:brightness(1.06);box-shadow:0 6px 16px rgba(61,100,244,.4)}
+  .btn.soft{background:var(--primary-soft);border-color:var(--primary-line);color:var(--primary-deep)}
+  .btn.soft:hover{border-color:var(--primary);background:var(--primary-soft)}
+  .btn.danger{color:var(--danger);border-color:var(--line-strong);background:var(--surface)}
+  .btn.danger:hover{background:var(--danger-soft);border-color:var(--danger)}
+  .btn.ghost{border-color:transparent;background:transparent}
+  .btn.ghost:hover{background:var(--surface-3);box-shadow:none}
+  .btn:disabled{opacity:.42;cursor:not-allowed;box-shadow:none;transform:none}
+  .btn.sm{height:28px;padding:0 10px;font-size:12px;border-radius:8px}
+  .btn.icon{padding:0;width:32px}
+  .btn.sm.icon{width:28px}
+  .btn.block{width:100%}
+
+  /* ---------- workspace ---------- */
+  .workspace{flex:1;display:flex;min-height:0;overflow:hidden}
+
+  /* ---------- panels ---------- */
+  .panel{background:var(--surface);display:flex;flex-direction:column;min-height:0}
+  .panel-left{width:292px;flex:none;border-right:1px solid var(--line)}
+  .panel-right{width:316px;flex:none;border-left:1px solid var(--line);overflow-y:auto;background:var(--surface)}
+  .panel-head{
+    flex:none;display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding:16px 16px 10px;
+  }
+  .panel-head h2{margin:0;font-size:14px;font-weight:700;letter-spacing:.2px;display:flex;align-items:center;gap:8px}
+  .pill{
+    display:inline-flex;align-items:center;justify-content:center;min-width:21px;height:20px;padding:0 7px;
+    border-radius:20px;background:var(--primary-soft);color:var(--primary-deep);font-size:11px;font-weight:700;
+    font-variant-numeric:tabular-nums;
+  }
+  html[data-theme="dark"] .pill{color:var(--primary-deep)}
+  .filter-bar{flex:none;padding:0 14px 12px;display:flex;flex-direction:column;gap:9px}
+  .search{position:relative}
+  .search .ic{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--text-3);pointer-events:none}
+  .search input{
+    width:100%;height:34px;padding:0 30px;border-radius:var(--radius-sm);
+    border:1px solid var(--line);background:var(--surface-2);font-size:13px;outline:none;transition:all .15s;
+  }
+  .search input:focus{border-color:var(--primary-line);background:var(--surface);box-shadow:0 0 0 3.5px rgba(61,100,244,.10)}
+  .search input::placeholder{color:var(--text-4)}
+  .search .skey{position:absolute;right:8px;top:50%;transform:translateY(-50%)}
+  .chips{display:flex;flex-wrap:wrap;gap:5px}
+  .chip{
+    height:24px;padding:0 10px;border-radius:20px;border:1px solid var(--line);
+    background:var(--surface);font-size:11.5px;font-weight:550;color:var(--text-2);transition:all .13s;white-space:nowrap;
+    display:inline-flex;align-items:center;gap:5px;
+  }
+  .chip:hover{border-color:var(--line-strong);background:var(--surface-2);transform:translateY(-1px)}
+  .chip.on{background:var(--text);border-color:var(--text);color:var(--surface)}
+  .chip i{width:7px;height:7px;border-radius:50%;display:block;flex:none}
+  .chip .n{opacity:.55;font-size:10.5px;font-variant-numeric:tabular-nums}
+
+  .people-list{flex:1;overflow-y:auto;padding:2px 10px 12px;min-height:0}
+  .person{
+    display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:10px;
+    border:1px solid transparent;cursor:grab;transition:background .12s,border-color .12s,box-shadow .12s;
+    user-select:none;-webkit-user-select:none;touch-action:none;
+    animation:fadeUp .25s both;
+  }
+  .person:nth-child(1){animation-delay:.01s}.person:nth-child(2){animation-delay:.02s}
+  .person:nth-child(3){animation-delay:.03s}.person:nth-child(4){animation-delay:.04s}
+  .person:nth-child(5){animation-delay:.05s}.person:nth-child(6){animation-delay:.06s}
+  .person:nth-child(7){animation-delay:.07s}.person:nth-child(8){animation-delay:.08s}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  .person:hover{background:var(--surface-2);border-color:var(--line-2)}
+  .person.sel{
+    background:var(--primary-soft);border-color:var(--primary-line);
+    box-shadow:0 0 0 2.5px rgba(61,100,244,.10),inset 3px 0 0 var(--primary);
+  }
+  .person.dragging{opacity:.35}
+  .avatar{
+    width:32px;height:32px;border-radius:10px;flex:none;display:flex;align-items:center;justify-content:center;
+    font-size:12.5px;font-weight:700;letter-spacing:0;color:#fff;
+    box-shadow:inset 0 -6px 12px rgba(0,0,0,.10),inset 0 1px 0 rgba(255,255,255,.30);
+  }
+  .person-main{min-width:0;flex:1}
+  .person-name{font-size:13px;font-weight:620;display:flex;align-items:center;gap:6px}
+  .person-name em{font-style:normal;font-size:10.5px;color:var(--text-4);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:.3px}
+  .person-meta{font-size:11px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;display:flex;align-items:center;gap:5px}
+  .person-meta i{width:6px;height:6px;border-radius:50%;flex:none}
+  .drag-handle{color:var(--text-4);opacity:0;transition:.12s}
+  .person:hover .drag-handle{opacity:1}
+
+  .empty{padding:36px 18px;text-align:center;color:var(--text-3);font-size:12.5px;line-height:1.7}
+  .empty b{display:block;color:var(--text-2);font-size:13px;font-weight:650;margin-bottom:4px}
+  .empty .eic{
+    width:46px;height:46px;margin:0 auto 10px;border-radius:14px;background:var(--surface-3);
+    display:flex;align-items:center;justify-content:center;color:var(--text-4);
+  }
+  .empty .eic svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6}
+
+  .panel-foot{
+    flex:none;padding:10px 14px;border-top:1px solid var(--line-2);
+    font-size:11px;color:var(--text-3);line-height:1.7;background:var(--surface-2);
+  }
+
+  /* ---------- stage ---------- */
+  .stage{flex:1;min-width:0;display:flex;flex-direction:column;background:var(--stage-bg)}
+  .stage-bar{
+    flex:none;display:flex;align-items:center;gap:10px;padding:9px 14px;
+    background:var(--surface);border-bottom:1px solid var(--line);overflow-x:auto;
+  }
+  .seg{display:flex;background:var(--surface-3);border-radius:10px;padding:2.5px;flex:none}
+  .seg button{
+    height:27px;padding:0 11px;border-radius:8px;font-size:12.5px;font-weight:550;color:var(--text-2);
+    display:flex;align-items:center;gap:5px;transition:all .14s;white-space:nowrap;
+  }
+  .seg button .ic{width:14px;height:14px}
+  .seg button.on{
+    background:var(--surface);color:var(--text);font-weight:650;
+    box-shadow:0 1px 3px rgba(18,24,42,.14),0 0 0 .5px var(--line);
+  }
+  .tools{display:flex;align-items:center;gap:4px;flex:none}
+  #editTools{flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none}
+  #editTools::-webkit-scrollbar{display:none}
+  .tools.grow{flex:none;justify-content:flex-end;margin-left:auto}
+  .tdiv{width:1px;height:18px;background:var(--line);margin:0 4px;flex:none}
+  .tbtn{
+    height:28px;padding:0 8px;border-radius:8px;display:flex;align-items:center;gap:5px;
+    font-size:12.5px;font-weight:500;color:var(--text-2);border:1px solid transparent;transition:all .13s;white-space:nowrap;
+  }
+  .tbtn:hover{background:var(--surface-3);color:var(--text)}
+  .tbtn.on{background:var(--primary-soft);color:var(--primary-deep);border-color:var(--primary-line)}
+  .tbtn:disabled{opacity:.35;cursor:not-allowed;background:none}
+  .tbtn .ic{width:15px;height:15px}
+  .zoom{display:flex;align-items:center;gap:2px;flex:none;background:var(--surface-2);border:1px solid var(--line);border-radius:9px;padding:2.5px}
+  .zoom button{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--text-2);transition:.12s}
+  .zoom button:hover{background:var(--surface);color:var(--text);box-shadow:var(--sh-1)}
+  .zoom span{
+    font-size:11.5px;font-weight:600;color:var(--text-2);min-width:44px;text-align:center;
+    font-variant-numeric:tabular-nums;cursor:pointer;border-radius:6px;padding:2px 0;transition:.12s;
+  }
+  .zoom span:hover{background:var(--surface);box-shadow:var(--sh-1)}
+
+  .canvas-wrap{flex:1;position:relative;min-height:0;overflow:hidden;touch-action:none}
+  .canvas-wrap.panning{cursor:grabbing}
+  #map{display:block;width:100%;height:100%;touch-action:none}
+  #map text{font-family:inherit;user-select:none;pointer-events:none}
+  .seat{cursor:pointer}
+  .seat .seat-rect{transition:filter .13s,stroke .13s,stroke-width .13s}
+  .seat:hover .seat-rect{filter:brightness(.975) drop-shadow(0 3px 8px rgba(18,24,42,.16))}
+  html[data-theme="dark"] .seat:hover .seat-rect{filter:brightness(1.12) drop-shadow(0 3px 8px rgba(0,0,0,.5))}
+  .seat.sel .seat-rect{stroke:var(--primary);stroke-width:2.2;filter:drop-shadow(0 3px 8px rgba(61,100,244,.30))}
+  .seat.hot .seat-rect{stroke:var(--primary);stroke-width:2.4;filter:drop-shadow(0 0 8px rgba(61,100,244,.5))}
+  .seat.dim{opacity:.28;transition:opacity .2s}
+  .seat.illegal .seat-rect{stroke:var(--danger);stroke-width:2}
+  .seat.just-in .seat-rect{animation:seatIn .7s cubic-bezier(.2,.8,.2,1)}
+  @keyframes seatIn{
+    0%{filter:drop-shadow(0 0 0 rgba(18,157,110,0))}
+    30%{filter:drop-shadow(0 0 10px rgba(18,157,110,.85))}
+    100%{filter:drop-shadow(0 0 0 rgba(18,157,110,0))}
+  }
+
+  .save-float{
+    position:absolute;top:14px;right:14px;z-index:6;display:flex;align-items:center;gap:8px;
+    background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--line);
+    border-radius:11px;padding:6px 8px 6px 13px;box-shadow:var(--sh-2);font-size:12px;
+  }
+  .save-float .st{color:var(--text-2);display:flex;align-items:center;gap:6px;white-space:nowrap;font-weight:550}
+  .save-float .st i{width:7px;height:7px;border-radius:50%;background:var(--warn);display:block}
+  .save-float.saved .st i{background:var(--ok)}
+  .canvas-hud{
+    position:absolute;left:14px;bottom:14px;display:flex;align-items:center;gap:8px;
+    background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--line);
+    border-radius:10px;padding:6px 11px;font-size:11.5px;color:var(--text-2);box-shadow:var(--sh-1);
+    pointer-events:none;
+  }
+  .canvas-hud b{color:var(--text);font-weight:650;font-variant-numeric:tabular-nums}
+  .canvas-legend{
+    position:absolute;right:14px;bottom:14px;display:flex;align-items:center;gap:12px;
+    background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--line);
+    border-radius:10px;padding:6px 12px;font-size:11px;font-weight:550;color:var(--text-2);box-shadow:var(--sh-1);
+  }
+  .canvas-legend span{display:flex;align-items:center;gap:5px;white-space:nowrap}
+  .canvas-legend i{width:10px;height:10px;border-radius:3.5px;display:block;box-shadow:inset 0 0 0 1px rgba(18,24,42,.08)}
+  html[data-theme="dark"] .canvas-legend i{box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+
+  /* 悬浮提示 */
+  .seat-tip{
+    position:fixed;z-index:210;pointer-events:none;max-width:230px;
+    background:var(--text);color:var(--surface);border-radius:10px;padding:8px 11px;
+    box-shadow:var(--sh-3);font-size:12px;line-height:1.55;opacity:0;transition:opacity .12s;
+  }
+  .seat-tip.show{opacity:1}
+  .seat-tip .t-id{font-size:10.5px;font-weight:700;letter-spacing:.6px;opacity:.62;text-transform:uppercase}
+  .seat-tip .t-name{font-size:13px;font-weight:650;margin-top:1px}
+  .seat-tip .t-meta{opacity:.78;font-size:11px;margin-top:1px}
+  .seat-tip .t-free{font-weight:650}
+  .seat-tip .t-free b{color:#5EE6B4}
+
+  .map-empty{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:10px;color:var(--text-3);background:transparent;z-index:5;
+  }
+  .map-empty .box{
+    background:var(--surface);border:1px dashed var(--line-strong);border-radius:16px;padding:30px 38px;text-align:center;
+    box-shadow:var(--sh-2);max-width:420px;
+  }
+  .map-empty b{display:block;color:var(--text);font-size:14.5px;margin-bottom:5px}
+  .map-empty p{margin:0 0 14px;font-size:12.5px;line-height:1.75}
+
+  .drag-ghost{
+    position:fixed;z-index:200;pointer-events:none;transform:translate(-50%,-50%) rotate(-2deg);
+    background:var(--surface);border:1px solid var(--primary-line);border-radius:10px;padding:6px 12px;
+    box-shadow:0 14px 34px rgba(18,24,42,.24);font-size:12.5px;font-weight:650;color:var(--text);
+    display:flex;align-items:center;gap:8px;white-space:nowrap;
+  }
+  .drag-ghost .avatar{width:20px;height:20px;border-radius:6px;font-size:10px}
+
+  /* ---------- right panel ---------- */
+  .rp{padding:16px 16px 14px;border-bottom:1px solid var(--line-2)}
+  .rp:last-child{border-bottom:none}
+  .rp-title{
+    font-size:11px;font-weight:700;color:var(--text-3);letter-spacing:.6px;
+    margin:0 0 11px;display:flex;align-items:center;justify-content:space-between;
+  }
+  .rp-title .sub{font-weight:550;letter-spacing:0;color:var(--text-4);font-size:11px}
+  .rp h3{margin:0;font-size:15px;font-weight:680}
+
+  .detail-card{
+    border:1px solid var(--line);border-radius:var(--radius);padding:13px;background:var(--surface-2);
+    position:relative;overflow:hidden;
+  }
+  .detail-card.accent{border-top:2.5px solid var(--primary)}
+  .detail-top{display:flex;align-items:center;gap:11px}
+  .detail-top .avatar{width:40px;height:40px;border-radius:12px;font-size:15px}
+  .detail-top .dt-name{font-size:14.5px;font-weight:680}
+  .detail-top .dt-sub{font-size:11.5px;color:var(--text-3);margin-top:1px}
+  .kv{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;font-size:12.5px;border-bottom:1px dashed var(--line-2)}
+  .kv:last-child{border-bottom:none}
+  .kv span{color:var(--text-3)}
+  .kv b{font-weight:600;text-align:right;word-break:break-all;font-variant-numeric:tabular-nums}
+  .tag{
+    display:inline-flex;align-items:center;gap:4px;height:21px;padding:0 8px;border-radius:6px;
+    font-size:11px;font-weight:650;white-space:nowrap;
+  }
+  .tag.ok{background:var(--ok-soft);color:var(--ok)}
+  .tag.warn{background:var(--warn-soft);color:var(--warn)}
+  .tag.err{background:var(--danger-soft);color:var(--danger)}
+  .tag.mute{background:var(--surface-3);color:var(--text-2)}
+
+  .legend-row{display:flex;align-items:center;gap:9px;padding:5.5px 0;font-size:12.5px}
+  .legend-row i{width:10px;height:10px;border-radius:3.5px;flex:none;box-shadow:inset 0 0 0 1px rgba(18,24,42,.08)}
+  .legend-row .nm{flex:1;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .legend-row b{font-variant-numeric:tabular-nums;font-weight:650}
+  .legend-row .bar{width:56px;height:4.5px;border-radius:3px;background:var(--surface-3);overflow:hidden;flex:none}
+  .legend-row .bar u{display:block;height:100%;border-radius:3px;text-decoration:none;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+
+  /* 概览顶部：环形 + 速览 */
+  .ov-top{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  .donut{position:relative;width:92px;height:92px;flex:none}
+  .donut svg{display:block;transform:rotate(-90deg)}
+  .donut .d-track{stroke:var(--surface-3)}
+  .donut .d-bar{stroke:url(#donutGrad);transition:stroke-dashoffset .6s cubic-bezier(.2,.8,.2,1)}
+  .donut .d-c{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .donut .d-c b{font-size:19px;font-weight:750;letter-spacing:-.4px;font-variant-numeric:tabular-nums;line-height:1.1}
+  .donut .d-c span{font-size:9.5px;color:var(--text-3);letter-spacing:.4px;margin-top:1px}
+  .ov-mini{flex:1;min-width:0}
+  .ov-mini .row{display:flex;justify-content:space-between;align-items:center;padding:3.5px 0;font-size:12px;color:var(--text-2)}
+  .ov-mini .row b{font-variant-numeric:tabular-nums;font-weight:680;color:var(--text)}
+  .ov-mini .row i{width:8px;height:8px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:-.5px}
+
+  .field{margin-bottom:9px}
+  .field label{display:block;font-size:11.5px;font-weight:550;color:var(--text-3);margin-bottom:4px}
+  .field input,.field select{
+    width:100%;height:32px;padding:0 10px;border-radius:8px;border:1px solid var(--line);
+    background:var(--surface);font-size:13px;outline:none;transition:all .14s;
+  }
+  .field input:focus,.field select:focus{border-color:var(--primary-line);box-shadow:0 0 0 3.5px rgba(61,100,244,.10)}
+  .field input[type="range"]{padding:0;height:26px;accent-color:var(--primary)}
+  .field-row{display:flex;gap:8px}
+  .field-row .field{flex:1;min-width:0}
+
+  .hint-box{
+    background:var(--primary-soft);border:1px solid var(--primary-line);border-radius:var(--radius-sm);
+    padding:10px 12px;font-size:11.5px;color:var(--primary-deep);line-height:1.65;
+  }
+  html[data-theme="dark"] .hint-box{color:var(--text-2)}
+  .hint-box b{font-weight:680}
+  .hint-box ol{margin:4px 0 0;padding-left:16px}
+  .hint-box li{margin:2.5px 0}
+
+  .icon-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}
+  .icon-grid .btn{justify-content:flex-start;height:34px}
+
+  /* ---------- modal ---------- */
+  .modal-mask{
+    position:fixed;inset:0;background:rgba(15,19,30,.48);backdrop-filter:blur(5px);
+    z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;
+    animation:fade .16s ease;
+  }
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .modal{
+    background:var(--surface);border-radius:18px;box-shadow:var(--sh-3);width:100%;max-width:640px;
+    max-height:calc(100vh - 48px);display:flex;flex-direction:column;overflow:hidden;
+    border:1px solid var(--line);
+    animation:pop .22s cubic-bezier(.2,.9,.3,1);
+  }
+  @keyframes pop{from{opacity:0;transform:translateY(14px) scale(.975)}to{opacity:1;transform:none}}
+  .modal.wide{max-width:940px}
+  .modal.slim{max-width:470px}
+  .modal-head{
+    flex:none;padding:18px 20px 13px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+    border-bottom:1px solid var(--line-2);
+  }
+  .modal-head h3{margin:0;font-size:16px;font-weight:700;letter-spacing:.2px}
+  .modal-head p{margin:4px 0 0;font-size:12px;color:var(--text-3);line-height:1.6}
+  .modal-body{flex:1;overflow-y:auto;padding:18px 20px;min-height:0}
+  .modal-foot{
+    flex:none;padding:13px 20px;border-top:1px solid var(--line-2);display:flex;align-items:center;
+    justify-content:space-between;gap:10px;background:var(--surface-2);
+  }
+  .modal-foot .right{display:flex;gap:8px;margin-left:auto}
+
+  .drop{
+    border:1.5px dashed var(--line-strong);border-radius:14px;background:var(--surface-2);
+    padding:30px 20px;text-align:center;transition:all .15s;cursor:pointer;
+  }
+  .drop:hover,.drop.over{border-color:var(--primary);background:var(--primary-soft);transform:scale(1.005)}
+  .drop .ic{width:28px;height:28px;color:var(--text-3);margin-bottom:8px}
+  .drop b{display:block;font-size:13.5px;margin-bottom:3px}
+  .drop span{font-size:12px;color:var(--text-3)}
+  .drop em{font-style:normal;color:var(--primary);font-weight:650}
+
+  .tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:14px}
+  .tabs button{
+    padding:8px 12px;font-size:13px;font-weight:550;color:var(--text-3);border-bottom:2px solid transparent;margin-bottom:-1px;
+  }
+  .tabs button.on{color:var(--primary-deep);border-bottom-color:var(--primary);font-weight:650}
+
+  .spec{
+    background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:13px 15px;
+    font-size:12.2px;color:var(--text-2);line-height:1.75;margin-bottom:14px;
+  }
+  .spec b{color:var(--text);font-weight:680;display:block;margin-bottom:3px;font-size:12.5px}
+  .spec ul{margin:4px 0 0;padding-left:17px}
+  .spec li{margin:2px 0}
+  .spec code{
+    background:var(--surface-3);border-radius:4px;padding:1px 5px;font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:11.5px;color:var(--text-2);
+  }
+  .spec + .spec{margin-top:-6px}
+
+  .tbl-wrap{border:1px solid var(--line);border-radius:12px;overflow:auto;max-height:320px}
+  table.tbl{width:100%;border-collapse:collapse;font-size:12.3px}
+  table.tbl th{
+    position:sticky;top:0;background:var(--surface-2);text-align:left;font-weight:650;color:var(--text-2);
+    padding:8px 11px;border-bottom:1px solid var(--line);white-space:nowrap;font-size:11.5px;z-index:1;
+  }
+  table.tbl td{padding:7.5px 11px;border-bottom:1px solid var(--line-2);vertical-align:middle;white-space:nowrap}
+  table.tbl tr:last-child td{border-bottom:none}
+  table.tbl tr:hover td{background:var(--surface-2)}
+  table.tbl td.mono{font-variant-numeric:tabular-nums;color:var(--text-3)}
+
+  .sum{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+  .sum .box{
+    flex:1;min-width:104px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface-2);
+  }
+  .sum .box b{display:block;font-size:19px;font-weight:740;font-variant-numeric:tabular-nums;letter-spacing:-.3px}
+  .sum .box span{font-size:11px;color:var(--text-3)}
+  .sum .box.add b{color:var(--ok)}
+  .sum .box.upd b{color:var(--primary)}
+  .sum .box.cft b{color:var(--warn)}
+  .sum .box.skp b{color:var(--text-3)}
+
+  .check{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:var(--text-2);cursor:pointer;user-select:none}
+  .check input{margin:2px 0 0;width:15px;height:15px;accent-color:var(--primary);cursor:pointer;flex:none}
+  .check b{color:var(--text);font-weight:620}
+
+  .prev-map{
+    border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden;margin-bottom:12px;
+  }
+  .prev-map svg{display:block;width:100%;height:auto}
+
+  /* 欢迎导览 */
+  .welcome-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:4px 0 6px}
+  .wcard{
+    border:1px solid var(--line);border-radius:14px;padding:15px 14px;background:var(--surface-2);text-align:left;
+  }
+  .wcard .wic{
+    width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;
+    background:var(--primary-soft);color:var(--primary-deep);
+  }
+  .wcard:nth-child(2) .wic{background:var(--ok-soft);color:var(--ok)}
+  .wcard:nth-child(3) .wic{background:var(--warn-soft);color:var(--warn)}
+  .wcard .wic svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .wcard b{display:block;font-size:13px;font-weight:680;margin-bottom:3px}
+  .wcard p{margin:0;font-size:11.5px;color:var(--text-3);line-height:1.6}
+
+  .toast{
+    position:fixed;left:50%;bottom:28px;transform:translate(-50%,14px);z-index:300;
+    background:#232B3C;color:#fff;border-radius:12px;padding:11px 18px;font-size:13px;font-weight:500;
+    box-shadow:0 16px 40px rgba(10,14,25,.4);opacity:0;pointer-events:none;transition:all .22s cubic-bezier(.2,.8,.2,1);
+    max-width:80vw;display:flex;align-items:center;gap:9px;
+  }
+  html[data-theme="dark"] .toast{background:#39415A}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+  .toast.ok{background:#0B7A55}
+  .toast.err{background:#B3261E}
+
+  /* 离线演示版提示条 */
+  .demo-bar{
+    display:flex;align-items:center;gap:10px;padding:8px 20px;
+    background:linear-gradient(90deg,#FFF6E5,#FFFBF2);
+    border-bottom:1px solid #F0DCC0;font-size:12.5px;color:#7A5B1E;
+  }
+  html[data-theme="dark"] .demo-bar{background:linear-gradient(90deg,#332B1B,#2A2519);border-bottom-color:#4A3E24;color:#E4C27E}
+  .demo-bar[hidden]{display:none}
+  .demo-bar .dot{width:7px;height:7px;border-radius:50%;background:#E8A33D;flex:none;box-shadow:0 0 0 3px rgba(232,163,61,.2)}
+  .demo-bar b{font-size:12.5px;flex:none}
+  .demo-bar span{flex:1 1 auto;min-width:0;line-height:1.5}
+  .demo-bar .btn{flex:none;background:transparent;border-color:#E8D3AE;color:inherit}
+  @media (max-width:720px){
+    .demo-bar span{display:none}
+  }
+
+  .loading-mask{
+    position:absolute;inset:0;background:var(--glass);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;
+    z-index:15;font-size:12.5px;font-weight:550;color:var(--text-2);gap:10px;flex-direction:column;
+  }
+  .spin{width:22px;height:22px;border:2.5px solid var(--line-strong);border-top-color:var(--primary);border-radius:50%;animation:sp .7s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .skel{border-radius:10px;background:linear-gradient(90deg,var(--surface-3) 25%,var(--surface-2) 45%,var(--surface-3) 65%);background-size:200% 100%;animation:shimmer 1.3s infinite}
+  @keyframes shimmer{to{background-position:-200% 0}}
+
+  .mini-note{font-size:11.5px;color:var(--text-3);line-height:1.65;margin-top:8px}
+  .txt-mute{color:var(--text-3)}
+  .txt-sm{font-size:12px}
+
+  @media (max-width:1180px){
+    .panel-right{width:284px}
+    .stat{padding:0 13px;min-width:64px}
+  }
+  @media (max-width:1080px){
+    .stats .stat:nth-child(n+4){display:none}
+  }
+  @media (max-width:980px){
+    .panel-right{display:none}
+    #btnHelp{display:none}
+  }
+  @media (max-width:820px){
+    .panel-left{width:244px}
+    .brand p{display:none}
+    .stats{display:none}
+    .topbar{gap:10px;padding:0 12px}
+  }
+  @media (max-width:640px){
+    .panel-left{display:none}
+    .topbar{height:auto;padding:8px 10px;flex-wrap:wrap}
+    .btn span.lbl{display:none}
+    .icon-grid{grid-template-columns:1fr}
+    .sum{display:block}
+    .welcome-grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body data-page-node-id="EnM86wvtceakbq5ptXCVKo">
+<style data-page-node-id="ywmccxFQOhpm8YC0nbPMnZ" data-pnid-children="mZPBdg76huHtVJ9VmPvzaT">
+  .menu{
+    position:fixed;z-index:120;background:#fff;border:1px solid var(--line);border-radius:10px;
+    box-shadow:var(--sh-2);padding:5px;min-width:132px;animation:pop .14s ease;
+  }
+  .menu button{
+    display:flex;align-items:center;gap:8px;width:100%;height:30px;padding:0 9px;border-radius:6px;
+    font-size:12.5px;color:var(--text-2);text-align:left;white-space:nowrap;
+  }
+  .menu button:hover{background:#F2F4F9;color:var(--text)}
+  .menu button:disabled{opacity:.35;cursor:not-allowed;background:none}
+  .menu .mtitle{font-size:10.5px;color:var(--text-4);padding:4px 9px 3px;letter-spacing:.3px}
+  .row-flex{display:flex;align-items:center;gap:8px}
+  .grow{flex:1;min-width:0}
+  .mt8{margin-top:8px}
+  .mt12{margin-top:12px}
+  .divider{height:1px;background:var(--line-2);margin:10px 0}
+  .txt-mute{color:var(--text-3)}
+  .txt-sm{font-size:12px}
+</style>
+
+<svg data-page-node-id="6mdtRlu4y01AZDBGIUtTYN" aria-hidden="true" height="0" width="0" style="position:absolute"><defs data-page-node-id="3lduGGXE2UC20CTF0ShXsZ">
+  <symbol data-page-node-id="kEMbBlSmQ3nKpIKQJ1ypUt" id="i-plus" viewBox="0 0 24 24"><path data-page-node-id="R55yQuRAYCqrE8fMbuYWbP" d="M12 5v14M5 12h14"/></symbol>
+  <symbol data-page-node-id="5l7wqMewFSAXJVfkN9kt7n" id="i-search" viewBox="0 0 24 24"><circle data-page-node-id="fJDeyDB6mL01yE3yGReJCJ" cx="11" cy="11" r="7"/><path data-page-node-id="tXD1TDDRRwQONe02aoAL73" d="M20 20l-3.6-3.6"/></symbol>
+  <symbol data-page-node-id="WFuraCQOpiz1SAf8uyAWg1" id="i-close" viewBox="0 0 24 24"><path data-page-node-id="A2HaH9C3FQi2VrVQr1KwDZ" d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol data-page-node-id="229Jc4Jg0QK7KpeWQcrvEC" id="i-undo" viewBox="0 0 24 24"><path data-page-node-id="nrw8pkwfH2fxf4bg3I6AKv" d="M9 14l-4-4 4-4"/><path data-page-node-id="ba7bgWRTC4iVoAFYSkyZpn" d="M5 10h9a5 5 0 0 1 0 10h-2"/></symbol>
+  <symbol data-page-node-id="TNrNspD2Eq5wNQtUcSkhpv" id="i-redo" viewBox="0 0 24 24"><path data-page-node-id="9liRfiXdT369RIJK3AryxP" d="M15 14l4-4-4-4"/><path data-page-node-id="G8x0kZbSpFw0WaAaWlxSmP" d="M19 10h-9a5 5 0 0 0 0 10h2"/></symbol>
+  <symbol data-page-node-id="cXTCYcuoJMsEXgI1qpyg3n" id="i-trash" viewBox="0 0 24 24"><path data-page-node-id="fjhObGrjKf0gjcT2FiDspQ" d="M4 7h16"/><path data-page-node-id="hxJKfThdNuNYaXVKgGl9Ny" d="M9.5 7V4.8h5V7"/><path data-page-node-id="0eZDYFOpzUMNyYwObJBmNM" d="M6.5 7l.9 12.2h9.2L17.5 7"/></symbol>
+  <symbol data-page-node-id="vHgFWiIEe7sclBHGlBK2uq" id="i-rotate" viewBox="0 0 24 24"><path data-page-node-id="KCFMJ3MCNIKJUawlfKzvb6" d="M20 12a8 8 0 1 1-2.6-5.9"/><path data-page-node-id="8584foDH3y3Ev9jgsSskr8" d="M20 4v4.5h-4.5"/></symbol>
+  <symbol data-page-node-id="xjVFYI9Rr9mpDxiaK9SQ6G" id="i-hash" viewBox="0 0 24 24"><path data-page-node-id="cXzGrRgcWts403PudfYcYs" d="M9.5 4L7.5 20M17 4l-2 16M4 9h16.5M3.5 15H20"/></symbol>
+  <symbol data-page-node-id="HfVEf2oFaXJfJzMSgtS4rI" id="i-image" viewBox="0 0 24 24"><rect data-page-node-id="RgiyJwmFyns7y8etGWc6JC" height="15" rx="2.2" width="18" x="3" y="4.5"/><circle data-page-node-id="KrkMnEs7G7oA24ely1Yf9e" cx="8.6" cy="10" r="1.6"/><path data-page-node-id="G2M4FkD3Dt3fdPv2STkMiU" d="M21 15.5l-4.8-4.6-8.4 8.4"/></symbol>
+  <symbol data-page-node-id="iCvuBnjsvjPc4F7AFvfBeq" id="i-download" viewBox="0 0 24 24"><path data-page-node-id="yuy8uxxXBKfepDylT15vTW" d="M12 4v11"/><path data-page-node-id="lC16PUdUXXJ4PAnhoKVhAv" d="M8 11.5l4 4 4-4"/><path data-page-node-id="g1pXaOMOZ2rea6XKHo0kjf" d="M4.5 19.5h15"/></symbol>
+  <symbol data-page-node-id="6gjU3gqBGxWQ3yPAv7Qgos" id="i-upload" viewBox="0 0 24 24"><path data-page-node-id="DifeO5FehD94u5wjO7d2Yg" d="M12 19.5V8.5"/><path data-page-node-id="pNUoXffEJfB8U4GeU7ahaa" d="M8 12l4-4 4 4"/><path data-page-node-id="E2gJ2MDOpaa1fum4Yq0gJA" d="M4.5 4.5h15"/></symbol>
+  <symbol data-page-node-id="OU5yU1NjGbhbbuZJsrm6ah" id="i-save" viewBox="0 0 24 24"><path data-page-node-id="8a7NuPnMIf6VqfNTQIvGp4" d="M5 4.5h10.5L19 8v11.5H5z"/><path data-page-node-id="9PbMmx6hUqTHk6BQMhrWe4" d="M8.5 4.5v5h6.5v-5"/><path data-page-node-id="EHQHpUBmGUuL5R6EEMIRNm" d="M8.5 19.5v-6h7v6"/></symbol>
+  <symbol data-page-node-id="dzjclSmDbMKDe6zNp8lSNk" id="i-grid" viewBox="0 0 24 24"><rect data-page-node-id="an0kRaF3JgNopDIsStFHP8" height="7" rx="1.4" width="7" x="4" y="4"/><rect data-page-node-id="qe2jVKgElnZzXcitCat3ce" height="7" rx="1.4" width="7" x="13" y="4"/><rect data-page-node-id="NRDclTbOXZJsEPflI7jP8o" height="7" rx="1.4" width="7" x="4" y="13"/><rect data-page-node-id="JYwLSr6IApKSRaVJxOvQga" height="7" rx="1.4" width="7" x="13" y="13"/></symbol>
+  <symbol data-page-node-id="2QPT9JOsG65Dduxx5NKCC6" id="i-door" viewBox="0 0 24 24"><path data-page-node-id="QTeN4wy6hWc83MykwqBsRZ" d="M6 3.5h12v17H6z"/><path data-page-node-id="EToOhyeV0iR8tKwBweJviN" d="M14.5 12h.01"/><path data-page-node-id="HpQJpa4vfXWIB03FOIEWYQ" d="M4 20.5h16"/></symbol>
+  <symbol data-page-node-id="jVh2kCrsJxaVRLJWl0NmGb" id="i-users" viewBox="0 0 24 24"><circle data-page-node-id="t0SgIfOfviJXDQ3VqD14gg" cx="9.5" cy="8.5" r="3.2"/><path data-page-node-id="tOVF2yjSH7We1uFlvE8LSg" d="M3.5 20c0-3.2 2.7-5 6-5s6 1.8 6 5"/><path data-page-node-id="y5F4L5VHZLB2RDTs4rdY8G" d="M16.5 5.6a3 3 0 0 1 0 5.8"/><path data-page-node-id="WzZx6NSRw4LIncwnY7WYBL" d="M18.5 20c0-2.3-.7-3.8-1.8-4.6"/></symbol>
+  <symbol data-page-node-id="aBW25n8yUu1vPYbD6zYanj" id="i-align-l" viewBox="0 0 24 24"><path data-page-node-id="LqkiWIKfCxLhIFJMN5IhQZ" d="M4 4v16"/><path data-page-node-id="18V5G5bCv5LsHEET26MgT8" d="M8 8h11M8 16h7"/></symbol>
+  <symbol data-page-node-id="esV4c0LGMiAdhQbrHWAXmn" id="i-align-c" viewBox="0 0 24 24"><path data-page-node-id="N0mAXphVmpIv7E3TKqtvUA" d="M12 4v16"/><path data-page-node-id="5ksgi4GoqS0nHUNBYgRCFu" d="M6.5 8h11M8 16h8"/></symbol>
+  <symbol data-page-node-id="cnKq0W4RW3BNsTpKrkjO3N" id="i-align-r" viewBox="0 0 24 24"><path data-page-node-id="I8l2bStd6kyAOBuBM7Zrg7" d="M20 4v16"/><path data-page-node-id="xxRxJ1Sp8kIMZh4LqIt3gM" d="M16 8H5M16 16h-7"/></symbol>
+  <symbol data-page-node-id="qfqKlcxBsYUQmAohT9WOSO" id="i-align-t" viewBox="0 0 24 24"><path data-page-node-id="F4ebLKgw2zefi1CgR1zaxI" d="M4 4h16"/><path data-page-node-id="4kN5kIJ9TIEBHGHvXyMO9i" d="M8 8v10M16 8v7"/></symbol>
+  <symbol data-page-node-id="mTP7da2VYZOg24BCnIIL3n" id="i-align-m" viewBox="0 0 24 24"><path data-page-node-id="WbRiNBIs2pKVxmRG3FfMRT" d="M4 12h16"/><path data-page-node-id="NmiEKhgJTnUu1SEocMRAAY" d="M8 6.5v11M16 8v8"/></symbol>
+  <symbol data-page-node-id="4UZAZXEfEcPlrkpPkPP7Lw" id="i-align-b" viewBox="0 0 24 24"><path data-page-node-id="xeWiSyRlPdwMARRsLPOK0k" d="M4 20h16"/><path data-page-node-id="hkRbBkgX2GY3fDElC1nPM2" d="M8 16V6M16 16V9"/></symbol>
+  <symbol data-page-node-id="S7jKbzYUDMDUuo19Pdr3mb" id="i-refresh" viewBox="0 0 24 24"><path data-page-node-id="Ch2uZZaCHQCM3AF7cV4Pud" d="M20 12a8 8 0 1 1-2.6-5.9"/><path data-page-node-id="S9tnUqUbdTJlAvGDl72jVf" d="M20 4v4.5h-4.5"/></symbol>
+  <symbol data-page-node-id="jB07F6MII9N56sHZ3HvfTS" id="i-swap" viewBox="0 0 24 24"><path data-page-node-id="uzjslZlyrdNTt0xu915ids" d="M4 8h13"/><path data-page-node-id="UzLiAavnf1ZsyFKxbsohpl" d="M14 5l3 3-3 3"/><path data-page-node-id="00HUFCGKOwfQ8uLr6ZKycD" d="M20 16H7"/><path data-page-node-id="0Hlb203wg7x6YyXWS4zzrU" d="M10 13l-3 3 3 3"/></symbol>
+  <symbol data-page-node-id="dapes0AhxOThpGw0SosaCM" id="i-edit" viewBox="0 0 24 24"><path data-page-node-id="LfvBMfXDrF3rn03HUeV1RE" d="M4 20h4L18.5 9.5a2 2 0 0 0-2.8-2.8L5 17.4z"/><path data-page-node-id="JE2OgVJIG9Vn4q8h4uwoRo" d="M14 7.2l2.8 2.8"/></symbol>
+  <symbol data-page-node-id="mpgVCLAq2E92I0H3Tu2psS" id="i-cursor" viewBox="0 0 24 24"><path data-page-node-id="jhSeKwLiMl5CWh1UyiKAPw" d="M5 3.5l14 7-6 1.6-2.4 6z"/></symbol>
+  <symbol data-page-node-id="dU9GKCdmTMJGlLUuzJ05R9" id="i-help" viewBox="0 0 24 24"><circle data-page-node-id="ksGGpawS4k8ArGCWOZbVau" cx="12" cy="12" r="8.5"/><path data-page-node-id="185WjofRiajhcaWf1M0una" d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.7.3-1 .8-1 1.6v.3"/><path data-page-node-id="QHQG1ZLR4WnZWRiSEcV0W3" d="M12 17h.01"/></symbol>
+  <symbol data-page-node-id="uTHpx8yElTScC4WBqA0JY9" id="i-expand" viewBox="0 0 24 24"><path data-page-node-id="2fZTWKhjEDlX9644Do6nf2" d="M9 4H4v5M15 4h5v5M15 20h5v-5M9 20H4v-5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-grid-sm" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></symbol>
+</defs></svg>
+
+<div data-page-node-id="I39ivujDwwqzA0LlhdN8GK" class="app">
+  <header data-page-node-id="jWT0w7EKlxsJHv5wfbG7Un" class="topbar">
+    <div data-page-node-id="RIuxujZTjbcgG2WzfY6PRC" class="brand">
+      <div data-page-node-id="zz3h64AphrM7CZzN7ce8uZ" class="logo"><!--pnid:2YC1ADJvpobk6km4aA6iFE--><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7.5" height="7.5" rx="2"/><rect x="13" y="3.5" width="7.5" height="7.5" rx="2"/><rect x="3.5" y="13" width="7.5" height="7.5" rx="2"/><path d="M16.75 13.5v6.5M13.5 16.75H20"/></svg></div>
+      <div data-page-node-id="maIWwNevoTjKmXau34K1hP">
+        <h1 data-page-node-id="1ctFJT7pLWXFAh5NVf3qFU"><!--pnid:DBfbQI2zjshacgQ9LaJtWD-->工位<i>分配</i>工作台</h1>
+        <p data-page-node-id="Tv7HmYU4xb5PCGaMZbVNzT"><!--pnid:eBQefLEOGK77h10VH7Ns2C-->可视化工位地图 · 拖拽分配 · 实时协作</p>
+      </div>
+    </div>
+
+    <div data-page-node-id="gFqmnRO2pjM5pNRpjlAAaK" class="stats">
+      <div data-page-node-id="WIWBsZpWrcgyGW2UsXZ0VF" class="stat"><b data-page-node-id="kEQzEIsUwjIoqJroda3d9F" data-sp-bindable="database" data-sp-database-id="OPYP81p07OWDXOXSCyjVei" id="stTotal"><!--pnid:G7SC1k0MjZUe5sw1A5woZn-->—</b><span data-page-node-id="EUaemrJfDR5fcMYUfbES5u"><!--pnid:9zfHcaS1uM8IsWAm4HcTbi-->工位总数</span></div>
+      <div data-page-node-id="H79vpyV1egyGDqKhNmkIPx" class="stat hl"><b data-page-node-id="1lR9sv0ZwZw9lU2BRecQEV" data-sp-bindable="database" data-sp-database-id="NXBMH58F6gGhRHKFicpSGb" id="stAssigned"><!--pnid:g4htNF0RbLkFkllRDrxwQn-->—</b><span data-page-node-id="qvXYjwzwXc4KcI4y9RWMq1"><!--pnid:DddoDPTZTrV3nbyS2Gkuyv-->已分配</span></div>
+      <div data-page-node-id="a3CtwSGHSEkAyPMIgIfZbv" class="stat warn"><b data-page-node-id="5kvCC8AAku5dAZZDez1bNg" data-sp-bindable="database" data-sp-database-id="OPYP81p07OWDXOXSCyjVei" id="stFree"><!--pnid:G5RlECYpCioE0DcyXSVW4e-->—</b><span data-page-node-id="d1ZVVSe0yc99BTPsLv4mj3"><!--pnid:XCJksyw5gRxJyyr0nKH3Ig-->空闲</span></div>
+      <div data-page-node-id="0Xq351K5xjRj1AfrXM9ALB" class="stat"><b data-page-node-id="xnERcCe9vlWWZt3P0qNbHU" data-sp-bindable="database" data-sp-database-id="OPYP81p07OWDXOXSCyjVei" id="stRate"><!--pnid:7TjDfOdzzVBM8VfAZHB0cC-->—</b><span data-page-node-id="YNIL3f3incTSv7SnjVcLrD"><!--pnid:TObHSkD79PspfJ5CM79YCy-->占用率</span><div class="meter"><u id="rateMeter" style="width:0%"></u></div></div>
+      <div data-page-node-id="UCA6El97UXh3LjzCGotzrS" class="stat"><b data-page-node-id="DRDlDBjly6Optxbj4ovo6J" data-sp-bindable="database" data-sp-database-id="NXBMH58F6gGhRHKFicpSGb" id="stPeople"><!--pnid:LEK9GmG3xQr80n3dzOckXW-->—</b><span data-page-node-id="XjLKgBfErZonWr3RReDtzH"><!--pnid:ujRTw82CbE2QyQNHYaRuHq-->待分配人员</span></div>
+    </div>
+
+    <div data-page-node-id="0jSfE9hcI5b8GtBbYfnwT7" class="topbar-actions">
+      <div data-page-node-id="upZx5mgPVWlMWZlRlwvvoS" class="sync" id="syncState"><i data-page-node-id="SRDzKDOfzw6DtFeXMWMf9J"></i><span data-page-node-id="DMJ6XOI9telPhTwTDeyGyh"><!--pnid:HhmO4ROMCHaRPTRCMgtFtE-->已同步</span></div>
+      <button data-page-node-id="lrub4vYmVLuBq3GzRtKrZI" class="btn" id="btnImportExcel" title="按 Excel 批量分配工位">
+        <svg data-page-node-id="Kq19IznDh1y7o75Cf6zGVj" class="ic"><use data-page-node-id="Dd8aylpo4JOdwksV5BJU12" href="#i-upload"/></svg><span data-page-node-id="MuuqRbiU7q400tlimakgc1" class="lbl"><!--pnid:ZFFsFHl80SSwG2iYlbOeU3-->导入 Excel</span>
+      </button>
+      <button data-page-node-id="Y9rcNbAwy2GAe5bzTndcJR" class="btn" id="btnExportExcel" title="导出分配结果">
+        <svg data-page-node-id="Ratq6yruopverWH2qZZUbl" class="ic"><use data-page-node-id="b3F3Rzy31jeLenfcDILq6d" href="#i-download"/></svg><span data-page-node-id="UkLUr3XkFgzYANE2q02u07" class="lbl"><!--pnid:NqV1qq1mOBe7w91lfZbHTS-->导出结果</span>
+      </button>
+      <button data-page-node-id="LYkWqZqrHu94Nh4ZcV4YrU" class="btn ghost icon" id="btnHelp" title="使用说明">
+        <svg data-page-node-id="b2Fkisms8ML2cNNC3IIyDu" class="ic"><use data-page-node-id="4u86xZLhh9j5jsfvgqJ67o" href="#i-help"/></svg>
+      </button>
+      <button class="btn ghost icon" id="btnTheme" title="切换浅色 / 深色主题">
+        <svg class="ic" id="themeIcon"><use href="#i-moon"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="demo-bar" id="demoBar" hidden>
+    <span class="dot"></span>
+    <b>离线演示版</b>
+    <span>数据只保存在这台电脑的浏览器里，不会同步到资料库，也无法多人协作。需要正式用时，请在 WorkBuddy 左侧「资料库」中打开「工位分配工具」。</span>
+    <button class="btn sm" id="btnDemoReset">重置演示数据</button>
+  </div>
+
+  <div data-page-node-id="8WQCicGxaygHx6WWrmOk9k" class="workspace">
+    <aside data-page-node-id="dUSKPRELTmgrt0XgsC86IX" class="panel panel-left">
+      <div data-page-node-id="Zmc4nnoqBzukWhKkArqmnK" class="panel-head">
+        <h2 data-page-node-id="3ZMctvbUoaYiQdyLCp9RDO"><!--pnid:SBhrMVrCT9Swb7fUqoG3HH-->待分配人员 <span data-page-node-id="savvrROZ7wUGA4UarVFr9z" class="pill" data-sp-bindable="database" data-sp-database-id="NXBMH58F6gGhRHKFicpSGb" id="unassignedCount"><!--pnid:I4DmWCH8GnZSNa9CNSUAtl-->0</span></h2>
+        <button data-page-node-id="SjQxnXdrJdD10zQyCD2IHY" class="btn ghost icon sm" id="btnRefresh" title="刷新数据">
+          <svg data-page-node-id="fPoRkmi5SA4QOVlt2Oo4ic" class="ic"><use data-page-node-id="4Ovr2694Dqkvyo8ohSRV2c" href="#i-refresh"/></svg>
+        </button>
+      </div>
+      <div data-page-node-id="ZqgntZFlvKMSzaYOxgYAbh" class="filter-bar">
+        <div data-page-node-id="ZW7PUMFiaGc6tO7zzrYIi8" class="search">
+          <svg data-page-node-id="BA0EHb2dyfj4rEcqHPDWlT" class="ic"><use data-page-node-id="tkdg6W6gm74K5zmBY1fcgD" href="#i-search"/></svg>
+          <input data-page-node-id="nQL5f0c7JNIDGXckD7gSh1" autocomplete="off" id="searchInput" placeholder="搜索姓名 / 工号 / 职位" type="text">
+          <span class="skey kbd">/</span>
+        </div>
+        <div data-page-node-id="bGBayo6Zr5exMdVWtGKbeY" class="chips" id="deptChips"></div>
+      </div>
+      <div data-page-node-id="ybGFmeLJqBPtk6IVUFZybF" class="people-list" id="peopleList"></div>
+      <div data-page-node-id="REcos3pcQk8essWArr8LFr" class="panel-foot"><!--pnid:sG7ysg3YUR3IIWQc1SOIiH-->拖拽姓名到工位即可分配；也可以先点人，再点工位。</div>
+    </aside>
+
+    <section data-page-node-id="3arPmKW2ZTFAvX2quLF4Ik" class="stage">
+      <div data-page-node-id="2BhAWSd7lWeLBFMi70BOp3" class="stage-bar">
+        <div data-page-node-id="DdehEuXclYcAbyHkl2VzmU" class="seg" id="modeSeg">
+          <button data-page-node-id="OWqpF6SGbCScM1TCLQaeXr" class="on" data-mode="assign"><svg data-page-node-id="gt3nEvEx9C5RNHIRIsQrH5" class="ic"><use data-page-node-id="P1Po9XV945soxwadxQiLAP" href="#i-cursor"/></svg><!--pnid:recjvxc50viRz4rycbubPo-->分配模式</button>
+          <button data-page-node-id="TFcjgBHjUWiHTPuCOe5UGO" data-mode="edit"><svg data-page-node-id="fcONsLzo6NtLHVXT7rDAnt" class="ic"><use data-page-node-id="HkOtbNNLcXmAovTwhsPmdK" href="#i-edit"/></svg><!--pnid:9F2F5kHHznWn6r0nkJ7x9E-->编辑工位图</button>
+        </div>
+
+        <div data-page-node-id="CWXv4VzB0CfbfbVRhFs4qc" class="tools" id="assignTools">
+          <button data-page-node-id="Bg4E9ca92Ld0m5LdncIDEu" class="tbtn" id="btnToggleUnderlay"><svg data-page-node-id="mNeWzZiku3cXB2xOvQGb4I" class="ic"><use data-page-node-id="uiORZuyfhUYLJMn6tpkqkZ" href="#i-image"/></svg><!--pnid:1oiMBIqrAxCX7OIMzTjIts-->底图</button>
+          <button data-page-node-id="YJeQaoh9Dj0Pw2ZgGm2ZEi" class="tbtn" id="btnFitAssign"><svg data-page-node-id="3jmdnsZk9JbZr1V7TJqXCS" class="ic"><use data-page-node-id="yh0oXh9F2zlvBPeEkP7GIE" href="#i-expand"/></svg><!--pnid:EF39B5kraZgxwbiQIMDxHA-->适应窗口</button>
+        </div>
+
+        <div data-page-node-id="iihOJKLFcsKlSYV0UoNyHS" class="tools" hidden id="editTools">
+          <button data-page-node-id="SNlwy23KgLOpMtFRDMDVne" class="tbtn" id="btnAddSeat"><svg data-page-node-id="TPF5ACHNmPgaRLW9jr2tYG" class="ic"><use data-page-node-id="BI04sVkjPlxE9dwWGflJua" href="#i-plus"/></svg><!--pnid:o4mW1LC6xiFliPY5ztiT3p-->工位</button>
+          <button data-page-node-id="sB6vFeFibZYu2FEQYP5221" class="tbtn" id="btnAddGroup"><svg data-page-node-id="PjDjK52DUNPuL64sBdsCeM" class="ic"><use data-page-node-id="MLBA3o0oJCN0SOZL52svlE" href="#i-grid"/></svg><!--pnid:sK0sDao0Z0m1qiUoLXcoaw-->桌组</button>
+          <button data-page-node-id="cdB6IfAcfYyfvWiM0l8TgW" class="tbtn" id="btnAddFacility"><svg data-page-node-id="qs5c4jPBk2FeWSGa915u6f" class="ic"><use data-page-node-id="4p47ZhWbZg8hUHRIfWOChk" href="#i-door"/></svg><!--pnid:zcaVbYNpXZi6QAR3ALhP6P-->设施</button>
+          <div data-page-node-id="qv0isIRVVbg5fDxf4gYvC8" class="tdiv"></div>
+          <button data-page-node-id="awZL7mmiZ8meL9gnxrMI9Z" class="tbtn" id="btnRotate" title="旋转 90°"><svg data-page-node-id="OztlIoN8m9F7LRgbbTbcZK" class="ic"><use data-page-node-id="V3X3YJ8iV63QFMvVooggDj" href="#i-rotate"/></svg><!--pnid:juBXnTOKk7YNyM3dsM3v26-->旋转</button>
+          <button data-page-node-id="czLGVaceRmcKRmagH9WdBZ" class="tbtn" id="btnAlignMenu" title="对齐"><svg data-page-node-id="PBHfx8M86hrwIaI5WJQOe4" class="ic"><use data-page-node-id="PwjAncQ7GfCbIcAaXPFeFd" href="#i-align-l"/></svg><!--pnid:94AuQqzPdvPGI2e4wkFiOU-->对齐</button>
+          <button data-page-node-id="x8J20tzEqzPADrCDCmJiti" class="tbtn" id="btnNumber" title="批量编号"><svg data-page-node-id="fDaM4u1ennerLFx9RxYGUk" class="ic"><use data-page-node-id="Fr853Skp6xZnsLXGLzndkq" href="#i-hash"/></svg><!--pnid:5vFq9BjxjD4S7RIiv4VRVe-->编号</button>
+          <div data-page-node-id="gMkHelAGxYslv52v2sDOA1" class="tdiv"></div>
+        </div>
+
+        <div data-page-node-id="D64AWOtvG5Py2PX0U63fad" class="tools grow">
+          <div data-page-node-id="eWF5o3yM3VkZY9paBzgtdl" class="tools" hidden id="historyTools">
+            <button data-page-node-id="q88H1wJvMYRHD6WAChxVJQ" class="tbtn" id="btnUndo" title="撤销 (Ctrl+Z)"><svg data-page-node-id="eUuoQbLONXy2VYReioR9b2" class="ic"><use data-page-node-id="M57bImG5xny83ibQi4WnGC" href="#i-undo"/></svg></button>
+            <button data-page-node-id="UW5FCq649rG2ubp5fdoxUr" class="tbtn" id="btnRedo" title="重做 (Ctrl+Shift+Z)"><svg data-page-node-id="3Epu3XI59IdVnEeqNJJDLz" class="ic"><use data-page-node-id="IwcFaKw7W6qbMpealWljpE" href="#i-redo"/></svg></button>
+            <div data-page-node-id="o3OPcWQIyHFQcjRO5PHLw1" class="tdiv"></div>
+          </div>
+          <div data-page-node-id="KgrnKGcJ0H1jcqkJGdNPDp" class="zoom">
+            <button data-page-node-id="K4F8lOIHLOQh6kMxv5EgkK" id="btnZoomOut" title="缩小"><!--pnid:uY4s4Z7bwoUEru3qPZDfMU-->−</button>
+            <span data-page-node-id="9Rl5bCGYVIgNW96LjnYrfK" id="zoomLabel" title="点击适应窗口"><!--pnid:Iml5hf5oxMY6X5GgJNKB9a-->100%</span>
+            <button data-page-node-id="TmRXQgGiGT1SfHKjR0dDVQ" id="btnZoomIn" title="放大"><!--pnid:P02ylgdkkBCXelc51RYToN-->+</button>
+          </div>
+        </div>
+      </div>
+
+      <div data-page-node-id="8ZAhW96QSEDbpGMdLRC9yA" class="canvas-wrap" id="canvasWrap">
+        <svg data-page-node-id="XDdqwBmhRcPfEiDzk0qtfA" id="map" xmlns="http://www.w3.org/2000/svg">
+          <defs data-page-node-id="5oFpchDyCOyfbuAj8WUx3V">
+            <pattern data-page-node-id="qhrRkPm7exhsmlFRgCXlta" height="20" id="dots" patternUnits="userSpaceOnUse" width="20">
+              <circle data-page-node-id="Rm2ZFb6CETnq7w8fCbLgKs" cx="1" cy="1" r="1" style="fill:var(--canvas-dot)"></circle>
+            </pattern>
+            <filter data-page-node-id="5uKOp26cGLJCFHc5bU8tlG" height="160%" id="seatShadow" width="160%" x="-30%" y="-30%">
+              <feDropShadow data-page-node-id="cm5gn18I9C1w6gtXxR5nZ2" dx="0" dy="1" flood-color="#1B2130" flood-opacity="0.10" stdDeviation="1.4"></feDropShadow>
+            </filter>
+            <linearGradient id="donutGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#5B7CFF"/><stop offset="1" stop-color="#12B886"/>
+            </linearGradient>
+          </defs>
+          <rect data-page-node-id="tfzTSb41MdrHyErMbaV1sY" height="580" id="paper" rx="14" style="fill:var(--paper);stroke:var(--paper-line)" width="1100" x="0" y="0"></rect>
+          <g data-page-node-id="gh9mCz0pcADOMCWCAOO6XH" id="gridLayer"></g>
+          <g data-page-node-id="LLa1JLJgylbsYToWM32lxY" id="underlayLayer"></g>
+          <g data-page-node-id="AOS9SMYDaUEh5gcCYB8zke" id="zoneLayer"></g>
+          <g data-page-node-id="8RFMOuBPlw4dXugxUOOB2u" id="seatLayer"></g>
+          <g data-page-node-id="BYke7trx3C65caOAnGoKQe" id="overlayLayer"></g>
+        </svg>
+
+        <div data-page-node-id="D30I6aO2Urg6X5a6lmUQM8" class="map-empty" hidden id="mapEmpty">
+          <div data-page-node-id="0ca8Ss7jEmbxkl88dB5gtV" class="box">
+            <b data-page-node-id="ZWpuS1iQo2pfAW4OkrGwZK"><!--pnid:dPD3bc08MZa3JuzI1HHkis-->工位图还是空的</b>
+            <p data-page-node-id="8OpTqIasK3JrZJabbzIebw"><!--pnid:W9BX9Q7d5DiEEbH36CW4PP-->切到「编辑工位图」添加工位，或导入现成的 SVG / Excel 工位图。</p>
+            <button data-page-node-id="2lFPak5njf63GCjkpgaMvn" class="btn primary sm" id="btnEmptyEdit"><!--pnid:opLvGULzIBeJqo9Uc4f63q-->开始编辑工位图</button>
+          </div>
+        </div>
+
+        <div data-page-node-id="OnRMVYmcGzzG9wGtK4AGcH" class="map-empty" hidden id="mapEmptyOffline">
+          <div data-page-node-id="asryiWbpRpzzWeOo2kJRZI" class="box">
+            <b data-page-node-id="qsRs5UDejxOOlATmIK98EZ"><!--pnid:wAkhvyuv78j4R1rNC6NX8y-->没有连上资料库数据服务</b>
+            <p data-page-node-id="vXlwaTqkhAcFSKGXMrPAGB"><!--pnid:EEmCc3lwC0zAzaXlEarmO2-->右上角显示「未连接」，说明当前不是在资料库里打开本页面（例如在浏览器中直接打开了本地 HTML 文件）。<br data-page-node-id="yVsLLjP0fZzMW9S08MYaXi"><!--pnid:5S2gC2eMRFS6yVje6lbFG0-->请打开 <b data-page-node-id="rrsrEmOwGx0OAnwto8qcIP"><!--pnid:0se2smDe65Zf5SOEWJEXrn-->https://www.workbuddy.cn/space/d/KG7g1RcasyTsRuH6fywcyI</b><!--pnid:K3kG6cHjrQmCuQjCyhm30w-->，或在 WorkBuddy 左侧「资料库」里进入「工位分配工具」。</p>
+          </div>
+        </div>
+
+        <div data-page-node-id="F4Djlvgicyg5ZBCDRwcYRm" class="save-float" hidden id="saveBox">
+          <span data-page-node-id="tnPVBXgABAcycsBrsqst6A" class="st" id="saveState"><i data-page-node-id="xxH4yO4qw5DUTFfX9MjTbZ"></i><span data-page-node-id="NI0wEG29BuJu7Ca5Lnogp8" id="saveStateText"><!--pnid:ysmvGvmJZYHiZuowIL6UcO-->有未保存的修改</span></span>
+          <button data-page-node-id="Hvb0TWDQuObcgUpkaIdncv" class="btn sm" id="btnCancelEdit"><!--pnid:DkNWQbF8OXlTGvWfZrhXEf-->取消</button>
+          <button data-page-node-id="jP1014UZMozU843rtjZxp7" class="btn sm primary" id="btnSaveMap"><svg data-page-node-id="7GTrXLbc4vv8HHUtcDYFuv" class="ic"><use data-page-node-id="5yeQKzkT3u3ZXDZS1qRfZV" href="#i-save"/></svg><!--pnid:ES1ls0cwHYk1bCpomkVBKa-->保存工位图</button>
+        </div>
+        <div data-page-node-id="LQGvRK5Q3BOSAMgVcpJJci" class="canvas-hud" data-sp-bindable="database" data-sp-database-id="OPYP81p07OWDXOXSCyjVei" id="canvasHud"></div>
+        <div data-page-node-id="JzEWeRV7D9nlt8qCLdcnzV" class="canvas-legend">
+          <span data-page-node-id="RwCt9J8pYKBcXDVuK8yIc5"><i data-page-node-id="btFuI6PPNWX22VbHHQuRTZ" style="background:var(--seat-free-bg); box-shadow:inset 0 0 0 1px var(--seat-free-line)"></i><!--pnid:bBQhIyYo7GjrtyGj4g9Eif-->空闲</span>
+          <span data-page-node-id="ZCP6TqmezbOywY2YZBUqbw"><i data-page-node-id="7bQplC26YBLKlweAtPGIaX" style="background:var(--primary-soft); box-shadow:inset 0 0 0 1px var(--primary-line)"></i><!--pnid:6e0glQOX4bDLECQEoqTYg0-->已占用</span>
+          <span data-page-node-id="FLymVuDVI3cPWOrMTs0cZa"><i data-page-node-id="T7vQhnfWQMSEBrhNbEa7Wo" style="background:var(--fac-def-bg); box-shadow:inset 0 0 0 1px var(--fac-def-line)"></i><!--pnid:MuXRErs1Kb4uWIE2dTCLEM-->功能设施</span>
+        </div>
+        <div class="seat-tip" id="seatTip"></div>
+        <div data-page-node-id="daJio5GvBu7mE4IGZaA7ZZ" class="loading-mask" id="loadingMask"><span data-page-node-id="h8xx5ntii5Fu1nDUnuLIc8" class="spin"></span><span data-page-node-id="cOfet2Bi2lGhlYS0wRpqoE"><!--pnid:0FYUczOBv3XSCHEC2L4zap-->正在加载数据…</span></div>
+      </div>
+    </section>
+
+    <aside data-page-node-id="HjJlMNsShha8o2dw0sigLK" class="panel panel-right" id="panelRight">
+      <div data-page-node-id="dKT73LI7MXgYrBYRK5ukyH" id="detailBody"></div>
+    </aside>
+  </div>
+</div>
+
+<div data-page-node-id="wc03lnJHDevVr3B6DPHyj1" id="modalRoot"></div>
+<div data-page-node-id="kouQm7c8M28sZ81FDlmeO3" class="toast" id="toast"></div>
+<script data-page-node-id="6XMi4O4Z4xi5lRmMWHMipJ" data-pnid-children="r0UGFTZ84KlEkExp4FudNr">
+/* =========================================================
+   工位分配工具 — 核心状态 / 数据层
+   ========================================================= */
+var DBX = {
+  emp: 'NXBMH58F6gGhRHKFicpSGb',
+  seat: 'OPYP81p07OWDXOXSCyjVei',
+  set: 'EfZth8HwMZk6ux79N46Lcb'
+};
+
+var S = {
+  employees: [],
+  seats: [],
+  dbSeats: [],
+  settings: {},
+  underlay: '',
+  underlayName: '',
+  underlayOpacity: 0.45,
+  world: { w: 1100, h: 580 },
+  mapName: '办公室平面图',
+  mode: 'assign',
+  selection: [],
+  pendingPerson: '',
+  filter: { q: '', dept: '' },
+  view: { x: 0, y: 0, w: 1100, h: 580 },
+  history: [],
+  hIdx: -1,
+  dirty: false,
+  showUnderlay: true,
+  loading: true,
+  online: true,
+  dragging: null,
+  saving: false
+};
+
+var DEPT_PALETTE = [
+  { key: '产品', c: '#6C5CE7', s: '#F1EEFF' },
+  { key: '研发', c: '#3B6CF6', s: '#ECF1FF' },
+  { key: '技术', c: '#3B6CF6', s: '#ECF1FF' },
+  { key: '设计', c: '#D9437A', s: '#FDEEF4' },
+  { key: '市场', c: '#E07B22', s: '#FFF3E6' },
+  { key: '运营', c: '#0F9D8B', s: '#E6F8F4' },
+  { key: '人事', c: '#6E7A90', s: '#F0F2F7' },
+  { key: '行政', c: '#6E7A90', s: '#F0F2F7' },
+  { key: '财务', c: '#B08900', s: '#FBF4DC' }
+];
+var FALLBACK_DEPT = { c: '#6E7A90', s: '#F0F2F7' };
+
+function isDarkTheme() {
+  return document.documentElement.getAttribute('data-theme') === 'dark';
+}
+function hexA(hex, a) {
+  var h = String(hex || '').replace('#', '');
+  if (h.length === 3) h = h.charAt(0) + h.charAt(0) + h.charAt(1) + h.charAt(1) + h.charAt(2) + h.charAt(2);
+  var n = parseInt(h, 10);
+  if (isNaN(n)) return hex;
+  return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
+}
+
+function $(id) { return document.getElementById(id); }
+function esc(s) {
+  if (s === null || s === undefined) return '';
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function clone(o) { return JSON.parse(JSON.stringify(o)); }
+function num(v, d) { var n = parseFloat(v); return isFinite(n) ? n : (d || 0); }
+function initials(name) { return name ? String(name).slice(-2) : '?'; }
+function deptStyle(dept) {
+  var d = String(dept || '');
+  var hit = FALLBACK_DEPT;
+  for (var i = 0; i < DEPT_PALETTE.length; i++) {
+    if (d.indexOf(DEPT_PALETTE[i].key) >= 0) { hit = DEPT_PALETTE[i]; break; }
+  }
+  if (isDarkTheme()) return { c: hit.c, s: hexA(hit.c, 0.16) };
+  return hit;
+}
+function trimStr(v) { return String(v === null || v === undefined ? '' : v).replace(/^\s+|\s+$/g, ''); }
+
+function sdk() {
+  if (DEMO) return null; /* 演示版只读写本机 localStorage */
+  if (window.__SMART_PAGE__ && window.__SMART_PAGE__.database) return window.__SMART_PAGE__.database;
+  return null;
+}
+
+/* ---------- 离线演示模式（本地 HTML 双击打开时使用） ---------- */
+var DEMO = !!(window.__WB_DEMO__);
+var LS_KEY = 'wb-seat-tool-demo-v1';
+
+function lsRead() {
+  try { return JSON.parse(localStorage.getItem(LS_KEY)) || null; } catch (e) { return null; }
+}
+function lsWrite(d) {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(d)); } catch (e) { /* 隐私模式下忽略 */ }
+}
+function unwrapField(v) {
+  if (v === null || v === undefined) return '';
+  if (typeof v === 'object') {
+    if (v.text !== undefined) return v.text;
+    if (v.number !== undefined) return v.number;
+  }
+  return v;
+}
+/* 首次打开用内置预置数据铺底，之后所有改动都落在 localStorage */
+function demoStore() {
+  var d = lsRead();
+  if (d && d.emp && d.seat && d.set) return d;
+  d = { emp: [], seat: [], set: [] };
+  var s = window.DEMO_SEED || {};
+  var i, e, t, g;
+  for (i = 0; i < (s.employees || []).length; i++) {
+    e = s.employees[i];
+    d.emp.push({ _id: 'demp' + i, '姓名': e['姓名'], '工号': e['工号'], '部门': e['部门'], '职位': e['职位'], '工位号': e['工位号'] });
+  }
+  for (i = 0; i < (s.seats || []).length; i++) {
+    t = s.seats[i];
+    d.seat.push({ _id: 'dseat' + i, '工位号': t['工位号'], '名称': t['名称'], '类型': t['类型'], '区域': t['区域'], 'X': t['X'], 'Y': t['Y'], '宽度': t['宽度'], '高度': t['高度'], '旋转': t['旋转'] });
+  }
+  for (i = 0; i < (s.settings || []).length; i++) {
+    g = s.settings[i];
+    d.set.push({ _id: 'dset' + i, '项目': g['项目'], '内容': g['内容'] });
+  }
+  lsWrite(d);
+  return d;
+}
+function demoList(dbId, d) {
+  if (dbId === DBX.emp) return d.emp;
+  if (dbId === DBX.seat) return d.seat;
+  return d.set;
+}
+function demoWrite(dbId, rid, props, isAdd) {
+  var d = demoStore();
+  var list = demoList(dbId, d);
+  var row = null, i, k;
+  if (isAdd) {
+    row = { _id: 'd' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6) };
+    for (k in props) if (props.hasOwnProperty(k)) row[k] = unwrapField(props[k]);
+    list.push(row);
+  } else {
+    for (i = 0; i < list.length; i++) if (list[i]._id === rid) { row = list[i]; break; }
+    if (!row) return Promise.resolve({ id: rid });
+    for (k in props) if (props.hasOwnProperty(k)) row[k] = unwrapField(props[k]);
+  }
+  /* 设置表按「项目」去重，避免每次保存都堆一行 */
+  if (dbId === DBX.set) {
+    var key = row['项目'];
+    var keep = [];
+    for (i = 0; i < list.length; i++) if (list[i] === row || list[i]['项目'] !== key) keep.push(list[i]);
+    if (dbId === DBX.emp) d.emp = keep; else if (dbId === DBX.seat) d.seat = keep; else d.set = keep;
+  }
+  lsWrite(d);
+  return Promise.resolve({ id: row._id });
+}
+function demoDel(dbId, rid) {
+  var d = demoStore();
+  var list = demoList(dbId, d);
+  var out = [];
+  for (var i = 0; i < list.length; i++) if (list[i]._id !== rid) out.push(list[i]);
+  if (dbId === DBX.emp) d.emp = out; else if (dbId === DBX.seat) d.seat = out; else d.set = out;
+  lsWrite(d);
+  return Promise.resolve({ id: rid });
+}
+function demoReset() {
+  try { localStorage.removeItem(LS_KEY); } catch (e) { /* ignore */ }
+  return loadEverything();
+}
+
+/* 演示版顶部提示条 */
+function showDemoBar() {
+  var bar = $('demoBar');
+  if (!bar) return;
+  bar.hidden = false;
+  var btn = $('btnDemoReset');
+  if (btn && !btn.dataset.bound) {
+    btn.dataset.bound = '1';
+    btn.addEventListener('click', function () {
+      if (window.confirm('重置后会恢复内置的 45 名员工与 60 个工位，你在本机做过的改动会被清空。确定重置？')) {
+        demoReset();
+        toast('已恢复初始演示数据', 'ok');
+      }
+    });
+  }
+}
+
+/* ---------- toast ---------- */
+var toastTimer = null;
+function toast(msg, type) {
+  var el = $('toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'toast show' + (type === 'ok' ? ' ok' : type === 'err' ? ' err' : '');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { el.className = 'toast'; }, 2600);
+}
+
+/* ---------- sync badge ---------- */
+function setSync(state, text) {
+  var el = $('syncState');
+  if (!el) return;
+  el.className = 'sync' + (state === 'busy' ? ' busy' : state === 'err' ? ' err' : '');
+  var sp = el.querySelector('span');
+  if (sp) sp.textContent = text;
+}
+
+/* ---------- data mapping ---------- */
+function mapEmp(row) {
+  var rid = row._id || row.record_id || row.id;
+  if (!rid) return null;
+  return {
+    rid: rid,
+    name: trimStr(row['姓名']),
+    code: trimStr(row['工号']),
+    dept: trimStr(row['部门']),
+    title: trimStr(row['职位']),
+    seat: trimStr(row['工位号'])
+  };
+}
+function mapSeat(row) {
+  var rid = row._id || row.record_id || row.id;
+  var id = trimStr(row['工位号']);
+  if (!id) return null;
+  return {
+    rid: rid || '',
+    id: id,
+    oldId: id,
+    name: trimStr(row['名称']) || id,
+    type: trimStr(row['类型']) || '工位',
+    zone: trimStr(row['区域']),
+    x: num(row['X']),
+    y: num(row['Y']),
+    w: num(row['宽度'], 54),
+    h: num(row['高度'], 38),
+    rot: num(row['旋转'], 0)
+  };
+}
+function mapSetting(row) {
+  var k = trimStr(row['项目']);
+  if (!k) return null;
+  return { key: k, value: trimStr(row['内容']), rid: row._id || row.record_id || row.id || '' };
+}
+
+/* ---------- db primitives ---------- */
+var db = null;
+
+function paged(fetchPage, mapper) {
+  var acc = [];
+  function page(cursor, guard) {
+    if (guard > 60) return Promise.resolve(acc);
+    return fetchPage(cursor).then(function (r) {
+      var rows = (r && r.results) || [];
+      for (var i = 0; i < rows.length; i++) {
+        var m = mapper(rows[i]);
+        if (m) acc.push(m);
+      }
+      var next = r && r.nextCursor;
+      if (r && r.hasMore && next && next !== cursor && rows.length) return page(next, guard + 1);
+      return acc;
+    }).catch(function (err) {
+      console.error('[database] query 失败', err);
+      throw err;
+    });
+  }
+  return page(null, 0);
+}
+
+function loadEmployees() {
+  return paged(function (cursor) {
+    return db.query({ databaseId: 'NXBMH58F6gGhRHKFicpSGb', pageSize: 200, startCursor: cursor || undefined });
+  }, mapEmp);
+}
+function loadSeats() {
+  return paged(function (cursor) {
+    return db.query({ databaseId: 'OPYP81p07OWDXOXSCyjVei', pageSize: 200, startCursor: cursor || undefined });
+  }, mapSeat);
+}
+function loadSettings() {
+  return paged(function (cursor) {
+    return db.query({ databaseId: 'EfZth8HwMZk6ux79N46Lcb', pageSize: 200, startCursor: cursor || undefined });
+  }, mapSetting);
+}
+
+/* serial write queue — keeps the page under the QPS ceiling */
+var writeChain = Promise.resolve();
+function queueWrite(fn) {
+  var p = writeChain.then(fn);
+  writeChain = p.then(function () { return null; }, function () { return null; });
+  return p;
+}
+function dbUpdate(dbId, rid, props) {
+  if (DEMO) return demoWrite(dbId, rid, props, false);
+  return queueWrite(function () {
+    return sdk().updateRecord({ databaseId: dbId, recordId: rid, properties: props });
+  });
+}
+function dbAdd(dbId, props) {
+  if (DEMO) return demoWrite(dbId, null, props, true);
+  return queueWrite(function () {
+    return sdk().addRecord({ databaseId: dbId, properties: props });
+  });
+}
+function dbDel(dbId, rid) {
+  if (DEMO) return demoDel(dbId, rid);
+  return queueWrite(function () {
+    return sdk().deleteRecord({ databaseId: dbId, recordId: rid });
+  });
+}
+
+/* ---------- derived lookups ---------- */
+function seatById(id) {
+  for (var i = 0; i < S.seats.length; i++) if (S.seats[i].id === id) return S.seats[i];
+  return null;
+}
+function seatByAnyId(id) {
+  var s = seatById(id);
+  if (s) return s;
+  for (var i = 0; i < S.seats.length; i++) if (S.seats[i].oldId && S.seats[i].oldId === id) return S.seats[i];
+  return null;
+}
+function empByRid(rid) {
+  for (var i = 0; i < S.employees.length; i++) if (S.employees[i].rid === rid) return S.employees[i];
+  return null;
+}
+function empBySeat(seatId) {
+  for (var i = 0; i < S.employees.length; i++) if (S.employees[i].seat === seatId) return S.employees[i];
+  return null;
+}
+function seatLabel(seat) {
+  if (!seat) return '';
+  return seat.type === '工位' ? seat.id : (seat.name || seat.id);
+}
+function realSeats() {
+  var out = [];
+  for (var i = 0; i < S.seats.length; i++) if (S.seats[i].type === '工位') out.push(S.seats[i]);
+  return out;
+}
+function unassignedList() {
+  var out = [];
+  for (var i = 0; i < S.employees.length; i++) {
+    var e = S.employees[i];
+    var st = e.seat ? seatByAnyId(e.seat) : null;
+    if (!st || st.type !== '工位') out.push(e);
+  }
+  return out;
+}
+function deptList() {
+  var map = {}, out = [];
+  for (var i = 0; i < S.employees.length; i++) {
+    var d = S.employees[i].dept || '未填写部门';
+    if (!map[d]) { map[d] = 0; out.push(d); }
+    map[d]++;
+  }
+  out.sort(function (a, b) { return map[b] - map[a]; });
+  return out;
+}
+
+/* ---------- load ---------- */
+/* 资料库运行时可能在页面脚本之后才注入 __SMART_PAGE__，未发现 SDK 时短重试若干次 */
+function waitSdk(tryCount) {
+  if (sdk()) return Promise.resolve(true);
+  if (tryCount <= 0) return Promise.resolve(false);
+  return new Promise(function (res) {
+    setTimeout(function () { res(waitSdk(tryCount - 1)); }, 250);
+  });
+}
+
+function loadDemo() {
+  var d = demoStore();
+  S.loading = false;
+  S.online = false;
+  S.demo = true;
+  applyData(
+    (d.emp || []).map(mapEmp).filter(Boolean),
+    (d.seat || []).map(mapSeat).filter(Boolean),
+    (d.set || []).map(mapSetting).filter(Boolean)
+  );
+  setSync('', '本地演示');
+  if (!S.hIdxSeeded) { seedHistory(); S.hIdxSeeded = true; }
+  renderAll();
+  showDemoBar();
+  return Promise.resolve(true);
+}
+
+function loadEverything() {
+  if (DEMO) return loadDemo();
+  return waitSdk(12).then(function (hasSdk) {
+    if (!hasSdk) {
+      db = null;
+      S.loading = false;
+      S.online = false;
+      setSync('err', '未连接');
+      renderAll();
+      toast('当前环境未连接数据服务：若在浏览器里直接打开了本地文件，页面为只读预览；请到资料库中打开本页面查看与编辑数据', 'err');
+      return false;
+    }
+    db = sdk();
+    S.loading = true;
+  setSync('busy', '同步中');
+  renderLoading();
+  return Promise.all([
+    loadEmployees(),
+    loadSeats(),
+    loadSettings()
+  ]).then(function (res) {
+    applyData(res[0], res[1], res[2]);
+    S.loading = false;
+    S.online = true;
+    setSync('', '已同步');
+    if (!S.hIdxSeeded) { seedHistory(); S.hIdxSeeded = true; }
+    renderAll();
+    return true;
+  }).catch(function (err) {
+    S.loading = false;
+    S.online = false;
+    setSync('err', '同步失败');
+    renderAll();
+    showLoadError(err);
+    return false;
+  });
+  });
+}
+
+function applyData(emps, seats, settings) {
+  S.employees = emps || [];
+  S.seats = seats || [];
+  S.dbSeats = clone(S.seats);
+  var st = {}, rids = {};
+  for (var i = 0; i < (settings || []).length; i++) {
+    st[settings[i].key] = settings[i].value;
+    rids[settings[i].key] = settings[i].rid || '';
+  }
+  S.settings = st;
+  S.settingRids = rids;
+  S.underlay = st['底图'] || '';
+  S.underlayName = st['底图名称'] || '';
+  S.underlayOpacity = num(st['底图透明度'], 0.45);
+  S.mapName = st['地图名称'] || '办公室平面图';
+  try {
+    var w = JSON.parse(st['画布'] || '{}');
+    if (w && w.w && w.h) S.world = { w: num(w.w, 1100), h: num(w.h, 580) };
+  } catch (e) { S.world = { w: 1100, h: 580 }; }
+  if (!S.view || !S.view.w) S.view = { x: 0, y: 0, w: S.world.w, h: S.world.h };
+  var seatIds = {}, empIds = {};
+  for (var k = 0; k < S.seats.length; k++) seatIds[S.seats[k].id] = 1;
+  for (var m = 0; m < S.employees.length; m++) empIds[S.employees[m].rid] = 1;
+  S.selection = (S.selection || []).filter(function (id) { return seatIds[id]; });
+  if (S.pendingPerson && !empIds[S.pendingPerson]) S.pendingPerson = '';
+}
+
+function renderLoading() {
+  var list = $('peopleList');
+  if (list) list.innerHTML = '<div class="empty"><b>加载中…</b>正在读取人员与工位数据</div>';
+  var hud = $('canvasHud');
+  if (hud) hud.innerHTML = '加载中…';
+}
+
+function showLoadError(err) {
+  var list = $('peopleList');
+  if (list) {
+    list.innerHTML = '<div class="empty"><b>数据加载失败</b>' +
+      '请检查网络后点右上角刷新重试。<br><span class="txt-sm txt-mute">' + esc((err && err.message) || '') + '</span></div>';
+  }
+  toast('数据加载失败，请稍后重试', 'err');
+}
+
+/* ---------- background refresh (multi-user sync) ---------- */
+var refreshTimer = null;
+var refreshing = false;
+function scheduleRefresh(delay) {
+  if (refreshTimer) clearTimeout(refreshTimer);
+  refreshTimer = setTimeout(refreshNow, delay || 400);
+}
+function refreshNow() {
+  if (refreshing || S.saving) return Promise.resolve();
+  if (S.dragging) { scheduleRefresh(900); return Promise.resolve(); }
+  db = sdk();
+  if (!db) return Promise.resolve();
+  refreshing = true;
+  setSync('busy', '同步中');
+  return Promise.all([
+    loadEmployees(),
+    loadSeats(),
+    loadSettings()
+  ]).then(function (res) {
+    var settings = res[2];
+    var st = {}, rids = {};
+    for (var i = 0; i < settings.length; i++) {
+      st[settings[i].key] = settings[i].value;
+      rids[settings[i].key] = settings[i].rid || '';
+    }
+    S.settingRids = rids;
+    var incoming = res[1] || [];
+    var changedMap = JSON.stringify(incoming.map(sigOf)) !== JSON.stringify(S.dbSeats.map(sigOf));
+    S.employees = res[0] || [];
+    S.settings = st;
+    S.underlay = st['底图'] || '';
+    S.underlayName = st['底图名称'] || '';
+    S.mapName = st['地图名称'] || S.mapName;
+    if (!S.dirty) {
+      S.seats = incoming;
+      S.dbSeats = clone(incoming);
+    } else if (changedMap) {
+      S.dbSeats = clone(incoming);
+      toast('其他人更新了工位图，保存时会以你的编辑为准', '');
+    }
+    setSync('', '已同步');
+    renderAll();
+  }).catch(function () {
+    setSync('err', '同步失败');
+  }).then(function () {
+    refreshing = false;
+  });
+}
+function sigOf(s) {
+  return [s.id, s.type, s.zone, s.x, s.y, s.w, s.h, s.rot].join('|');
+}
+
+function startSync() {
+  if (DEMO) return; /* 演示版无远端，不需要订阅与轮询 */
+  var db = sdk();
+  if (!db) return;
+  try {
+    if (typeof db.onUpdated === 'function') {
+      db.onUpdated(function (payload) {
+        var ids = (payload && payload.databaseIds) || [];
+        if (ids.indexOf(DBX.emp) >= 0 || ids.indexOf(DBX.seat) >= 0 || ids.indexOf(DBX.set) >= 0) {
+          scheduleRefresh(450);
+        }
+      });
+    }
+  } catch (e) { /* 订阅失败时仍有轮询兜底 */ }
+  setInterval(function () {
+    if (document.hidden) return;
+    refreshNow();
+  }, 12000);
+}
+
+/* ---------- history (undo / redo) ---------- */
+function snapshot() {
+  return JSON.stringify({ seats: S.seats, underlay: S.underlay, underlayName: S.underlayName, world: S.world });
+}
+function seedHistory() {
+  S.history = [snapshot()];
+  S.hIdx = 0;
+}
+function pushHistory() {
+  if (S.hIdx < S.history.length - 1) S.history = S.history.slice(0, S.hIdx + 1);
+  S.history.push(snapshot());
+  if (S.history.length > 40) S.history.shift();
+  S.hIdx = S.history.length - 1;
+  S.dirty = true;
+  updateUndoState();
+}
+function restoreSnapshot(str) {
+  var o = JSON.parse(str);
+  S.seats = o.seats;
+  S.underlay = o.underlay;
+  S.underlayName = o.underlayName;
+  S.world = o.world;
+  var ids = {};
+  for (var i = 0; i < S.seats.length; i++) ids[S.seats[i].id] = 1;
+  S.selection = S.selection.filter(function (id) { return ids[id]; });
+  S.dirty = true;
+  renderCanvas();
+  renderDetail();
+  updateUndoState();
+  renderStats();
+}
+function undo() {
+  if (S.hIdx <= 0) return;
+  S.hIdx--;
+  restoreSnapshot(S.history[S.hIdx]);
+}
+function redo() {
+  if (S.hIdx >= S.history.length - 1) return;
+  S.hIdx++;
+  restoreSnapshot(S.history[S.hIdx]);
+}
+</script>
+<script data-page-node-id="2167JmAsxL3KPsIRkLfFsX" data-pnid-children="aqS47sNhQZSF7xTejuubyo">
+/* =========================================================
+   渲染层：统计 / 人员清单 / 画布 / 右侧详情
+   ========================================================= */
+function renderAll() {
+  var lm = $('loadingMask');
+  if (lm && !S.loading) lm.style.display = 'none';
+  renderStats();
+  renderPeople();
+  renderCanvas();
+  renderDetail();
+  syncModeUI();
+}
+
+function updateUndoState() {
+  var u = $('btnUndo'), r = $('btnRedo');
+  if (u) u.disabled = S.hIdx <= 0;
+  if (r) r.disabled = S.hIdx >= S.history.length - 1;
+  var box = $('saveBox');
+  if (box) {
+    box.hidden = (S.mode !== 'edit');
+    box.className = 'save-float' + (S.dirty ? '' : ' saved');
+  }
+  var st = $('saveStateText');
+  if (st) st.textContent = S.dirty ? '有未保存的修改' : '与已保存一致';
+}
+
+/* ---------- stats ---------- */
+function renderStats() {
+  var seats = realSeats();
+  var total = seats.length;
+  var assigned = 0;
+  for (var i = 0; i < seats.length; i++) if (empOfSeat(seats[i])) assigned++;
+  var rate = total ? Math.round(assigned / total * 100) : 0;
+  $('stTotal').textContent = total;
+  $('stAssigned').textContent = assigned;
+  $('stFree').textContent = Math.max(total - assigned, 0);
+  $('stRate').textContent = rate + '%';
+  var rm = $('rateMeter');
+  if (rm) rm.style.width = rate + '%';
+  $('stPeople').textContent = unassignedList().length;
+  $('unassignedCount').textContent = unassignedList().length;
+  var hud = $('canvasHud');
+  if (hud) {
+    var zones = {};
+    for (var j = 0; j < seats.length; j++) zones[seats[j].zone || '未分区'] = 1;
+    hud.innerHTML = '共 <b>' + total + '</b> 个工位 · <b>' + Object.keys(zones).length + '</b> 个区域 · 已分配 <b>' + assigned + '</b> 人';
+  }
+  var empty = $('mapEmpty');
+  if (empty) empty.hidden = total > 0 || S.loading;
+  var off = $('mapEmptyOffline');
+  if (off) off.hidden = !(S.online === false && !DEMO && total === 0 && !S.loading);
+}
+
+/* ---------- people list ---------- */
+function renderPeople() {
+  var chips = $('deptChips');
+  var depts = deptList();
+  var counts = {};
+  var list = unassignedList();
+  for (var i = 0; i < list.length; i++) {
+    var d = list[i].dept || '未填写部门';
+    counts[d] = (counts[d] || 0) + 1;
+  }
+  var html = '<button class="chip' + (S.filter.dept === '' ? ' on' : '') + '" data-dept="">全部<span class="n">' + list.length + '</span></button>';
+  for (var k = 0; k < depts.length; k++) {
+    var dep = depts[k];
+    var c = deptStyle(dep);
+    html += '<button class="chip' + (S.filter.dept === dep ? ' on' : '') + '" data-dept="' + esc(dep) + '">' +
+      '<i style="background:' + c.c + '"></i>' + esc(dep.replace('部', '')) +
+      '<span class="n">' + (counts[dep] || 0) + '</span></button>';
+  }
+  chips.innerHTML = html;
+
+  var q = S.filter.q.toLowerCase();
+  var rows = [];
+  for (var m = 0; m < list.length; m++) {
+    var p = list[m];
+    if (S.filter.dept && (p.dept || '未填写部门') !== S.filter.dept) continue;
+    if (q) {
+      var hay = (p.name + ' ' + p.code + ' ' + p.title + ' ' + p.dept).toLowerCase();
+      if (hay.indexOf(q) < 0) continue;
+    }
+    rows.push(p);
+  }
+  var pl = $('peopleList');
+  if (!S.employees.length) {
+    pl.innerHTML = '<div class="empty"><div class="eic"><svg viewBox="0 0 24 24"><circle cx="9.5" cy="8.5" r="3.2"/><path d="M3.5 20c0-3.2 2.7-5 6-5s6 1.8 6 5"/><path d="M16.5 5.6a3 3 0 0 1 0 5.8"/><path d="M18.5 20c0-2.3-.7-3.8-1.8-4.6"/></svg></div><b>还没有人员数据</b>' +
+      '点右上角「导入 Excel」按模板批量导入，<br>或直接在资料库的员工表里添加。' +
+      (S.online === false && !DEMO ? '<br><br><span class="txt-mute">当前为只读预览（未连接数据服务）：请到资料库中打开本页面，才能看到已预置的 45 名员工与 60 个工位。</span>' : '') +
+      '</div>';
+    return;
+  }
+  if (!rows.length) {
+    pl.innerHTML = '<div class="empty"><div class="eic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></div><b>' + (list.length ? '没有匹配的人员' : '全部人员都已分配') + '</b>' +
+      (list.length ? '换个关键词或部门筛选试试。' : '可以点画面上的工位调整座位。') + '</div>';
+    return;
+  }
+  var buf = [];
+  for (var n = 0; n < rows.length; n++) {
+    var e = rows[n];
+    var cs = deptStyle(e.dept);
+    buf.push(
+      '<div class="person' + (S.pendingPerson === e.rid ? ' sel' : '') + '" data-rid="' + esc(e.rid) + '">' +
+        '<div class="avatar" style="background:linear-gradient(145deg,' + cs.c + ',' + hexA(cs.c, 0.78) + ')">' + esc(initials(e.name)) + '</div>' +
+        '<div class="person-main">' +
+          '<div class="person-name">' + esc(e.name) + (e.code ? '<em>' + esc(e.code) + '</em>' : '') + '</div>' +
+          '<div class="person-meta"><i style="background:' + cs.c + '"></i>' + esc(e.dept || '未填写部门') + (e.title ? ' · ' + esc(e.title) : '') + '</div>' +
+        '</div>' +
+        '<svg class="ic drag-handle" style="width:14px;height:14px"><use href="#i-swap"/></svg>' +
+      '</div>'
+    );
+  }
+  pl.innerHTML = buf.join('');
+}
+
+/* ---------- canvas ---------- */
+function renderCanvas() {
+  var W = S.world.w, H = S.world.h;
+  $('paper').setAttribute('width', W);
+  $('paper').setAttribute('height', H);
+
+  var gl = $('gridLayer');
+  gl.innerHTML = '<rect x="0" y="0" width="' + W + '" height="' + H + '" rx="14" fill="url(#dots)"></rect>';
+
+  var ul = $('underlayLayer');
+  if (S.underlay && S.showUnderlay) {
+    ul.innerHTML = '<image href="' + S.underlay.split('"').join('&quot;') + '" x="0" y="0" width="' + W + '" height="' + H +
+      '" preserveAspectRatio="xMidYMid meet" opacity="' + S.underlayOpacity + '"></image>';
+  } else {
+    ul.innerHTML = '';
+  }
+
+  var zl = $('zoneLayer');
+  zl.innerHTML = zoneLabelsHTML();
+
+  var sl = $('seatLayer');
+  /* 搜索 / 部门筛选时，画布上命中人员的工位高亮、其余淡出 */
+  var q = (S.filter.q || '').toLowerCase();
+  var hasFilter = !!(q || S.filter.dept);
+  var hl = {};
+  if (hasFilter) {
+    for (var h = 0; h < S.employees.length; h++) {
+      var ep = S.employees[h];
+      if (!ep.seat) continue;
+      if (S.filter.dept && (ep.dept || '未填写部门') !== S.filter.dept) continue;
+      if (q) {
+        var hay = (ep.name + ' ' + ep.code + ' ' + ep.title + ' ' + ep.dept).toLowerCase();
+        if (hay.indexOf(q) < 0) continue;
+      }
+      hl[ep.seat] = 1;
+      var st2 = seatByAnyId(ep.seat);
+      if (st2) hl[st2.id] = 1;
+    }
+  }
+  S.hlActive = hasFilter;
+  S.hlSeats = hl;
+  var buf = [];
+  for (var i = 0; i < S.seats.length; i++) buf.push(seatSVG(S.seats[i]));
+  sl.innerHTML = buf.join('');
+
+  applyView();
+  updateUndoState();
+}
+
+function zoneLabelsHTML() {
+  var groups = {};
+  for (var i = 0; i < S.seats.length; i++) {
+    var s = S.seats[i];
+    if (s.type !== '工位' || !s.zone) continue;
+    if (!groups[s.zone]) groups[s.zone] = { x: 99999, y: 99999, n: 0 };
+    var g = groups[s.zone];
+    g.x = Math.min(g.x, s.x);
+    g.y = Math.min(g.y, s.y);
+    g.n++;
+  }
+  var out = [];
+  for (var z in groups) {
+    if (!groups.hasOwnProperty(z)) continue;
+    var gg = groups[z];
+    var label = z.toUpperCase() + ' · ' + gg.n;
+    var w = label.length * 6.4 + 22;
+    out.push('<g pointer-events="none">' +
+      '<rect x="' + (gg.x - 2) + '" y="' + (gg.y - 27) + '" width="' + w + '" height="18" rx="9" style="fill:var(--zone-pill-bg);stroke:var(--zone-pill-line);stroke-width:1"></rect>' +
+      '<text x="' + (gg.x - 2 + w / 2) + '" y="' + (gg.y - 14.5) + '" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="1.1" style="fill:var(--zone-txt)">' +
+      esc(label) + '</text></g>');
+  }
+  return out.join('');
+}
+
+function seatSVG(s) {
+  var isSeat = s.type === '工位';
+  var emp = isSeat ? empOfSeat(s) : null;
+  var sel = S.selection.indexOf(s.id) >= 0;
+  var hlHit = S.hlActive && S.hlSeats && S.hlSeats[s.id];
+  var cls = 'seat' + (sel ? ' sel' : '') + (S.hlActive ? (hlHit ? ' hot' : ' dim') : '');
+  var tf = 'translate(' + s.x + ',' + s.y + ')' + (s.rot ? ' rotate(' + s.rot + ' ' + (s.w / 2) + ' ' + (s.h / 2) + ')' : '');
+  var out = '<g class="' + cls + '" data-id="' + esc(s.id) + '" transform="' + tf + '">';
+
+  if (!isSeat) {
+    var bg = 'var(--fac-def-bg)', line = 'var(--fac-def-line)', txt = 'var(--fac-def-txt)';
+    if (s.type === '会议室') { bg = 'var(--fac-meet-bg)'; line = 'var(--fac-meet-line)'; txt = 'var(--fac-meet-txt)'; }
+    if (s.type === '茶水间') { bg = 'var(--fac-tea-bg)'; line = 'var(--fac-tea-line)'; txt = 'var(--fac-tea-txt)'; }
+    if (s.type === '其他') { bg = 'var(--fac-oth-bg)'; line = 'var(--fac-oth-line)'; txt = 'var(--fac-oth-txt)'; }
+    out += '<rect class="seat-rect" x="0" y="0" width="' + s.w + '" height="' + s.h + '" rx="9" style="fill:' + bg +
+      ';stroke:' + line + ';stroke-width:1.1" stroke-dasharray="5 3"></rect>';
+    out += '<text x="' + (s.w / 2) + '" y="' + (s.h / 2 - 1) + '" text-anchor="middle" font-size="' + Math.min(12, s.w / 8) +
+      '" font-weight="650" style="fill:' + txt + '">' + esc(s.name || s.id) + '</text>';
+    out += '<text x="' + (s.w / 2) + '" y="' + (s.h / 2 + 14) + '" text-anchor="middle" font-size="9.5" style="fill:' + txt +
+      '" opacity="0.75">' + esc(s.type) + '</text>';
+  } else if (emp) {
+    var cs = deptStyle(emp.dept);
+    out += '<rect class="seat-rect" x="0" y="0" width="' + s.w + '" height="' + s.h + '" rx="8" style="fill:' + cs.s +
+      ';stroke:' + cs.c + ';stroke-width:1.2;stroke-opacity:.5"></rect>';
+    out += '<text x="' + (s.w / 2) + '" y="15.5" text-anchor="middle" font-size="8.6" style="fill:' + cs.c +
+      '" fill-opacity="0.78" letter-spacing="0.3" font-weight="600">' + esc(s.id) + '</text>';
+    out += '<text x="' + (s.w / 2) + '" y="29.5" text-anchor="middle" font-size="11.4" font-weight="650" style="fill:var(--seat-name)">' +
+      esc(emp.name) + '</text>';
+  } else {
+    out += '<rect class="seat-rect" x="0" y="0" width="' + s.w + '" height="' + s.h + '" rx="8" style="fill:var(--seat-free-bg);stroke:var(--seat-free-line);stroke-width:1.1"></rect>';
+    out += '<text x="' + (s.w / 2) + '" y="' + (s.h / 2 + 3.6) + '" text-anchor="middle" font-size="9.6" style="fill:var(--seat-free-txt)" letter-spacing="0.2">' +
+      esc(s.id) + '</text>';
+  }
+  out += '</g>';
+  return out;
+}
+
+/* ---------- view ---------- */
+function applyView() {
+  var map = $('map');
+  if (!map || !S.view) return;
+  map.setAttribute('viewBox', S.view.x + ' ' + S.view.y + ' ' + S.view.w + ' ' + S.view.h);
+  var label = $('zoomLabel');
+  if (label) label.textContent = Math.round(S.view.w ? (S.world.w / S.view.w) * 100 : 100) + '%';
+}
+
+function zoomBy(factor, cx, cy) {
+  var v = S.view;
+  var nw = Math.min(Math.max(v.w / factor, S.world.w / 4), S.world.w * 2.2);
+  var nh = nw * (v.h / v.w);
+  var px = (cx === undefined ? v.x + v.w / 2 : v.x + cx * v.w);
+  var py = (cy === undefined ? v.y + v.h / 2 : v.y + cy * v.h);
+  S.view = { x: px - (px - v.x) * (nw / v.w), y: py - (py - v.y) * (nh / v.h), w: nw, h: nh };
+  applyView();
+}
+
+function fitView() {
+  var wrap = $('canvasWrap');
+  if (!wrap) return;
+  var ratio = wrap.clientWidth / Math.max(wrap.clientHeight, 1);
+  var w = S.world.w, h = S.world.h, pad = 18;
+  var vw = w + pad * 2, vh = h + pad * 2;
+  if (vw / vh > ratio) vh = vw / ratio; else vw = vh * ratio;
+  S.view = { x: (w - vw) / 2, y: (h - vh) / 2, w: vw, h: vh };
+  applyView();
+}
+
+function viewToWorld(clientX, clientY) {
+  var map = $('map');
+  var r = map.getBoundingClientRect();
+  var v = S.view;
+  return {
+    x: v.x + (clientX - r.left) / r.width * v.w,
+    y: v.y + (clientY - r.top) / r.height * v.h
+  };
+}
+
+/* ---------- mode UI ---------- */
+function syncModeUI() {
+  var btns = document.querySelectorAll('#modeSeg button');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].className = btns[i].getAttribute('data-mode') === S.mode ? 'on' : '';
+  }
+  $('assignTools').hidden = S.mode !== 'assign';
+  $('editTools').hidden = S.mode !== 'edit';
+  var ht = $('historyTools');
+  if (ht) ht.hidden = S.mode !== 'edit';
+  $('saveBox').hidden = S.mode !== 'edit';
+  var wrap = $('canvasWrap');
+  if (wrap) wrap.style.cursor = '';
+}
+</script>
+<script data-page-node-id="zxsKd8fx4OmFwbaBw73dfx" data-pnid-children="AN6OiCW42k6QC0jWWj65mo">
+/* =========================================================
+   右侧详情面板
+   ========================================================= */
+function renderDetail() {
+  var box = $('detailBody');
+  if (!box) return;
+  if (S.loading) {
+    box.innerHTML = '<div class="rp"><div class="rp-title">数据加载中</div>' +
+      '<div class="detail-card txt-sm txt-mute">正在读取人员与工位数据…</div></div>';
+    return;
+  }
+  box.innerHTML = S.mode === 'assign' ? assignDetailHTML() : editDetailHTML();
+  wireDetail();
+}
+
+/* ---------- 分配模式 ---------- */
+function assignDetailHTML() {
+  if (S.selection.length === 1) {
+    var seat = seatById(S.selection[0]);
+    if (seat) return seatDetailHTML(seat);
+  }
+  return overviewHTML();
+}
+
+function seatDetailHTML(seat) {
+  var isSeat = seat.type === '工位';
+  var emp = isSeat ? empOfSeat(seat) : null;
+  var cs = emp ? deptStyle(emp.dept) : FALLBACK_DEPT;
+  var h = '';
+
+  if (emp) {
+    h += '<div class="rp">' +
+      '<div class="rp-title">工位占用 <span class="sub">' + esc(seat.id) + '</span></div>' +
+      '<div class="detail-card accent">' +
+        '<div class="detail-top">' +
+          '<div class="avatar" style="background:linear-gradient(145deg,' + cs.c + ',' + hexA(cs.c, 0.78) + ')">' + esc(initials(emp.name)) + '</div>' +
+          '<div><div class="dt-name">' + esc(emp.name) + '</div>' +
+          '<div class="dt-sub">' + esc(emp.dept || '未填写部门') + (emp.title ? ' · ' + esc(emp.title) : '') + '</div></div>' +
+        '</div>' +
+        '<div class="mt12">' +
+          '<div class="kv"><span>工位号</span><b>' + esc(seat.id) + '</b></div>' +
+          '<div class="kv"><span>区域</span><b>' + esc(seat.zone || '未分区') + '</b></div>' +
+          '<div class="kv"><span>工号</span><b>' + esc(emp.code || '—') + '</b></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="mt12"><button class="btn block" data-act="unassign">' +
+        '<svg class="ic"><use href="#i-undo"/></svg>移回待分配</button></div>' +
+      '<div class="mini-note">把这个人拖到别的工位，可以与对方直接交换。</div>' +
+    '</div>';
+    return h;
+  }
+
+  if (!isSeat) {
+    h += '<div class="rp">' +
+      '<div class="rp-title">功能设施</div>' +
+      '<div class="detail-card">' +
+        '<div class="tag mute">' + esc(seat.type) + '</div>' +
+        '<div style="font-size:18px;font-weight:680;margin-top:8px">' + esc(seat.name || seat.id) + '</div>' +
+        '<div class="txt-sm txt-mute mt8">编号 ' + esc(seat.id) + ' · ' + esc(seat.zone || '公共区') + '</div>' +
+      '</div>' +
+      '<div class="hint-box mt12">会议室、茶水间等设施不参与人员分配。需要调整位置请切到「编辑工位图」。</div>' +
+    '</div>';
+    return h;
+  }
+
+  h += '<div class="rp">' +
+    '<div class="rp-title">工位详情</div>' +
+    '<div class="detail-card" style="text-align:center;padding:16px">' +
+      '<div class="tag ok">空闲可分配</div>' +
+      '<div style="font-size:19px;font-weight:680;margin-top:9px;letter-spacing:.3px">' + esc(seat.id) + '</div>' +
+      '<div class="txt-sm txt-mute" style="margin-top:2px">' + esc(seat.zone || '未分区') + '</div>' +
+    '</div>' +
+    '<div class="hint-box mt12"><b>怎么分配</b><ol>' +
+      '<li>从左侧把人员拖到这张工位上</li>' +
+      '<li>或先点左侧人员，再点这张工位</li>' +
+    '</ol></div>' +
+  '</div>';
+  return h;
+}
+
+function donutSVG(pct) {
+  var r = 36, c = 2 * Math.PI * r;
+  var off = c * (1 - Math.min(Math.max(pct, 0), 100) / 100);
+  return '<svg width="92" height="92" viewBox="0 0 92 92">' +
+    '<defs><linearGradient id="dg' + pct + '" x1="0" y1="0" x2="1" y2="1">' +
+    '<stop offset="0" stop-color="#5B7CFF"/><stop offset="1" stop-color="#12B886"/></linearGradient></defs>' +
+    '<circle class="d-track" cx="46" cy="46" r="' + r + '" fill="none" stroke-width="9"></circle>' +
+    '<circle class="d-bar" cx="46" cy="46" r="' + r + '" fill="none" stroke-width="9" stroke-linecap="round" ' +
+    'stroke-dasharray="' + c.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '"></circle>' +
+    '</svg>';
+}
+
+function overviewHTML() {
+  var stats = {};
+  var order = [];
+  for (var i = 0; i < S.employees.length; i++) {
+    var e = S.employees[i];
+    var d = e.dept || '未填写部门';
+    if (!stats[d]) { stats[d] = { total: 0, on: 0 }; order.push(d); }
+    stats[d].total++;
+    if (e.seat && seatByAnyId(e.seat)) stats[d].on++;
+  }
+  order.sort(function (a, b) { return stats[b].total - stats[a].total; });
+
+  var rows = [];
+  for (var k = 0; k < order.length; k++) {
+    var dp = order[k], st = stats[dp], cs = deptStyle(dp);
+    var pct = st.total ? Math.round(st.on / st.total * 100) : 0;
+    rows.push('<div class="legend-row">' +
+      '<i style="background:' + cs.c + '"></i>' +
+      '<span class="nm">' + esc(dp) + '</span>' +
+      '<span class="bar"><u style="width:' + pct + '%;background:' + cs.c + '"></u></span>' +
+      '<b>' + st.on + '<span class="txt-mute" style="font-weight:400">/' + st.total + '</span></b>' +
+    '</div>');
+  }
+
+  /* 环形占用率 + 速览 */
+  var seats = realSeats();
+  var total = seats.length, occupied = 0;
+  for (var m = 0; m < seats.length; m++) if (empOfSeat(seats[m])) occupied++;
+  var rate = total ? Math.round(occupied / total * 100) : 0;
+  var zones = {};
+  for (var z = 0; z < seats.length; z++) {
+    var zn = seats[z].zone || '未分区';
+    if (!zones[zn]) zones[zn] = { total: 0, on: 0 };
+    zones[zn].total++;
+    if (empOfSeat(seats[z])) zones[zn].on++;
+  }
+  var zrows = [];
+  for (var zk in zones) {
+    if (!zones.hasOwnProperty(zk)) continue;
+    var zz = zones[zk];
+    var zp = zz.total ? Math.round(zz.on / zz.total * 100) : 0;
+    zrows.push('<div class="legend-row">' +
+      '<span class="nm">' + esc(zk) + '</span>' +
+      '<span class="bar"><u style="width:' + zp + '%;background:linear-gradient(90deg,#5B7CFF,#12B886)"></u></span>' +
+      '<b>' + zz.on + '<span class="txt-mute" style="font-weight:400">/' + zz.total + '</span></b>' +
+    '</div>');
+  }
+
+  var h = '<div class="rp">' +
+    '<div class="rp-title">占用概览</div>' +
+    '<div class="ov-top">' +
+      '<div class="donut">' + donutSVG(rate) +
+        '<div class="d-c"><b>' + rate + '%</b><span>占用率</span></div>' +
+      '</div>' +
+      '<div class="ov-mini">' +
+        '<div class="row"><span><i style="background:var(--primary)"></i>已分配</span><b>' + occupied + '</b></div>' +
+        '<div class="row"><span><i style="background:var(--seat-free-line)"></i>空闲工位</span><b>' + Math.max(total - occupied, 0) + '</b></div>' +
+        '<div class="row"><span><i style="background:var(--warn)"></i>待分配人员</span><b>' + unassignedList().length + '</b></div>' +
+      '</div>' +
+    '</div>' +
+    (zrows.length ? '<div class="mini-note" style="margin:2px 0 4px">各区域占用</div>' + zrows : '') +
+  '</div>';
+
+  h += '<div class="rp">' +
+    '<div class="rp-title">部门分配进度 <span class="sub">已分配 / 总人数</span></div>' +
+    (rows.length ? rows.join('') : '<div class="empty" style="padding:18px 0"><b>暂无人员</b>导入 Excel 开始分配</div>') +
+  '</div>';
+
+  h += '<div class="rp">' +
+    '<div class="rp-title">图例</div>' +
+    '<div class="legend-row"><i style="background:var(--seat-free-bg);box-shadow:inset 0 0 0 1px var(--seat-free-line)"></i><span class="nm">空闲工位</span></div>' +
+    '<div class="legend-row"><i style="background:var(--primary-soft);box-shadow:inset 0 0 0 1px var(--primary-line)"></i><span class="nm">已占用（按部门着色）</span></div>' +
+    '<div class="legend-row"><i style="background:var(--fac-def-bg);box-shadow:inset 0 0 0 1px var(--fac-def-line)"></i><span class="nm">会议室 / 茶水间</span></div>' +
+  '</div>';
+
+  h += '<div class="rp">' +
+    '<div class="rp-title">操作提示</div>' +
+    '<div class="hint-box"><b>三种分配方式</b><ol>' +
+      '<li>拖左侧人员 → 工位：直接分配</li>' +
+      '<li>拖工位上的人 → 另一个工位：两人交换</li>' +
+      '<li>拖工位上的人 → 左侧清单：取消分配</li>' +
+      '<li>搜索或按部门筛选时，命中的工位会在图上高亮</li>' +
+    '</ol></div>' +
+  '</div>';
+  return h;
+}
+
+/* ---------- 编辑模式 ---------- */
+function editDetailHTML() {
+  if (S.selection.length === 1) {
+    var seat = seatById(S.selection[0]);
+    if (seat) return inspectorHTML(seat);
+  }
+  if (S.selection.length > 1) return batchHTML();
+  return mapSettingsHTML();
+}
+
+function inspectorHTML(seat) {
+  var emp = seat.type === '工位' ? empOfSeat(seat) : null;
+  var types = ['工位', '会议室', '茶水间', '其他'];
+  var opts = '';
+  for (var i = 0; i < types.length; i++) {
+    opts += '<option value="' + types[i] + '"' + (seat.type === types[i] ? ' selected' : '') + '>' + types[i] + '</option>';
+  }
+  return '<div class="rp">' +
+      '<div class="rp-title">属性 <span class="sub">' + esc(seat.id) + '</span></div>' +
+      '<div class="field"><label>工位号 / 编号</label><input data-field="id" value="' + esc(seat.id) + '"></div>' +
+      '<div class="field"><label>显示名称</label><input data-field="name" value="' + esc(seat.name) + '"></div>' +
+      '<div class="field"><label>类型</label><select data-field="type">' + opts + '</select></div>' +
+      '<div class="field"><label>区域</label><input data-field="zone" value="' + esc(seat.zone) + '"></div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>X</label><input type="number" data-field="x" value="' + seat.x + '"></div>' +
+        '<div class="field"><label>Y</label><input type="number" data-field="y" value="' + seat.y + '"></div>' +
+      '</div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>宽</label><input type="number" data-field="w" value="' + seat.w + '"></div>' +
+        '<div class="field"><label>高</label><input type="number" data-field="h" value="' + seat.h + '"></div>' +
+      '</div>' +
+      '<div class="field"><label>旋转角度</label><input type="number" data-field="rot" value="' + seat.rot + '"></div>' +
+      (emp ? '<div class="hint-box">该工位当前由 <b>' + esc(emp.name) + '</b> 使用。修改编号并保存后，其工位号会一起更新。</div>' : '') +
+      '<div class="mt12"><button class="btn block danger" data-act="delete-sel">' +
+        '<svg class="ic"><use href="#i-trash"/></svg>删除这个对象</button></div>' +
+    '</div>' +
+    '<div class="rp"><div class="rp-title">快捷操作</div>' +
+      '<div class="icon-grid">' +
+        '<button class="btn sm" data-act="rotate-sel"><svg class="ic"><use href="#i-rotate"/></svg>旋转 90°</button>' +
+        '<button class="btn sm" data-act="dup-sel"><svg class="ic"><use href="#i-plus"/></svg>复制一个</button>' +
+      '</div>' +
+    '</div>';
+}
+
+function batchHTML() {
+  var n = S.selection.length;
+  return '<div class="rp">' +
+      '<div class="rp-title">批量操作 <span class="sub">已选 ' + n + ' 个对象</span></div>' +
+      '<div class="txt-sm txt-mute" style="margin-bottom:8px">对齐（以选区外接框为基准）</div>' +
+      '<div class="icon-grid">' +
+        '<button class="btn sm" data-act="align" data-align="left"><svg class="ic"><use href="#i-align-l"/></svg>左对齐</button>' +
+        '<button class="btn sm" data-act="align" data-align="cx"><svg class="ic"><use href="#i-align-c"/></svg>水平居中</button>' +
+        '<button class="btn sm" data-act="align" data-align="right"><svg class="ic"><use href="#i-align-r"/></svg>右对齐</button>' +
+        '<button class="btn sm" data-act="align" data-align="top"><svg class="ic"><use href="#i-align-t"/></svg>顶对齐</button>' +
+        '<button class="btn sm" data-act="align" data-align="cy"><svg class="ic"><use href="#i-align-m"/></svg>垂直居中</button>' +
+        '<button class="btn sm" data-act="align" data-align="bottom"><svg class="ic"><use href="#i-align-b"/></svg>底对齐</button>' +
+      '</div>' +
+      '<div class="divider"></div>' +
+      '<div class="icon-grid">' +
+        '<button class="btn sm" data-act="dist-h"><svg class="ic"><use href="#i-grid"/></svg>水平等距</button>' +
+        '<button class="btn sm" data-act="dist-v"><svg class="ic"><use href="#i-grid"/></svg>垂直等距</button>' +
+        '<button class="btn sm" data-act="rotate-sel"><svg class="ic"><use href="#i-rotate"/></svg>旋转 90°</button>' +
+        '<button class="btn sm" data-act="number-sel"><svg class="ic"><use href="#i-hash"/></svg>批量编号</button>' +
+      '</div>' +
+      '<div class="mt12"><button class="btn block danger" data-act="delete-sel">' +
+        '<svg class="ic"><use href="#i-trash"/></svg>删除所选 ' + n + ' 个</button></div>' +
+    '</div>' +
+    '<div class="rp"><div class="hint-box">按住 <b>Shift</b> 点击可加选；在空白处按住拖动可框选。</div></div>';
+}
+
+function mapSettingsHTML() {
+  var hasUl = !!S.underlay;
+  var n = realSeats().length;
+  return '<div class="rp">' +
+      '<div class="rp-title">工位图</div>' +
+      '<div class="field"><label>图纸名称</label><input data-map="name" value="' + esc(S.mapName) + '"></div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>画布宽</label><input type="number" data-map="w" value="' + S.world.w + '"></div>' +
+        '<div class="field"><label>画布高</label><input type="number" data-map="h" value="' + S.world.h + '"></div>' +
+      '</div>' +
+      '<div class="mini-note">共 ' + n + ' 个工位，' + (S.seats.length - n) + ' 个功能设施。</div>' +
+    '</div>' +
+    '<div class="rp">' +
+      '<div class="rp-title">底图 <span class="sub">' + (hasUl ? esc(S.underlayName || '已上传') : '未上传') + '</span></div>' +
+      '<div class="icon-grid">' +
+        '<button class="btn sm" data-act="underlay-upload"><svg class="ic"><use href="#i-image"/></svg>' + (hasUl ? '更换底图' : '上传底图') + '</button>' +
+        '<button class="btn sm" data-act="underlay-clear"' + (hasUl ? '' : ' disabled') + '><svg class="ic"><use href="#i-trash"/></svg>移除底图</button>' +
+      '</div>' +
+      '<div class="field mt12"><label>底图透明度 ' + Math.round(S.underlayOpacity * 100) + '%</label>' +
+        '<input type="range" data-map="opacity" min="10" max="100" step="5" value="' + Math.round(S.underlayOpacity * 100) + '"></div>' +
+      '<div class="mini-note">可上传 PNG / JPG 平面图，或导入 SVG 时自动带入。底图只作参考，不参与分配。</div>' +
+    '</div>' +
+    '<div class="rp">' +
+      '<div class="rp-title">导入 / 导出</div>' +
+      '<div class="icon-grid">' +
+        '<button class="btn sm" data-act="import-map"><svg class="ic"><use href="#i-upload"/></svg>导入工位图</button>' +
+        '<button class="btn sm" data-act="export-menu"><svg class="ic"><use href="#i-download"/></svg>下载工位图</button>' +
+      '</div>' +
+      '<div class="mini-note">支持 SVG（Figma / draw.io 编辑后导回）与 Excel 网格。</div>' +
+    '</div>' +
+    '<div class="rp">' +
+      '<div class="hint-box"><b>编辑提示</b><ol>' +
+        '<li>拖动工位可移动，空白处拖动可框选</li>' +
+        '<li>按住空格或鼠标中键拖动可平移画布</li>' +
+        '<li>改完记得点右上角「保存工位图」</li>' +
+      '</ol></div>' +
+    '</div>';
+}
+
+/* ---------- 详情面板事件 ---------- */
+function wireDetail() {
+  var box = $('detailBody');
+  if (!box) return;
+  var btns = box.querySelectorAll('[data-act]');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click', function (e) {
+      var act = this.getAttribute('data-act');
+      var align = this.getAttribute('data-align');
+      onDetailAction(act, align);
+    });
+  }
+  var fields = box.querySelectorAll('[data-field]');
+  for (var j = 0; j < fields.length; j++) {
+    fields[j].addEventListener('change', function () {
+      var seat = seatById(S.selection[0]);
+      if (!seat) return;
+      applySeatInput(seat, this.getAttribute('data-field'), this.value);
+    });
+  }
+  var maps = box.querySelectorAll('[data-map]');
+  for (var k = 0; k < maps.length; k++) {
+    var ev = maps[k].getAttribute('data-map') === 'opacity' ? 'input' : 'change';
+    maps[k].addEventListener(ev, function () {
+      onMapSetting(this.getAttribute('data-map'), this.value);
+    });
+  }
+}
+</script>
+<script data-page-node-id="zqqSDGvqYSSextp1U9Eqa6" data-pnid-children="lamaKunuwL481ucD7qMOya">
+/* =========================================================
+   模态框 / 编辑器操作
+   ========================================================= */
+function closeModal() {
+  var root = $('modalRoot');
+  if (root) root.innerHTML = '';
+}
+function openModal(o) {
+  closeModal();
+  var root = $('modalRoot');
+  var mask = document.createElement('div');
+  mask.className = 'modal-mask';
+  mask.innerHTML =
+    '<div class="modal ' + (o.cls || '') + '">' +
+      '<div class="modal-head">' +
+        '<div><h3>' + esc(o.title) + '</h3>' + (o.sub ? '<p>' + o.sub + '</p>' : '') + '</div>' +
+        '<button class="btn ghost icon sm" data-close="1"><svg class="ic"><use href="#i-close"/></svg></button>' +
+      '</div>' +
+      '<div class="modal-body" id="modalBody">' + (o.body || '') + '</div>' +
+      (o.footer === false ? '' :
+        '<div class="modal-foot"><div>' + (o.footLeft || '') + '</div>' +
+        '<div class="right">' + (o.footer || '<button class="btn" data-close="1">关闭</button>') + '</div></div>') +
+    '</div>';
+  root.appendChild(mask);
+  mask.addEventListener('click', function (e) {
+    var t = e.target;
+    while (t && t !== mask) {
+      if (t.getAttribute && t.getAttribute('data-close')) { closeModal(); return; }
+      t = t.parentNode;
+    }
+    if (e.target === mask) closeModal();
+  });
+  return mask;
+}
+
+/* ---------- 右侧面板动作 ---------- */
+function selectedSeats() {
+  var out = [];
+  for (var i = 0; i < S.selection.length; i++) {
+    var s = seatById(S.selection[i]);
+    if (s) out.push(s);
+  }
+  return out;
+}
+
+function onDetailAction(act, align) {
+  if (act === 'unassign') { unassignSelected(); return; }
+  if (act === 'align') { alignSel(align); return; }
+  if (act === 'rotate-sel') { rotateSel(); return; }
+  if (act === 'number-sel') { openNumberModal(); return; }
+  if (act === 'delete-sel') { deleteSel(); return; }
+  if (act === 'dup-sel') { duplicateSel(); return; }
+  if (act === 'dist-h') { distribute('h'); return; }
+  if (act === 'dist-v') { distribute('v'); return; }
+  if (act === 'underlay-upload') { pickUnderlay(); return; }
+  if (act === 'underlay-clear') { clearUnderlay(); return; }
+  if (act === 'import-map') { openImportMapModal(); return; }
+  if (act === 'export-menu') { openExportMapModal(); return; }
+}
+
+function applySeatInput(seat, field, value) {
+  var old = seat[field];
+  if (field === 'id') {
+    var nv = trimStr(value);
+    if (!nv) { toast('工位号不能为空', 'err'); renderDetail(); return; }
+    if (nv === seat.id) return;
+    if (seatById(nv)) { toast('工位号「' + nv + '」已存在', 'err'); renderDetail(); return; }
+    seat.id = nv;
+    if (!seat.name || seat.name === old) seat.name = nv;
+    for (var i = 0; i < S.selection.length; i++) if (S.selection[i] === old) S.selection[i] = nv;
+  } else if (field === 'name') {
+    seat.name = trimStr(value) || seat.id;
+  } else if (field === 'type') {
+    seat.type = value;
+  } else if (field === 'zone') {
+    seat.zone = trimStr(value);
+  } else if (field === 'x' || field === 'y' || field === 'w' || field === 'h' || field === 'rot') {
+    seat[field] = Math.round(num(value, seat[field]));
+    if ((field === 'w' || field === 'h') && seat[field] < 12) seat[field] = 12;
+  }
+  pushHistory();
+  renderCanvas();
+  renderDetail();
+  renderStats();
+}
+
+function onMapSetting(key, value) {
+  if (key === 'name') {
+    S.mapName = trimStr(value) || '办公室平面图';
+  } else if (key === 'w' || key === 'h') {
+    var v = Math.max(300, Math.min(6000, Math.round(num(value, S.world[key]))));
+    S.world[key] = v;
+    fitView();
+  } else if (key === 'opacity') {
+    S.underlayOpacity = Math.max(0.1, Math.min(1, num(value, 45) / 100));
+    renderCanvas();
+    var lab = document.querySelector('#detailBody [data-map="opacity"]');
+    if (lab && lab.parentNode) {
+      var l = lab.parentNode.querySelector('label');
+      if (l) l.textContent = '底图透明度 ' + Math.round(S.underlayOpacity * 100) + '%';
+    }
+    return;
+  }
+  S.dirty = true;
+  renderCanvas();
+}
+
+/* ---------- 选择 ---------- */
+function setSelection(ids, add) {
+  if (!add) S.selection = ids.slice();
+  else {
+    for (var i = 0; i < ids.length; i++) {
+      var idx = S.selection.indexOf(ids[i]);
+      if (idx >= 0) S.selection.splice(idx, 1);
+      else S.selection.push(ids[i]);
+    }
+  }
+  renderCanvas();
+  renderDetail();
+}
+
+/* ---------- 编辑：变换 ---------- */
+function bboxOf(list) {
+  var x1 = Infinity, y1 = Infinity, x2 = -Infinity, y2 = -Infinity;
+  for (var i = 0; i < list.length; i++) {
+    var s = list[i];
+    x1 = Math.min(x1, s.x); y1 = Math.min(y1, s.y);
+    x2 = Math.max(x2, s.x + s.w); y2 = Math.max(y2, s.y + s.h);
+  }
+  return { x: x1, y: y1, x2: x2, y: y2, w: x2 - x1, h: y2 - y1, cx: (x1 + x2) / 2, cy: (y1 + y2) / 2 };
+}
+
+function alignSel(mode) {
+  var list = selectedSeats();
+  if (list.length < 2) { toast('请先选中 2 个以上对象', 'err'); return; }
+  var b = bboxOf(list);
+  for (var i = 0; i < list.length; i++) {
+    var s = list[i];
+    if (mode === 'left') s.x = Math.round(b.x);
+    if (mode === 'right') s.x = Math.round(b.x2 - s.w);
+    if (mode === 'cx') s.x = Math.round(b.cx - s.w / 2);
+    if (mode === 'top') s.y = Math.round(b.y);
+    if (mode === 'bottom') s.y = Math.round(b.y2 - s.h);
+    if (mode === 'cy') s.y = Math.round(b.cy - s.h / 2);
+  }
+  pushHistory();
+  renderCanvas();
+  renderDetail();
+}
+
+function distribute(dir) {
+  var list = selectedSeats();
+  if (list.length < 3) { toast('等距分布需要至少 3 个对象', 'err'); return; }
+  list.sort(function (a, b) { return dir === 'h' ? a.x - b.x : a.y - b.y; });
+  var first = list[0], last = list[list.length - 1];
+  if (dir === 'h') {
+    var total = (last.x + last.w) - first.x;
+    var sumW = 0;
+    for (var i = 0; i < list.length; i++) sumW += list[i].w;
+    var gap = (total - sumW) / (list.length - 1);
+    var cur = first.x;
+    for (var j = 0; j < list.length; j++) { list[j].x = Math.round(cur); cur += list[j].w + gap; }
+  } else {
+    var totalV = (last.y + last.h) - first.y;
+    var sumH = 0;
+    for (var k = 0; k < list.length; k++) sumH += list[k].h;
+    var gapV = (totalV - sumH) / (list.length - 1);
+    var curV = first.y;
+    for (var m = 0; m < list.length; m++) { list[m].y = Math.round(curV); curV += list[m].h + gapV; }
+  }
+  pushHistory();
+  renderCanvas();
+}
+
+function rotateSel() {
+  var list = selectedSeats();
+  if (!list.length) { toast('请先选中要旋转的对象', 'err'); return; }
+  for (var i = 0; i < list.length; i++) list[i].rot = (num(list[i].rot) + 90) % 360;
+  pushHistory();
+  renderCanvas();
+  renderDetail();
+}
+
+function deleteSel() {
+  var list = selectedSeats();
+  if (!list.length) { toast('请先选中要删除的对象', 'err'); return; }
+  var busy = [];
+  for (var i = 0; i < list.length; i++) {
+    var e = empOfSeat(list[i]);
+    if (e) busy.push(e.name + '（' + list[i].id + '）');
+  }
+  openModal({
+    title: '删除 ' + list.length + ' 个对象？',
+    cls: 'slim',
+    body: '<div style="font-size:13px;line-height:1.75">删除后需要点「保存工位图」才会真正生效。' +
+      (busy.length ? '<br><br><b style="color:#B3261E">以下 ' + busy.length + ' 人的工位会消失，保存时他们会自动回到待分配：</b><br>' +
+        esc(busy.join('、')) : '') + '</div>',
+    footer: '<button class="btn" data-close="1">取消</button>' +
+      '<button class="btn danger" id="mDelOk">确认删除</button>'
+  });
+  $('mDelOk').addEventListener('click', function () {
+    var ids = S.selection.slice();
+    S.seats = S.seats.filter(function (s) { return ids.indexOf(s.id) < 0; });
+    S.selection = [];
+    closeModal();
+    pushHistory();
+    renderAll();
+    toast('已删除 ' + ids.length + ' 个对象，记得保存', '');
+  });
+}
+
+function duplicateSel() {
+  var list = selectedSeats();
+  if (!list.length) return;
+  var added = [];
+  for (var i = 0; i < list.length; i++) {
+    var src = list[i];
+    var copy = clone(src);
+    copy.rid = '';
+    copy.id = nextSeatId(copy.type === '工位' ? 'N' : 'F');
+    copy.name = copy.id;
+    copy.x = src.x + src.w + 12;
+    copy.y = src.y;
+    copy.oldId = copy.id;
+    S.seats.push(copy);
+    added.push(copy.id);
+  }
+  S.selection = added;
+  pushHistory();
+  renderCanvas();
+  renderDetail();
+  renderStats();
+}
+
+function nextSeatId(prefix) {
+  var max = 0;
+  for (var i = 0; i < S.seats.length; i++) {
+    var m = String(S.seats[i].id).match(new RegExp('^' + prefix + '-(\\d+)$'));
+    if (m) max = Math.max(max, parseInt(m[1], 10));
+  }
+  var n = max + 1, id;
+  do {
+    id = prefix + '-' + (n < 10 ? '0' + n : n);
+    n++;
+  } while (seatById(id));
+  return id;
+}
+
+/* ---------- 编辑：新增 ---------- */
+function viewCenterWorld() {
+  return { x: Math.round(S.view.x + S.view.w / 2), y: Math.round(S.view.y + S.view.h / 2) };
+}
+
+function addOneSeat() {
+  if (S.mode !== 'edit') setMode('edit');
+  var c = viewCenterWorld();
+  var seat = {
+    rid: '', id: nextSeatId('N'), oldId: '',
+    name: '', type: '工位', zone: 'N区',
+    x: Math.round(c.x / 10) * 10 - 27, y: Math.round(c.y / 10) * 10 - 19,
+    w: 54, h: 38, rot: 0
+  };
+  seat.name = seat.id;
+  S.seats.push(seat);
+  S.selection = [seat.id];
+  pushHistory();
+  renderAll();
+  toast('已添加工位 ' + seat.id + '，可在右侧改编号', 'ok');
+}
+
+function openGroupModal() {
+  if (S.mode !== 'edit') setMode('edit');
+  openModal({
+    title: '添加一组桌位',
+    sub: '按行列批量生成工位，编号自动递增。',
+    cls: 'slim',
+    body:
+      '<div class="field-row">' +
+        '<div class="field"><label>编号前缀</label><input id="gPrefix" value="E" maxlength="4"></div>' +
+        '<div class="field"><label>起始序号</label><input id="gStart" type="number" value="1"></div>' +
+      '</div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>数量</label><input id="gCount" type="number" value="6"></div>' +
+        '<div class="field"><label>每行几个</label><input id="gPerRow" type="number" value="3"></div>' +
+      '</div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>横向间距</label><input id="gGx" type="number" value="10"></div>' +
+        '<div class="field"><label>纵向间距</label><input id="gGy" type="number" value="26"></div>' +
+      '</div>' +
+      '<div class="field"><label>区域名称</label><input id="gZone" value="E区"></div>',
+    footer: '<button class="btn" data-close="1">取消</button><button class="btn primary" id="gOk">生成</button>'
+  });
+  $('gOk').addEventListener('click', function () {
+    var prefix = trimStr($('gPrefix').value) || 'E';
+    var start = Math.max(1, Math.round(num($('gStart').value, 1)));
+    var count = Math.max(1, Math.min(60, Math.round(num($('gCount').value, 6))));
+    var perRow = Math.max(1, Math.min(20, Math.round(num($('gPerRow').value, 3))));
+    var gx = Math.max(0, num($('gGx').value, 10));
+    var gy = Math.max(0, num($('gGy').value, 26));
+    var zone = trimStr($('gZone').value) || (prefix + '区');
+    var c = viewCenterWorld();
+    var totalW = perRow * 54 + (perRow - 1) * gx;
+    var x0 = Math.round((c.x - totalW / 2) / 10) * 10;
+    var y0 = Math.round((c.y - 60) / 10) * 10;
+    var created = [];
+    for (var i = 0; i < count; i++) {
+      var row = Math.floor(i / perRow), col = i % perRow;
+      var n = start + i;
+      var id = prefix + '-' + (n < 10 ? '0' + n : n);
+      if (seatById(id)) continue;
+      var s = {
+        rid: '', id: id, oldId: '', name: id, type: '工位', zone: zone,
+        x: x0 + col * (54 + gx), y: y0 + row * (38 + gy), w: 54, h: 38, rot: 0
+      };
+      S.seats.push(s);
+      created.push(id);
+    }
+    S.selection = created;
+    closeModal();
+    pushHistory();
+    renderAll();
+    toast('已生成 ' + created.length + ' 个工位', 'ok');
+  });
+}
+
+function openFacilityModal() {
+  if (S.mode !== 'edit') setMode('edit');
+  openModal({
+    title: '添加功能设施',
+    sub: '会议室、茶水间、打印区等，不参与人员分配。',
+    cls: 'slim',
+    body:
+      '<div class="field"><label>名称</label><input id="fName" value="会议室" placeholder="例如：大会议室"></div>' +
+      '<div class="field"><label>类型</label><select id="fType">' +
+        '<option>会议室</option><option>茶水间</option><option>其他</option></select></div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>宽</label><input id="fW" type="number" value="240"></div>' +
+        '<div class="field"><label>高</label><input id="fH" type="number" value="120"></div>' +
+      '</div>' +
+      '<div class="mini-note">添加后可以拖动调整位置，右侧面板可改尺寸。</div>',
+    footer: '<button class="btn" data-close="1">取消</button><button class="btn primary" id="fOk">添加</button>'
+  });
+  $('fOk').addEventListener('click', function () {
+    var name = trimStr($('fName').value) || '会议室';
+    var type = $('fType').value;
+    var w = Math.max(40, num($('fW').value, 240));
+    var h = Math.max(30, num($('fH').value, 120));
+    var c = viewCenterWorld();
+    var s = {
+      rid: '', id: nextSeatId('F'), oldId: '', name: name, type: type, zone: '公共区',
+      x: Math.round((c.x - w / 2) / 10) * 10, y: Math.round((c.y - h / 2) / 10) * 10,
+      w: w, h: h, rot: 0
+    };
+    S.seats.push(s);
+    S.selection = [s.id];
+    closeModal();
+    pushHistory();
+    renderAll();
+    toast('已添加「' + name + '」', 'ok');
+  });
+}
+
+/* ---------- 批量编号 ---------- */
+function openNumberModal() {
+  var list = selectedSeats();
+  if (list.length < 1) { toast('请先选中要编号的工位', 'err'); return; }
+  openModal({
+    title: '批量编号',
+    sub: '按位置顺序为选中的 ' + list.length + ' 个对象重新编号。',
+    cls: 'slim',
+    body:
+      '<div class="field-row">' +
+        '<div class="field"><label>前缀</label><input id="nPrefix" value="A-" maxlength="6"></div>' +
+        '<div class="field"><label>起始序号</label><input id="nStart" type="number" value="1"></div>' +
+      '</div>' +
+      '<div class="field-row">' +
+        '<div class="field"><label>步长</label><input id="nStep" type="number" value="1"></div>' +
+        '<div class="field"><label>序号位数</label><input id="nPad" type="number" value="2"></div>' +
+      '</div>' +
+      '<div class="field"><label>排序方式</label><select id="nOrder">' +
+        '<option value="row">按行：从上到下、从左到右</option>' +
+        '<option value="col">按列：从左到右、从上到下</option>' +
+      '</select></div>' +
+      '<div class="mini-note">编号与现有工位重复时会自动跳过，不会覆盖其他工位。</div>',
+    footer: '<button class="btn" data-close="1">取消</button><button class="btn primary" id="nOk">应用编号</button>'
+  });
+  $('nOk').addEventListener('click', function () {
+    var prefix = $('nPrefix').value;
+    var start = Math.round(num($('nStart').value, 1));
+    var step = Math.max(1, Math.round(num($('nStep').value, 1)));
+    var pad = Math.max(1, Math.min(4, Math.round(num($('nPad').value, 2))));
+    var order = $('nOrder').value;
+    var arr = selectedSeats().slice();
+    arr.sort(function (a, b) {
+      if (order === 'row') {
+        if (Math.abs(a.y - b.y) > 6) return a.y - b.y;
+        return a.x - b.x;
+      }
+      if (Math.abs(a.x - b.x) > 6) return a.x - b.x;
+      return a.y - b.y;
+    });
+    var selectedIds = {};
+    for (var i = 0; i < arr.length; i++) selectedIds[arr[i].id] = 1;
+    var n = start, ok = 0, skipped = 0, changed = [];
+    for (var j = 0; j < arr.length; j++) {
+      var s = arr[j];
+      var seq = String(n).length >= pad ? String(n) : new Array(pad - String(n).length + 1).join('0') + n;
+      var id = prefix + seq;
+      if (!selectedIds[id] && seatById(id)) { skipped++; n += step; continue; }
+      var oldId = s.id;
+      s.id = id;
+      if (!s.name || s.name === oldId) s.name = id;
+      changed.push({ from: oldId, to: id });
+      ok++; n += step;
+    }
+    S.selection = arr.map(function (x) { return x.id; });
+    closeModal();
+    pushHistory();
+    renderAll();
+    toast('已重编号 ' + ok + ' 个' + (skipped ? '，跳过 ' + skipped + ' 个重号' : ''), ok ? 'ok' : '');
+  });
+}
+</script>
+<script data-page-node-id="FhsvbMW0pHboiScDilqZFh" data-pnid-children="JyWAgkxUuOUOAWV2TKD3eS">
+/* =========================================================
+   分配逻辑 + 画布交互 + 保存
+   ========================================================= */
+function empOfSeat(seat) {
+  if (!seat || seat.type !== '工位') return null;
+  var e = empBySeat(seat.id);
+  if (!e && seat.oldId && seat.oldId !== seat.id) e = empBySeat(seat.oldId);
+  return e || null;
+}
+
+function closestMatch(node, cls) {
+  while (node && node.nodeType === 1) {
+    if (node.classList && node.classList.contains(cls)) return node;
+    node = node.parentNode;
+  }
+  return null;
+}
+
+function assignPerson(rid, seatId) {
+  if (S.mode !== 'assign' && seatId) { /* 允许，但编辑态不建议 */ }
+  var emp = empByRid(rid);
+  if (!emp) return;
+  var target = seatId ? seatById(seatId) : null;
+  if (seatId && !target) { toast('工位不存在', 'err'); return; }
+  if (target && target.type !== '工位') { toast('「' + (target.name || target.id) + '」不是工位，不能分配', 'err'); return; }
+  var fromId = emp.seat;
+  var fromSeat = fromId ? seatById(fromId) : null;
+  if (target && target.id === fromId) { S.pendingPerson = ''; renderAll(); return; }
+  var occupant = target ? empOfSeat(target) : null;
+  if (occupant && occupant.rid === emp.rid) { S.pendingPerson = ''; renderAll(); return; }
+
+  emp.seat = target ? target.id : '';
+  var jobs = [emp];
+  if (occupant) {
+    occupant.seat = fromSeat ? fromSeat.id : '';
+    jobs.push(occupant);
+  }
+  S.pendingPerson = '';
+  renderAll();
+  setSync('busy', '保存中');
+  var ps = [];
+  for (var i = 0; i < jobs.length; i++) {
+    (function (j) {
+      ps.push(dbUpdate(DBX.emp, j.rid, { '工位号': { text: j.seat } }));
+    })(jobs[i]);
+  }
+  Promise.all(ps).then(function () {
+    setSync('', '已同步');
+    if (occupant) toast('已与 ' + occupant.name + ' 交换工位', 'ok');
+    else if (target) toast(emp.name + ' → ' + target.id, 'ok');
+    else toast(emp.name + ' 已移回待分配', '');
+  }).catch(function () {
+    setSync('err', '保存失败');
+    toast('保存失败，正在恢复', 'err');
+    refreshNow();
+  });
+}
+
+function unassignSelected() {
+  var list = selectedSeats();
+  var n = 0;
+  for (var i = 0; i < list.length; i++) {
+    var e = empOfSeat(list[i]);
+    if (e) { assignPerson(e.rid, null); n++; }
+  }
+  if (!n) toast('这个工位本来就没有人', '');
+}
+
+/* ---------- 拖拽 ---------- */
+var PT = null;
+var spaceDown = false;
+
+function ghostFor(emp) {
+  var d = document.createElement('div');
+  d.className = 'drag-ghost';
+  var cs = deptStyle(emp.dept);
+  d.innerHTML = '<div class="avatar" style="background:' + cs.s + ';color:' + cs.c + '">' + esc(initials(emp.name)) + '</div>' +
+    esc(emp.name) + '<span style="font-weight:400;color:#8B93A5;font-size:11px">' + esc(emp.dept || '') + '</span>';
+  document.body.appendChild(d);
+  return d;
+}
+function moveGhost(ghost, x, y) {
+  ghost.style.left = x + 'px';
+  ghost.style.top = y + 'px';
+}
+function clearHot() {
+  var els = document.querySelectorAll('.seat.hot,.seat.illegal');
+  for (var i = 0; i < els.length; i++) els[i].classList.remove('hot', 'illegal');
+}
+function seatElFromPoint(x, y) {
+  var el = document.elementFromPoint(x, y);
+  if (!el) return null;
+  var g = closestMatch(el, 'seat');
+  return g;
+}
+
+function onPeopleDown(e) {
+  if (e.button !== 0) return;
+  var card = closestMatch(e.target, 'person');
+  if (!card) return;
+  if (S.mode !== 'assign') { toast('编辑模式下不能分配，先保存并切回「分配模式」', ''); return; }
+  var rid = card.getAttribute('data-rid');
+  var emp = empByRid(rid);
+  if (!emp) return;
+  PT = { kind: 'person', rid: rid, emp: emp, sx: e.clientX, sy: e.clientY, started: false, card: card, ghost: null };
+  e.preventDefault();
+}
+
+function onMapDown(e) {
+  if (e.button === 2) return;
+  var seatEl = closestMatch(e.target, 'seat');
+  var wrap = $('canvasWrap');
+  var world = viewToWorld(e.clientX, e.clientY);
+
+  if (e.button === 1 || spaceDown) {
+    PT = { kind: 'pan', sx: e.clientX, sy: e.clientY, view: clone(S.view), rect: $('map').getBoundingClientRect() };
+    wrap.classList.add('panning');
+    e.preventDefault();
+    return;
+  }
+
+  if (!seatEl) {
+    if (S.mode === 'edit') {
+      PT = { kind: 'marquee', sx: e.clientX, sy: e.clientY, world: world, base: S.selection.slice(), rect: null };
+    } else {
+      PT = { kind: 'pan', sx: e.clientX, sy: e.clientY, view: clone(S.view), rect: $('map').getBoundingClientRect(), tapClear: true };
+    }
+    e.preventDefault();
+    return;
+  }
+
+  var seat = seatById(seatEl.getAttribute('data-id'));
+  if (!seat) return;
+
+  if (S.mode === 'edit') {
+    var already = S.selection.indexOf(seat.id) >= 0;
+    if (e.shiftKey) {
+      setSelection([seat.id], true);
+    } else if (!already) {
+      setSelection([seat.id], false);
+    }
+    var sel = selectedSeats();
+    PT = {
+      kind: 'moveSeats', sx: e.clientX, sy: e.clientY, world: world, moved: false,
+      list: sel.map(function (s) { return { seat: s, x: s.x, y: s.y }; })
+    };
+    e.preventDefault();
+    return;
+  }
+
+  /* 分配模式 */
+  if (S.pendingPerson) {
+    assignPerson(S.pendingPerson, seat.id);
+    e.preventDefault();
+    return;
+  }
+  var emp = empOfSeat(seat);
+  if (emp) {
+    PT = { kind: 'seatPerson', rid: emp.rid, emp: emp, from: seat.id, sx: e.clientX, sy: e.clientY, started: false, ghost: null };
+    e.preventDefault();
+    return;
+  }
+  setSelection([seat.id], e.shiftKey);
+  e.preventDefault();
+}
+
+function onPointerMove(e) {
+  if (!PT) return;
+  var dx = e.clientX - PT.sx, dy = e.clientY - PT.sy;
+
+  if (PT.kind === 'pan') {
+    var r = PT.rect;
+    var scale = PT.view.w / r.width;
+    var nx = PT.view.x - dx * scale;
+    var ny = PT.view.y - dy * scale;
+    S.view = { x: nx, y: ny, w: PT.view.w, h: PT.view.h };
+    applyView();
+    return;
+  }
+
+  if (PT.kind === 'person' || PT.kind === 'seatPerson') {
+    if (!PT.started && Math.abs(dx) + Math.abs(dy) < 5) return;
+    if (!PT.started) {
+      PT.started = true;
+      S.dragging = true;
+      PT.ghost = ghostFor(PT.emp);
+      if (PT.card) PT.card.classList.add('dragging');
+    }
+    moveGhost(PT.ghost, e.clientX, e.clientY);
+    clearHot();
+    var el = seatElFromPoint(e.clientX, e.clientY);
+    if (el) {
+      var s = seatById(el.getAttribute('data-id'));
+      if (s && s.type === '工位' && s.id !== PT.from) el.classList.add('hot');
+      else if (s && s.type !== '工位') el.classList.add('illegal');
+    }
+    return;
+  }
+
+  if (PT.kind === 'moveSeats') {
+    if (!PT.moved && Math.abs(dx) + Math.abs(dy) < 3) return;
+    PT.moved = true;
+    var w0 = viewToWorld(PT.sx, PT.sy);
+    var w1 = viewToWorld(e.clientX, e.clientY);
+    var ddx = w1.x - w0.x, ddy = w1.y - w0.y;
+    var grid = e.shiftKey ? 10 : 1;
+    for (var i = 0; i < PT.list.length; i++) {
+      var item = PT.list[i];
+      var nxv = Math.round((item.x + ddx) / grid) * grid;
+      var nyv = Math.round((item.y + ddy) / grid) * grid;
+      item.seat.x = nxv;
+      item.seat.y = nyv;
+      var g = document.querySelector('.seat[data-id="' + cssEsc(item.seat.id) + '"]');
+      if (g) {
+        g.setAttribute('transform', 'translate(' + nxv + ',' + nyv + ')' +
+          (item.seat.rot ? ' rotate(' + item.seat.rot + ' ' + (item.seat.w / 2) + ' ' + (item.seat.h / 2) + ')' : ''));
+      }
+    }
+    return;
+  }
+
+  if (PT.kind === 'marquee') {
+    var a = PT.world, b = viewToWorld(e.clientX, e.clientY);
+    var x = Math.min(a.x, b.x), y = Math.min(a.y, b.y);
+    var w = Math.abs(a.x - b.x), h = Math.abs(a.y - b.y);
+    var ov = $('overlayLayer');
+    ov.innerHTML = '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h +
+      '" fill="rgba(59,108,246,0.08)" stroke="#3B6CF6" stroke-width="1" stroke-dasharray="4 3" rx="2"></rect>';
+    PT.rect = { x: x, y: y, w: w, h: h };
+    return;
+  }
+}
+
+function cssEsc(s) {
+  return String(s).replace(/["\\]/g, '\\$&');
+}
+
+function onPointerUp(e) {
+  if (!PT) return;
+  var pt = PT;
+  PT = null;
+  $('canvasWrap').classList.remove('panning');
+
+  if (pt.kind === 'person' || pt.kind === 'seatPerson') {
+    if (pt.ghost) pt.ghost.parentNode.removeChild(pt.ghost);
+    if (pt.card) pt.card.classList.remove('dragging');
+    clearHot();
+    S.dragging = false;
+    if (!pt.started) {
+      if (pt.kind === 'person') {
+        S.pendingPerson = S.pendingPerson === pt.rid ? '' : pt.rid;
+        renderPeople();
+        renderDetail();
+        if (S.pendingPerson) toast('已选中 ' + pt.emp.name + '，点一个工位即可分配', '');
+      } else {
+        setSelection([pt.from], false);
+      }
+      return;
+    }
+    var el = seatElFromPoint(e.clientX, e.clientY);
+    var overPeople = closestMatch(document.elementFromPoint(e.clientX, e.clientY), 'panel-left');
+    var target = el ? seatById(el.getAttribute('data-id')) : null;
+    if (target && target.type === '工位' && target.id !== pt.from) {
+      assignPerson(pt.rid, target.id);
+    } else if (overPeople && pt.kind === 'seatPerson') {
+      assignPerson(pt.rid, null);
+    }
+    return;
+  }
+
+  if (pt.kind === 'moveSeats') {
+    if (pt.moved) {
+      pushHistory();
+      renderCanvas();
+      renderDetail();
+    }
+    return;
+  }
+
+  if (pt.kind === 'marquee') {
+    $('overlayLayer').innerHTML = '';
+    if ((!pt.rect || (pt.rect.w <= 4 && pt.rect.h <= 4)) && !e.shiftKey) {
+      setSelection([], false);
+      return;
+    }
+    if (pt.rect && (pt.rect.w > 4 || pt.rect.h > 4)) {
+      var sel = [];
+      for (var i = 0; i < S.seats.length; i++) {
+        var s = S.seats[i];
+        if (s.x + s.w < pt.rect.x || s.x > pt.rect.x + pt.rect.w) continue;
+        if (s.y + s.h < pt.rect.y || s.y > pt.rect.y + pt.rect.h) continue;
+        sel.push(s.id);
+      }
+      setSelection(sel, false);
+    }
+    return;
+  }
+
+  if (pt.kind === 'pan' && pt.tapClear) {
+    if (Math.abs(e.clientX - pt.sx) + Math.abs(e.clientY - pt.sy) < 4) {
+      setSelection([], false);
+      S.pendingPerson = '';
+      renderPeople();
+      renderDetail();
+    }
+  }
+}
+
+/* ---------- 快捷键 ---------- */
+function onKeyDown(e) {
+  var tag = (e.target && e.target.tagName || '').toLowerCase();
+  var typing = tag === 'input' || tag === 'select' || tag === 'textarea';
+  if (e.keyCode === 27) {
+    closeModal();
+    S.pendingPerson = '';
+    if (!typing) { setSelection([], false); renderPeople(); }
+    return;
+  }
+  if (typing) return;
+  if (e.keyCode === 32) { spaceDown = true; }
+  var meta = e.ctrlKey || e.metaKey;
+  if (meta && e.keyCode === 90) {
+    e.preventDefault();
+    if (e.shiftKey) redo(); else undo();
+    return;
+  }
+  if (meta && e.keyCode === 89) { e.preventDefault(); redo(); return; }
+  if ((e.keyCode === 46 || e.keyCode === 8) && S.mode === 'edit' && S.selection.length) {
+    e.preventDefault();
+    deleteSel();
+  }
+}
+
+function onKeyUp(e) {
+  if (e.keyCode === 32) spaceDown = false;
+}
+
+/* ---------- 模式切换 ---------- */
+function setMode(mode) {
+  if (S.mode === mode) return;
+  if (S.mode === 'edit' && S.dirty && mode === 'assign') {
+    openModal({
+      title: '工位图有未保存的修改',
+      cls: 'slim',
+      body: '<div style="font-size:13px;line-height:1.7">切回分配模式前，先决定这些修改怎么处理。</div>',
+      footer: '<button class="btn" data-close="1">继续编辑</button>' +
+        '<button class="btn danger" id="mDiscard">放弃修改</button>' +
+        '<button class="btn primary" id="mSaveGo">保存并切换</button>'
+    });
+    $('mDiscard').addEventListener('click', function () {
+      closeModal();
+      S.dirty = false;
+      doSetMode(mode);
+      loadEverything();
+    });
+    $('mSaveGo').addEventListener('click', function () {
+      closeModal();
+      saveMap(true);
+    });
+    return;
+  }
+  doSetMode(mode);
+}
+
+function doSetMode(mode) {
+  S.mode = mode;
+  S.selection = [];
+  S.pendingPerson = '';
+  if (mode === 'edit' && !S.history.length) seedHistory();
+  syncModeUI();
+  renderAll();
+  if (mode === 'edit') toast('编辑模式：拖动工位排版，改完点右上角保存', '');
+}
+
+/* ---------- 底图 ---------- */
+function pickUnderlay() {
+  var inp = document.createElement('input');
+  inp.type = 'file';
+  inp.accept = 'image/*,.svg';
+  inp.addEventListener('change', function () {
+    var f = inp.files && inp.files[0];
+    if (f) readUnderlayFile(f);
+  });
+  inp.click();
+}
+
+function readUnderlayFile(file) {
+  var isSvg = /svg/i.test(file.type) || /\.svg$/i.test(file.name);
+  var fr = new FileReader();
+  if (isSvg) {
+    fr.onload = function () {
+      S.underlay = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(String(fr.result));
+      S.underlayName = file.name;
+      S.dirty = true;
+      S.showUnderlay = true;
+      renderCanvas();
+      renderDetail();
+      toast('底图已更新，记得保存工位图', 'ok');
+    };
+    fr.readAsText(file);
+    return;
+  }
+  fr.onload = function () {
+    shrinkImage(String(fr.result), function (dataUrl) {
+      S.underlay = dataUrl;
+      S.underlayName = file.name;
+      S.dirty = true;
+      S.showUnderlay = true;
+      renderCanvas();
+      renderDetail();
+      toast('底图已更新，记得保存工位图', 'ok');
+    });
+  };
+  fr.readAsDataURL(file);
+}
+
+function shrinkImage(dataUrl, cb) {
+  var img = new Image();
+  img.onload = function () {
+    var maxW = 1600;
+    var scale = Math.min(1, maxW / img.width);
+    var c = document.createElement('canvas');
+    c.width = Math.round(img.width * scale);
+    c.height = Math.round(img.height * scale);
+    var ctx = c.getContext('2d');
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, c.width, c.height);
+    ctx.drawImage(img, 0, 0, c.width, c.height);
+    try { cb(c.toDataURL('image/jpeg', 0.82)); } catch (e) { cb(dataUrl); }
+  };
+  img.onerror = function () { cb(dataUrl); };
+  img.src = dataUrl;
+}
+
+function clearUnderlay() {
+  S.underlay = '';
+  S.underlayName = '';
+  S.dirty = true;
+  renderCanvas();
+  renderDetail();
+  toast('底图已移除，记得保存', '');
+}
+
+/* ---------- 保存工位图 ---------- */
+function saveMap(thenSwitch) {
+  if (S.saving) return;
+  var ids = {}, renames = {};
+  for (var i = 0; i < S.seats.length; i++) {
+    var st = S.seats[i];
+    if (st.type === '工位') ids[st.id] = 1;
+    if (st.oldId && st.oldId !== st.id && st.type === '工位') renames[st.oldId] = st.id;
+  }
+  var orphans = [];
+  for (var j = 0; j < S.employees.length; j++) {
+    var e = S.employees[j];
+    if (e.seat && !ids[e.seat] && !renames[e.seat]) orphans.push(e);
+  }
+  if (orphans.length) {
+    var rows = [];
+    for (var k = 0; k < orphans.length; k++) {
+      rows.push('<tr><td>' + esc(orphans[k].name) + '</td><td class="mono">' + esc(orphans[k].seat) +
+        '</td><td>' + esc(orphans[k].dept || '') + '</td><td>' + esc(orphans[k].title || '') + '</td></tr>');
+    }
+    openModal({
+      title: '有 ' + orphans.length + ' 人的工位已被删除',
+      sub: '保存后这些人员会自动回到左侧「待分配」清单，需要重新安排。',
+      body: '<div class="tbl-wrap" style="max-height:240px"><table class="tbl"><thead><tr>' +
+        '<th>姓名</th><th>原工位</th><th>部门</th><th>职位</th></tr></thead><tbody>' + rows.join('') +
+        '</tbody></table></div>',
+      footer: '<button class="btn" data-close="1">继续编辑</button>' +
+        '<button class="btn primary" id="orphOk">确认并保存</button>'
+    });
+    $('orphOk').addEventListener('click', function () {
+      closeModal();
+      doSaveMap(renames, orphans, thenSwitch);
+    });
+    return;
+  }
+  doSaveMap(renames, [], thenSwitch);
+}
+
+function doSaveMap(renames, orphans, thenSwitch) {
+  if (!DEMO) {
+    db = sdk();
+    if (!db) { toast('当前环境无法保存', 'err'); return; }
+  }
+  S.saving = true;
+  setSync('busy', '保存中');
+  var btn = $('btnSaveMap');
+  if (btn) btn.disabled = true;
+
+  var tasks = [];
+  var dbByRid = {};
+  for (var i = 0; i < S.dbSeats.length; i++) dbByRid[S.dbSeats[i].rid] = S.dbSeats[i];
+
+  for (var j = 0; j < S.seats.length; j++) {
+    (function (s) {
+      var props = {
+        '工位号': { text: s.id }, '名称': { text: s.name }, '类型': { text: s.type },
+        '区域': { text: s.zone }, 'X': { number: Math.round(s.x) }, 'Y': { number: Math.round(s.y) },
+        '宽度': { number: Math.round(s.w) }, '高度': { number: Math.round(s.h) }, '旋转': { number: Math.round(num(s.rot)) }
+      };
+      if (!s.rid) {
+        tasks.push(dbAdd(DBX.seat, props).then(function (r) {
+          s.rid = (r && r.id) || '';
+          s.oldId = s.id;
+        }));
+      } else {
+        var old = dbByRid[s.rid];
+        if (!old || sigOf(old) !== sigOf(s)) {
+          var props2 = {};
+          for (var key in props) if (props.hasOwnProperty(key)) props2[key] = props[key];
+          tasks.push(dbUpdate(DBX.seat, s.rid, props2).then(function () { s.oldId = s.id; }));
+        } else {
+          s.oldId = s.id;
+        }
+      }
+    })(S.seats[j]);
+  }
+
+  var keepRids = {};
+  for (var m = 0; m < S.seats.length; m++) if (S.seats[m].rid) keepRids[S.seats[m].rid] = 1;
+  for (var n = 0; n < S.dbSeats.length; n++) {
+    (function (s) {
+      if (!keepRids[s.rid]) tasks.push(dbDel(DBX.seat, s.rid));
+    })(S.dbSeats[n]);
+  }
+
+  for (var oldId in renames) {
+    if (!renames.hasOwnProperty(oldId)) continue;
+    for (var p = 0; p < S.employees.length; p++) {
+      if (S.employees[p].seat === oldId) {
+        (function (e, nid) {
+          e.seat = nid;
+          tasks.push(dbUpdate(DBX.emp, e.rid, { '工位号': { text: nid } }));
+        })(S.employees[p], renames[oldId]);
+      }
+    }
+  }
+
+  for (var q = 0; q < orphans.length; q++) {
+    (function (e) {
+      e.seat = '';
+      tasks.push(dbUpdate(DBX.emp, e.rid, { '工位号': { text: '' } }));
+    })(orphans[q]);
+  }
+
+  var settings = {
+    '地图名称': S.mapName,
+    '画布': JSON.stringify({ w: S.world.w, h: S.world.h }),
+    '底图': S.underlay || '',
+    '底图名称': S.underlayName || '',
+    '底图透明度': String(S.underlayOpacity)
+  };
+  var rids = S.settingRids || {};
+  for (var key in settings) {
+    if (!settings.hasOwnProperty(key)) continue;
+    (function (k, v) {
+      if (rids[k]) tasks.push(dbUpdate(DBX.set, rids[k], { '内容': { text: v } }));
+      else tasks.push(dbAdd(DBX.set, { '项目': { text: k }, '内容': { text: v } }));
+    })(key, settings[key]);
+  }
+
+  Promise.all(tasks).then(function () {
+    S.dirty = false;
+    S.saving = false;
+    if (btn) btn.disabled = false;
+    toast('工位图已保存' + (orphans.length ? '，' + orphans.length + ' 人已回到待分配' : ''), 'ok');
+    if (thenSwitch) {
+      doSetMode('assign');
+    }
+    return loadEverything().then(function () { seedHistory(); });
+  }).catch(function (err) {
+    S.saving = false;
+    if (btn) btn.disabled = false;
+    setSync('err', '保存失败');
+    toast('保存失败：' + ((err && err.message) || '请重试'), 'err');
+  });
+}
+</script>
+<script data-page-node-id="TSHDEIhzadPmXJNCBc2QTK" data-pnid-children="3Gne6wdyZ5DhtUiN7apB7u">
+/* =========================================================
+   文件导入导出：XLSX / CSV / SVG
+   ========================================================= */
+function todayStr() {
+  var d = new Date();
+  function p(n) { return n < 10 ? '0' + n : '' + n; }
+  return d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate());
+}
+function downloadBlob(blob, filename) {
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function () { URL.revokeObjectURL(url); if (a.parentNode) a.parentNode.removeChild(a); }, 1500);
+}
+function pickFile(accept, cb) {
+  var inp = document.createElement('input');
+  inp.type = 'file';
+  inp.accept = accept;
+  inp.addEventListener('change', function () {
+    var f = inp.files && inp.files[0];
+    if (f) cb(f);
+  });
+  inp.click();
+}
+
+/* ---------------- ZIP（读） ---------------- */
+function u16(dv, o) { return dv.getUint16(o, true); }
+function u32(dv, o) { return dv.getUint32(o, true); }
+
+function inflateRaw(bytes) {
+  return new Promise(function (resolve, reject) {
+    if (typeof DecompressionStream === 'undefined') { reject(new Error('NO_INFLATE')); return; }
+    try {
+      var ds = new DecompressionStream('deflate-raw');
+      var stream = new Blob([bytes]).stream().pipeThrough(ds);
+      new Response(stream).arrayBuffer().then(function (ab) { resolve(new Uint8Array(ab)); }, reject);
+    } catch (e) { reject(e); }
+  });
+}
+
+function unzip(buf) {
+  var dv = new DataView(buf);
+  var len = dv.byteLength;
+  var eocd = -1;
+  for (var i = len - 22; i >= Math.max(0, len - 66000); i--) {
+    if (u32(dv, i) === 0x06054b50) { eocd = i; break; }
+  }
+  if (eocd < 0) return Promise.reject(new Error('ZIP 结构异常'));
+  var count = u16(dv, eocd + 10);
+  var cdOff = u32(dv, eocd + 16);
+  var out = {};
+  var jobs = [];
+  var p = cdOff;
+  for (var k = 0; k < count; k++) {
+    if (u32(dv, p) !== 0x02014b50) break;
+    var method = u16(dv, p + 10);
+    var csize = u32(dv, p + 20);
+    var nameLen = u16(dv, p + 28);
+    var extraLen = u16(dv, p + 30);
+    var cmtLen = u16(dv, p + 32);
+    var lho = u32(dv, p + 42);
+    var nameBytes = new Uint8Array(buf, p + 46, nameLen);
+    var name = new TextDecoder('utf-8').decode(nameBytes);
+    var lnameLen = u16(dv, lho + 26);
+    var lextraLen = u16(dv, lho + 28);
+    var dataStart = lho + 30 + lnameLen + lextraLen;
+    var raw = new Uint8Array(buf, dataStart, csize);
+    (function (nm, mth, rb) {
+      if (mth === 0) { out[nm] = rb; return; }
+      jobs.push(inflateRaw(rb).then(function (u8) { out[nm] = u8; }));
+    })(name, method, raw);
+    p += 46 + nameLen + extraLen + cmtLen;
+  }
+  return Promise.all(jobs).then(function () { return out; });
+}
+
+function bytesToText(u8) {
+  return new TextDecoder('utf-8').decode(u8);
+}
+
+/* ---------------- XLSX（读） ---------------- */
+function xmlDoc(str) { return new DOMParser().parseFromString(str, 'text/xml'); }
+function nodeText(n) { return n ? (n.textContent || '') : ''; }
+
+function xlsxToGrid(file) {
+  return new Promise(function (resolve, reject) {
+    if (/\.csv$/i.test(file.name)) {
+      var fr = new FileReader();
+      fr.onload = function () {
+        var ab = fr.result;
+        var txt = '';
+        try { txt = new TextDecoder('utf-8', { fatal: false }).decode(ab); } catch (e) { txt = ''; }
+        if (txt.indexOf('\uFFFD') >= 0) {
+          try { txt = new TextDecoder('gbk').decode(ab); } catch (e2) { /* 保留 utf-8 结果 */ }
+        }
+        resolve(parseCsv(txt.replace(/^\uFEFF/, '')));
+      };
+      fr.onerror = function () { reject(new Error('文件读取失败')); };
+      fr.readAsArrayBuffer(file);
+      return;
+    }
+    var fr = new FileReader();
+    fr.onerror = function () { reject(new Error('文件读取失败')); };
+    fr.onload = function () {
+      unzip(fr.result).then(function (files) {
+        var shared = [];
+        if (files['xl/sharedStrings.xml']) {
+          var sdoc = xmlDoc(bytesToText(files['xl/sharedStrings.xml']));
+          var sis = sdoc.getElementsByTagName('si');
+          for (var i = 0; i < sis.length; i++) {
+            var ts = sis[i].getElementsByTagName('t');
+            var s = '';
+            for (var j = 0; j < ts.length; j++) s += nodeText(ts[j]);
+            shared.push(s);
+          }
+        }
+        var sheetPath = null;
+        var names = Object.keys(files);
+        for (var n = 0; n < names.length; n++) {
+          if (/^xl\/worksheets\/sheet\d+\.xml$/.test(names[n])) {
+            if (!sheetPath || names[n] < sheetPath) sheetPath = names[n];
+          }
+        }
+        if (!sheetPath) { reject(new Error('没有找到工作表')); return; }
+        var sdoc2 = xmlDoc(bytesToText(files[sheetPath]));
+        var rows = sdoc2.getElementsByTagName('row');
+        var grid = [];
+        for (var r = 0; r < rows.length; r++) {
+          var rIdx = parseInt(rows[r].getAttribute('r'), 10) - 1;
+          if (!(rIdx >= 0)) rIdx = grid.length;
+          var cells = rows[r].getElementsByTagName('c');
+          var line = grid[rIdx] || [];
+          for (var c = 0; c < cells.length; c++) {
+            var cell = cells[c];
+            var ref = cell.getAttribute('r') || '';
+            var col = colIndex(ref);
+            if (col < 0) col = c;
+            var t = cell.getAttribute('t');
+            var val = '';
+            if (t === 's') {
+              var vNode = cell.getElementsByTagName('v')[0];
+              var si = parseInt(nodeText(vNode), 10);
+              val = shared[si] !== undefined ? shared[si] : '';
+            } else if (t === 'inlineStr') {
+              var isNode = cell.getElementsByTagName('t');
+              for (var m = 0; m < isNode.length; m++) val += nodeText(isNode[m]);
+            } else {
+              var vv = cell.getElementsByTagName('v')[0];
+              val = nodeText(vv);
+            }
+            line[col] = trimStr(val);
+          }
+          grid[rIdx] = line;
+        }
+        for (var g = 0; g < grid.length; g++) if (!grid[g]) grid[g] = [];
+        resolve(grid);
+      }).catch(reject);
+    };
+    fr.readAsArrayBuffer(file);
+  });
+}
+
+function colIndex(ref) {
+  var m = String(ref).match(/^([A-Z]+)/);
+  if (!m) return -1;
+  var s = m[1], n = 0;
+  for (var i = 0; i < s.length; i++) n = n * 26 + (s.charCodeAt(i) - 64);
+  return n - 1;
+}
+
+function parseCsv(text) {
+  var rows = [], row = [], cur = '', q = false;
+  for (var i = 0; i < text.length; i++) {
+    var ch = text.charAt(i);
+    if (q) {
+      if (ch === '"') {
+        if (text.charAt(i + 1) === '"') { cur += '"'; i++; } else q = false;
+      } else cur += ch;
+    } else {
+      if (ch === '"') q = true;
+      else if (ch === ',') { row.push(cur); cur = ''; }
+      else if (ch === '\n') { row.push(cur); rows.push(row); row = []; cur = ''; }
+      else if (ch !== '\r') cur += ch;
+    }
+  }
+  if (cur || row.length) { row.push(cur); rows.push(row); }
+  return rows;
+}
+
+/* ---------------- XLSX（写，无压缩） ---------------- */
+var CRC_TABLE = (function () {
+  var t = [];
+  for (var n = 0; n < 256; n++) {
+    var c = n;
+    for (var k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+    t[n] = c >>> 0;
+  }
+  return t;
+})();
+function crc32(u8) {
+  var c = 0xFFFFFFFF;
+  for (var i = 0; i < u8.length; i++) c = CRC_TABLE[(c ^ u8[i]) & 0xFF] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+function strBytes(s) { return new TextEncoder().encode(s); }
+function xmlEsc(s) {
+  return String(s === null || s === undefined ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+}
+function zipStore(files) {
+  var parts = [], central = [], offset = 0;
+  for (var i = 0; i < files.length; i++) {
+    var name = strBytes(files[i].name);
+    var data = files[i].data;
+    var crc = crc32(data);
+    var lh = new Uint8Array(30 + name.length);
+    var dv = new DataView(lh.buffer);
+    dv.setUint32(0, 0x04034b50, true);
+    dv.setUint16(4, 20, true);
+    dv.setUint16(6, 0x0800, true);
+    dv.setUint16(8, 0, true);
+    dv.setUint16(10, 0, true);
+    dv.setUint16(12, 0x0021, true);
+    dv.setUint32(14, crc, true);
+    dv.setUint32(18, data.length, true);
+    dv.setUint32(22, data.length, true);
+    dv.setUint16(26, name.length, true);
+    dv.setUint16(28, 0, true);
+    lh.set(name, 30);
+    parts.push(lh, data);
+
+    var ce = new Uint8Array(46 + name.length);
+    var dv2 = new DataView(ce.buffer);
+    dv2.setUint32(0, 0x02014b50, true);
+    dv2.setUint16(4, 20, true);
+    dv2.setUint16(6, 20, true);
+    dv2.setUint16(8, 0x0800, true);
+    dv2.setUint16(10, 0, true);
+    dv2.setUint16(12, 0, true);
+    dv2.setUint16(14, 0x0021, true);
+    dv2.setUint32(16, crc, true);
+    dv2.setUint32(20, data.length, true);
+    dv2.setUint32(24, data.length, true);
+    dv2.setUint16(28, name.length, true);
+    dv2.setUint16(30, 0, true);
+    dv2.setUint16(32, 0, true);
+    dv2.setUint16(34, 0, true);
+    dv2.setUint16(36, 0, true);
+    dv2.setUint32(38, 0, true);
+    dv2.setUint32(42, offset, true);
+    ce.set(name, 46);
+    central.push(ce);
+    offset += lh.length + data.length;
+  }
+  var cdSize = 0;
+  for (var j = 0; j < central.length; j++) cdSize += central[j].length;
+  var eocd = new Uint8Array(22);
+  var dv3 = new DataView(eocd.buffer);
+  dv3.setUint32(0, 0x06054b50, true);
+  dv3.setUint16(8, files.length, true);
+  dv3.setUint16(10, files.length, true);
+  dv3.setUint32(12, cdSize, true);
+  dv3.setUint32(16, offset, true);
+  var all = parts.concat(central, [eocd]);
+  var total = 0;
+  for (var k = 0; k < all.length; k++) total += all[k].length;
+  var out = new Uint8Array(total), pos = 0;
+  for (var m = 0; m < all.length; m++) { out.set(all[m], pos); pos += all[m].length; }
+  return out;
+}
+
+function colName(i) {
+  var s = '';
+  i = i + 1;
+  while (i > 0) {
+    var r = (i - 1) % 26;
+    s = String.fromCharCode(65 + r) + s;
+    i = Math.floor((i - 1) / 26);
+  }
+  return s;
+}
+
+function xlsxBlob(rows, sheetName) {
+  var sheetRows = [];
+  for (var r = 0; r < rows.length; r++) {
+    var cells = [];
+    for (var c = 0; c < rows[r].length; c++) {
+      var v = rows[r][c];
+      if (v === null || v === undefined || v === '') continue;
+      var ref = colName(c) + (r + 1);
+      if (typeof v === 'number' && isFinite(v)) {
+        cells.push('<c r="' + ref + '"><v>' + v + '</v></c>');
+      } else {
+        cells.push('<c r="' + ref + '" t="inlineStr"><is><t xml:space="preserve">' + xmlEsc(v) + '</t></is></c>');
+      }
+    }
+    sheetRows.push('<row r="' + (r + 1) + '">' + cells.join('') + '</row>');
+  }
+  var sheet = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+    '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">' +
+    '<cols><col min="1" max="1" width="14" customWidth="1"/><col min="2" max="6" width="16" customWidth="1"/></cols>' +
+    '<sheetData>' + sheetRows.join('') + '</sheetData></worksheet>';
+  var files = [
+    {
+      name: '[Content_Types].xml',
+      data: strBytes('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+        '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
+        '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
+        '<Default Extension="xml" ContentType="application/xml"/>' +
+        '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>' +
+        '<Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>' +
+        '</Types>')
+    },
+    {
+      name: '_rels/.rels',
+      data: strBytes('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>' +
+        '</Relationships>')
+    },
+    {
+      name: 'xl/workbook.xml',
+      data: strBytes('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+        '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" ' +
+        'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">' +
+        '<sheets><sheet name="' + xmlEsc(sheetName || 'Sheet1') + '" sheetId="1" r:id="rId1"/></sheets></workbook>')
+    },
+    {
+      name: 'xl/_rels/workbook.xml.rels',
+      data: strBytes('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
+        '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' +
+        '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>' +
+        '</Relationships>')
+    },
+    { name: 'xl/worksheets/sheet1.xml', data: strBytes(sheet) }
+  ];
+  var zip = zipStore(files);
+  return new Blob([zip], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+}
+</script>
+<script data-page-node-id="6tDa4i9PlhEoxFNbOoyt85" data-pnid-children="wGAzhHjP4JbY5lZdK6TwNp">
+/* =========================================================
+   人员 Excel 导入 / 结果导出
+   ========================================================= */
+var IMPORT = null;
+
+function openImportExcelModal() {
+  IMPORT = null;
+  openModal({
+    title: '导入 Excel 分配工位',
+    sub: '先预览每行是新增、更新还是冲突，确认后再写入。',
+    cls: 'wide',
+    body: importIntroHTML(),
+    footLeft: '<button class="btn" id="btnTpl"><svg class="ic"><use href="#i-download"/></svg>下载导入模板</button>',
+    footer: '<button class="btn" data-close="1">取消</button>'
+  });
+  $('btnTpl').addEventListener('click', downloadTemplate);
+  wireDropZone();
+}
+
+function importIntroHTML() {
+  return '' +
+    '<div class="spec"><b>按表头名称自动识别列</b>' +
+      '<ul>' +
+        '<li><code>姓名</code>　必填。没有这一列无法导入。</li>' +
+        '<li><code>工号</code>　有工号时优先按工号匹配，没有则按姓名匹配。</li>' +
+        '<li><code>部门</code>　<code>职位</code>　补充或更新人员信息。</li>' +
+        '<li><code>工位号</code>　填了就分配；留空只新增/更新人员，不进工位。</li>' +
+      '</ul>' +
+    '</div>' +
+    '<div class="spec"><b>示例</b>' +
+      '<table class="tbl" style="margin-top:6px"><thead><tr><th>姓名</th><th>工号</th><th>部门</th><th>职位</th><th>工位号</th></tr></thead>' +
+      '<tbody><tr><td>张三</td><td>EMP100</td><td>研发部</td><td>前端工程师</td><td>A-03</td></tr>' +
+      '<tr><td>李四</td><td>EMP101</td><td>市场部</td><td>市场专员</td><td></td></tr></tbody></table>' +
+      '<div class="mini-note">列的顺序可以不同，多余列会被忽略。支持 .xlsx / .xls / .csv。</div>' +
+    '</div>' +
+    '<div class="drop" id="dropZone">' +
+      '<svg class="ic"><use href="#i-upload"/></svg>' +
+      '<b>点击选择文件，或把文件拖到这里</b>' +
+      '<span>推荐 <em>.xlsx</em>，也支持 .csv</span>' +
+    '</div>';
+}
+
+function wireDropZone() {
+  var dz = $('dropZone');
+  if (!dz) return;
+  dz.addEventListener('click', function () {
+    pickFile('.xlsx,.xls,.csv', handleImportFile);
+  });
+  dz.addEventListener('dragover', function (e) { e.preventDefault(); dz.classList.add('over'); });
+  dz.addEventListener('dragleave', function () { dz.classList.remove('over'); });
+  dz.addEventListener('drop', function (e) {
+    e.preventDefault();
+    dz.classList.remove('over');
+    var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) handleImportFile(f);
+  });
+}
+
+function handleImportFile(file) {
+  if (/\.xls$/i.test(file.name)) {
+    toast('旧版 .xls 请先另存为 .xlsx', 'err');
+    return;
+  }
+  var body = $('modalBody');
+  if (body) body.innerHTML = '<div style="padding:40px;text-align:center;color:#8B93A5">' +
+    '<span class="spin" style="display:inline-block;vertical-align:-3px;margin-right:6px"></span>正在解析 ' + esc(file.name) + '…</div>';
+  xlsxToGrid(file).then(function (grid) {
+    var parsed = parseEmployeeGrid(grid);
+    if (!parsed.ok) {
+      if (body) body.innerHTML = '<div class="empty" style="padding:30px"><b>' + esc(parsed.error) + '</b>' +
+        '请检查表头是否有「姓名」列，或点左下角下载导入模板。</div>';
+      return;
+    }
+    IMPORT = { rows: parsed.rows, fileName: file.name, overwrite: false };
+    classifyImport();
+    renderImportPreview();
+  }).catch(function (err) {
+    if (body) body.innerHTML = '<div class="empty" style="padding:30px"><b>文件解析失败</b>' +
+      esc((err && err.message) || '') + '<br>如果是旧版 .xls，请另存为 .xlsx 后重试。</div>';
+  });
+}
+
+function parseEmployeeGrid(grid) {
+  var map = null, headerRow = -1, best = 0;
+  var patterns = [
+    { key: 'name', re: /姓名|名字|员工姓名|name/i },
+    { key: 'code', re: /工号|员工编号|工牌|员工号|code/i },
+    { key: 'dept', re: /部门|事业部|团队|dept|department/i },
+    { key: 'title', re: /职位|岗位|职称|title|position/i },
+    { key: 'seat', re: /工位|座位|桌位|席位|seat|desk/i }
+  ];
+  for (var r = 0; r < Math.min(grid.length, 8); r++) {
+    var line = grid[r] || [];
+    var m = {}, hits = 0;
+    for (var c = 0; c < line.length; c++) {
+      var cell = trimStr(line[c]);
+      if (!cell) continue;
+      for (var p = 0; p < patterns.length; p++) {
+        if (!m[patterns[p].key] && patterns[p].re.test(cell)) { m[patterns[p].key] = c; hits++; break; }
+      }
+    }
+    if (m.name !== undefined && hits > best) { best = hits; map = m; headerRow = r; }
+  }
+  if (!map || map.name === undefined) {
+    return { ok: false, error: '没有找到「姓名」列' };
+  }
+  var rows = [];
+  for (var i = headerRow + 1; i < grid.length; i++) {
+    var ln = grid[i] || [];
+    var name = trimStr(ln[map.name]);
+    if (!name) continue;
+    rows.push({
+      rowNo: i + 1,
+      name: name,
+      code: map.code !== undefined ? trimStr(ln[map.code]) : '',
+      dept: map.dept !== undefined ? trimStr(ln[map.dept]) : '',
+      title: map.title !== undefined ? trimStr(ln[map.title]) : '',
+      seat: map.seat !== undefined ? trimStr(ln[map.seat]) : ''
+    });
+  }
+  if (!rows.length) return { ok: false, error: '表里没有可导入的数据行' };
+  return { ok: true, rows: rows };
+}
+
+function classifyImport() {
+  if (!IMPORT) return;
+  var byCode = {}, byName = {};
+  for (var i = 0; i < S.employees.length; i++) {
+    var e = S.employees[i];
+    if (e.code) byCode[e.code] = e;
+    byName[e.name] = e;
+  }
+  var seenName = {}, seenCode = {}, seenSeat = {};
+  for (var j = 0; j < IMPORT.rows.length; j++) {
+    var r = IMPORT.rows[j];
+    r.existRid = '';
+    r.occupyRid = '';
+    r.occupyName = '';
+    r.note = '';
+    r.changes = [];
+
+    if (seenName[r.name] || (r.code && seenCode[r.code])) {
+      r.status = 'conflict';
+      r.note = '文件内重复（同一人出现多次）';
+      continue;
+    }
+    seenName[r.name] = 1;
+    if (r.code) seenCode[r.code] = 1;
+
+    var exist = (r.code && byCode[r.code]) || byName[r.name] || null;
+    if (exist) r.existRid = exist.rid;
+
+    var seatObj = r.seat ? seatById(r.seat) : null;
+    var seatProblem = '';
+    if (r.seat) {
+      if (!seatObj) seatProblem = '工位「' + r.seat + '」不存在';
+      else if (seatObj.type !== '工位') seatProblem = '「' + r.seat + '」不是工位';
+      else if (seenSeat[r.seat]) seatProblem = '工位「' + r.seat + '」在文件里重复出现';
+      var occ = seatObj ? empOfSeat(seatObj) : null;
+      if (occ && (!exist || occ.rid !== exist.rid)) {
+        r.occupyRid = occ.rid;
+        r.occupyName = occ.name;
+        if (!IMPORT.overwrite) seatProblem = '工位已被 ' + occ.name + ' 占用';
+      }
+    }
+    if (r.seat && seatObj && seatObj.type === '工位') seenSeat[r.seat] = 1;
+
+    if (exist) {
+      if (exist.dept && r.dept && exist.dept !== r.dept) r.changes.push('部门 ' + exist.dept + ' → ' + r.dept);
+      if (exist.title && r.title && exist.title !== r.title) r.changes.push('职位 ' + exist.title + ' → ' + r.title);
+      if (r.code && exist.code && exist.code !== r.code) r.changes.push('工号 ' + exist.code + ' → ' + r.code);
+      if (r.seat && exist.seat !== r.seat) r.changes.push('工位 ' + (exist.seat || '未分配') + ' → ' + r.seat);
+      if (!exist.dept && r.dept) r.changes.push('补充部门 ' + r.dept);
+      if (!exist.title && r.title) r.changes.push('补充职位 ' + r.title);
+    }
+
+    if (seatProblem) {
+      r.status = 'conflict';
+      r.note = seatProblem + (r.occupyName && IMPORT.overwrite ? '，将覆盖 ' + r.occupyName : '');
+    } else if (exist) {
+      if (r.changes.length) { r.status = 'update'; r.note = r.changes.join('；'); }
+      else { r.status = 'skip'; r.note = '信息无变化'; }
+      if (r.occupyName && IMPORT.overwrite) r.note += '（覆盖 ' + r.occupyName + '）';
+    } else {
+      r.status = 'add';
+      r.note = r.seat ? '新增人员并分配 ' + r.seat : '新增人员，暂不分配';
+      if (r.occupyName && IMPORT.overwrite) r.note += '（覆盖 ' + r.occupyName + '）';
+    }
+  }
+}
+
+function importCounts() {
+  var c = { add: 0, update: 0, conflict: 0, skip: 0 };
+  if (!IMPORT) return c;
+  for (var i = 0; i < IMPORT.rows.length; i++) c[IMPORT.rows[i].status]++;
+  return c;
+}
+
+function renderImportPreview() {
+  var c = importCounts();
+  var badge = { add: '<span class="tag ok">新增</span>', update: '<span class="tag" style="background:#EDF2FF;color:#2A55D4">更新</span>', conflict: '<span class="tag warn">冲突</span>', skip: '<span class="tag mute">无变化</span>' };
+  var rows = [];
+  for (var i = 0; i < IMPORT.rows.length; i++) {
+    var r = IMPORT.rows[i];
+    rows.push('<tr><td>' + badge[r.status] + '</td><td class="mono">' + r.rowNo + '</td><td>' + esc(r.name) + '</td>' +
+      '<td class="mono">' + esc(r.code) + '</td><td>' + esc(r.dept) + '</td><td>' + esc(r.title) + '</td>' +
+      '<td class="mono">' + esc(r.seat) + '</td><td class="txt-mute">' + esc(r.note) + '</td></tr>');
+  }
+  var canGo = c.add + c.update > 0;
+  var html = '' +
+    '<div class="sum">' +
+      '<div class="box add"><b>' + c.add + '</b><span>新增人员</span></div>' +
+      '<div class="box upd"><b>' + c.update + '</b><span>更新人员</span></div>' +
+      '<div class="box cft"><b>' + c.conflict + '</b><span>冲突（不导入）</span></div>' +
+      '<div class="box skp"><b>' + c.skip + '</b><span>无变化</span></div>' +
+    '</div>' +
+    '<label class="check" style="margin-bottom:12px"><input type="checkbox" id="ckOverwrite"' + (IMPORT.overwrite ? ' checked' : '') + '>' +
+      '<span><b>工位被占用时，覆盖原占用人</b><br>被覆盖的人会自动回到待分配清单。</span></label>' +
+    '<div class="tbl-wrap"><table class="tbl"><thead><tr>' +
+      '<th>状态</th><th>行号</th><th>姓名</th><th>工号</th><th>部门</th><th>职位</th><th>工位号</th><th>说明</th>' +
+    '</tr></thead><tbody>' + rows.join('') + '</tbody></table></div>' +
+    '<div class="mini-note">共读取 ' + IMPORT.rows.length + ' 行有效数据' +
+      (c.conflict ? '，其中 ' + c.conflict + ' 行冲突不会导入' : '') + '。' +
+      (c.update ? '「更新」会覆盖表里已有的部门 / 职位 / 工位信息。' : '') + '</div>';
+
+  var body = $('modalBody');
+  if (body) body.innerHTML = html;
+  var foot = document.querySelector('.modal-foot .right');
+  if (foot) {
+    foot.innerHTML = '<button class="btn" id="btnBackPick">重选文件</button>' +
+      '<button class="btn primary" id="btnDoImport"' + (canGo ? '' : ' disabled') + '>确认导入 ' + (c.add + c.update) + ' 行</button>';
+    var b1 = $('btnBackPick');
+    if (b1) b1.addEventListener('click', function () {
+      IMPORT = null;
+      openImportExcelModal();
+    });
+    var b2 = $('btnDoImport');
+    if (b2) b2.addEventListener('click', runImport);
+  }
+  var ck = $('ckOverwrite');
+  if (ck) ck.addEventListener('change', function () {
+    IMPORT.overwrite = ck.checked;
+    classifyImport();
+    renderImportPreview();
+  });
+}
+
+function runImport() {
+  var rows = [];
+  for (var i = 0; i < IMPORT.rows.length; i++) {
+    var r = IMPORT.rows[i];
+    if (r.status === 'add' || r.status === 'update') rows.push(r);
+  }
+  if (!rows.length) return;
+  var btn = $('btnDoImport');
+  if (btn) { btn.disabled = true; btn.textContent = '导入中 0/' + rows.length; }
+  var okAdd = 0, okUpd = 0, failed = 0, idx = 0;
+
+  function step() {
+    if (idx >= rows.length) return Promise.resolve();
+    var r = rows[idx++];
+    if (btn && idx % 3 === 0) btn.textContent = '导入中 ' + idx + '/' + rows.length;
+    var pre = Promise.resolve();
+    if (r.occupyRid) {
+      pre = dbUpdate(DBX.emp, r.occupyRid, { '工位号': { text: '' } }).then(function () {
+        for (var q = 0; q < S.employees.length; q++) if (S.employees[q].rid === r.occupyRid) S.employees[q].seat = '';
+      });
+    }
+    return pre.then(function () {
+      if (r.status === 'add') {
+        var empProps = { '姓名': { text: r.name }, '工号': { text: r.code }, '部门': { text: r.dept }, '职位': { text: r.title }, '工位号': { text: r.seat } };
+        return dbAdd(DBX.emp, empProps).then(function (res) {
+          S.employees.push({ rid: (res && res.id) || '', name: r.name, code: r.code, dept: r.dept, title: r.title, seat: r.seat });
+          okAdd++;
+        });
+      }
+      var upd = {};
+      if (r.dept) upd['部门'] = { text: r.dept };
+      if (r.title) upd['职位'] = { text: r.title };
+      if (r.code) upd['工号'] = { text: r.code };
+      if (r.seat) upd['工位号'] = { text: r.seat };
+      return dbUpdate(DBX.emp, r.existRid, upd).then(function () {
+        for (var q = 0; q < S.employees.length; q++) {
+          if (S.employees[q].rid === r.existRid) {
+            if (r.dept) S.employees[q].dept = r.dept;
+            if (r.title) S.employees[q].title = r.title;
+            if (r.code) S.employees[q].code = r.code;
+            if (r.seat) S.employees[q].seat = r.seat;
+          }
+        }
+        okUpd++;
+      });
+    }).catch(function () {
+      failed++;
+    }).then(step);
+  }
+
+  step().then(function () {
+    closeModal();
+    toast('导入完成：新增 ' + okAdd + ' 人，更新 ' + okUpd + ' 人' + (failed ? '，失败 ' + failed + ' 行' : ''), failed ? 'err' : 'ok');
+    loadEverything();
+  });
+}
+
+/* ---------- 模板 / 导出 ---------- */
+function downloadTemplate() {
+  var rows = [['姓名', '工号', '部门', '职位', '工位号']];
+  var blob = xlsxBlob(rows, '导入模板');
+  downloadBlob(blob, '工位分配导入模板.xlsx');
+  toast('模板已下载，填好后回到这里导入', 'ok');
+}
+
+function exportResults() {
+  var rows = [['姓名', '工号', '部门', '职位', '工位号', '区域', '状态']];
+  var assigned = [], rest = [];
+  for (var i = 0; i < S.employees.length; i++) {
+    var e = S.employees[i];
+    var s = e.seat ? seatById(e.seat) : null;
+    var rec = [e.name, e.code, e.dept, e.title, s ? s.id : (e.seat || ''), s ? (s.zone || '') : '', s ? '已分配' : '待分配'];
+    if (s) assigned.push({ key: s.id, rec: rec });
+    else rest.push({ key: e.dept + '|' + e.name, rec: rec });
+  }
+  assigned.sort(function (a, b) { return String(a.key).localeCompare(String(b.key), 'zh-Hans-CN', { numeric: true }); });
+  rest.sort(function (a, b) { return String(a.key).localeCompare(String(b.key), 'zh-Hans-CN'); });
+  for (var j = 0; j < assigned.length; j++) rows.push(assigned[j].rec);
+  for (var k = 0; k < rest.length; k++) rows.push(rest[k].rec);
+  downloadBlob(xlsxBlob(rows, '工位分配结果'), '工位分配结果_' + todayStr() + '.xlsx');
+  toast('已导出 ' + S.employees.length + ' 条记录', 'ok');
+}
+</script>
+<script data-page-node-id="ssUa3rK1f6Vu76O7pUpAuP" data-pnid-children="58r8fFzafbUL9VwlqhTNka">
+/* =========================================================
+   工位图导入 / 导出：SVG、Excel 网格
+   ========================================================= */
+var MAPIMP = null;
+
+function openImportMapModal() {
+  MAPIMP = null;
+  openModal({
+    title: '导入工位图',
+    sub: '导入会替换当前工位图，先预览确认再保存。',
+    cls: 'wide',
+    body:
+      '<div class="tabs" id="mapTabs">' +
+        '<button data-tab="svg" class="on">SVG 矢量图</button>' +
+        '<button data-tab="xlsx">Excel 网格</button>' +
+      '</div>' +
+      '<div id="mapTabBody">' + svgSpecHTML() + '</div>',
+    footer: '<button class="btn" data-close="1">取消</button>'
+  });
+  $('mapTabs').addEventListener('click', function (e) {
+    var b = e.target;
+    while (b && b.tagName !== 'BUTTON') b = b.parentNode;
+    if (!b || !b.getAttribute('data-tab')) return;
+    var tabs = this.querySelectorAll('button');
+    for (var i = 0; i < tabs.length; i++) tabs[i].className = tabs[i] === b ? 'on' : '';
+    $('mapTabBody').innerHTML = b.getAttribute('data-tab') === 'svg' ? svgSpecHTML() : xlsxSpecHTML();
+    wireMapTab();
+  });
+  wireMapTab();
+}
+
+function wireMapTab() {
+  var z = $('mapDrop');
+  if (!z) return;
+  z.addEventListener('click', function () {
+    pickFile(/.svg$/i.test(z.getAttribute('data-kind')) ? '.svg' : '.xlsx,.xls,.csv', function (f) {
+      if (z.getAttribute('data-kind') === 'svg') handleSvgFile(f);
+      else handleGridFile(f);
+    });
+  });
+  var dz = $('mapDrop');
+  dz.addEventListener('dragover', function (e) { e.preventDefault(); dz.classList.add('over'); });
+  dz.addEventListener('dragleave', function () { dz.classList.remove('over'); });
+  dz.addEventListener('drop', function (e) {
+    e.preventDefault();
+    dz.classList.remove('over');
+    var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (!f) return;
+    if (/\.svg$/i.test(f.name)) handleSvgFile(f);
+    else handleGridFile(f);
+  });
+}
+
+function svgSpecHTML() {
+  return '<div class="spec"><b>SVG 格式要求</b>' +
+      '<ul>' +
+        '<li>每个工位是一个图形（建议用组 <code>&lt;g&gt;</code>），它的 <code>id</code> 或图层名就是工位号，例如 <code>A-01</code>。</li>' +
+        '<li>其余图形（墙、地面、家具、文字）会作为底图保留，不参与分配。</li>' +
+        '<li>Figma、draw.io、Illustrator 导出的 SVG 都可以直接用；导出时勾选「包含 id / 图层名」。</li>' +
+        '<li>工位图形建议互相不重叠，导入时按图形外框识别位置和大小。</li>' +
+      '</ul>' +
+    '</div>' +
+    '<div class="drop" id="mapDrop" data-kind="svg">' +
+      '<svg class="ic"><use href="#i-upload"/></svg>' +
+      '<b>点击选择 SVG 文件</b>' +
+      '<span>也可以把 .svg 文件拖到这里</span>' +
+    '</div>' +
+    '<div class="mini-note">导入后可以在「编辑工位图」里微调位置，再点保存。</div>';
+}
+
+function xlsxSpecHTML() {
+  return '<div class="spec"><b>Excel 网格格式要求</b>' +
+      '<ul>' +
+        '<li>一个单元格就是一个工位，单元格里的文字就是工位号。</li>' +
+        '<li>单元格的行列位置决定工位在图上的位置。</li>' +
+        '<li>空单元格表示该位置没有工位。</li>' +
+        '<li>支持 .xlsx 与 .csv；只读取第一个工作表。</li>' +
+      '</ul>' +
+    '</div>' +
+    '<div class="drop" id="mapDrop" data-kind="xlsx">' +
+      '<svg class="ic"><use href="#i-upload"/></svg>' +
+      '<b>点击选择 Excel 文件</b>' +
+      '<span>也可以把 .xlsx / .csv 文件拖到这里</span>' +
+    '</div>' +
+    '<div class="mini-note">导入后功能设施（会议室等）需要在编辑模式里重新添加。</div>';
+}
+
+/* ---------- SVG 解析 ---------- */
+function handleSvgFile(file) {
+  var fr = new FileReader();
+  fr.onload = function () {
+    var res;
+    try {
+      res = parseSvgMap(String(fr.result));
+    } catch (e) {
+      toast((e && e.message) || 'SVG 解析失败', 'err');
+      return;
+    }
+    MAPIMP = { kind: 'svg', seats: res.seats, underlay: res.underlayUrl, name: file.name, world: res.world };
+    renderMapPreview();
+  };
+  fr.readAsText(file);
+}
+
+function parseSvgMap(text) {
+  var doc = new DOMParser().parseFromString(text, 'image/svg+xml');
+  if (doc.getElementsByTagName('parsererror').length) throw new Error('SVG 解析失败，文件可能不是标准 SVG');
+  var srcRoot = doc.documentElement;
+  if (!srcRoot || String(srcRoot.nodeName).toLowerCase() !== 'svg') throw new Error('这不是一个 SVG 文件');
+
+  var vb = srcRoot.getAttribute('viewBox');
+  var worldW = num(srcRoot.getAttribute('width'), 0);
+  var worldH = num(srcRoot.getAttribute('height'), 0);
+  var vbBox = null;
+  if (vb) {
+    var p = vb.split(/[\s,]+/);
+    if (p.length === 4) {
+      vbBox = { x: num(p[0]), y: num(p[1]), w: num(p[2]), h: num(p[3]) };
+      if (!worldW || !worldH) { worldW = vbBox.w; worldH = vbBox.h; }
+    }
+  }
+
+  var host = document.createElement('div');
+  host.style.cssText = 'position:fixed;left:-20000px;top:0;width:3000px;height:2000px;overflow:hidden;';
+  document.body.appendChild(host);
+
+  var working = document.importNode(srcRoot, true);
+  if (vbBox) working.setAttribute('viewBox', vbBox.x + ' ' + vbBox.y + ' ' + vbBox.w + ' ' + vbBox.h);
+  if (!working.getAttribute('width')) working.setAttribute('width', worldW || 1100);
+  if (!working.getAttribute('height')) working.setAttribute('height', worldH || 800);
+  host.appendChild(working);
+
+  var black = /^(defs|svg|style|title|desc|layer\d*|layer_\d+|g\d*|group\d*|background|bg|base|grid|underlay|paper|frame|mask.*|clip.*|bg.*)$/i;
+  var all = working.querySelectorAll('[id]');
+  var raw = [];
+  for (var i = 0; i < all.length; i++) {
+    var el = all[i];
+    var id = trimStr(el.getAttribute('id'));
+    if (!id || black.test(id)) continue;
+    var pn = el.parentNode;
+    var skip = false;
+    while (pn && pn !== working) {
+      var tag = String(pn.nodeName).toLowerCase();
+      if (tag === 'defs' || tag === 'clippath' || tag === 'mask' || tag === 'symbol') { skip = true; break; }
+      pn = pn.parentNode;
+    }
+    if (skip) continue;
+    var box;
+    try { box = el.getBBox(); } catch (e) { continue; }
+    if (!box || box.width < 10 || box.height < 8) continue;
+    if (box.width > 700 || box.height > 500) continue;
+    raw.push({ el: el, id: id, box: box });
+  }
+
+  /* 只保留最外层：若某个候选包含另一个候选，丢弃内层 */
+  var outer = [];
+  for (var a = 0; a < raw.length; a++) {
+    var inside = false;
+    for (var b = 0; b < raw.length; b++) {
+      if (a === b) continue;
+      if (raw[b].el !== raw[a].el && raw[b].el.contains && raw[b].el.contains(raw[a].el)) { inside = true; break; }
+    }
+    if (!inside) outer.push(raw[a]);
+  }
+
+  /* 优先采用带数字的编号，减少把装饰图层误判为工位 */
+  var withNum = [], hasMeta = false;
+  for (var c = 0; c < outer.length; c++) {
+    if (/\d/.test(outer[c].id)) withNum.push(outer[c]);
+    if (outer[c].el.getAttribute('data-type')) hasMeta = true;
+  }
+  var picked = hasMeta ? outer : (withNum.length >= 2 ? withNum : outer);
+  if (picked.length > 400) picked = [];
+
+  var seats = [];
+  var ids = {};
+  for (var d = 0; d < picked.length; d++) {
+    var it = picked[d];
+    var sid = it.id;
+    if (ids[sid]) continue;
+    ids[sid] = 1;
+    var typ = it.el.getAttribute('data-type') || '工位';
+    var zone = it.el.getAttribute('data-zone') || '';
+    var nm = it.el.getAttribute('data-name') || sid;
+    seats.push({
+      rid: '', id: sid, oldId: '', name: nm, type: typ, zone: zone,
+      x: Math.round(it.box.x), y: Math.round(it.box.y),
+      w: Math.max(14, Math.round(it.box.width)), h: Math.max(12, Math.round(it.box.height)),
+      rot: 0
+    });
+  }
+
+  /* 底图 = 原图去掉工位图形 */
+  var clone = document.importNode(srcRoot, true);
+  var toRemove = [];
+  var all2 = clone.querySelectorAll('[id]');
+  for (var e = 0; e < all2.length; e++) {
+    var cid = trimStr(all2[e].getAttribute('id'));
+    if (cid && ids[cid]) toRemove.push(all2[e]);
+  }
+  for (var f = 0; f < toRemove.length; f++) {
+    if (toRemove[f].parentNode) toRemove[f].parentNode.removeChild(toRemove[f]);
+  }
+  var underlaySvg = new XMLSerializer().serializeToString(clone);
+  var underlayUrl = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(underlaySvg);
+
+  host.parentNode.removeChild(host);
+
+  var maxX = 0, maxY = 0;
+  for (var g = 0; g < seats.length; g++) {
+    maxX = Math.max(maxX, seats[g].x + seats[g].w);
+    maxY = Math.max(maxY, seats[g].y + seats[g].h);
+  }
+  var world = {
+    w: Math.max(Math.round(worldW || 0), Math.round(maxX + 8), 400),
+    h: Math.max(Math.round(worldH || 0), Math.round(maxY + 8), 300)
+  };
+  return { seats: seats, underlayUrl: underlayUrl, world: world };
+}
+
+/* ---------- Excel 网格解析 ---------- */
+function handleGridFile(file) {
+  if (/\.xls$/i.test(file.name)) { toast('旧版 .xls 请先另存为 .xlsx', 'err'); return; }
+  xlsxToGrid(file).then(function (grid) {
+    var seats = [], count = 0;
+    for (var r = 0; r < grid.length; r++) {
+      for (var c = 0; c < (grid[r] || []).length; c++) {
+        var v = trimStr(grid[r][c]);
+        if (!v) continue;
+        count++;
+        if (count > 500) return;
+        seats.push({
+          rid: '', id: v, oldId: '', name: v, type: '工位', zone: '',
+          x: 28 + c * 64, y: 44 + r * 64, w: 54, h: 38, rot: 0
+        });
+      }
+    }
+    if (!seats.length) { toast('这个表里没有找到非空单元格', 'err'); return; }
+    if (count > 500) { toast('工位数量超过 500，请拆分后再导入', 'err'); return; }
+    var maxX = 0, maxY = 0;
+    for (var i = 0; i < seats.length; i++) {
+      maxX = Math.max(maxX, seats[i].x + seats[i].w);
+      maxY = Math.max(maxY, seats[i].y + seats[i].h);
+    }
+    MAPIMP = { kind: 'xlsx', seats: seats, underlay: '', name: file.name, world: { w: maxX + 28, h: maxY + 30 } };
+    renderMapPreview();
+  }).catch(function (err) {
+    toast('Excel 解析失败：' + ((err && err.message) || ''), 'err');
+  });
+}
+
+/* ---------- 预览 ---------- */
+function renderMapPreview() {
+  if (!MAPIMP) return;
+  var seats = MAPIMP.seats;
+  var W = MAPIMP.world.w, H = MAPIMP.world.h;
+  var buf = ['<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" style="background:#fff">'];
+  buf.push('<rect width="' + W + '" height="' + H + '" fill="#fff"/>');
+  if (MAPIMP.underlay) {
+    buf.push('<image href="' + MAPIMP.underlay.replace(/"/g, '&quot;') + '" x="0" y="0" width="' + W + '" height="' + H + '" opacity="0.5"/>');
+  }
+  for (var i = 0; i < seats.length && i < 600; i++) {
+    var s = seats[i];
+    buf.push('<rect x="' + s.x + '" y="' + s.y + '" width="' + s.w + '" height="' + s.h +
+      '" rx="3" fill="#EDF2FF" stroke="#3B6CF6" stroke-width="1.2"/>');
+    if (s.w > 26 && s.h > 14) {
+      buf.push('<text x="' + (s.x + s.w / 2) + '" y="' + (s.y + s.h / 2 + 3.5) + '" text-anchor="middle" font-size="' +
+        Math.min(9, s.w / 5) + '" fill="#2A55D4">' + xmlEsc(s.id) + '</text>');
+    }
+  }
+  buf.push('</svg>');
+
+  var list = [];
+  for (var j = 0; j < seats.length && j < 12; j++) list.push(esc(seats[j].id));
+  var more = seats.length > 12 ? ' 等 ' + seats.length + ' 个' : '';
+
+  var body = $('modalBody');
+  if (!body) return;
+  body.innerHTML =
+    '<div class="sum">' +
+      '<div class="box add"><b>' + seats.length + '</b><span>识别到工位</span></div>' +
+      '<div class="box upd"><b>' + W + ' × ' + H + '</b><span>画布尺寸</span></div>' +
+      '<div class="box skp"><b>' + (MAPIMP.underlay ? '有' : '无') + '</b><span>底图</span></div>' +
+    '</div>' +
+    '<div class="prev-map">' + buf.join('') + '</div>' +
+    '<div class="spec" style="margin-bottom:0"><b>识别到的工位号</b>' + list.join('、') + more +
+      '<br>来源文件：' + esc(MAPIMP.name) + '</div>' +
+    (seats.length ? '' : '<div class="hint-box mt12">没有识别到带 id 的工位图形，可以先把整张图作为底图导入，再手动添加工位。</div>');
+
+  var foot = document.querySelector('.modal-foot .right');
+  if (foot) {
+    foot.innerHTML = '<button class="btn" id="btnMapBack">重新选择</button>' +
+      (seats.length ?
+        '<button class="btn" id="btnMapBgOnly">只导入为底图</button>' +
+        '<button class="btn primary" id="btnMapApply">确认导入 ' + seats.length + ' 个工位</button>'
+        : '<button class="btn primary" id="btnMapBgOnly">导入为底图</button>');
+    var back = $('btnMapBack');
+    if (back) back.addEventListener('click', openImportMapModal);
+    var ap = $('btnMapApply');
+    if (ap) ap.addEventListener('click', function () { applyMapImport(false); });
+    var bo = $('btnMapBgOnly');
+    if (bo) bo.addEventListener('click', function () { applyMapImport(true); });
+  }
+}
+
+function applyMapImport(bgOnly) {
+  if (!MAPIMP) return;
+  var seats = bgOnly ? [] : MAPIMP.seats;
+  S.seats = seats;
+  S.selection = [];
+  S.underlay = MAPIMP.underlay || '';
+  S.underlayName = bgOnly || !MAPIMP.underlay ? MAPIMP.name : MAPIMP.name;
+  S.world = MAPIMP.world;
+  S.dirty = true;
+  pushHistory();
+  closeModal();
+  renderAll();
+  fitView();
+  toast(bgOnly ? '已作为底图导入，现在可以手动添加工位' : '已导入 ' + seats.length + ' 个工位，点「保存工位图」生效', 'ok');
+}
+
+/* ---------- 导出工位图 ---------- */
+function openExportMapModal() {
+  openModal({
+    title: '下载当前工位图',
+    sub: '三种格式，按需取用。',
+    cls: 'slim',
+    body:
+      '<div class="spec"><b>SVG</b>每个工位的组 id 就是工位号，可在 Figma、draw.io、Illustrator 里继续编辑，导出后还能再导回来。' +
+        '<div class="mini-note">包含底图、工位图形与编号，矢量无限放大不糊。</div></div>' +
+      '<div class="spec"><b>PNG 图片</b>把当前工位图渲染成 2 倍高清位图，方便直接贴进 PPT、群公告或打印张贴。' +
+        '<div class="mini-note">呈现占用状态与部门配色，不可再导回编辑。</div></div>' +
+      '<div class="spec"><b>Excel</b>一个单元格一个工位，行列位置与图上位置对应。' +
+        '<div class="mini-note">只导出可分配的工位，会议室等设施不写入网格。</div></div>',
+    footer: '<button class="btn" id="btnExpXlsx"><svg class="ic"><use href="#i-download"/></svg>Excel</button>' +
+      '<button class="btn" id="btnExpPng"><svg class="ic"><use href="#i-download"/></svg>PNG</button>' +
+      '<button class="btn primary" id="btnExpSvg"><svg class="ic"><use href="#i-download"/></svg>SVG</button>'
+  });
+  $('btnExpSvg').addEventListener('click', function () { exportMapSvg(); closeModal(); });
+  $('btnExpPng').addEventListener('click', function () { exportMapPng(); closeModal(); });
+  $('btnExpXlsx').addEventListener('click', function () { exportMapExcel(); closeModal(); });
+}
+
+function buildSvgText() {
+  var W = S.world.w, H = S.world.h;
+  var out = ['<?xml version="1.0" encoding="UTF-8"?>'];
+  out.push('<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">');
+  out.push('<rect id="background" x="0" y="0" width="' + W + '" height="' + H + '" fill="#ffffff"/>');
+  if (S.underlay) {
+    out.push('<image id="underlay" x="0" y="0" width="' + W + '" height="' + H + '" opacity="' + S.underlayOpacity +
+      '" href="' + S.underlay + '"/>');
+  }
+  for (var i = 0; i < S.seats.length; i++) {
+    var s = S.seats[i];
+    var emp = empOfSeat(s);
+    var isSeat = s.type === '工位';
+    var label = isSeat ? (emp ? emp.name : s.id) : (s.name || s.id);
+    var fill = '#FFFFFF', stroke = '#D5DAE5';
+    if (!isSeat) { fill = '#F5F2EA'; stroke = '#D8CFBA'; }
+    else if (emp) { var cs = deptStyle(emp.dept); fill = cs.s; stroke = cs.c; }
+    out.push('<g id="' + xmlEsc(s.id) + '" data-type="' + xmlEsc(s.type) + '" data-name="' + xmlEsc(s.name || s.id) +
+      '" data-zone="' + xmlEsc(s.zone || '') + '"' +
+      (s.rot ? ' transform="rotate(' + s.rot + ' ' + (s.x + s.w / 2) + ' ' + (s.y + s.h / 2) + ')"' : '') + '>');
+    out.push('<rect x="' + s.x + '" y="' + s.y + '" width="' + s.w + '" height="' + s.h + '" rx="7" fill="' + fill +
+      '" stroke="' + stroke + '" stroke-width="1.2"/>');
+    out.push('<text x="' + (s.x + s.w / 2) + '" y="' + (s.y + s.h / 2 + 4) + '" text-anchor="middle" font-size="' +
+      (isSeat ? 11 : 12) + '" font-family="PingFang SC, Microsoft YaHei, sans-serif" fill="#3E4A61">' + xmlEsc(label) + '</text>');
+    out.push('</g>');
+  }
+  out.push('</svg>');
+  return out.join('\n');
+}
+
+function exportMapSvg() {
+  downloadBlob(new Blob([buildSvgText()], { type: 'image/svg+xml' }), '工位图_' + todayStr() + '.svg');
+  toast('SVG 已下载', 'ok');
+}
+
+function exportMapPng() {
+  if (!S.seats.length) { toast('当前没有工位可导出', 'err'); return; }
+  var url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(buildSvgText());
+  var img = new Image();
+  img.onload = function () {
+    var scale = 2;
+    var cv = document.createElement('canvas');
+    cv.width = Math.max(1, S.world.w * scale);
+    cv.height = Math.max(1, S.world.h * scale);
+    var ctx = cv.getContext('2d');
+    if (!ctx) { toast('PNG 导出失败', 'err'); return; }
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, cv.width, cv.height);
+    ctx.drawImage(img, 0, 0, cv.width, cv.height);
+    cv.toBlob(function (blob) {
+      if (!blob) { toast('PNG 导出失败，请改用 SVG', 'err'); return; }
+      downloadBlob(blob, '工位图_' + todayStr() + '.png');
+      toast('PNG 已下载（' + cv.width + '×' + cv.height + '）', 'ok');
+    }, 'image/png');
+  };
+  img.onerror = function () { toast('PNG 渲染失败，请改用 SVG', 'err'); };
+  img.src = url;
+}
+
+function exportMapExcel() {
+  var seats = realSeats();
+  if (!seats.length) { toast('当前没有可导出的工位', 'err'); return; }
+  var cells = [], maxR = 0, maxC = 0, used = {};
+  for (var i = 0; i < seats.length; i++) {
+    var s = seats[i];
+    var c = Math.max(0, Math.round((s.x - 28) / 64));
+    var r = Math.max(0, Math.round((s.y - 44) / 64));
+    while (used[r + ',' + c]) c++;
+    used[r + ',' + c] = 1;
+    cells.push({ r: r, c: c, v: s.id });
+    maxR = Math.max(maxR, r);
+    maxC = Math.max(maxC, c);
+  }
+  var rows = [];
+  for (var r2 = 0; r2 <= maxR; r2++) {
+    var line = [];
+    for (var c2 = 0; c2 <= maxC; c2++) line.push('');
+    rows.push(line);
+  }
+  for (var k = 0; k < cells.length; k++) rows[cells[k].r][cells[k].c] = cells[k].v;
+  downloadBlob(xlsxBlob(rows, '工位网格'), '工位图网格_' + todayStr() + '.xlsx');
+  toast('Excel 网格已下载', 'ok');
+}
+</script>
+<script data-page-node-id="UxThEme10PtXq7WkRd2Vn" data-pnid-children="Bq4WkRd2VnUxThEme10Pt">
+/* =========================================================
+   体验增强层：主题切换 / 工位悬浮提示 / 欢迎导览 / 快捷键
+   ========================================================= */
+var THEME_KEY = 'wb-seat-theme';
+var WELCOME_KEY = 'wb-seat-welcomed-v1';
+
+/* 尽早恢复上次选择的主题，避免深色用户看到闪白 */
+(function () {
+  try {
+    if (localStorage.getItem(THEME_KEY) === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  } catch (e) {}
+})();
+
+function applyTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+  var use = document.querySelector('#themeIcon use');
+  if (use) use.setAttribute('href', t === 'dark' ? '#i-sun' : '#i-moon');
+  var btn = $('btnTheme');
+  if (btn) btn.setAttribute('title', t === 'dark' ? '切换到浅色模式' : '切换到深色模式');
+  renderCanvas();
+  renderPeople();
+  renderDetail();
+}
+
+function toggleTheme() {
+  applyTheme(isDarkTheme() ? 'light' : 'dark');
+}
+
+/* ---------- 工位悬浮提示 ---------- */
+function seatTipHTML(s) {
+  var isSeat = s.type === '工位';
+  var emp = isSeat ? empOfSeat(s) : null;
+  if (emp) {
+    return '<div class="t-id">' + esc(s.id) + (s.zone ? ' · ' + esc(s.zone) : '') + '</div>' +
+      '<div class="t-name">' + esc(emp.name) + '</div>' +
+      '<div class="t-meta">' + esc(emp.dept || '未填写部门') + (emp.title ? ' · ' + esc(emp.title) : '') + '</div>';
+  }
+  if (isSeat) {
+    return '<div class="t-id">' + esc(s.id) + (s.zone ? ' · ' + esc(s.zone) : '') + '</div>' +
+      '<div class="t-free"><b>空闲</b><span style="opacity:.7;font-size:11px"> 点击或拖入人员即可分配</span></div>';
+  }
+  return '<div class="t-id">' + esc(s.type || '设施') + '</div>' +
+    '<div class="t-name">' + esc(s.name || s.id) + '</div>' +
+    (s.zone ? '<div class="t-meta">' + esc(s.zone) + '</div>' : '');
+}
+
+function hideSeatTip() {
+  var tip = $('seatTip');
+  if (tip) tip.classList.remove('show');
+}
+
+function moveSeatTip(clientX, clientY) {
+  var tip = $('seatTip');
+  var wrap = $('canvasWrap');
+  if (!tip || !wrap || !tip.classList.contains('show')) return;
+  var r = wrap.getBoundingClientRect();
+  var x = clientX - r.left + 14;
+  var y = clientY - r.top + 14;
+  if (x + 190 > r.width) x = clientX - r.left - 194;
+  if (y + 80 > r.height) y = clientY - r.top - 84;
+  tip.style.left = Math.max(6, x) + 'px';
+  tip.style.top = Math.max(6, y) + 'px';
+}
+
+function bindSeatTip() {
+  var map = $('map');
+  if (!map) return;
+  map.addEventListener('pointerover', function (ev) {
+    if (S.mode !== 'assign' || S.dragging) return;
+    var g = ev.target && ev.target.closest ? ev.target.closest('.seat') : null;
+    if (!g) return;
+    var seat = seatByAnyId(g.getAttribute('data-id') || '');
+    if (!seat) return;
+    var tip = $('seatTip');
+    if (!tip) return;
+    tip.innerHTML = seatTipHTML(seat);
+    tip.classList.add('show');
+    moveSeatTip(ev.clientX, ev.clientY);
+  });
+  map.addEventListener('pointerout', function (ev) {
+    var g = ev.target && ev.target.closest ? ev.target.closest('.seat') : null;
+    if (g) hideSeatTip();
+  });
+  map.addEventListener('pointerdown', hideSeatTip);
+}
+
+/* ---------- 快捷键：/ 聚焦搜索 ---------- */
+function bindSlashKey() {
+  window.addEventListener('keydown', function (e) {
+    if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
+    var tag = document.activeElement ? String(document.activeElement.tagName || '').toLowerCase() : '';
+    if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+    if (document.querySelector('.modal-mask')) return;
+    var inp = $('searchInput');
+    if (!inp) return;
+    e.preventDefault();
+    inp.focus();
+    inp.select();
+  });
+}
+
+/* ---------- 首次欢迎导览 ---------- */
+function maybeWelcome() {
+  var seen = false;
+  try { seen = !!localStorage.getItem(WELCOME_KEY); } catch (e) {}
+  if (seen || !S.seats.length) return;
+  openModal({
+    title: '欢迎来到工位分配工作台',
+    sub: '三个核心能力，一分钟上手团队工位管理。',
+    cls: 'wide',
+    body:
+      '<div class="welcome-grid">' +
+        '<div class="wcard"><div class="wic">' +
+          '<svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="3.2"/></svg>' +
+        '</div><b>拖拽分配</b><p>把左侧人员拖到工位，或点人员再点工位；交换、取消一键完成。</p></div>' +
+        '<div class="wcard"><div class="wic">' +
+          '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 20h10M9 9h6M9 13h4"/></svg>' +
+        '</div><b>批量导入导出</b><p>Excel 名单一键导入，自动识别新增/更新/冲突；结果随时导出存档。</p></div>' +
+        '<div class="wcard"><div class="wic">' +
+          '<svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>' +
+        '</div><b>工位图编辑</b><p>可视化搭建平面图：添加桌位、框选旋转、对齐编号，还能导入 SVG 平面图。</p></div>' +
+      '</div>' +
+      '<div class="mini-note">小提示：右上角可切换深浅主题；按 <span class="kbd">/</span> 快速定位搜索框。分配结果实时保存，团队打开同一链接即自动同步。</div>',
+    footer: '<button class="btn primary" data-close="1">开始使用</button>'
+  });
+  try { localStorage.setItem(WELCOME_KEY, '1'); } catch (e) {}
+}
+
+function initUx() {
+  var btn = $('btnTheme');
+  if (btn) btn.addEventListener('click', toggleTheme);
+  var use = document.querySelector('#themeIcon use');
+  if (use) use.setAttribute('href', isDarkTheme() ? '#i-sun' : '#i-moon');
+  bindSeatTip();
+  bindSlashKey();
+}
+</script>
+<script data-page-node-id="2kXUy3f9bwKlRTFRIT6mbE" data-pnid-children="A9gc4qtfCvntYY7PUdqOuI">
+/* =========================================================
+   初始化与事件绑定
+   ========================================================= */
+function showHelp() {
+  openModal({
+    title: '怎么用这个工具',
+    sub: '三种分配方式 + 工位图编辑，30 秒上手。',
+    body:
+      '<div class="spec"><b>一、分配工位</b><ol>' +
+        '<li>从左侧清单把人员拖到工位上</li>' +
+        '<li>拖工位上的人到另一个工位：两人自动交换</li>' +
+        '<li>拖工位上的人到左侧清单：取消分配</li>' +
+        '<li>也可以先点人员、再点工位</li>' +
+      '</ol></div>' +
+      '<div class="spec"><b>二、批量导入</b><ol>' +
+        '<li>点右上角「导入 Excel」，先下载模板</li>' +
+        '<li>按「姓名 / 工号 / 部门 / 职位 / 工位号」填好</li>' +
+        '<li>导入前会预览每行是新增、更新还是冲突</li>' +
+        '<li>工位被占用时，可勾选覆盖原占用人</li>' +
+      '</ol></div>' +
+      '<div class="spec"><b>三、编辑工位图</b><ol>' +
+        '<li>切到「编辑工位图」，可添加工位、整组桌位、会议室</li>' +
+        '<li>拖动移动、框选多个、旋转、对齐、批量编号</li>' +
+        '<li>支持上传平面图当底图，或导入 SVG / Excel 工位图</li>' +
+        '<li>改完点「保存工位图」；被删工位上的人会自动回到待分配</li>' +
+      '</ol></div>' +
+      '<div class="spec" style="margin-bottom:0"><b>关于多人协作</b>' +
+        '分配结果会直接写进数据表，其他人打开同一链接时自动同步，不需要手动刷新。</div>',
+    footer: '<button class="btn primary" data-close="1">知道了</button>'
+  });
+}
+
+function bindEvents() {
+  $('btnImportExcel').addEventListener('click', openImportExcelModal);
+  $('btnExportExcel').addEventListener('click', exportResults);
+  $('btnHelp').addEventListener('click', showHelp);
+  $('btnRefresh').addEventListener('click', function () { loadEverything().then(fitView); });
+
+  $('btnToggleUnderlay').addEventListener('click', function () {
+    S.showUnderlay = !S.showUnderlay;
+    this.classList.toggle('on', S.showUnderlay);
+    renderCanvas();
+  });
+  $('btnFitAssign').addEventListener('click', fitView);
+  $('zoomLabel').addEventListener('click', fitView);
+  $('btnZoomIn').addEventListener('click', function () { zoomBy(1.2); });
+  $('btnZoomOut').addEventListener('click', function () { zoomBy(1 / 1.2); });
+
+  $('modeSeg').addEventListener('click', function (e) {
+    var b = e.target;
+    while (b && b.tagName !== 'BUTTON') b = b.parentNode;
+    if (b && b.getAttribute('data-mode')) setMode(b.getAttribute('data-mode'));
+  });
+
+  $('btnAddSeat').addEventListener('click', addOneSeat);
+  $('btnAddGroup').addEventListener('click', openGroupModal);
+  $('btnAddFacility').addEventListener('click', openFacilityModal);
+  $('btnRotate').addEventListener('click', rotateSel);
+  $('btnNumber').addEventListener('click', openNumberModal);
+  $('btnUndo').addEventListener('click', undo);
+  $('btnRedo').addEventListener('click', redo);
+  $('btnSaveMap').addEventListener('click', function () { saveMap(false); });
+  $('btnCancelEdit').addEventListener('click', function () {
+    if (!S.dirty) { doSetMode('assign'); return; }
+    openModal({
+      title: '放弃未保存的修改？',
+      cls: 'slim',
+      body: '<div style="font-size:13px;line-height:1.7">工位图会恢复到上次保存的状态。</div>',
+      footer: '<button class="btn" data-close="1">继续编辑</button>' +
+        '<button class="btn danger" id="cancelYes">放弃修改</button>'
+    });
+    $('cancelYes').addEventListener('click', function () {
+      closeModal();
+      S.dirty = false;
+      S.selection = [];
+      doSetMode('assign');
+      loadEverything().then(fitView);
+    });
+  });
+  $('btnEmptyEdit').addEventListener('click', function () { setMode('edit'); });
+
+  $('btnAlignMenu').addEventListener('click', function () {
+    var list = selectedSeats();
+    if (list.length < 2) { toast('请先选中 2 个以上对象', 'err'); return; }
+    openDetailMenu(this, [
+      { label: '左对齐', act: 'align', arg: 'left' },
+      { label: '水平居中', act: 'align', arg: 'cx' },
+      { label: '右对齐', act: 'align', arg: 'right' },
+      { label: '顶对齐', act: 'align', arg: 'top' },
+      { label: '垂直居中', act: 'align', arg: 'cy' },
+      { label: '底对齐', act: 'align', arg: 'bottom' }
+    ]);
+  });
+
+  $('peopleList').addEventListener('pointerdown', onPeopleDown);
+  $('map').addEventListener('pointerdown', onMapDown);
+  window.addEventListener('pointermove', onPointerMove);
+  window.addEventListener('pointerup', onPointerUp);
+  window.addEventListener('pointercancel', onPointerUp);
+  window.addEventListener('keydown', onKeyDown);
+  window.addEventListener('keyup', onKeyUp);
+
+  $('searchInput').addEventListener('input', function () {
+    S.filter.q = trimStr(this.value);
+    renderPeople();
+    renderCanvas();
+  });
+  $('deptChips').addEventListener('click', function (e) {
+    var b = e.target;
+    while (b && b.tagName !== 'BUTTON') b = b.parentNode;
+    if (!b) return;
+    S.filter.dept = b.getAttribute('data-dept') || '';
+    renderPeople();
+    renderCanvas();
+  });
+
+  $('canvasWrap').addEventListener('wheel', function (e) {
+    e.preventDefault();
+    var r = $('map').getBoundingClientRect();
+    var cx = (e.clientX - r.left) / r.width;
+    var cy = (e.clientY - r.top) / r.height;
+    zoomBy(e.deltaY < 0 ? 1.12 : 1 / 1.12, cx, cy);
+  }, { passive: false });
+
+  window.addEventListener('resize', function () {
+    if (S.dragging) return;
+  });
+}
+
+function openDetailMenu(anchor, items) {
+  var old = document.querySelector('.menu');
+  if (old) old.parentNode.removeChild(old);
+  var menu = document.createElement('div');
+  menu.className = 'menu';
+  var html = '';
+  for (var i = 0; i < items.length; i++) {
+    html += '<button data-act="' + items[i].act + '" data-arg="' + items[i].arg + '">' + esc(items[i].label) + '</button>';
+  }
+  menu.innerHTML = html;
+  document.body.appendChild(menu);
+  var r = anchor.getBoundingClientRect();
+  menu.style.left = Math.min(r.left, window.innerWidth - 150) + 'px';
+  menu.style.top = (r.bottom + 6) + 'px';
+  menu.addEventListener('click', function (e) {
+    var b = e.target;
+    while (b && b.tagName !== 'BUTTON') b = b.parentNode;
+    if (!b) return;
+    onDetailAction(b.getAttribute('data-act'), b.getAttribute('data-arg'));
+    document.body.removeChild(menu);
+  });
+  setTimeout(function () {
+    document.addEventListener('pointerdown', function hide(ev) {
+      if (menu.parentNode && !menu.contains(ev.target)) {
+        menu.parentNode.removeChild(menu);
+      }
+      document.removeEventListener('pointerdown', hide);
+    });
+  }, 0);
+}
+
+function boot() {
+  initUx();
+  bindEvents();
+  S.filter.q = '';
+  S.showUnderlay = true;
+  var t = $('btnToggleUnderlay');
+  if (t) t.classList.add('on');
+  renderLoading();
+  renderDetail();
+  loadEverything().then(function (ok) {
+    if (ok) {
+      fitView();
+      startSync();
+      if (!S.seats.length) {
+        setTimeout(function () {
+          toast('还没有工位图，切到「编辑工位图」开始搭建', '');
+        }, 700);
+      }
+      maybeWelcome();
+    }
+  });
+  setTimeout(function () {
+    var lm = $('loadingMask');
+    if (lm) lm.style.display = 'none';
+  }, 9000);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
+</script>
+
+</body>
+</html>

@@ -4,8 +4,8 @@
 
 ## 从哪里开始看
 
-- [`index.html`](./index.html)：6 件精选作品的主展示页。
-- [`projects/index.html`](./projects/index.html)：21 个补充公开项目的目录页。
+- [`index.html`](./index.html)：作品集首页（精选案例、搜索、筛选和收藏）。
+- [`projects/index.html`](./projects/index.html)：88 个补充项目的目录页；首页另有 6 件精选，均为不同项目，合计 94 件公开展示作品。
 - [`PUBLIC-STRUCTURE.md`](./PUBLIC-STRUCTURE.md)：用小白能看懂的话解释这个仓库公开了什么、别人能下载什么。
 - [`发给HR的网址-粘贴用.md`](./发给HR的网址-粘贴用.md)：招聘表单可直接粘贴的作品集网址和使用说明。
 

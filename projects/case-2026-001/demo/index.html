@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 应用创新沙龙 · 2026 深圳 | 活动报名小程序交互演示</title>
+<style>
+  :root {
+    --bg: #f4f7f5;
+    --bg-2: #ffffff;
+    --card: rgba(255, 255, 255, 0.9);
+    --card-2: #ffffff;
+    --line: rgba(15, 23, 42, 0.09);
+    --text: #101a15;
+    --muted: #57615c;
+    --faint: #8b948f;
+    --green: #07c160;
+    --green-deep: #04843c;
+    --green-soft: rgba(7, 193, 96, 0.1);
+    --green-glow: rgba(7, 193, 96, 0.28);
+    --shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 10px 30px rgba(15, 23, 42, 0.06);
+    --shadow-lg: 0 2px 6px rgba(15, 23, 42, 0.05), 0 24px 56px rgba(15, 23, 42, 0.12);
+    --radius: 18px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    background-image:
+      linear-gradient(rgba(7, 193, 96, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(7, 193, 96, 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    color: var(--text);
+    font-family: var(--font);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  ::selection { background: var(--green); color: #fff; }
+  img { display: block; }
+
+  /* ============ 顶部导航 ============ */
+  .progress-line {
+    position: fixed; top: 0; left: 0; height: 2px; width: 0;
+    background: linear-gradient(90deg, var(--green-deep), var(--green));
+    z-index: 120; box-shadow: 0 0 12px var(--green-glow);
+  }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 110;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px clamp(20px, 4vw, 48px);
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, background .3s;
+  }
+  nav.scrolled { border-bottom-color: var(--line); background: rgba(255, 255, 255, 0.93); box-shadow: 0 6px 24px rgba(15, 23, 42, 0.06); }
+  .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+  .nav-mark { width: 32px; height: 32px; flex-shrink: 0; display: block; }
+  .nav-mark svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 4px 12px var(--green-glow)); }
+  .nav-brand b { font-size: 15px; letter-spacing: .04em; }
+  .nav-brand span { font-size: 11px; color: var(--faint); letter-spacing: .22em; display: block; line-height: 1; margin-top: 2px; }
+  .nav-links { display: flex; gap: clamp(14px, 2.4vw, 30px); align-items: center; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 13.5px;
+    transition: color .2s; position: relative;
+  }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 0; bottom: -5px; height: 2px; width: 0;
+    background: var(--green); transition: width .25s; border-radius: 2px;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: var(--green); color: #fff; border: none; cursor: pointer;
+    font-family: var(--font); font-size: 13.5px; font-weight: 700;
+    padding: 8px 18px; border-radius: 999px;
+    box-shadow: 0 0 0 0 var(--green-glow);
+    transition: box-shadow .25s, transform .2s;
+  }
+  .nav-cta:hover { box-shadow: 0 0 22px var(--green-glow); transform: translateY(-1px); }
+  @media (max-width: 860px) { .nav-links { display: none; } }
+
+  /* ============ Hero ============ */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 120px clamp(20px, 5vw, 64px) 80px;
+    gap: clamp(24px, 4vw, 56px);
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 55% 45% at 78% 26%, rgba(7, 193, 96, 0.15), transparent 62%),
+      radial-gradient(ellipse 42% 38% at 10% 88%, rgba(7, 193, 96, 0.09), transparent 60%),
+      linear-gradient(180deg, #ffffff 0%, #e9f3ed 55%, var(--bg) 100%);
+  }
+  .hero-bg::after {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(7, 193, 96, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(7, 193, 96, 0.05) 1px, transparent 1px);
+    background-size: 46px 46px;
+    mask-image: radial-gradient(ellipse 78% 68% at 50% 38%, #000 25%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 78% 68% at 50% 38%, #000 25%, transparent 78%);
+  }
+  .hero-inner {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: clamp(28px, 5vw, 72px); width: 100%; max-width: 1240px; margin: 0 auto;
+  }
+  .hero-copy { flex: 1.15; min-width: 0; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12.5px; letter-spacing: .28em; color: var(--green);
+    border: 1px solid rgba(7, 193, 96, .35); border-radius: 999px;
+    padding: 7px 16px; margin-bottom: 26px;
+    background: var(--green-soft);
+    animation: fadeUp .8s .1s cubic-bezier(.2,.7,.3,1) both;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse 2s infinite; }
+  .hero h1 {
+    font-size: clamp(42px, 6.4vw, 76px);
+    line-height: 1.06; font-weight: 800; letter-spacing: -.015em;
+    animation: fadeUp .8s .22s cubic-bezier(.2,.7,.3,1) both;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(100deg, #04843c 0%, var(--green) 52%, #23d97e 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero-sub {
+    margin-top: 22px; font-size: clamp(15px, 1.6vw, 18px); color: var(--muted);
+    max-width: 30em;
+    animation: fadeUp .8s .34s cubic-bezier(.2,.7,.3,1) both;
+  }
+  .hero-facts {
+    display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px;
+    animation: fadeUp .8s .46s cubic-bezier(.2,.7,.3,1) both;
+  }
+  .fact {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 10px 16px; font-size: 13.5px; color: var(--text);
+    backdrop-filter: blur(8px);
+  }
+  .fact b { color: var(--green); font-size: 15px; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; animation: fadeUp .8s .58s cubic-bezier(.2,.7,.3,1) both; }
+  .btn-hero {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font); font-size: 15px; font-weight: 700;
+    padding: 15px 32px; border-radius: 999px; cursor: pointer; border: none;
+    transition: transform .22s, box-shadow .22s;
+  }
+  .btn-hero.solid { background: var(--green); color: #fff; box-shadow: 0 8px 32px rgba(7,193,96,.32); }
+  .btn-hero.solid:hover { transform: translateY(-2px); box-shadow: 0 12px 44px rgba(7,193,96,.45); }
+  .btn-hero.ghost {
+    background: var(--card); color: var(--text); border: 1px solid var(--line);
+    backdrop-filter: blur(8px);
+  }
+  .btn-hero.ghost:hover { transform: translateY(-2px); border-color: rgba(7,193,96,.5); }
+  .hero-scroll-hint {
+    position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+    color: var(--faint); font-size: 11px; letter-spacing: .3em;
+    display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 1;
+  }
+  .hero-scroll-hint .line { width: 1px; height: 34px; background: linear-gradient(180deg, var(--green), transparent); animation: drop 1.8s infinite; }
+
+  /* ============ 手机舞台 ============ */
+  .phone-stage {
+    flex-shrink: 0; position: relative;
+    perspective: 1200px;
+    animation: fadeUp 1s .5s cubic-bezier(.2,.7,.3,1) both;
+  }
+  .phone-float { animation: floaty 7s ease-in-out infinite; transform-style: preserve-3d; transition: transform .18s ease-out; }
+  .phone-stage.pulse .phone-float { animation: floaty 7s ease-in-out infinite, ring 1s ease-out 2; }
+  .phone-tag {
+    position: absolute; top: 18px; left: -34px; z-index: 5;
+    background: rgba(255, 255, 255, .93); border: 1px solid rgba(7,193,96,.45);
+    color: var(--green-deep); font-size: 11px; letter-spacing: .12em;
+    padding: 6px 12px; border-radius: 8px; backdrop-filter: blur(6px);
+    box-shadow: 0 6px 18px rgba(15,23,42,.1);
+    writing-mode: vertical-rl;
+  }
+  .phone-tag::before { content: "● "; font-size: 8px; }
+
+  /* ============ 数据带 ============ */
+  .stats {
+    max-width: 1240px; margin: 0 auto; padding: 10px clamp(20px, 5vw, 64px) 90px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  }
+  .stat {
+    background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 26px 24px; position: relative; overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform .25s, border-color .25s, box-shadow .25s;
+  }
+  .stat:hover { transform: translateY(-4px); border-color: rgba(7,193,96,.45); box-shadow: var(--shadow-lg); }
+  .stat::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(7,193,96,.55), transparent);
+  }
+  .stat .num { font-size: clamp(30px, 3.4vw, 42px); font-weight: 800; letter-spacing: -.02em; color: var(--text); }
+  .stat .num em { font-style: normal; color: var(--green); font-size: .55em; margin-left: 2px; }
+  .stat .lbl { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+  @media (max-width: 900px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ============ 通用 section ============ */
+  section { position: relative; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 64px) 110px; }
+  .sec-head { max-width: 640px; margin-bottom: 54px; }
+  .sec-tag {
+    font-size: 12px; letter-spacing: .3em; color: var(--green);
+    display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+  }
+  .sec-tag::before { content: ""; width: 26px; height: 1px; background: var(--green); }
+  .sec-head h2 { font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; line-height: 1.15; }
+  .sec-head p { color: var(--muted); margin-top: 14px; font-size: 15.5px; }
+
+  /* ============ 亮点 ============ */
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .hl-card {
+    background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 30px 26px; position: relative; overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform .3s, border-color .3s, box-shadow .3s;
+  }
+  .hl-card:hover { transform: translateY(-6px); border-color: rgba(7,193,96,.45); box-shadow: var(--shadow-lg); }
+  .hl-card .ico {
+    width: 48px; height: 48px; border-radius: 13px;
+    background: var(--green-soft); border: 1px solid rgba(7,193,96,.3);
+    display: flex; align-items: center; justify-content: center; font-size: 22px;
+    margin-bottom: 20px;
+  }
+  .hl-card h3 { font-size: 17px; font-weight: 700; }
+  .hl-card p { font-size: 13.5px; color: var(--muted); margin-top: 10px; line-height: 1.75; }
+  .hl-card .idx {
+    position: absolute; top: 18px; right: 22px; font-size: 44px; font-weight: 800;
+    color: rgba(7, 193, 96, 0.09); letter-spacing: -.03em;
+  }
+  @media (max-width: 1000px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .grid-4 { grid-template-columns: 1fr; } }
+
+  /* ============ 嘉宾 ============ */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .sp-card {
+    border-radius: var(--radius); overflow: hidden; position: relative;
+    background: var(--bg-2); border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    transition: transform .35s, border-color .35s, box-shadow .35s;
+  }
+  .sp-card:hover { transform: translateY(-8px); border-color: rgba(7,193,96,.5); box-shadow: var(--shadow-lg); }
+  .sp-photo { position: relative; aspect-ratio: 1 / 1.02; overflow: hidden; background: #eef2f0; }
+  .sp-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.7,.3,1); }
+  .sp-card:hover .sp-photo img { transform: scale(1.06); }
+  .sp-photo::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 68%, rgba(15,23,42,.16) 100%);
+  }
+  .sp-role {
+    position: absolute; top: 14px; left: 14px; z-index: 2;
+    font-size: 11px; letter-spacing: .14em; color: #fff;
+    background: var(--green); border: 1px solid rgba(7,193,96,.5);
+    padding: 5px 11px; border-radius: 999px;
+    box-shadow: 0 6px 16px rgba(7,193,96,.35);
+  }
+  .sp-body { padding: 22px 24px 26px; position: relative; }
+  .sp-body h3 { font-size: 21px; font-weight: 800; color: var(--text); }
+  .sp-body .sp-title { font-size: 12.5px; color: var(--green-deep); margin-top: 4px; letter-spacing: .04em; font-weight: 600; }
+  .sp-topic {
+    margin-top: 16px; font-size: 14px; font-weight: 600; color: var(--text);
+    border-left: 2px solid var(--green); padding-left: 12px; line-height: 1.5;
+  }
+  .sp-quote { margin-top: 14px; font-size: 13px; color: var(--muted); line-height: 1.7; font-style: italic; }
+  @media (max-width: 960px) { .grid-3 { grid-template-columns: 1fr; max-width: 460px; } }
+
+  /* ============ 议程 ============ */
+  .agenda-layout { display: grid; grid-template-columns: 340px 1fr; gap: clamp(24px, 4vw, 64px); align-items: start; }
+  .agenda-aside { position: sticky; top: 110px; }
+  .agenda-aside .card-note {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 24px; margin-top: 26px;
+  }
+  .agenda-aside .card-note .row { display: flex; gap: 12px; padding: 9px 0; font-size: 13.5px; color: var(--muted); }
+  .agenda-aside .card-note .row b { color: var(--text); min-width: 64px; font-weight: 600; }
+  .timeline { position: relative; padding-left: 26px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px;
+    background: linear-gradient(180deg, var(--green), rgba(7,193,96,.08));
+  }
+  .tl-item { position: relative; padding: 17px 0 17px 22px; border-bottom: 1px dashed rgba(15,23,42,.12); }
+  .tl-item:last-child { border-bottom: none; }
+  .tl-item::before {
+    content: ""; position: absolute; left: -25px; top: 26px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--green);
+    box-shadow: 0 0 12px var(--green-glow);
+  }
+  .tl-item.hot::before { background: var(--green); }
+  .tl-time { font-size: 13px; color: var(--green); font-weight: 700; letter-spacing: .06em; }
+  .tl-title { font-size: 16.5px; font-weight: 700; margin-top: 4px; }
+  .tl-title .badge {
+    font-size: 10.5px; color: #fff; background: var(--green); border-radius: 5px;
+    padding: 2px 7px; margin-left: 8px; vertical-align: 2px; letter-spacing: .05em;
+  }
+  .tl-desc { font-size: 13.5px; color: var(--muted); margin-top: 5px; }
+  @media (max-width: 960px) { .agenda-layout { grid-template-columns: 1fr; } .agenda-aside { position: static; } }
+
+  /* ============ 现场图集 ============ */
+  .gallery { display: grid; grid-template-columns: 1.35fr 1fr 1fr; gap: 14px; }
+  .g-item {
+    position: relative; border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--line); cursor: zoom-in; min-height: 240px;
+  }
+  .g-item:nth-child(1) { grid-row: span 2; min-height: 494px; }
+  .g-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.2,.7,.3,1); }
+  .g-item:hover img { transform: scale(1.05); }
+  .g-item::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(15,23,42,.72));
+    opacity: .9; transition: opacity .3s;
+  }
+  .g-cap {
+    position: absolute; left: 20px; right: 20px; bottom: 16px; z-index: 2;
+    font-size: 14px; font-weight: 600;
+  }
+  .g-cap span { display: block; font-size: 11.5px; color: var(--green); letter-spacing: .18em; margin-bottom: 4px; font-weight: 500; }
+  .g-zoom {
+    position: absolute; top: 14px; right: 14px; z-index: 2;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(255,255,255,.88); border: 1px solid rgba(15,23,42,.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; color: var(--text); backdrop-filter: blur(6px);
+    box-shadow: 0 4px 14px rgba(15,23,42,.12);
+  }
+  @media (max-width: 960px) { .gallery { grid-template-columns: 1fr 1fr; } .g-item:nth-child(1) { grid-row: span 2; min-height: 320px; } }
+  @media (max-width: 600px) { .gallery { grid-template-columns: 1fr; } .g-item:nth-child(1) { grid-row: auto; min-height: 240px; } }
+
+  /* ============ 小程序剖析 ============ */
+  .app-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 4vw, 64px); align-items: center; }
+  .app-switch { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+  .app-switch button {
+    font-family: var(--font); cursor: pointer;
+    background: var(--card); border: 1px solid var(--line); color: var(--muted);
+    font-size: 13.5px; font-weight: 600; padding: 9px 18px; border-radius: 999px;
+    transition: all .22s; display: flex; align-items: center; gap: 7px;
+  }
+  .app-switch button .ico { font-size: 15px; }
+  .app-switch button:hover { color: var(--text); border-color: rgba(7,193,96,.4); }
+  .app-switch button.on { background: var(--green-soft); border-color: var(--green); color: var(--green); }
+  .app-hint { font-size: 12.5px; color: var(--faint); margin-top: 18px; display: flex; align-items: center; gap: 8px; }
+  .feat-list { display: flex; flex-direction: column; gap: 12px; }
+  .feat {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: var(--bg-2); border: 1px solid var(--line); border-radius: 14px;
+    padding: 18px 20px; box-shadow: var(--shadow);
+    transition: border-color .25s, transform .25s, box-shadow .25s;
+  }
+  .feat:hover { border-color: rgba(7,193,96,.4); transform: translateX(4px); box-shadow: var(--shadow-lg); }
+  .feat .f-ico {
+    width: 38px; height: 38px; border-radius: 10px; flex-shrink: 0;
+    background: var(--green-soft); border: 1px solid rgba(7,193,96,.28);
+    display: flex; align-items: center; justify-content: center; font-size: 17px;
+  }
+  .feat b { font-size: 14.5px; display: block; }
+  .feat p { font-size: 12.5px; color: var(--muted); margin-top: 3px; line-height: 1.6; }
+  @media (max-width: 960px) { .app-layout { grid-template-columns: 1fr; } }
+
+  /* ============ CTA ============ */
+  .cta {
+    text-align: center; position: relative; overflow: hidden;
+    padding: clamp(70px, 9vw, 120px) clamp(20px, 5vw, 64px);
+    background:
+      radial-gradient(ellipse 60% 70% at 50% 110%, rgba(7,193,96,.14), transparent 65%),
+      radial-gradient(ellipse 42% 55% at 50% -12%, rgba(7,193,96,.08), transparent 62%),
+      var(--bg-2);
+    border-top: 1px solid var(--line);
+  }
+  .cta h2 { font-size: clamp(30px, 4.4vw, 52px); font-weight: 800; letter-spacing: -.015em; }
+  .cta h2 .grad {
+    background: linear-gradient(100deg, #04843c, var(--green) 60%, #23d97e);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .cta .sub { color: var(--muted); margin: 18px auto 0; max-width: 34em; font-size: 15.5px; }
+  .cta-meta {
+    display: inline-flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 30px;
+  }
+  .cta-meta .fact { background: var(--bg-2); box-shadow: var(--shadow); }
+  .cta .btn-hero { margin-top: 38px; }
+  .cta .fine { font-size: 12px; color: var(--faint); margin-top: 22px; }
+
+  /* ============ Footer ============ */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 40px clamp(20px, 5vw, 64px);
+    display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between;
+    font-size: 12.5px; color: var(--faint);
+  }
+  footer .f-brand { display: flex; align-items: center; gap: 10px; color: var(--muted); }
+  footer .f-links { display: flex; gap: 20px; flex-wrap: wrap; }
+
+  /* ============ Lightbox ============ */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(15, 23, 42, .92);
+    display: none; align-items: center; justify-content: center;
+    padding: 4vmin; backdrop-filter: blur(10px);
+  }
+  .lightbox.show { display: flex; animation: fadeIn .25s; }
+  .lightbox img { max-width: 92vw; max-height: 86vh; border-radius: 12px; box-shadow: 0 30px 90px rgba(0,0,0,.7); border: 1px solid var(--line); }
+  .lightbox .lb-close {
+    position: absolute; top: 22px; right: 26px;
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--card); border: 1px solid var(--line); color: var(--text);
+    font-size: 18px; cursor: pointer; font-family: var(--font);
+  }
+  .lightbox .lb-cap { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); color: rgba(255,255,255,.78); font-size: 13px; }
+
+  /* ============ 动画 ============ */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes floaty { 0%, 100% { transform: translateY(0) rotateX(0) rotateY(0); } 50% { transform: translateY(-14px) rotateX(.6deg) rotateY(-1deg); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+  @keyframes drop { 0% { transform: scaleY(0); transform-origin: top; } 45% { transform: scaleY(1); transform-origin: top; } 55% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
+  @keyframes ring { 0% { filter: drop-shadow(0 0 0 var(--green-glow)); } 50% { filter: drop-shadow(0 0 26px var(--green)); } 100% { filter: drop-shadow(0 0 0 var(--green-glow)); } }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal.d1 { transition-delay: .08s; } .reveal.d2 { transition-delay: .16s; }
+  .reveal.d3 { transition-delay: .24s; } .reveal.d4 { transition-delay: .32s; }
+
+  /* ================================================================
+     以下为「手机内小程序界面」—— 视觉精修版，逻辑与原版一致
+     ================================================================ */
+  .phone {
+    width: 375px; height: 760px;
+    background: #10141b; border-radius: 54px;
+    padding: 11px; position: relative;
+    box-shadow: 0 40px 90px rgba(15,23,42,.4), 0 0 0 1px rgba(15,23,42,.06), inset 0 0 0 2px rgba(255,255,255,.06);
+  }
+  .notch { position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 120px; height: 28px; background: #10141b; border-radius: 0 0 16px 16px; z-index: 30; }
+  .screen { width: 100%; height: 100%; background: #f6f7f9; border-radius: 43px; overflow: hidden; position: relative; display: flex; flex-direction: column; color: #1a1d24; }
+  .statusbar {
+    height: 46px; display: flex; align-items: flex-end; justify-content: space-between;
+    padding: 0 26px 4px; font-size: 13px; font-weight: 600; flex-shrink: 0; background: #ffffff;
+  }
+  .statusbar .sicons { font-size: 11px; letter-spacing: 1px; }
+  .navbar {
+    height: 46px; background: rgba(255,255,255,.92); backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center; position: relative;
+    flex-shrink: 0; border-bottom: 1px solid #f1f3f5;
+  }
+  .navbar .nav-title { font-size: 16px; font-weight: 600; }
+  .navbar .nav-back {
+    position: absolute; left: 12px; font-size: 15px; color: #1a1d24;
+    cursor: pointer; padding: 4px 8px 4px 0; display: none; user-select: none;
+    border: none; background: none; font-family: var(--font);
+  }
+  .navbar .nav-back.show { display: block; }
+  .content { flex: 1; position: relative; overflow: hidden; }
+  .page {
+    position: absolute; inset: 0; overflow-y: auto; overflow-x: hidden;
+    display: none; scrollbar-width: none;
+  }
+  .page::-webkit-scrollbar { display: none; }
+  .page.active { display: block; animation: pageIn .28s cubic-bezier(.2,.7,.3,1); }
+  @keyframes pageIn { from { opacity: 0; transform: translateX(22px); } to { opacity: 1; transform: none; } }
+
+  /* 小程序内通用 */
+  .m-card {
+    background: #ffffff; border-radius: 14px; padding: 16px; margin: 12px;
+    box-shadow: 0 2px 10px rgba(15,23,42,.05);
+  }
+  .m-btn {
+    background: #07c160; color: #fff; border-radius: 999px;
+    font-size: 15px; font-weight: 600; text-align: center; padding: 11px 0;
+    border: none; cursor: pointer; width: 100%; font-family: var(--font);
+    transition: transform .15s, box-shadow .15s, background .2s;
+  }
+  .m-btn:active { transform: scale(.97); }
+  .m-btn[disabled] { background: #c9cdd4; cursor: not-allowed; }
+  .m-btn-ghost {
+    background: #e9f9f0; color: #07913a; border-radius: 999px;
+    font-size: 14px; font-weight: 600; text-align: center; padding: 11px 0;
+    border: none; cursor: pointer; width: 100%; font-family: var(--font);
+    transition: transform .15s;
+  }
+  .m-btn-ghost:active { transform: scale(.97); }
+  .m-sec-title { font-size: 15px; font-weight: 600; margin: 2px 0 9px; }
+  .m-meta-row { display: flex; align-items: flex-start; padding: 5px 0; }
+  .m-meta-emoji { width: 23px; font-size: 14px; flex-shrink: 0; }
+  .m-meta-label { color: #8a8f99; width: 55px; font-size: 13px; flex-shrink: 0; }
+  .m-meta-value { flex: 1; font-size: 13px; }
+  .m-tag {
+    display: inline-block; background: #e9f9f0; color: #07913a;
+    font-size: 11px; padding: 3px 9px; border-radius: 999px; margin-right: 6px;
+  }
+  .m-tag-plain { background: #f1f3f5; color: #5f6570; }
+  .m-empty { text-align: center; padding: 70px 0; color: #8a8f99; font-size: 14px; }
+  .m-empty .e { font-size: 38px; display: block; margin-bottom: 9px; }
+  .m-empty .s { font-size: 12px; color: #b0b5bd; margin-top: 4px; }
+
+  /* 首页 */
+  .m-brand { display: flex; align-items: center; padding: 14px 16px 4px; }
+  .m-brand-logo { width: 36px; height: 36px; }
+  .m-brand-text { flex: 1; margin-left: 10px; }
+  .m-brand-title { font-size: 16px; font-weight: 700; }
+  .m-brand-sub { font-size: 11px; color: #8a8f99; margin-top: 1px; }
+  .m-brand-user {
+    width: 32px; height: 32px; border-radius: 50%; background: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 16px;
+    cursor: pointer; box-shadow: 0 1px 5px rgba(15,23,42,.1); border: none; font-family: var(--font);
+  }
+  .m-hero { padding: 0; overflow: hidden; }
+  .m-hero-cover { width: 100%; height: 158px; object-fit: cover; }
+  .m-hero-body { padding: 16px 14px 14px; }
+  .m-hero-tags { margin-bottom: 7px; }
+  .m-hero-title { font-size: 19px; font-weight: 800; letter-spacing: -.01em; }
+  .m-hero-sub { font-size: 12.5px; color: #5f6570; margin: 3px 0 7px; }
+  .m-progress-bar { height: 6px; background: #f1f3f5; border-radius: 999px; overflow: hidden; margin-top: 8px; }
+  .m-progress-inner { height: 100%; background: linear-gradient(90deg, #07913a, #07c160); border-radius: 999px; transition: width .5s cubic-bezier(.2,.7,.3,1); }
+  .m-progress-text { font-size: 11px; color: #8a8f99; margin-top: 5px; }
+  .m-hero-actions { display: flex; gap: 10px; margin-top: 14px; }
+  .m-hero-actions > * { flex: 1; }
+  .m-tip-line { font-size: 13px; color: #5f6570; padding: 4px 0; }
+
+  /* 详情页 */
+  .m-cover { width: 100%; height: 178px; object-fit: cover; }
+  .m-title { font-size: 20px; font-weight: 800; }
+  .m-sub { font-size: 13px; color: #5f6570; margin: 4px 0 8px; }
+  .m-intro { font-size: 13.5px; color: #3d434d; line-height: 1.85; }
+  .m-hl-row { display: flex; align-items: flex-start; padding: 5px 0; }
+  .m-hl-emoji { font-size: 13px; margin-right: 7px; flex-shrink: 0; }
+  .m-hl-text { font-size: 13.5px; color: #3d434d; flex: 1; }
+  .m-agenda-row { display: flex; align-items: flex-start; padding: 7px 0; position: relative; }
+  .m-agenda-time { width: 48px; font-size: 13px; color: #07913a; font-weight: 700; flex-shrink: 0; }
+  .m-agenda-dot { width: 8px; height: 8px; border-radius: 50%; background: #07c160; margin: 6px 12px 0 0; flex-shrink: 0; box-shadow: 0 0 0 3px rgba(7,193,96,.15); }
+  .m-agenda-item { flex: 1; font-size: 13.5px; color: #3d434d; }
+  .m-bottom-bar {
+    position: sticky; bottom: 0; background: rgba(255,255,255,.94); backdrop-filter: blur(10px);
+    display: flex; align-items: center; padding: 9px 12px;
+    box-shadow: 0 -2px 12px rgba(15,23,42,.07);
+  }
+  .m-bottom-info { flex: 1; margin-left: 6px; }
+  .m-bottom-count { font-size: 13px; font-weight: 700; }
+  .m-bottom-left { font-size: 11px; color: #8a8f99; }
+  .m-join-btn { width: 140px; margin: 0 6px; }
+
+  /* 报名页 */
+  .m-act-mini { display: flex; align-items: center; }
+  .m-mini-cover { width: 84px; height: 84px; border-radius: 10px; flex-shrink: 0; object-fit: cover; }
+  .m-mini-info { flex: 1; margin-left: 12px; min-width: 0; }
+  .m-mini-title { font-size: 16px; font-weight: 700; }
+  .m-mini-meta { font-size: 12px; color: #8a8f99; margin-top: 4px; }
+  .m-already { background: #fff8e6; color: #b26a00; font-size: 13px; display: flex; gap: 7px; align-items: center; }
+  .m-form-row { display: flex; align-items: center; padding: 10px 0; border-bottom: 1px solid #f1f3f5; }
+  .m-form-row:last-child { border-bottom: none; }
+  .m-form-row.top { align-items: flex-start; }
+  .m-form-label { width: 75px; font-size: 14px; color: #3d434d; flex-shrink: 0; }
+  .m-form-input {
+    flex: 1; font-size: 14px; border: none; outline: none; background: transparent;
+    font-family: var(--font); min-width: 0; color: #1a1d24;
+  }
+  .m-form-input::placeholder { color: #b0b5bd; }
+  .m-form-textarea {
+    flex: 1; font-size: 14px; border: none; outline: none; background: transparent;
+    font-family: var(--font); height: 68px; line-height: 1.5; resize: none; color: #1a1d24;
+  }
+  .m-stepper { flex: 1; display: flex; align-items: center; }
+  .m-step-btn {
+    width: 28px; height: 28px; border-radius: 50%; background: #f1f3f5; color: #3d434d;
+    font-size: 16px; line-height: 26px; text-align: center; border: none; cursor: pointer;
+    font-family: var(--font); transition: transform .12s, background .2s;
+  }
+  .m-step-btn:active { transform: scale(.9); }
+  .m-step-btn[disabled] { color: #c9cdd4; cursor: not-allowed; }
+  .m-step-num { min-width: 40px; text-align: center; font-size: 15px; font-weight: 700; }
+  .m-notice-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .m-notice-line { font-size: 12.5px; color: #5f6570; padding: 3px 0; }
+  .m-submit-wrap { padding: 6px 12px 0; }
+  .m-btn.loading { position: relative; color: transparent; pointer-events: none; }
+  .m-btn.loading::after {
+    content: ""; position: absolute; left: 50%; top: 50%;
+    width: 18px; height: 18px; margin: -9px 0 0 -9px;
+    border: 2px solid rgba(255,255,255,.4); border-top-color: #fff;
+    border-radius: 50%; animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* 记录页 */
+  .m-head { display: flex; align-items: center; }
+  .m-head-avatar {
+    width: 48px; height: 48px; border-radius: 50%; background: #f1f3f5;
+    display: flex; align-items: center; justify-content: center; font-size: 23px; flex-shrink: 0;
+  }
+  .m-head-info { margin-left: 12px; }
+  .m-head-name { font-size: 16px; font-weight: 700; }
+  .m-head-sub { font-size: 12px; color: #8a8f99; margin-top: 2px; }
+  .m-record { display: flex; align-items: flex-start; animation: fadeUp .4s cubic-bezier(.2,.7,.3,1) both; }
+  .m-record-main { flex: 1; min-width: 0; }
+  .m-record-title { font-size: 15px; font-weight: 700; }
+  .m-record-meta { font-size: 12px; color: #8a8f99; margin-top: 4px; }
+  .m-record-remark { font-size: 12px; color: #5f6570; margin-top: 4px; }
+  .m-record-side { display: flex; flex-direction: column; align-items: flex-end; margin-left: 8px; flex-shrink: 0; }
+  .m-badge { font-size: 11px; padding: 3px 8px; border-radius: 999px; }
+  .m-badge-pending { background: #fff8e6; color: #b26a00; }
+  .m-badge-confirmed { background: #e9f9f0; color: #07913a; }
+  .m-badge-cancelled { background: #f1f3f5; color: #8a8f99; }
+  .m-cancel-btn {
+    margin-top: 10px; font-size: 12px; color: #e34d59; background: none;
+    border: none; padding: 0; cursor: pointer; line-height: 1.2; font-family: var(--font);
+  }
+
+  /* tabBar */
+  .m-tabbar {
+    height: 58px; background: rgba(255,255,255,.96); backdrop-filter: blur(10px);
+    border-top: 1px solid #f1f3f5; display: flex; flex-shrink: 0; padding-bottom: 4px;
+  }
+  .m-tabbar-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2px; cursor: pointer; border: none; background: none; font-family: var(--font);
+  }
+  .m-tabbar-item img { width: 26px; height: 26px; transition: transform .2s; }
+  .m-tabbar-item:active img { transform: scale(.88); }
+  .m-tabbar-item span { font-size: 10px; color: #9aa0a6; transition: color .2s; }
+  .m-tabbar-item.active span { color: #07c160; font-weight: 600; }
+
+  /* 登录弹窗 */
+  .m-mask {
+    position: absolute; inset: 0; background: rgba(15,23,42,.5);
+    display: none; align-items: center; justify-content: center; z-index: 100;
+    backdrop-filter: blur(3px);
+  }
+  .m-mask.show { display: flex; animation: fadeIn .22s; }
+  .m-panel {
+    width: 302px; background: #fff; border-radius: 20px; padding: 30px 24px 22px;
+    display: flex; flex-direction: column; align-items: center;
+    box-shadow: 0 24px 70px rgba(15,23,42,.3);
+    animation: panelIn .32s cubic-bezier(.2,.9,.3,1.2);
+  }
+  @keyframes panelIn { from { opacity: 0; transform: scale(.86) translateY(14px); } to { opacity: 1; transform: none; } }
+  .m-panel .logo { width: 64px; height: 64px; }
+  .m-panel .t { font-size: 18px; font-weight: 800; margin-top: 12px; }
+  .m-panel .st { font-size: 12px; color: #8a8f99; margin-top: 4px; }
+  .m-profile-row { display: flex; align-items: center; width: 100%; margin-top: 22px; }
+  .m-avatar-btn {
+    width: 56px; height: 56px; border-radius: 50%; background: #f1f3f5;
+    border: 1.5px dashed #c9cdd4; display: flex; align-items: center; justify-content: center;
+    font-size: 22px; cursor: pointer; flex-shrink: 0; font-family: var(--font); color: #b0b5bd;
+    transition: transform .15s;
+  }
+  .m-avatar-btn:active { transform: scale(.92); }
+  .m-nickname {
+    flex: 1; margin-left: 12px; background: #f6f7f9; border-radius: 10px;
+    padding: 11px 12px; font-size: 14px; border: none; outline: none; font-family: var(--font);
+    min-width: 0; color: #1a1d24;
+  }
+  .m-login-btn {
+    width: 100%; margin-top: 22px; background: #07c160; color: #fff;
+    border-radius: 999px; font-size: 16px; font-weight: 700; padding: 12px 0;
+    border: none; cursor: pointer; font-family: var(--font);
+    box-shadow: 0 6px 20px rgba(7,193,96,.35); transition: transform .15s;
+  }
+  .m-login-btn:active { transform: scale(.97); }
+  .m-panel .tip { font-size: 11px; color: #b0b5bd; margin-top: 14px; text-align: center; }
+
+  /* 确认弹窗 & Toast */
+  .m-confirm-panel { width: 282px; background: #fff; border-radius: 16px; padding: 24px 20px 0; text-align: center; box-shadow: 0 24px 70px rgba(15,23,42,.3); animation: panelIn .3s cubic-bezier(.2,.9,.3,1.2); }
+  .m-confirm-panel .t { font-size: 15px; font-weight: 700; }
+  .m-confirm-panel .m { font-size: 13px; color: #5f6570; margin-top: 8px; line-height: 1.65; }
+  .m-confirm-btns { display: flex; margin-top: 18px; border-top: 1px solid #f1f3f5; }
+  .m-confirm-btns button {
+    flex: 1; padding: 12px 0; border: none; background: none;
+    font-size: 15px; cursor: pointer; font-family: var(--font); color: #5f6570;
+  }
+  .m-confirm-btns button.ok { color: #e34d59; font-weight: 700; border-left: 1px solid #f1f3f5; }
+  .m-toast {
+    position: absolute; top: 130px; left: 50%; transform: translateX(-50%) translateY(-8px);
+    background: rgba(15,23,42,.85); color: #fff; font-size: 13px;
+    padding: 9px 18px; border-radius: 999px; opacity: 0; pointer-events: none;
+    transition: opacity .25s, transform .25s; z-index: 200; white-space: nowrap;
+  }
+  .m-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 1080px) {
+    .hero { flex-direction: column; padding-top: 110px; }
+    .hero-inner { flex-direction: column; }
+    .phone-stage { margin-top: 20px; }
+    .hero-scroll-hint { display: none; }
+  }
+  @media (max-width: 420px) {
+    .phone { width: 340px; height: 700px; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="logoGrad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#12e878"/><stop offset="1" stop-color="#04843c"/>
+    </linearGradient>
+  </defs>
+</svg>
+<div class="progress-line" id="progressLine"></div>
+
+<!-- ==================== 导航 ==================== -->
+<nav id="nav">
+  <a class="nav-brand" href="#top">
+    <span class="nav-mark"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="1.5" y="1.5" width="45" height="45" rx="12" fill="url(#logoGrad)"/><path d="M13 33L21.5 24L27.5 29L35.5 17.5" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="35.5" cy="17.5" r="3.6" fill="#fff"/></svg></span>
+    <b>AI 应用创新沙龙<span>SHENZHEN · 2026</span></b>
+  </a>
+  <div class="nav-links">
+    <a href="#highlights">活动亮点</a>
+    <a href="#speakers">嘉宾阵容</a>
+    <a href="#agenda">活动议程</a>
+    <a href="#gallery">现场直击</a>
+    <a href="#app">报名小程序</a>
+  </div>
+  <button class="nav-cta" id="navCta">立即报名</button>
+</nav>
+
+<!-- ==================== Hero ==================== -->
+<header class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="dot"></span>2026.10.25 · 深圳南山 · 线下限定</div>
+      <h1>AI 应用<br><span class="grad">创新沙龙</span></h1>
+      <p class="hero-sub">一场只谈「落地」的 AI 聚会。3 位一线产品负责人现场还原从需求拆解到上线的完整链路，2 个已上线 AI 应用现场演示，圆桌只算一本账：真实成本与收益。</p>
+      <div class="hero-facts">
+        <span class="fact">🗓️ <b>10.25</b>&nbsp;14:00–17:30</span>
+        <span class="fact">📍 南山科技园 AI 创新中心 3F</span>
+        <span class="fact">🎫 限额 <b>120</b>&nbsp;人</span>
+      </div>
+      <div class="hero-actions">
+        <button class="btn-hero solid" id="heroJoin">立即报名 →</button>
+        <button class="btn-hero ghost" id="heroTour">看看报名小程序 ↓</button>
+      </div>
+    </div>
+
+    <!-- 可交互手机 -->
+    <div class="phone-stage" id="phoneStage">
+      <div class="phone-tag">LIVE 可交互</div>
+      <div class="phone-float" id="phoneFloat">
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="screen">
+            <div class="statusbar">
+              <span id="mClock">9:41</span>
+              <span class="sicons">📶 🔋</span>
+            </div>
+            <div class="navbar">
+              <button class="nav-back" id="mNavBack">‹ 返回</button>
+              <span class="nav-title" id="mNavTitle">活动报名</span>
+            </div>
+            <div class="content">
+
+              <!-- 首页 -->
+              <div class="page active" id="m-page-index">
+                <div class="m-brand">
+                  <svg class="m-brand-logo" viewBox="0 0 48 48" aria-hidden="true"><rect x="1.5" y="1.5" width="45" height="45" rx="12" fill="url(#logoGrad)"/><path d="M13 33L21.5 24L27.5 29L35.5 17.5" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="35.5" cy="17.5" r="3.6" fill="#fff"/></svg>
+                  <div class="m-brand-text">
+                    <div class="m-brand-title">AI 应用创新沙龙</div>
+                    <div class="m-brand-sub">活动报名 · 深圳站</div>
+                  </div>
+                  <button class="m-brand-user" id="mHomeAvatar">👤</button>
+                </div>
+                <div class="m-card m-hero">
+                  <img class="m-hero-cover" src="images/cover.png" alt="活动封面">
+                  <div class="m-hero-body">
+                    <div class="m-hero-tags">
+                      <span class="m-tag">报名进行中</span>
+                      <span class="m-tag m-tag-plain">AI 从业者 / 高校学生</span>
+                    </div>
+                    <div class="m-hero-title">AI 应用创新沙龙</div>
+                    <div class="m-hero-sub">一线 AI 产品 · 落地案例 · 自由交流</div>
+                    <div class="m-meta-row"><span class="m-meta-emoji">🗓️</span><span class="m-meta-value" id="mHomeTime"></span></div>
+                    <div class="m-meta-row"><span class="m-meta-emoji">📍</span><span class="m-meta-value">南山科技园 AI 创新中心 3F</span></div>
+                    <div class="m-progress-bar"><div class="m-progress-inner" id="mHomeProgress" style="width:0%"></div></div>
+                    <div class="m-progress-text" id="mHomeProgressText"></div>
+                    <div class="m-hero-actions">
+                      <button class="m-btn" id="mBtnDetail">查看详情</button>
+                      <button class="m-btn-ghost" id="mBtnJoin">立即报名</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="m-card">
+                  <div class="m-sec-title">🎯 参与方式</div>
+                  <div class="m-tip-line">1. 微信登录后进入「在线报名」填写信息</div>
+                  <div class="m-tip-line">2. 提交后可在「报名记录」中查看或取消</div>
+                  <div class="m-tip-line">3. 名额有限，报满即止</div>
+                </div>
+              </div>
+
+              <!-- 详情页 -->
+              <div class="page" id="m-page-detail">
+                <img class="m-cover" src="images/cover.png" alt="活动封面">
+                <div class="m-card">
+                  <div class="m-title">AI 应用创新沙龙</div>
+                  <div class="m-sub">一线 AI 产品 · 落地案例 · 自由交流</div>
+                  <div>
+                    <span class="m-tag">报名进行中</span>
+                    <span class="m-tag m-tag-plain">AI 从业者 / 高校学生 / 转型开发者</span>
+                  </div>
+                </div>
+                <div class="m-card">
+                  <div class="m-meta-row"><span class="m-meta-emoji">🗓️</span><span class="m-meta-label">时间</span><span class="m-meta-value" id="mDetailTime"></span></div>
+                  <div class="m-meta-row"><span class="m-meta-emoji">📍</span><span class="m-meta-label">地点</span><span class="m-meta-value">南山区科技园 AI 创新中心 3F 发布厅</span></div>
+                  <div class="m-meta-row"><span class="m-meta-emoji">👥</span><span class="m-meta-label">人群</span><span class="m-meta-value">AI 从业者 / 高校学生 / 转型开发者</span></div>
+                  <div class="m-meta-row"><span class="m-meta-emoji">🎫</span><span class="m-meta-label">名额</span><span class="m-meta-value" id="mDetailCapacity"></span></div>
+                  <div class="m-meta-row"><span class="m-meta-emoji">🏛️</span><span class="m-meta-label">主办</span><span class="m-meta-value">AI 应用创新沙龙组委会</span></div>
+                </div>
+                <div class="m-card">
+                  <div class="m-sec-title">📝 活动简介</div>
+                  <div class="m-intro">一场聚焦 AI 应用落地的线下沙龙。3 位一线 AI 产品负责人现场分享从需求拆解到上线的完整过程，演示 2 个已上线运行的 AI 应用，并设圆桌与自由交流环节。无论你是正在寻找 AI 落地场景的从业者，还是希望切入 AI 领域的学生，都可以在这里找到可复用的方法与同路人。</div>
+                </div>
+                <div class="m-card">
+                  <div class="m-sec-title">✨ 活动亮点</div>
+                  <div class="m-hl-row"><span class="m-hl-emoji">✨</span><span class="m-hl-text">3 位一线 AI 产品负责人主题分享</span></div>
+                  <div class="m-hl-row"><span class="m-hl-emoji">✨</span><span class="m-hl-text">现场演示 2 个已上线的 AI 应用</span></div>
+                  <div class="m-hl-row"><span class="m-hl-emoji">✨</span><span class="m-hl-text">圆桌讨论：AI 项目的真实成本与收益</span></div>
+                  <div class="m-hl-row"><span class="m-hl-emoji">✨</span><span class="m-hl-text">自由交流环节，限量周边与抽奖</span></div>
+                </div>
+                <div class="m-card">
+                  <div class="m-sec-title">📋 活动流程</div>
+                  <div class="m-agenda-row"><div class="m-agenda-time">13:30</div><div class="m-agenda-dot"></div><div class="m-agenda-item">签到入场</div></div>
+                  <div class="m-agenda-row"><div class="m-agenda-time">14:00</div><div class="m-agenda-dot"></div><div class="m-agenda-item">开场 &amp; 主题分享一：AI 需求拆解</div></div>
+                  <div class="m-agenda-row"><div class="m-agenda-time">15:00</div><div class="m-agenda-dot"></div><div class="m-agenda-item">主题分享二：从 Demo 到上线</div></div>
+                  <div class="m-agenda-row"><div class="m-agenda-time">16:00</div><div class="m-agenda-dot"></div><div class="m-agenda-item">主题分享三 &amp; 圆桌讨论</div></div>
+                  <div class="m-agenda-row"><div class="m-agenda-time">17:00</div><div class="m-agenda-dot"></div><div class="m-agenda-item">自由交流</div></div>
+                  <div class="m-agenda-row"><div class="m-agenda-time">17:30</div><div class="m-agenda-dot"></div><div class="m-agenda-item">活动结束</div></div>
+                </div>
+                <div class="m-bottom-bar">
+                  <div class="m-bottom-info">
+                    <div class="m-bottom-count" id="mDetailCount"></div>
+                    <div class="m-bottom-left" id="mDetailLeft"></div>
+                  </div>
+                  <button class="m-btn m-join-btn" id="mBtnDetailJoin">立即报名</button>
+                </div>
+              </div>
+
+              <!-- 报名页 -->
+              <div class="page" id="m-page-signup">
+                <div class="m-card m-act-mini">
+                  <img class="m-mini-cover" src="images/cover.png" alt="活动封面">
+                  <div class="m-mini-info">
+                    <div class="m-mini-title">AI 应用创新沙龙</div>
+                    <div class="m-mini-meta" id="mSignupTime"></div>
+                    <div class="m-mini-meta">📍 南山科技园 AI 创新中心 3F</div>
+                  </div>
+                </div>
+                <div class="m-card m-already" id="mAlreadyCard" style="display:none">✅ 你已报名该活动，可在「报名记录」中查看</div>
+                <div class="m-card">
+                  <div class="m-form-row">
+                    <span class="m-form-label">姓名</span>
+                    <input class="m-form-input" id="mInputName" placeholder="请填写姓名" maxlength="20">
+                  </div>
+                  <div class="m-form-row">
+                    <span class="m-form-label">手机号</span>
+                    <input class="m-form-input" id="mInputPhone" type="tel" placeholder="用于接收活动通知" maxlength="11">
+                  </div>
+                  <div class="m-form-row">
+                    <span class="m-form-label">参与人数</span>
+                    <div class="m-stepper">
+                      <button class="m-step-btn" id="mBtnMinus">−</button>
+                      <span class="m-step-num" id="mPeopleNum">1</span>
+                      <button class="m-step-btn" id="mBtnPlus">＋</button>
+                    </div>
+                  </div>
+                  <div class="m-form-row top">
+                    <span class="m-form-label">备注</span>
+                    <textarea class="m-form-textarea" id="mInputRemark" placeholder="选填，如特殊需求" maxlength="200"></textarea>
+                  </div>
+                </div>
+                <div class="m-card">
+                  <div class="m-notice-title">📌 报名须知</div>
+                  <div class="m-notice-line">· 提交后如需取消，可在「报名记录」中操作</div>
+                  <div class="m-notice-line">· 手机号仅用于活动通知，不会外泄</div>
+                </div>
+                <div class="m-submit-wrap">
+                  <button class="m-btn" id="mBtnSubmit">提交报名</button>
+                </div>
+              </div>
+
+              <!-- 记录页 -->
+              <div class="page" id="m-page-records">
+                <div class="m-card m-head" id="mRecordsHead" style="display:none">
+                  <div class="m-head-avatar" id="mRecordsAvatar">👤</div>
+                  <div class="m-head-info">
+                    <div class="m-head-name" id="mRecordsNickname"></div>
+                    <div class="m-head-sub">我的报名记录</div>
+                  </div>
+                </div>
+                <div id="mRecordsList"></div>
+                <div class="m-card m-empty" id="mRecordsEmpty" style="display:none">
+                  <span class="e">📭</span>
+                  <div>还没有报名记录</div>
+                  <div class="s">去首页看看有什么活动吧</div>
+                </div>
+                <div class="m-card m-empty" id="mRecordsLocked" style="display:none">
+                  <span class="e">🔐</span>
+                  <div>登录后查看你的报名记录</div>
+                  <div class="s">点击右下角「报名记录」时会提醒你登录</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="m-tabbar">
+              <button class="m-tabbar-item active" id="mTabHome">
+                <img src="images/tab-home-active.png" alt="首页">
+                <span>首页</span>
+              </button>
+              <button class="m-tabbar-item" id="mTabRecords">
+                <img src="images/tab-records.png" alt="报名记录">
+                <span>报名记录</span>
+              </button>
+            </div>
+
+            <!-- 登录弹窗 -->
+            <div class="m-mask" id="mLoginMask">
+              <div class="m-panel">
+                <svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><rect x="1.5" y="1.5" width="45" height="45" rx="12" fill="url(#logoGrad)"/><path d="M13 33L21.5 24L27.5 29L35.5 17.5" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="35.5" cy="17.5" r="3.6" fill="#fff"/></svg>
+                <div class="t">AI 应用创新沙龙</div>
+                <div class="st">活动报名小程序</div>
+                <div class="m-profile-row">
+                  <button class="m-avatar-btn" id="mAvatarBtn">＋</button>
+                  <input class="m-nickname" id="mInputNickname" type="text" placeholder="设置昵称（选填）" maxlength="20">
+                </div>
+                <button class="m-login-btn" id="mBtnLogin">微信一键登录</button>
+                <div class="tip">登录后可用于活动报名与查询报名记录</div>
+              </div>
+            </div>
+
+            <!-- 确认弹窗 -->
+            <div class="m-mask" id="mConfirmMask">
+              <div class="m-confirm-panel">
+                <div class="t" id="mConfirmTitle">取消报名</div>
+                <div class="m" id="mConfirmMsg">确定取消这场活动的报名吗？取消后可重新报名。</div>
+                <div class="m-confirm-btns">
+                  <button id="mConfirmNo">再想想</button>
+                  <button class="ok" id="mConfirmYes">取消报名</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="m-toast" id="mToast"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll-hint"><span>SCROLL</span><div class="line"></div></div>
+</header>
+
+<!-- ==================== 数据带 ==================== -->
+<section class="stats">
+  <div class="stat reveal"><div class="num"><span id="statSigned">0</span><em>人</em></div><div class="lbl">当前已报名（与小程序实时同步）</div></div>
+  <div class="stat reveal d1"><div class="num"><span id="statLeft">120</span><em>席</em></div><div class="lbl">活动总名额 · 报满即止</div></div>
+  <div class="stat reveal d2"><div class="num">3<em>位</em></div><div class="lbl">一线 AI 产品负责人主题分享</div></div>
+  <div class="stat reveal d3"><div class="num">4<em>页</em></div><div class="lbl">报名小程序完整页面闭环</div></div>
+</section>
+
+<!-- ==================== 活动亮点 ==================== -->
+<section id="highlights">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-tag">HIGHLIGHTS</div>
+      <h2>四个小时，带走能复用的方法论</h2>
+      <p>不设空泛的趋势演讲，每一个环节都对着「做完」去：拆解、上线、算账、连接。</p>
+    </div>
+    <div class="grid-4">
+      <div class="hl-card reveal d1">
+        <span class="idx">01</span>
+        <div class="ico">🎯</div>
+        <h3>需求拆解实战</h3>
+        <p>一套从模糊需求到可交付方案的方法论，现场还原一个真实项目的完整拆解过程。</p>
+      </div>
+      <div class="hl-card reveal d2">
+        <span class="idx">02</span>
+        <div class="ico">🚀</div>
+        <h3>从 Demo 到上线</h3>
+        <p>独立开发者的完整交付链路：模型选型、工程封装、灰度发布与反馈闭环，一次讲透。</p>
+      </div>
+      <div class="hl-card reveal d3">
+        <span class="idx">03</span>
+        <div class="ico">💬</div>
+        <h3>圆桌：真实成本账</h3>
+        <p>不讲故事只算账：人力、算力、维护成本与可量化的业务回报，圆桌现场交锋。</p>
+      </div>
+      <div class="hl-card reveal d4">
+        <span class="idx">04</span>
+        <div class="ico">🎁</div>
+        <h3>自由交流 &amp; 抽奖</h3>
+        <p>限量周边、现场抽奖，与同频的从业者建立真实连接——人脉是沙龙真正的复利。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 嘉宾 ==================== -->
+<section id="speakers" style="background: var(--bg-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+  <div class="wrap" style="padding-top: 100px;">
+    <div class="sec-head reveal">
+      <div class="sec-tag">SPEAKERS</div>
+      <h2>嘉宾阵容</h2>
+      <p>三位都刚从一线项目里走出来的人，分享的是上周还在用的方法。</p>
+    </div>
+    <div class="grid-3">
+      <div class="sp-card reveal d1">
+        <div class="sp-photo"><span class="sp-role">主题分享一</span><img src="images/showcase-lite/speaker-1.png" alt="林弈舟"></div>
+        <div class="sp-body">
+          <h3>林弈舟</h3>
+          <div class="sp-title">前字节跳动 AI 产品负责人</div>
+          <div class="sp-topic">《AI 需求拆解：从模糊想法到可交付方案》</div>
+          <div class="sp-quote">「先想清楚谁来用、用在哪儿，再谈模型。」</div>
+        </div>
+      </div>
+      <div class="sp-card reveal d2">
+        <div class="sp-photo"><span class="sp-role">主题分享二</span><img src="images/showcase-lite/speaker-2.png" alt="沈知遥"></div>
+        <div class="sp-body">
+          <h3>沈知遥</h3>
+          <div class="sp-title">独立开发者 · 2 款上线 AI 应用作者</div>
+          <div class="sp-topic">《从 Demo 到上线：一个人的交付链路》</div>
+          <div class="sp-quote">「上线只是开始，能用起来才算数。」</div>
+        </div>
+      </div>
+      <div class="sp-card reveal d3">
+        <div class="sp-photo"><span class="sp-role">圆桌主持</span><img src="images/showcase-lite/speaker-3.png" alt="程屹"></div>
+        <div class="sp-body">
+          <h3>程屹</h3>
+          <div class="sp-title">某智能制造集团数字化总监</div>
+          <div class="sp-topic">《AI 项目的真实成本与收益》</div>
+          <div class="sp-quote">「我们不为技术买单，只为结果买单。」</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 议程 ==================== -->
+<section id="agenda">
+  <div class="wrap" style="padding-top: 100px;">
+    <div class="agenda-layout">
+      <div class="agenda-aside reveal">
+        <div class="sec-tag">AGENDA</div>
+        <h2 style="font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; line-height: 1.15;">当天怎么过</h2>
+        <div class="card-note">
+          <div class="row"><b>🗓️ 日期</b><span>2026 年 10 月 25 日（周日）</span></div>
+          <div class="row"><b>⏰ 时间</b><span>13:30 签到 · 14:00 正式开始</span></div>
+          <div class="row"><b>📍 地点</b><span>南山区科技园 AI 创新中心 3F 发布厅</span></div>
+          <div class="row"><b>🎫 名额</b><span>120 人，报名审核制</span></div>
+          <div class="row"><b>🎒 携带</b><span>名片或微信名片，方便现场连接</span></div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="tl-item reveal"><div class="tl-time">13:30</div><div class="tl-title">签到入场</div><div class="tl-desc">领取物料、早鸟咖啡，展位自由参观</div></div>
+        <div class="tl-item hot reveal d1"><div class="tl-time">14:00</div><div class="tl-title">开场 &amp; 主题分享一<span class="badge">林弈舟</span></div><div class="tl-desc">AI 需求拆解：从模糊想法到可交付方案</div></div>
+        <div class="tl-item reveal d2"><div class="tl-time">15:00</div><div class="tl-title">茶歇 &amp; 展位互动</div><div class="tl-desc">合作展位体验，自由交流</div></div>
+        <div class="tl-item hot reveal d3"><div class="tl-time">15:20</div><div class="tl-title">主题分享二<span class="badge">沈知遥</span></div><div class="tl-desc">从 Demo 到上线：一个人的交付链路</div></div>
+        <div class="tl-item hot reveal d3"><div class="tl-time">16:10</div><div class="tl-title">现场 Demo 演示</div><div class="tl-desc">2 个已上线 AI 应用现场跑，欢迎带问题来</div></div>
+        <div class="tl-item hot reveal d4"><div class="tl-time">16:40</div><div class="tl-title">圆桌讨论<span class="badge">程屹 主持</span></div><div class="tl-desc">AI 项目的真实成本与收益：一本账算清楚</div></div>
+        <div class="tl-item reveal d4"><div class="tl-time">17:20</div><div class="tl-title">自由交流 &amp; 抽奖</div><div class="tl-desc">限量周边、现场抽奖，合影收尾</div></div>
+        <div class="tl-item reveal d4"><div class="tl-time">17:30</div><div class="tl-title">活动结束</div><div class="tl-desc">带走方法论，也带走同路人</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 现场图集 ==================== -->
+<section id="gallery" style="background: var(--bg-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+  <div class="wrap" style="padding-top: 100px;">
+    <div class="sec-head reveal">
+      <div class="sec-tag">GALLERY</div>
+      <h2>现场直击</h2>
+      <p>往届沙龙的三个切片：舞台、展台、酒会。今年 10 月 25 日，镜头交给你。</p>
+    </div>
+    <div class="gallery">
+      <div class="g-item reveal" data-cap="主论坛 · 主题分享">
+        <img src="images/showcase-lite/scene-keynote.png" alt="主论坛现场"><span class="g-zoom">⤢</span>
+        <div class="g-cap"><span>KEYNOTE</span>主论坛 · 主题分享</div>
+      </div>
+      <div class="g-item reveal d1" data-cap="展位 · Demo 体验区">
+        <img src="images/showcase-lite/scene-demo.png" alt="Demo 体验区"><span class="g-zoom">⤢</span>
+        <div class="g-cap"><span>DEMO</span>展位 · Demo 体验区</div>
+      </div>
+      <div class="g-item reveal d2" data-cap="After Party · 自由交流">
+        <img src="images/showcase-lite/scene-networking.png" alt="自由交流"><span class="g-zoom">⤢</span>
+        <div class="g-cap"><span>NETWORKING</span>After Party · 自由交流</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 小程序剖析 ==================== -->
+<section id="app" style="background: var(--bg-2); border-top: 1px solid var(--line);">
+  <div class="wrap" style="padding-top: 100px;">
+    <div class="app-layout">
+      <div class="reveal">
+        <div class="sec-tag">MINI PROGRAM</div>
+        <h2 style="font-size: clamp(28px, 3.6vw, 42px); font-weight: 800; letter-spacing: -.01em; line-height: 1.15;">报名，用一个<br>小程序闭环</h2>
+        <p style="color: var(--muted); margin-top: 14px; font-size: 15.5px;">微信授权登录 → 查看活动 → 在线报名 → 记录管理，四个页面一条直线。点击下面的页面按钮，页面上方的真机会跟着跳转。</p>
+        <div class="app-switch" style="margin-top: 26px;">
+          <button class="on" data-page="index"><span class="ico">🏠</span>活动首页</button>
+          <button data-page="detail"><span class="ico">📄</span>活动详情</button>
+          <button data-page="signup"><span class="ico">✍️</span>在线报名</button>
+          <button data-page="records"><span class="ico">🧾</span>报名记录</button>
+        </div>
+        <div class="feat-list">
+          <div class="feat"><div class="f-ico">🔐</div><div><b>微信授权登录</b><p>wx.login + 官方头像昵称组件，本机生成稳定 uid，无需注册</p></div></div>
+          <div class="feat"><div class="f-ico">📊</div><div><b>报名进度实时可见</b><p>已报名 / 总名额进度条，剩余名额动态计算，满员自动置灰</p></div></div>
+          <div class="feat"><div class="f-ico">✅</div><div><b>防重复 + 可取消</b><p>手机号格式校验，重复报名拦截；记录页一键取消，名额实时回减</p></div></div>
+          <div class="feat"><div class="f-ico">☁️</div><div><b>数据层可插拔</b><p>读写全部收敛在 utils/api.js，当前本地存储，随时可切换云端数据库</p></div></div>
+        </div>
+        <div class="app-hint">👆 点上方页面按钮 · 或直接操作页面上方的真机体验完整流程</div>
+      </div>
+      <div class="reveal d2" style="text-align: center;">
+        <div style="display: inline-block; text-align: left; position: relative;">
+          <div class="phone-tag" style="left: -30px; top: 16px;">同一台真机</div>
+          <div style="width: 375px; height: 760px; border-radius: 54px; background: linear-gradient(180deg, rgba(7,193,96,.07), rgba(7,193,96,.02)); border: 1px dashed rgba(7,193,96,.45); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 60px 44px; text-align: center; box-shadow: 0 24px 60px rgba(15,23,42,.1);">
+            <div style="font-size: 46px;">📱</div>
+            <div style="font-size: 16px; color: var(--text); font-weight: 800;">真机在页面上方</div>
+            <div style="font-size: 13px; color: var(--muted); line-height: 1.8;">本区域由左侧「页面按钮」驱动<br>点击按钮，上方手机会实时跳转<br>登录、报名、取消都能在真机上完成</div>
+            <div style="margin-top: 8px; font-size: 11px; letter-spacing: .3em; color: var(--green);">SCROLL UP TO PLAY</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CTA ==================== -->
+<section class="cta">
+  <div class="reveal">
+    <div class="sec-tag" style="justify-content: center;">JOIN US</div>
+    <h2>10 月 25 日，<span class="grad">南山见</span></h2>
+    <p class="sub">120 个名额，报满即止。提交报名后可在小程序「报名记录」中随时取消，给犹豫留一次反悔的机会。</p>
+    <div class="cta-meta">
+      <span class="fact">🗓️ 2026.10.25（周日）14:00</span>
+      <span class="fact">📍 南山科技园 AI 创新中心 3F</span>
+      <span class="fact">🎫 剩余 <b id="ctaLeft">120</b> 席</span>
+    </div>
+    <br>
+    <button class="btn-hero solid" id="ctaJoin">立即报名 →</button>
+    <div class="fine">报名成功后短信与微信通知 · 请填写真实手机号</div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-brand"><span class="nav-mark" style="width:26px;height:26px;"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="1.5" y="1.5" width="45" height="45" rx="12" fill="url(#logoGrad)"/><path d="M13 33L21.5 24L27.5 29L35.5 17.5" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="35.5" cy="17.5" r="3.6" fill="#fff"/></svg></span>AI 应用创新沙龙组委会 · 2026 · 深圳</div>
+  <div class="f-links"><span>联系：hello@ai-salon.show</span><span>协作：深科人工智能产业联盟</span><span>本页为报名小程序交互演示</span></div>
+</footer>
+
+<!-- ==================== Lightbox ==================== -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose">✕</button>
+  <img src="" id="lbImg" alt="现场大图">
+  <div class="lb-cap" id="lbCap"></div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ================= 小程序数据（与源码 api.js 同口径） ================= */
+  var LS_ACT = 'signup.activities.v1', LS_SIGN = 'signup.signups.v1', LS_USER = 'signup.user.v1';
+  var AVATARS = ['🦊', '🐱', '🐼', '🐯', '🐸', '🐵', '🐶'];
+  var state = { user: null, page: 'index', form: { people: 1 }, avatarIdx: 0, confirmAction: null };
+
+  function lsGet(k, f) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : f; } catch (e) { return f; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  function loadActivity() {
+    var list = lsGet(LS_ACT, null);
+    if (!Array.isArray(list) || list.length === 0) {
+      list = [{ id: 1, title: 'AI 应用创新沙龙', capacity: 120, signed_count: 0, start_time: '2026-10-25T14:00:00+08:00', end_time: '2026-10-25T17:30:00+08:00', status: 'published' }];
+      lsSet(LS_ACT, list);
+    }
+    return list[0];
+  }
+  function saveActivity(a) { lsSet(LS_ACT, [a]); }
+  function loadSignups() { var l = lsGet(LS_SIGN, []); return Array.isArray(l) ? l : []; }
+  function saveSignups(l) { lsSet(LS_SIGN, l); }
+
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function fmtRange(s, e) {
+    var d = new Date(s), d2 = new Date(e);
+    return (d.getMonth() + 1) + '月' + d.getDate() + '日 ' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ' - ' + pad(d2.getHours()) + ':' + pad(d2.getMinutes());
+  }
+  function fmtDateTime(iso) { var d = new Date(iso); return (d.getMonth() + 1) + '月' + d.getDate() + '日 ' + pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+  function statusText(s) { return { pending: '待确认', confirmed: '已确认', cancelled: '已取消' }[s] || '待确认'; }
+  function validatePhone(p) { return /^1[3-9]\d{9}$/.test(p || ''); }
+
+  var toastTimer = null;
+  function toast(msg) {
+    var t = $('mToast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove('show'); }, 1800);
+  }
+
+  /* ================= 手机页面切换 ================= */
+  var PAGE_META = {
+    index: { title: '活动报名', tab: true },
+    records: { title: '活动报名', tab: true },
+    detail: { title: '活动详情', tab: false },
+    signup: { title: '在线报名', tab: false }
+  };
+  function go(page) {
+    state.page = page;
+    ['index', 'detail', 'signup', 'records'].forEach(function (p) {
+      var el = $('m-page-' + p);
+      el.classList.toggle('active', p === page);
+      if (p === page) { el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; }
+    });
+    var meta = PAGE_META[page];
+    $('mNavTitle').textContent = meta.title;
+    $('mNavBack').classList.toggle('show', !meta.tab);
+    var activeTab = page === 'records' ? 'records' : 'index';
+    $('mTabHome').classList.toggle('active', activeTab === 'index');
+    $('mTabRecords').classList.toggle('active', activeTab === 'records');
+    $('mTabHome').querySelector('img').src = activeTab === 'index' ? 'images/tab-home-active.png' : 'images/tab-home.png';
+    $('mTabRecords').querySelector('img').src = activeTab === 'records' ? 'images/tab-records-active.png' : 'images/tab-records.png';
+    Array.prototype.forEach.call(document.querySelectorAll('.app-switch button'), function (b) {
+      b.classList.toggle('on', b.getAttribute('data-page') === page);
+    });
+    render();
+  }
+
+  /* ================= 渲染 ================= */
+  function render() {
+    var act = loadActivity();
+    var timeText = fmtRange(act.start_time, act.end_time);
+    $('mHomeTime').textContent = timeText;
+    var pct = Math.round(act.signed_count / act.capacity * 100);
+    $('mHomeProgress').style.width = Math.min(pct, 100) + '%';
+    $('mHomeProgressText').textContent = '已报名 ' + act.signed_count + ' / ' + act.capacity + ' 人';
+    $('mDetailTime').textContent = timeText;
+    $('mDetailCapacity').textContent = act.signed_count + ' / ' + act.capacity + ' 人';
+    $('mDetailCount').textContent = act.signed_count + ' 人已报名';
+    var left = Math.max(0, act.capacity - act.signed_count);
+    $('mDetailLeft').textContent = '剩余 ' + left + ' 个名额';
+    var joinBtn = $('mBtnDetailJoin');
+    joinBtn.disabled = left <= 0;
+    joinBtn.textContent = left <= 0 ? '名额已满' : '立即报名';
+    $('mSignupTime').textContent = '🗓️ ' + timeText;
+    var already = state.user && hasSigned(act.id);
+    $('mAlreadyCard').style.display = already ? 'flex' : 'none';
+    var submit = $('mBtnSubmit');
+    submit.disabled = !!already;
+    submit.textContent = already ? '已提交报名' : '提交报名';
+    var av = state.user ? (state.user.avatarUrl || '👤') : '👤';
+    $('mHomeAvatar').textContent = av;
+    $('mRecordsAvatar').textContent = av;
+    if (state.user) {
+      $('mRecordsNickname').textContent = state.user.nickname || '微信用户';
+      $('mRecordsHead').style.display = 'flex';
+    } else {
+      $('mRecordsHead').style.display = 'none';
+    }
+    renderRecords();
+    renderOuterStats(act, left);
+  }
+
+  function renderOuterStats(act, left) {
+    countTo($('statSigned'), act.signed_count);
+    $('statLeft').textContent = left;
+    $('ctaLeft').textContent = left;
+  }
+
+  var countRaf = {};
+  function countTo(el, target) {
+    var from = parseInt(el.textContent, 10) || 0;
+    if (from === target) return;
+    var key = el.id;
+    if (countRaf[key]) cancelAnimationFrame(countRaf[key]);
+    var start = null;
+    function step(ts) {
+      if (!start) start = ts;
+      var p = Math.min(1, (ts - start) / 500);
+      el.textContent = Math.round(from + (target - from) * p);
+      if (p < 1) countRaf[key] = requestAnimationFrame(step);
+    }
+    countRaf[key] = requestAnimationFrame(step);
+  }
+
+  function renderRecords() {
+    var list = $('mRecordsList');
+    list.innerHTML = '';
+    if (!state.user) {
+      $('mRecordsEmpty').style.display = 'none';
+      $('mRecordsLocked').style.display = 'block';
+      return;
+    }
+    $('mRecordsLocked').style.display = 'none';
+    var mine = loadSignups().filter(function (s) { return s.uid === state.user.uid; })
+      .sort(function (a, b) { return String(b.created_at).localeCompare(String(a.created_at)); });
+    if (mine.length === 0) { $('mRecordsEmpty').style.display = 'block'; return; }
+    $('mRecordsEmpty').style.display = 'none';
+    mine.forEach(function (item, i) {
+      var card = document.createElement('div');
+      card.className = 'm-card m-record';
+      card.style.animationDelay = (i * 0.06) + 's';
+      var side = '<div class="m-record-side"><span class="m-badge m-badge-' + item.status + '">' + statusText(item.status) + '</span>';
+      if (item.status !== 'cancelled') side += '<button class="m-cancel-btn" data-id="' + item.id + '">取消报名</button>';
+      side += '</div>';
+      card.innerHTML =
+        '<div class="m-record-main">' +
+          '<div class="m-record-title">' + item.activity_title + '</div>' +
+          '<div class="m-record-meta">🗓️ ' + fmtDateTime(item.activity_start) + ' · 👥 ' + item.people + ' 人</div>' +
+          '<div class="m-record-meta">🙋 ' + item.name + ' · ' + item.phone + '</div>' +
+          (item.remark ? '<div class="m-record-remark">📝 ' + item.remark + '</div>' : '') +
+        '</div>' + side;
+      list.appendChild(card);
+    });
+    Array.prototype.forEach.call(list.querySelectorAll('.m-cancel-btn'), function (btn) {
+      btn.addEventListener('click', function () {
+        askConfirm('取消报名', '确定取消这场活动的报名吗？取消后可重新报名。', function () {
+          cancelSignup(Number(btn.getAttribute('data-id')));
+        });
+      });
+    });
+  }
+
+  /* ================= 业务逻辑 ================= */
+  function hasSigned(activityId) {
+    if (!state.user) return false;
+    return loadSignups().some(function (s) {
+      return String(s.activity_id) === String(activityId) && s.uid === state.user.uid &&
+        (s.status === 'pending' || s.status === 'confirmed');
+    });
+  }
+  function ensureLogin() {
+    if (state.user) return true;
+    $('mLoginMask').classList.add('show');
+    return false;
+  }
+  function submitSignup() {
+    if (!ensureLogin()) return;
+    var act = loadActivity();
+    if (act.capacity - act.signed_count <= 0) { toast('名额已满'); return; }
+    var name = $('mInputName').value.trim();
+    var phone = $('mInputPhone').value.trim();
+    var remark = $('mInputRemark').value.trim();
+    if (!name) { toast('请填写姓名'); return; }
+    if (!validatePhone(phone)) { toast('请填写正确的 11 位手机号'); return; }
+    if (hasSigned(act.id)) { toast('你已经报名过这个活动了'); return; }
+    var btn = $('mBtnSubmit');
+    btn.classList.add('loading');
+    setTimeout(function () {
+      btn.classList.remove('loading');
+      var list = loadSignups();
+      list.unshift({
+        id: Date.now(), uid: state.user.uid, activity_id: act.id, activity_title: act.title,
+        activity_start: act.start_time, name: name, phone: phone,
+        people: state.form.people, remark: remark, status: 'pending',
+        created_at: new Date().toISOString()
+      });
+      saveSignups(list);
+      act.signed_count += 1;
+      saveActivity(act);
+      $('mInputName').value = ''; $('mInputPhone').value = ''; $('mInputRemark').value = '';
+      state.form.people = 1;
+      updateStepper();
+      toast('🎉 报名成功');
+      setTimeout(function () { go('records'); }, 500);
+    }, 850);
+  }
+  function cancelSignup(id) {
+    var list = loadSignups();
+    var target = list.find(function (s) { return String(s.id) === String(id) && s.uid === state.user.uid; });
+    if (!target || target.status === 'cancelled') { renderRecords(); return; }
+    target.status = 'cancelled';
+    saveSignups(list);
+    var act = loadActivity();
+    act.signed_count = Math.max(0, act.signed_count - 1);
+    saveActivity(act);
+    toast('已取消报名');
+    render();
+  }
+  function updateStepper() {
+    $('mBtnMinus').disabled = state.form.people <= 1;
+    $('mBtnPlus').disabled = state.form.people >= 5;
+    $('mPeopleNum').textContent = state.form.people;
+  }
+  function askConfirm(title, msg, onOk) {
+    $('mConfirmTitle').textContent = title;
+    $('mConfirmMsg').textContent = msg;
+    state.confirmAction = onOk;
+    $('mConfirmMask').classList.add('show');
+  }
+  function doLogin() {
+    var nick = $('mInputNickname').value.trim();
+    var avatar = state.avatarIdx > 0 ? AVATARS[state.avatarIdx - 1] : '';
+    state.user = { uid: 'u_' + Date.now(), nickname: nick || '微信用户', avatarUrl: avatar };
+    lsSet(LS_USER, state.user);
+    $('mLoginMask').classList.remove('show');
+    toast('✅ 登录成功');
+    render();
+  }
+
+  /* ================= 手机事件绑定 ================= */
+  $('mBtnDetail').addEventListener('click', function () { go('detail'); });
+  $('mBtnJoin').addEventListener('click', function () { if (ensureLogin()) go('signup'); });
+  $('mBtnDetailJoin').addEventListener('click', function () { if (ensureLogin()) go('signup'); });
+  $('mNavBack').addEventListener('click', function () { go('index'); });
+  $('mTabHome').addEventListener('click', function () { go('index'); });
+  $('mTabRecords').addEventListener('click', function () { if (ensureLogin()) go('records'); });
+  $('mHomeAvatar').addEventListener('click', function () {
+    if (!state.user) { $('mLoginMask').classList.add('show'); }
+    else { toast('已登录：' + (state.user.nickname || '微信用户')); }
+  });
+  $('mLoginMask').addEventListener('click', function (e) { if (e.target === this) this.classList.remove('show'); });
+  $('mAvatarBtn').addEventListener('click', function () {
+    state.avatarIdx = (state.avatarIdx + 1) % (AVATARS.length + 1);
+    this.textContent = state.avatarIdx === 0 ? '＋' : AVATARS[state.avatarIdx - 1];
+  });
+  $('mBtnLogin').addEventListener('click', doLogin);
+  $('mBtnMinus').addEventListener('click', function () { if (state.form.people > 1) { state.form.people--; updateStepper(); } });
+  $('mBtnPlus').addEventListener('click', function () { if (state.form.people < 5) { state.form.people++; updateStepper(); } });
+  $('mBtnSubmit').addEventListener('click', submitSignup);
+  $('mConfirmNo').addEventListener('click', function () { $('mConfirmMask').classList.remove('show'); state.confirmAction = null; });
+  $('mConfirmYes').addEventListener('click', function () {
+    $('mConfirmMask').classList.remove('show');
+    if (state.confirmAction) state.confirmAction();
+    state.confirmAction = null;
+  });
+
+  /* ================= 外部页面联动 ================= */
+  Array.prototype.forEach.call(document.querySelectorAll('.app-switch button'), function (b) {
+    b.addEventListener('click', function () {
+      go(b.getAttribute('data-page'));
+      pulsePhone();
+      $('phoneStage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+  function pulsePhone() {
+    var st = $('phoneStage');
+    st.classList.remove('pulse');
+    void st.offsetWidth;
+    st.classList.add('pulse');
+    setTimeout(function () { st.classList.remove('pulse'); }, 2200);
+  }
+  function joinFlow() {
+    $('phoneStage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(function () {
+      pulsePhone();
+      if (!state.user) { $('mLoginMask').classList.add('show'); }
+      else { go('signup'); }
+    }, 650);
+  }
+  $('navCta').addEventListener('click', joinFlow);
+  $('heroJoin').addEventListener('click', joinFlow);
+  $('ctaJoin').addEventListener('click', joinFlow);
+  $('heroTour').addEventListener('click', function () {
+    document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // 滚动进度线 + 导航态
+  var nav = $('nav'), line = $('progressLine');
+  function onScroll() {
+    var h = document.documentElement;
+    var p = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    line.style.width = (p * 100) + '%';
+    nav.classList.toggle('scrolled', h.scrollTop > 10);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // 入场动画
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  Array.prototype.forEach.call(document.querySelectorAll('.reveal'), function (el) { io.observe(el); });
+
+  // 手机视差倾斜
+  var stage = $('phoneStage'), float = $('phoneFloat');
+  stage.addEventListener('mousemove', function (e) {
+    var r = stage.getBoundingClientRect();
+    var x = (e.clientX - r.left) / r.width - 0.5;
+    var y = (e.clientY - r.top) / r.height - 0.5;
+    float.style.transform = 'rotateY(' + (x * 7) + 'deg) rotateX(' + (-y * 6) + 'deg)';
+  });
+  stage.addEventListener('mouseleave', function () { float.style.transform = ''; });
+
+  // Lightbox
+  var lb = $('lightbox');
+  Array.prototype.forEach.call(document.querySelectorAll('.g-item'), function (item) {
+    item.addEventListener('click', function () {
+      var img = item.querySelector('img');
+      $('lbImg').src = img.src;
+      $('lbCap').textContent = item.getAttribute('data-cap') || '';
+      lb.classList.add('show');
+    });
+  });
+  function closeLb() { lb.classList.remove('show'); }
+  $('lbClose').addEventListener('click', closeLb);
+  lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLb(); });
+
+  // 时钟
+  function tick() {
+    var d = new Date();
+    $('mClock').textContent = d.getHours() + ':' + pad(d.getMinutes());
+  }
+  tick(); setInterval(tick, 30000);
+
+  /* ================= 启动 ================= */
+  state.user = lsGet(LS_USER, null);
+  updateStepper();
+  go('index');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,2673 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-mode="doc">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>欧盟 AI Act 披露义务合规研究报告 · AI 语音助手「这是 AI」首次交互披露</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  --f-serif:"Source Han Serif SC","Noto Serif CJK SC","Songti SC","STSong","SimSun",Georgia,serif;
+  --f-sans:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Noto Sans CJK SC",-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"SF Mono","JetBrains Mono",Consolas,"Courier New",monospace;
+  --r-s:4px; --r-m:7px; --r-l:12px;
+  --ease:cubic-bezier(.22,.75,.28,1);
+  --bar-h:52px; --head-h:48px;
+}
+html[data-theme="dark"]{
+  --bg:#080b11; --bg-grad-1:rgba(41,84,158,.20); --bg-grad-2:rgba(150,110,32,.13);
+  --surface:rgba(255,255,255,.038); --surface-2:rgba(255,255,255,.062); --surface-3:rgba(255,255,255,.09);
+  --line:rgba(255,255,255,.10); --line-2:rgba(255,255,255,.055); --line-3:rgba(255,255,255,.16);
+  --ink:#e9edf6; --ink-2:#a9b4c8; --ink-3:#727f96; --ink-4:#4e596e;
+  --brand:#5b9dff; --brand-2:#2f6fd0; --brand-soft:rgba(91,157,255,.13); --brand-line:rgba(91,157,255,.34);
+  --gold:#e3b45c; --gold-soft:rgba(227,180,92,.12); --gold-line:rgba(227,180,92,.32);
+  --red:#ff6f61; --red-soft:rgba(255,111,97,.12); --red-line:rgba(255,111,97,.32);
+  --amber:#f0a742; --amber-soft:rgba(240,167,66,.12); --amber-line:rgba(240,167,66,.32);
+  --green:#43c795; --green-soft:rgba(67,199,149,.12); --green-line:rgba(67,199,149,.32);
+  --teal:#3fc6cf; --teal-soft:rgba(63,198,207,.12); --teal-line:rgba(63,198,207,.32);
+  --violet:#a58cf5; --violet-soft:rgba(165,140,245,.12); --violet-line:rgba(165,140,245,.32);
+  --chrome:rgba(10,14,21,.86);
+  --shadow:0 24px 70px rgba(0,0,0,.55);
+  --quote-bg:rgba(255,255,255,.028);
+  --track:rgba(255,255,255,.09);
+}
+html[data-theme="light"]{
+  --bg:#e9edf4; --bg-grad-1:rgba(41,84,158,.12); --bg-grad-2:rgba(168,129,31,.10);
+  --surface:#ffffff; --surface-2:#ffffff; --surface-3:#eef2f8;
+  --line:#d9dfea; --line-2:#e9edf4; --line-3:#c3ccdb;
+  --ink:#111827; --ink-2:#374253; --ink-3:#5b6779; --ink-4:#7c8798;
+  --brand:#2563c9; --brand-2:#1a4d9e; --brand-soft:#eaf1fd; --brand-line:#b9cef0;
+  --gold:#9a7314; --gold-soft:#fbf4e2; --gold-line:#e6d3a0;
+  --red:#b8332a; --red-soft:#fdecea; --red-line:#f0c0bb;
+  --amber:#8a5a08; --amber-soft:#fdf3e3; --amber-line:#eed6a6;
+  --green:#136b4c; --green-soft:#e8f6f0; --green-line:#b2ddc9;
+  --teal:#0d5f68; --teal-soft:#e5f3f5; --teal-line:#a9d8dd;
+  --violet:#463479; --violet-soft:#efecf9; --violet-line:#cdc2ee;
+  --chrome:rgba(255,255,255,.9);
+  --shadow:0 20px 56px rgba(20,32,58,.16);
+  --quote-bg:#f8fafd;
+  --track:#dde3ed;
+}
+/* ═══════════════════════════════════════════════════════════════
+   BASE
+   ═══════════════════════════════════════════════════════════════ */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:var(--f-sans);font-size:16.4px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  overflow:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(1200px 700px at 88% -8%,var(--bg-grad-1),transparent 62%),
+    radial-gradient(900px 620px at 2% 104%,var(--bg-grad-2),transparent 60%);
+}
+::selection{background:var(--brand);color:#fff}
+.mono,.cite,.num,.tag,.kicker,.u,.lab,.eyebrow,.amt{font-family:var(--f-mono)}
+
+/* ═══════════════════════════════════════════════════════════════
+   APP SHELL
+   ═══════════════════════════════════════════════════════════════ */
+#app{position:relative;z-index:1;height:100%;display:flex;flex-direction:column}
+
+/* ── top bar ── */
+#head{
+  flex:none;height:var(--head-h);display:flex;align-items:center;gap:20px;
+  padding:0 20px;border-bottom:1px solid var(--line-2);
+  background:var(--chrome);backdrop-filter:blur(14px);
+}
+#head .mark{display:flex;align-items:center;gap:11.2px;flex:none}
+#head .seal{
+  width:24px;height:24px;border-radius:5px;flex:none;
+  background:linear-gradient(140deg,var(--brand),var(--brand-2));
+  display:grid;place-items:center;color:#fff;font-size:12.8px;font-weight:800;
+  font-family:var(--f-serif);letter-spacing:-.5px;box-shadow:0 2px 8px rgba(47,111,208,.4)
+}
+#head .brand{font-size:14px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+#head .brand small{display:block;font-family:var(--f-mono);font-size:11.8px;font-weight:600;
+  letter-spacing:.16em;color:var(--ink-3);text-transform:uppercase;margin-top:-2px}
+#head .divider{width:1px;height:22px;background:var(--line);flex:none}
+#head .crumb{
+  display:flex;align-items:center;gap:10px;font-size:13.1px;color:var(--ink-3);
+  font-family:var(--f-mono);letter-spacing:.04em;white-space:nowrap;overflow:hidden
+}
+#head .crumb b{color:var(--brand);font-weight:700}
+#head .crumb .sep{color:var(--ink-4)}
+#head .spacer{flex:1}
+#head .meta{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-3);letter-spacing:.05em;white-space:nowrap}
+#head .meta i{color:var(--ink-4);font-style:normal;margin:0 5px}
+
+/* ── stage ── */
+#stage{flex:1;position:relative;overflow:hidden;display:grid;place-items:center}
+#canvas{
+  width:1600px;height:900px;position:relative;flex:none;
+  transform-origin:center center;
+  background:var(--surface-2);
+  border:1px solid var(--line);
+  border-radius:var(--r-l);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+/* ── slides ── */
+.slide{
+  position:absolute;inset:0;display:none;flex-direction:column;
+  padding:50px 57.5px 42.5px;background:var(--surface-2);
+  overflow-y:auto;overflow-x:hidden;
+}
+.slide::-webkit-scrollbar{width:7px}
+.slide::-webkit-scrollbar-thumb{background:var(--line-3);border-radius:7px}
+.slide::-webkit-scrollbar-track{background:transparent}
+.slide.on{display:flex}
+.slide.from-r{animation:inR .46s var(--ease) both}
+.slide.from-l{animation:inL .46s var(--ease) both}
+@keyframes inR{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+@keyframes inL{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+.slide.cover{animation:none}
+@keyframes coverIn{from{opacity:0;transform:translateY(16px) scale(.995)}to{opacity:1;transform:none}}
+
+/* ── slide head ── */
+.shead{flex:none;margin-bottom:16px}
+.eyebrow{
+  display:flex;align-items:center;gap:11.2px;font-size:12.2px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--brand);margin-bottom:8px
+}
+.eyebrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--brand-line),transparent)}
+.eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--brand);flex:none;
+  box-shadow:0 0 0 3px var(--brand-soft)}
+h1.st{
+  font-family:var(--f-serif);font-size:29px;line-height:1.26;font-weight:800;
+  letter-spacing:-.4px;color:var(--ink)
+}
+h1.st em{font-style:normal;color:var(--brand)}
+h1.st .lit{color:var(--red)}
+h1.st .lite{color:var(--gold)}
+h1.st .okc{color:var(--green)}
+p.sub{font-size:14px;color:var(--ink-3);margin-top:6px;max-width:1050px;line-height:1.62}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:15px}
+
+/* ── cover ── */
+.slide.cover{
+  padding:71.9px 75px 42.5px;justify-content:flex-start;
+  background:
+    radial-gradient(900px 620px at 92% 4%,var(--brand-soft),transparent 60%),
+    radial-gradient(700px 520px at 4% 100%,var(--gold-soft),transparent 58%),
+    var(--surface-2);
+}
+.slide.cover.on{animation:coverIn .6s var(--ease) both}
+.cover .crest{display:flex;align-items:center;gap:16.2px;margin-bottom:20px}
+.cover .crest .ring{
+  width:40px;height:40px;border-radius:9px;flex:none;
+  border:1px solid var(--brand-line);background:var(--brand-soft);
+  display:grid;place-items:center;color:var(--brand);font-size:18.4px
+}
+.cover .crest .txt{font-family:var(--f-mono);font-size:12.2px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ink-3);line-height:1.7}
+.cover .crest .txt b{display:block;color:var(--ink-2);font-size:13.1px;letter-spacing:.1em}
+.cover h1{
+  font-family:var(--f-serif);font-size:50px;line-height:1.14;font-weight:800;
+  letter-spacing:-1.5px;margin-bottom:15px
+}
+.cover h1 .l2{display:block;color:var(--brand)}
+.cover .lede{font-size:16px;color:var(--ink-2);max-width:760px;line-height:1.82;margin-bottom:20px}
+.cover .lede b{color:var(--ink);font-weight:600}
+.cover .chips{display:flex;flex-wrap:wrap;gap:10px}
+.cover .chips span{
+  font-family:var(--f-mono);font-size:12.5px;font-weight:700;letter-spacing:.06em;
+  padding:7.8px 13.8px;border-radius:100px;border:1px solid var(--line-3);color:var(--ink-2);
+  background:var(--surface)
+}
+.cover .chips span.hot{border-color:var(--red-line);color:var(--red);background:var(--red-soft)}
+.cover .chips span.ok{border-color:var(--green-line);color:var(--green);background:var(--green-soft)}
+.cv-top{flex:1;min-height:0;display:grid;grid-template-columns:1fr 268px;gap:45px;align-items:center}
+.cv-main{min-width:0}
+.cv-side{display:flex;flex-direction:column;gap:12.5px}
+.cv-card{
+  border:1px solid var(--line);border-left:3px solid var(--brand);border-radius:var(--r-m);
+  background:var(--surface);padding:18.8px 18.8px
+}
+.cv-card.warn{border-left-color:var(--red);background:var(--red-soft)}
+.cv-card .lab{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:700;margin-bottom:3px}
+.cv-card .art-ref{font-family:var(--f-mono);font-size:27px;font-weight:800;color:var(--brand);
+  line-height:1.05;letter-spacing:-1.2px}
+.cv-card.warn .art-ref{color:var(--red)}
+.cv-card .art-ref span{font-size:14.4px;color:var(--ink-3);letter-spacing:0;margin-left:2px}
+.cv-card .sub{font-size:12.5px;color:var(--ink-3);line-height:1.55;margin-top:5px;padding-top:5px;
+  border-top:1px solid var(--line-2)}
+.cover-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);gap:0;flex:none;
+  border-top:1px solid var(--line);padding-top:14px;margin-top:8px
+}
+.cover-grid>div{padding-right:20px;border-right:1px solid var(--line-2);margin-right:20px}
+.cover-grid>div:last-child{border-right:none;margin-right:0}
+.cover-grid .lab{font-family:var(--f-mono);font-size:11.8px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:700;margin-bottom:4px}
+.cover-grid .val{font-size:14px;font-weight:650;color:var(--ink);line-height:1.5}
+.cover-grid .val small{display:block;font-family:var(--f-sans);font-size:12.5px;font-weight:400;
+  color:var(--ink-3);margin-top:2px}
+
+/* ═══════════════════════════════════════════════════════════════
+   COMPONENTS
+   ═══════════════════════════════════════════════════════════════ */
+/* verdict */
+.verdict{
+  display:flex;gap:17.5px;align-items:flex-start;flex:none;
+  background:var(--brand-soft);border:1px solid var(--brand-line);
+  border-left-width:3px;border-radius:var(--r-m);padding:20.2px 22.5px
+}
+.verdict.red{background:var(--red-soft);border-color:var(--red-line)}
+.verdict.amber{background:var(--amber-soft);border-color:var(--amber-line)}
+.verdict.green{background:var(--green-soft);border-color:var(--green-line)}
+.verdict .badge{
+  flex:none;font-family:var(--f-mono);font-size:11.8px;font-weight:800;letter-spacing:.13em;
+  padding:4px 11.2px;border-radius:var(--r-s);background:var(--brand);color:#fff;white-space:nowrap;margin-top:1px
+}
+html[data-theme="light"] .verdict .badge{color:#fff}
+.verdict.red .badge{background:var(--red)}
+.verdict.amber .badge{background:var(--amber)}
+.verdict.green .badge{background:var(--green)}
+.verdict .txt{font-size:14px;line-height:1.72;color:var(--ink-2)}
+.verdict .txt b{color:var(--ink);font-weight:700}
+
+/* law quote */
+.art{
+  flex:none;border:1px solid var(--line);border-left:3px solid var(--brand);
+  background:var(--quote-bg);border-radius:var(--r-m);padding:18.8px 20px
+}
+.art .lbl{display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:11.8px;
+  font-weight:800;letter-spacing:.14em;color:var(--brand);text-transform:uppercase;margin-bottom:7px}
+.art .lbl::before{content:"";width:14px;height:1.5px;background:currentColor;flex:none}
+.art .en{font-family:var(--f-mono);font-size:13.2px;line-height:1.78;color:var(--ink-2);
+  letter-spacing:-.1px;display:block}
+.art .en b{color:var(--ink);font-weight:700;background:var(--brand-soft);padding:0 2px;border-radius:2px}
+.art .zh{display:block;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);
+  font-size:13.2px;line-height:1.72;color:var(--ink-3)}
+.art .zh::before{content:"中译";font-family:var(--f-mono);font-size:11.5px;font-weight:800;letter-spacing:.1em;
+  color:var(--gold);margin-right:8px;vertical-align:1px}
+.art .zh b{color:var(--ink-2)}
+.art.amber{border-left-color:var(--gold)} .art.amber .lbl{color:var(--gold)}
+.art.amber .en b{background:var(--gold-soft)}
+.art.red{border-left-color:var(--red)} .art.red .lbl{color:var(--red)}
+.art.red .en b{background:var(--red-soft)}
+.art .src{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:8px;font-family:var(--f-mono);
+  font-size:11.8px;color:var(--ink-4);line-height:1.6}
+.art .src a{color:var(--ink-3);text-decoration:none;border-bottom:1px dotted var(--ink-4)}
+.art .src a:hover{color:var(--brand);border-color:var(--brand)}
+
+/* citation chip */
+.cite{
+  font-size:11.8px;color:var(--brand);background:var(--brand-soft);
+  border:1px solid var(--brand-line);border-radius:3px;padding:1px 6.2px;margin-left:4px;
+  white-space:nowrap;font-weight:700;text-decoration:none;letter-spacing:.02em
+}
+a.cite:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
+
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:13.3px;line-height:1.6}
+th,td{padding:11px 12.5px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-2)}
+th{
+  background:var(--surface-3);color:var(--ink);font-weight:800;font-size:11.8px;
+  letter-spacing:.1em;text-transform:uppercase;font-family:var(--f-mono);
+  border-bottom:1.5px solid var(--line-3);white-space:nowrap;position:sticky;top:0;z-index:2
+}
+tbody tr{transition:background .16s}
+tbody tr:hover{background:var(--surface)}
+td b{color:var(--ink)}
+.tbl-wrap{flex:1;min-height:0;overflow:auto;border:1px solid var(--line);border-radius:var(--r-m);background:var(--surface)}
+.tbl-wrap::-webkit-scrollbar{width:8px;height:8px}
+.tbl-wrap::-webkit-scrollbar-thumb{background:var(--line-3);border-radius:8px}
+.tbl-wrap::-webkit-scrollbar-track{background:transparent}
+td.num,th.num{white-space:nowrap;font-family:var(--f-mono)}
+tr.hl-row{background:var(--red-soft)!important}
+tr.hl-row td:first-child{box-shadow:inset 3px 0 0 var(--red)}
+
+/* tags */
+.tag{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.08em;padding:2px 8.8px;
+  border-radius:3px;text-transform:uppercase;white-space:nowrap;font-family:var(--f-mono);line-height:1.6}
+.t-hi{background:var(--red);color:#fff}
+.t-md{background:var(--gold);color:#fff}
+.t-lo{background:var(--brand-2);color:#fff}
+.t-ok{background:var(--green-soft);color:var(--green);border:1px solid var(--green-line)}
+.t-no{background:var(--red-soft);color:var(--red);border:1px solid var(--red-line)}
+.t-na{background:var(--surface-3);color:var(--ink-3);border:1px solid var(--line)}
+.t-wa{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-line)}
+.t-in{background:var(--brand-soft);color:var(--brand);border:1px solid var(--brand-line)}
+html[data-theme="dark"] .t-md{color:#241a04}
+
+/* grid */
+.grid{display:grid;gap:13.8px;flex:none}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g5{grid-template-columns:repeat(5,1fr)}
+.g-2-1{grid-template-columns:1.4fr 1fr}
+.g-1-2{grid-template-columns:1fr 1.4fr}
+.g-3-2{grid-template-columns:1.5fr 1fr}
+.card{border:1px solid var(--line);border-radius:var(--r-m);background:var(--surface);padding:18.8px 17.5px;min-width:0}
+.card.tint{background:var(--surface-2)}
+.card.hot{border-color:var(--red-line);background:var(--red-soft)}
+.card.key{border-color:var(--brand-line);background:var(--brand-soft)}
+.card h4{font-size:14px;font-weight:800;margin-bottom:6px;color:var(--ink);
+  display:flex;align-items:center;gap:8.8px;line-height:1.4}
+.card h4 .ix{font-family:var(--f-mono);font-size:11.8px;font-weight:800;color:var(--brand);
+  background:var(--brand-soft);border:1px solid var(--brand-line);border-radius:3px;padding:1px 6.2px;flex:none}
+.card p,.card li{font-size:13.3px;line-height:1.68;color:var(--ink-2)}
+.card ul{margin:4px 0 0 15px}
+.card li{margin-bottom:3px}
+.card .big{font-family:var(--f-mono);font-size:24px;font-weight:800;color:var(--brand);
+  line-height:1.05;letter-spacing:-1.2px}
+.card .unit{font-family:var(--f-mono);font-size:12.2px;color:var(--ink-3);font-weight:700;margin-top:3px;letter-spacing:.06em}
+.card.hot .big{color:var(--red)}
+
+/* KPI strip */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;flex:none;
+  background:var(--line);border:1px solid var(--line);border-radius:var(--r-m);overflow:hidden}
+.kpi{background:var(--surface);padding:18.8px 18.8px}
+.kpi .lab{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:700;margin-bottom:5px}
+.kpi .v{font-size:16.4px;font-weight:750;color:var(--ink);line-height:1.35;font-family:var(--f-mono);letter-spacing:-.3px}
+.kpi .v small{font-family:var(--f-sans);font-size:12.5px;font-weight:500;color:var(--ink-3);letter-spacing:0}
+.kpi.r .v{color:var(--red)} .kpi.g .v{color:var(--green)} .kpi.a .v{color:var(--gold)} .kpi.b .v{color:var(--brand)}
+
+/* checklist */
+ul.cl{list-style:none}
+ul.cl li{position:relative;padding-left:19px;margin-bottom:6px;font-size:13.6px;line-height:1.7;color:var(--ink-2)}
+ul.cl li::before{content:"";position:absolute;left:2px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--brand)}
+ul.cl li b{color:var(--ink);font-weight:700}
+ul.cl.no li::before{background:var(--red)}
+ul.cl.ok li::before{background:var(--green)}
+ul.cl.gold li::before{background:var(--gold)}
+
+/* note */
+.note{font-size:12.8px;color:var(--ink-3);line-height:1.7;border-left:2px solid var(--line-3);
+  padding-left:11px;flex:none}
+.note b{color:var(--ink-2)}
+.note .fine{color:var(--gold);font-size:12.5px}
+
+/* footer source line */
+.foot{flex:none;margin-top:auto;padding-top:10px;border-top:1px solid var(--line-2);
+  font-family:var(--f-mono);font-size:11.8px;color:var(--ink-4);line-height:1.65}
+.foot b{color:var(--ink-3)}
+
+/* inline marks */
+.hl{background:var(--gold-soft);color:var(--gold);padding:0 3px;border-radius:2px;font-weight:700}
+.hl-r{background:var(--red-soft);color:var(--red);padding:0 3px;border-radius:2px;font-weight:700}
+.hl-b{background:var(--brand-soft);color:var(--brand);padding:0 3px;border-radius:2px;font-weight:700}
+.hl-g{background:var(--green-soft);color:var(--green);padding:0 3px;border-radius:2px;font-weight:700}
+.term{font-family:var(--f-mono);font-size:.92em;color:var(--ink);background:var(--surface-3);
+  border:1px solid var(--line);border-radius:3px;padding:0 4px;font-weight:600}
+
+/* ═══════════════════════════════════════════════════════════════
+   OVERFLOW COMPENSATION
+   高密度页在渲染后自动微调字号，确保 16:9 画布内零滚动
+   ═══════════════════════════════════════════════════════════════ */
+.slide{--fit:1}
+.slide .body{font-size:calc(1em * var(--fit))}
+.slide.dense .body{gap:calc(12px * var(--fit))}
+.slide.dense .card p,
+.slide.dense .card li,
+.slide.dense ul.cl li,
+.slide.dense .verdict .txt,
+.slide.dense .note,
+.slide.dense .art .en,
+.slide.dense .art .zh,
+.slide.dense table{font-size:calc(1em * var(--fit))}
+.slide.dense table th,
+.slide.dense table td{padding:calc(7px * var(--fit)) calc(10px * var(--fit))}
+
+/* ── section divider ── */
+.slide.divider{
+  justify-content:center;align-items:flex-start;
+  background:
+    radial-gradient(800px 560px at 84% 12%,var(--brand-soft),transparent 62%),
+    radial-gradient(600px 460px at 6% 96%,var(--gold-soft),transparent 58%),
+    var(--surface-2)
+}
+.divider .num{
+  font-family:var(--f-serif);font-size:120px;line-height:.86;font-weight:800;letter-spacing:-6px;
+  background:linear-gradient(140deg,var(--brand),var(--brand-2) 60%,transparent);
+  -webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:6px
+}
+.divider h1{font-family:var(--f-serif);font-size:38px;font-weight:800;letter-spacing:-1px;line-height:1.24;margin-bottom:12px}
+.divider h1 em{font-style:normal;color:var(--brand)}
+.divider p{font-size:14.8px;color:var(--ink-2);max-width:700px;line-height:1.8;margin-bottom:22px}
+.divider .toc-mini{display:flex;flex-direction:column;gap:8.8px;border-left:2px solid var(--brand-line);padding-left:16px}
+.divider .toc-mini div{font-size:13.5px;color:var(--ink-2);display:flex;gap:13.8px;align-items:baseline}
+.divider .toc-mini b{font-family:var(--f-mono);font-size:12.5px;color:var(--brand);font-weight:800;flex:none}
+.divider .stamp{
+  position:absolute;right:60px;bottom:52px;text-align:right;
+  font-family:var(--f-mono);font-size:12.2px;letter-spacing:.14em;color:var(--ink-4);line-height:2
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SPECIAL MODULES
+   ═══════════════════════════════════════════════════════════════ */
+/* Art.50 explorer */
+.explorer{display:grid;grid-template-columns:290px 1fr;gap:15px;flex:1;min-height:0}
+.ex-list{display:flex;flex-direction:column;gap:4px;overflow:auto;padding-right:3px}
+.ex-list::-webkit-scrollbar{width:6px}
+.ex-list::-webkit-scrollbar-thumb{background:var(--line-3);border-radius:6px}
+.ex-item{
+  display:flex;align-items:center;gap:11.2px;padding:12.5px 13.8px;border-radius:var(--r-m);
+  border:1px solid transparent;cursor:pointer;transition:.18s;background:var(--surface);flex:none
+}
+.ex-item:hover{background:var(--surface-2);border-color:var(--line)}
+.ex-item.on{background:var(--brand-soft);border-color:var(--brand-line)}
+.ex-item .no{font-family:var(--f-mono);font-size:12.8px;font-weight:800;color:var(--brand);flex:none;width:38px}
+.ex-item.on .no{color:var(--ink)}
+.ex-item .tt{font-size:13.2px;font-weight:650;color:var(--ink-2);line-height:1.4;flex:1;min-width:0}
+.ex-item.on .tt{color:var(--ink)}
+.ex-item .st{width:7px;height:7px;border-radius:50%;flex:none;background:var(--line-3)}
+.ex-item .st.y{background:var(--red);box-shadow:0 0 0 3px var(--red-soft)}
+.ex-item .st.c{background:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
+.ex-item .st.n{background:var(--ink-4)}
+.ex-panel{border:1px solid var(--line);border-radius:var(--r-m);background:var(--surface);
+  padding:28.1px 27.5px;overflow:auto;display:flex;flex-direction:column;gap:17.5px}
+.ex-panel .art{flex:1 1 auto;min-height:0;padding:21.9px 22.5px;display:flex;flex-direction:column;justify-content:center}
+.ex-panel .art .en{font-size:13.6px;line-height:1.95}
+.ex-head{display:flex;align-items:flex-start;gap:17.5px;padding-bottom:13px;border-bottom:1px solid var(--line-2);flex:none}
+.ex-head .no{font-family:var(--f-mono);font-size:23.4px;font-weight:800;color:var(--brand);line-height:1;flex:none}
+.ex-head h3{font-family:var(--f-mono);font-size:16.4px;font-weight:700;line-height:1.4;
+  color:var(--ink);letter-spacing:.01em}
+.ex-head h3 .an{font-family:var(--f-serif);font-size:19.4px;font-weight:700;letter-spacing:.02em}
+.ex-head .st{margin-left:auto;flex:none}
+.ex-en{font-family:var(--f-mono);font-size:13px;line-height:1.8;color:var(--ink-2);
+  border-left:2px solid var(--brand-line);padding-left:12px}
+.ex-en b{color:var(--ink);background:var(--brand-soft);padding:0 2px;border-radius:2px}
+.ex-el{flex:none;margin-top:2px}
+.ex-el-h{font-family:var(--f-mono);font-size:11.8px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-4);margin-bottom:8px}
+.ex-el-g{display:grid;grid-template-columns:repeat(3,1fr);gap:11.2px}
+.ex-el-i{background:var(--surface-3);border:1px solid var(--line-2);border-radius:var(--r-s);
+  padding:15.6px 15px;min-width:0}
+.ex-el-i b{display:block;font-family:var(--f-mono);font-size:12.4px;font-weight:800;
+  color:var(--brand);letter-spacing:.02em;margin-bottom:5px}
+.ex-el-i span{display:block;font-size:12.6px;line-height:1.62;color:var(--ink-2)}
+.ex-el-i span b{display:inline;font-family:var(--f-sans);font-size:inherit;color:var(--ink);
+  background:none;letter-spacing:0;margin:0}
+.ex-zh{font-size:13.6px;line-height:1.9;color:var(--ink-3);flex:none}
+.ex-zh b{color:var(--ink-2)}
+.ex-applic{display:grid;grid-template-columns:repeat(3,1fr);gap:12.5px;margin-top:auto;padding-top:14px;border-top:1px solid var(--line-2);flex:none}
+.ex-applic div{font-size:12.8px;color:var(--ink-3);line-height:1.55}
+.ex-applic b{display:block;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-4);margin-bottom:3px;font-weight:700}
+.ex-applic div span{color:var(--ink-2);font-weight:600}
+
+/* fine ladder chart */
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:21.9px 20px 12.5px}
+.chart .ct{font-family:var(--f-mono);font-size:11.8px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:700;margin-bottom:12px}
+.lad{display:flex;flex-direction:column;gap:8.8px}
+.lad-row{display:grid;grid-template-columns:126px 1fr 92px;align-items:center;gap:13.8px}
+.lad-row .lb{font-family:var(--f-mono);font-size:12.6px;color:var(--ink-3);font-weight:700;text-align:right;line-height:1.4;letter-spacing:.01em}
+.lad-row .lb b{display:block;color:var(--ink-2);font-size:13px;letter-spacing:.02em}
+.lad-track{position:relative;height:30px;background:var(--surface-3);border-radius:3px;overflow:hidden}
+.lad-fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;
+  background:linear-gradient(90deg,var(--brand-2),var(--brand));
+  animation:grow .9s var(--ease) both}
+@keyframes grow{from{transform:scaleX(0);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
+.lad-fill.dim{background:linear-gradient(90deg,var(--ink-4),var(--ink-3));opacity:.42}
+.lad-fill.hot{background:linear-gradient(90deg,#c0392b,var(--red));box-shadow:0 0 16px rgba(255,111,97,.32)}
+.lad-row .vv{font-family:var(--f-mono);font-size:14.4px;font-weight:800;color:var(--ink);letter-spacing:0}
+.lad-row.hot .vv{color:var(--red)}
+.lad-row .vv small{font-size:12.2px;color:var(--ink-3);font-weight:600}
+.lad-axis{display:grid;grid-template-columns:126px 1fr 92px;gap:13.8px;margin-top:6px}
+.lad-axis .ax{position:relative;height:16px;border-top:1px solid var(--line-2)}
+.lad-axis .ax i{position:absolute;top:3px;font-family:var(--f-mono);font-size:11px;color:var(--ink-4);
+  font-style:normal;transform:translateX(-50%);white-space:nowrap}
+.lad-axis .ax i::before{content:"";position:absolute;left:50%;top:-4px;width:1px;height:4px;background:var(--line-3)}
+
+/* gantt */
+.gantt{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:21.9px 20px}
+.g-head{display:grid;grid-template-columns:200px 1fr;gap:15px;margin-bottom:7px}
+.g-axis{position:relative;height:18px;border-bottom:1px solid var(--line-2)}
+.g-axis i{position:absolute;bottom:3px;font-family:var(--f-mono);font-size:11px;color:var(--ink-4);
+  font-style:normal;transform:translateX(-50%);white-space:nowrap}
+.g-axis i::after{content:"";position:absolute;left:50%;bottom:-7px;width:1px;height:7px;background:var(--line-2)}
+.g-row{display:grid;grid-template-columns:200px 1fr;gap:15px;align-items:center;margin-bottom:5px}
+.g-lb{font-size:12.8px;color:var(--ink-2);display:flex;gap:8.8px;align-items:baseline;
+  overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.g-lb b{font-family:var(--f-mono);font-size:11.8px;font-weight:800;flex:none}
+.g-lb.hi b{color:var(--red)} .g-lb.md b{color:var(--gold)} .g-lb.lo b{color:var(--brand)}
+.g-track{position:relative;height:19px;background:var(--surface-3);border-radius:3px;
+  background-image:repeating-linear-gradient(90deg,transparent,transparent calc(10% - 1px),var(--line-2) calc(10% - 1px),var(--line-2) 10%)}
+.g-bar{position:absolute;top:3px;bottom:3px;border-radius:3px;
+  animation:slideR .8s var(--ease) both;display:flex;align-items:center;
+  padding:0 6px;font-family:var(--f-mono);font-size:11.5px;font-weight:800;color:#fff;overflow:hidden;white-space:nowrap}
+@keyframes slideR{from{transform:translateX(-14px);opacity:0}to{transform:none;opacity:1}}
+.g-bar.hi{background:linear-gradient(90deg,#c0392b,var(--red))}
+.g-bar.md{background:linear-gradient(90deg,var(--gold),#d99b2e)}
+.g-bar.lo{background:linear-gradient(90deg,var(--brand-2),var(--brand))}
+html[data-theme="dark"] .g-bar.md{color:#241a04}
+.g-bar.cont{background:repeating-linear-gradient(45deg,var(--brand-2),var(--brand-2) 6px,var(--brand) 6px,var(--brand) 12px)}
+.g-pin{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--gold);z-index:3}
+.g-pin::after{content:attr(data-l);position:absolute;top:-2px;left:5px;font-family:var(--f-mono);
+  font-size:11px;color:var(--gold);white-space:nowrap;font-weight:700}
+.g-now{position:absolute;top:-6px;bottom:-6px;width:1.5px;background:var(--red);z-index:4}
+.g-now::after{content:"D0";position:absolute;top:-3px;left:4px;font-family:var(--f-mono);
+  font-size:11px;color:var(--red);font-weight:800}
+
+/* checklist interactive */
+.ck-panel{display:grid;grid-template-columns:118px 1fr;gap:17.5px;align-items:center;flex:none}
+.ring{position:relative;width:104px;height:104px;flex:none}
+.ring svg{transform:rotate(-90deg)}
+.ring .rbg{fill:none;stroke:var(--surface-3);stroke-width:9}
+.ring .rfg{fill:none;stroke:var(--brand);stroke-width:9;stroke-linecap:round;
+  transition:stroke-dashoffset .55s var(--ease)}
+.ring .rtx{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring .rtx b{font-family:var(--f-mono);font-size:24.5px;font-weight:800;color:var(--ink);letter-spacing:-1px;line-height:1}
+.ring .rtx span{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:3px;font-weight:700}
+.ck-items{display:flex;flex-direction:column;gap:4px}
+.ck-item{
+  display:grid;grid-template-columns:22px 1fr auto;gap:12.5px;align-items:center;
+  padding:11px 13.8px;border:1px solid var(--line);border-radius:var(--r-m);background:var(--surface);
+  cursor:pointer;transition:.18s
+}
+.ck-item:hover{border-color:var(--brand-line);background:var(--brand-soft)}
+.ck-item .bx{
+  width:17px;height:17px;border-radius:4px;border:1.5px solid var(--line-3);
+  display:grid;place-items:center;flex:none;transition:.18s;background:var(--surface-2)
+}
+.ck-item .bx::after{content:"✓";font-size:12.8px;font-weight:900;color:#fff;opacity:0;transform:scale(.5);transition:.18s}
+.ck-item .tx{font-size:13.2px;line-height:1.45;color:var(--ink-2)}
+.ck-item .tx b{color:var(--ink);font-weight:700}
+.ck-item .dd{font-family:var(--f-mono);font-size:12.2px;color:var(--ink-3);font-weight:700;white-space:nowrap}
+.ck-item.done{background:var(--green-soft);border-color:var(--green-line)}
+.ck-item.done .bx{background:var(--green);border-color:var(--green)}
+.ck-item.done .bx::after{opacity:1;transform:none}
+.ck-item.done .tx{color:var(--ink-3);text-decoration:line-through;text-decoration-color:var(--green-line)}
+.ck-hint{font-family:var(--f-mono);font-size:11.8px;color:var(--ink-4);letter-spacing:.06em;margin-top:6px}
+
+/* UI wireframe */
+.wf-wrap{display:grid;grid-template-columns:1fr 300px;gap:17.5px;flex:1;min-height:0}
+.wf-stage{display:flex;flex-direction:column;gap:11.2px;min-height:0}
+.wf-toggle{display:flex;gap:6.2px;align-items:center;flex:none}
+.wf-toggle .lb{font-family:var(--f-mono);font-size:11.8px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-4);font-weight:700;margin-right:3px}
+.wf-toggle button{
+  font-family:var(--f-mono);font-size:12.5px;font-weight:700;padding:7.8px 15px;border-radius:100px;
+  border:1px solid var(--line-3);background:var(--surface);color:var(--ink-3);cursor:pointer;transition:.18s
+}
+.wf-toggle button.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.wf-toggle button.on.bad{background:var(--red);border-color:var(--red)}
+.wf{
+  flex:1;min-height:0;border:1px solid var(--line);border-radius:var(--r-m);background:var(--surface-2);
+  display:flex;flex-direction:column;overflow:hidden;position:relative
+}
+.wf-bar{
+  flex:none;height:29px;display:flex;align-items:center;gap:7.5px;padding:0 11px;
+  border-bottom:1px solid var(--line-2);background:var(--surface-3)
+}
+.wf-bar i{width:8px;height:8px;border-radius:50%;background:var(--line-3)}
+.wf-bar .u{flex:1;text-align:center;font-family:var(--f-mono);font-size:11.8px;color:var(--ink-4)}
+.wf-banner{
+  flex:none;margin:11px 13px 0;padding:14px 15px;border-radius:var(--r-m);
+  border:1px solid var(--brand-line);background:var(--brand-soft);
+  display:flex;gap:11.2px;align-items:flex-start;transition:.3s
+}
+.wf-banner .ic{
+  width:19px;height:19px;border-radius:50%;background:var(--brand);color:#fff;flex:none;
+  display:grid;place-items:center;font-size:12.8px;font-weight:800;font-family:var(--f-mono)
+}
+.wf-banner .tx{font-size:12.8px;line-height:1.55;color:var(--ink-2)}
+.wf-banner .tx b{display:block;color:var(--ink);font-weight:700;margin-bottom:1px;font-size:13.1px}
+.wf-chat{flex:1;min-height:0;overflow:auto;padding:16.2px;display:flex;flex-direction:column;gap:11.2px}
+.wf-msg{max-width:72%;padding:12.5px 15px;border-radius:12px;font-size:13px;line-height:1.55}
+.wf-msg.bot{align-self:flex-start;background:var(--surface-3);border:1px solid var(--line);border-bottom-left-radius:3px}
+.wf-msg.me{align-self:flex-end;background:var(--brand);color:#fff;border-bottom-right-radius:3px}
+.wf-voice{
+  align-self:flex-start;display:flex;align-items:center;gap:11.2px;padding:12.5px 16.2px;border-radius:12px;
+  background:var(--surface-3);border:1px solid var(--line);border-bottom-left-radius:3px
+}
+.wf-wave{display:flex;align-items:flex-end;gap:2px;height:17px}
+.wf-wave i{width:2.5px;background:var(--brand);border-radius:2px;opacity:.75}
+.wf-voice .lb{font-family:var(--f-mono);font-size:11.8px;color:var(--ink-3);font-weight:700}
+.wf-input{
+  flex:none;margin:0 13px 12px;padding:14px 16.2px;border-radius:100px;border:1px solid var(--line);
+  background:var(--surface);display:flex;align-items:center;gap:11.2px
+}
+.wf-input .ph{flex:1;font-size:12.8px;color:var(--ink-4)}
+.wf-input .ic{width:21px;height:21px;border-radius:50%;display:grid;place-items:center;
+  font-size:12.8px;background:var(--surface-3);color:var(--ink-3)}
+.wf-input .ai{font-family:var(--f-mono);font-size:11px;font-weight:800;letter-spacing:.08em;
+  padding:2px 7.5px;border-radius:100px;border:1px solid var(--brand-line);color:var(--brand);background:var(--brand-soft)}
+.wf-cta{
+  position:absolute;width:19px;height:19px;border-radius:50%;background:var(--gold);color:#241a04;
+  display:none;place-items:center;font-family:var(--f-mono);font-size:12.2px;font-weight:900;
+  box-shadow:0 0 0 4px var(--gold-soft);z-index:5
+}
+/* BAD state */
+.wf.bad .wf-banner{display:none}
+.wf.bad .wf-cta{display:grid}
+.wf.bad .wf-chat::before{
+  content:"AI 语音助手正在聆听…";display:block;align-self:center;font-family:var(--f-mono);
+  font-size:11.8px;color:var(--red);border:1px dashed var(--red-line);border-radius:100px;
+  padding:3px 12.5px;margin-bottom:2px
+}
+.wf.bad .wf-input .ai{opacity:.28;border-style:dashed}
+.wf.bad .wf-msg.bot{opacity:.9}
+.wf.bad{--brand:var(--red);--brand-soft:var(--red-soft);--brand-line:var(--red-line)}
+.wf-legend{display:flex;flex-direction:column;gap:10px;min-height:0;overflow:auto}
+.wf-legend::-webkit-scrollbar{width:6px}
+.wf-legend::-webkit-scrollbar-thumb{background:var(--line-3);border-radius:6px}
+.wf-note{
+  border:1px solid var(--line);border-left:3px solid var(--gold);background:var(--gold-soft);
+  border-radius:var(--r-m);padding:14px 15px;font-size:12.8px;line-height:1.65;color:var(--ink-2)
+}
+.wf-note b{display:block;color:var(--ink);font-weight:700;margin-bottom:2px;font-size:13.1px}
+.wf-note.ok{border-left-color:var(--green);background:var(--green-soft)}
+.wf-note.no{border-left-color:var(--red);background:var(--red-soft)}
+
+/* three-layer model */
+.layers{display:flex;flex-direction:column;gap:8.8px}
+.layer{
+  display:grid;grid-template-columns:52px 1fr 168px;gap:16.2px;align-items:center;
+  border:1px solid var(--line);border-radius:var(--r-m);padding:17.2px 18.8px;background:var(--surface);
+  position:relative;overflow:hidden
+}
+.layer::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--brand)}
+.layer.l2::before{background:var(--gold)} .layer.l3::before{background:var(--teal)}
+.layer .ix{
+  font-family:var(--f-mono);font-size:20.4px;font-weight:800;color:var(--brand);letter-spacing:-1px
+}
+.layer.l2 .ix{color:var(--gold)} .layer.l3 .ix{color:var(--teal)}
+.layer h4{font-size:14.4px;font-weight:750;color:var(--ink);margin-bottom:3px;line-height:1.35}
+.layer p{font-size:13px;color:var(--ink-3);line-height:1.6}
+.layer .law{font-family:var(--f-mono);font-size:12.2px;font-weight:700;color:var(--ink-2);
+  text-align:right;letter-spacing:.03em;line-height:1.6}
+.layer .law b{display:block;color:var(--ink-4);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase}
+.layer .vis{position:absolute;right:0;top:0;bottom:0;width:3px}
+.lay-vis{display:flex;gap:7.5px;margin-top:5px;flex-wrap:wrap}
+.lay-vis span{font-family:var(--f-mono);font-size:11.5px;padding:1px 7.5px;border-radius:3px;
+  border:1px solid var(--line-3);color:var(--ink-3)}
+
+/* traceability matrix */
+.trace th:nth-child(1){width:15%} .trace th:nth-child(2){width:12%}
+.trace th:nth-child(3){width:26%} .trace th:nth-child(4){width:13%}
+.trace th:nth-child(5){width:8%} .trace th:nth-child(6){width:9%}
+.trace td{font-size:13px}
+.trace .stt{font-family:var(--f-mono);font-size:11.8px;font-weight:800;letter-spacing:.06em;
+  padding:1px 7.5px;border-radius:3px;white-space:nowrap}
+.stt.no{background:var(--red-soft);color:var(--red);border:1px solid var(--red-line)}
+.stt.ip{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-line)}
+.stt.ev{background:var(--blue-soft,rgba(91,157,255,.1));color:var(--brand);border:1px solid var(--brand-line)}
+.stt.rp{background:var(--green-soft);color:var(--green);border:1px solid var(--green-line)}
+.stt.fe{background:var(--surface-3);color:var(--ink-3);border:1px solid var(--line)}
+
+/* agenda */
+.agenda{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;flex:none}
+.ag{
+  border:1px solid var(--line);border-radius:var(--r-m);background:var(--surface);padding:23.5px 20px;
+  display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:.2s;position:relative;overflow:hidden
+}
+.ag::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--brand);opacity:.5}
+.ag:hover{border-color:var(--brand-line);background:var(--brand-soft);transform:translateY(-2px)}
+.ag.c2::before{background:var(--gold)} .ag.c3::before{background:var(--red)} .ag.c4::before{background:var(--green)}
+.ag .n{font-family:var(--f-mono);font-size:26px;font-weight:800;color:var(--brand);
+  line-height:1;letter-spacing:-1.5px;opacity:.9}
+.ag.c2 .n{color:var(--gold)} .ag.c3 .n{color:var(--red)} .ag.c4 .n{color:var(--green)}
+.ag h4{font-size:14.8px;font-weight:750;color:var(--ink);line-height:1.4}
+.ag ul{list-style:none;margin-top:2px}
+.ag li{font-size:12.8px;color:var(--ink-3);line-height:1.65;padding-left:12px;position:relative}
+.ag li::before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:var(--ink-4)}
+.ag .pg{margin-top:auto;font-family:var(--f-mono);font-size:11.8px;color:var(--ink-4);letter-spacing:.1em;
+  padding-top:8px;border-top:1px solid var(--line-2)}
+
+/* sources */
+.src-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1;min-height:0}
+.srclist{list-style:none;font-size:13px;line-height:1.75;color:var(--ink-2)}
+.srclist li{margin-bottom:7px;padding-bottom:7px;border-bottom:1px dashed var(--line-2)}
+.srclist li:last-child{border-bottom:none}
+.srclist b{color:var(--brand);font-family:var(--f-mono);font-size:12.5px;font-weight:700;
+  display:inline-block;margin-right:6px}
+.srclist .u{display:block;font-family:var(--f-mono);font-size:11.8px;color:var(--ink-4);
+  word-break:break-all;margin-top:2px;line-height:1.55}
+.srclist .u a{color:var(--ink-4);text-decoration:none}
+.srclist .u a:hover{color:var(--brand)}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOTTOM BAR
+   ═══════════════════════════════════════════════════════════════ */
+#foot{
+  flex:none;height:var(--bar-h);display:flex;align-items:center;gap:17.5px;padding:0 20px;
+  border-top:1px solid var(--line-2);background:var(--chrome);backdrop-filter:blur(14px)
+}
+#segs{display:flex;gap:3px;flex:1;height:22px;align-items:center;cursor:pointer}
+.seg{flex:1;height:4px;border-radius:3px;background:var(--track);transition:.2s;position:relative}
+.seg:hover{background:var(--ink-4);transform:scaleY(1.7)}
+.seg.done{background:var(--ink-4)}
+.seg.on{background:var(--brand);height:6px;box-shadow:0 0 10px var(--brand-soft)}
+#ttl{font-size:13.1px;color:var(--ink-2);white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis;max-width:290px;flex:none;font-weight:600}
+#pos{font-family:var(--f-mono);font-size:12.8px;color:var(--ink-3);white-space:nowrap;flex:none;
+  letter-spacing:.06em;min-width:56px;text-align:right}
+#pos b{color:var(--ink);font-weight:800;font-size:14.4px}
+.tools{display:flex;gap:6.2px;flex:none}
+.tools button{
+  height:30px;min-width:30px;padding:0 9px;border-radius:var(--r-s);
+  border:1px solid var(--line);background:var(--surface);color:var(--ink-2);
+  font-family:var(--f-mono);font-size:12.8px;cursor:pointer;transition:.16s;
+  display:grid;place-items:center
+}
+.tools button:hover:not(:disabled){background:var(--brand);border-color:var(--brand);color:#fff}
+.tools button:disabled{opacity:.3;cursor:not-allowed}
+.tools button svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.9;
+  stroke-linecap:round;stroke-linejoin:round}
+
+/* overview overlay */
+#ov{
+  position:absolute;inset:0;background:var(--bg);z-index:40;display:none;
+  flex-direction:column;padding:40.6px 42.5px 27.5px
+}
+#ov.on{display:flex}
+#ov .oh{display:flex;align-items:baseline;gap:17.5px;flex:none;margin-bottom:16px}
+#ov .oh h3{font-family:var(--f-serif);font-size:22.4px;font-weight:800}
+#ov .oh p{font-size:13.1px;color:var(--ink-3);font-family:var(--f-mono);letter-spacing:.06em}
+#ov .oh .x{margin-left:auto}
+.ov-grid{flex:1;min-height:0;overflow:auto;display:grid;
+  grid-template-columns:repeat(6,1fr);gap:12.5px;align-content:start;padding-right:4px}
+.ov-grid::-webkit-scrollbar{width:8px}
+.ov-grid::-webkit-scrollbar-thumb{background:var(--line-3);border-radius:8px}
+.ov-card{
+  border:1px solid var(--line);border-radius:var(--r-m);background:var(--surface);padding:17.2px 15px;
+  cursor:pointer;transition:.18s;display:flex;flex-direction:column;gap:6.2px;min-height:82px
+}
+.ov-card:hover{border-color:var(--brand);background:var(--brand-soft);transform:translateY(-2px)}
+.ov-card.on{border-color:var(--brand);background:var(--brand-soft);box-shadow:0 0 0 2px var(--brand-soft)}
+.ov-card .n{font-family:var(--f-mono);font-size:16.4px;font-weight:800;color:var(--brand);line-height:1}
+.ov-card .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-4);font-weight:700}
+.ov-card .t{font-size:13.1px;font-weight:650;color:var(--ink-2);line-height:1.4}
+.ov-card.div .t{color:var(--gold)}
+.ov-card.div .n{color:var(--gold)}
+
+/* help overlay */
+#help{
+  position:absolute;inset:0;background:rgba(4,6,10,.72);backdrop-filter:blur(9px);z-index:50;
+  display:none;place-items:center
+}
+#help.on{display:grid}
+.help-box{
+  width:660px;max-width:88%;background:var(--surface-2);border:1px solid var(--line-3);
+  border-radius:var(--r-l);padding:40.6px 37.5px;box-shadow:var(--shadow)
+}
+.help-box h3{font-family:var(--f-serif);font-size:20.4px;font-weight:800;margin-bottom:4px}
+.help-box>p{font-size:13.1px;color:var(--ink-3);margin-bottom:16px}
+.help-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px}
+.help-grid div{display:flex;align-items:center;gap:12.5px;font-size:13.3px;color:var(--ink-2)}
+.help-grid kbd{
+  font-family:var(--f-mono);font-size:12.2px;font-weight:700;padding:3px 10px;border-radius:4px;
+  background:var(--surface-3);border:1px solid var(--line-3);color:var(--ink);min-width:56px;text-align:center;
+  box-shadow:0 1.5px 0 var(--line-3)
+}
+.help-foot{margin-top:18px;padding-top:13px;border-top:1px solid var(--line-2);
+  display:flex;gap:11.2px;align-items:center}
+.help-foot .btn{font-family:var(--f-mono);font-size:12.8px;font-weight:700;padding:11px 18.8px;border-radius:var(--r-s);
+  border:1px solid var(--line-3);background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.16s}
+.help-foot .btn:hover{background:var(--brand);border-color:var(--brand);color:#fff}
+
+/* toast */
+#toast{
+  position:absolute;left:50%;bottom:70px;transform:translateX(-50%) translateY(10px);
+  background:var(--ink);color:var(--bg);padding:14px 22.5px;border-radius:100px;
+  font-family:var(--f-mono);font-size:13.1px;font-weight:700;letter-spacing:.03em;
+  opacity:0;pointer-events:none;transition:.28s;z-index:60;box-shadow:0 8px 28px rgba(0,0,0,.4)
+}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+@media print{
+  html,body{overflow:visible;height:auto;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #head,#foot,#ov,#help,#toast,#rprog{display:none!important}
+  /* ── 演示模式：16:9 逐页 ── */
+  html[data-mode="deck"] #stage{display:block;overflow:visible;height:auto}
+  html[data-mode="deck"] #canvas{width:1600px;height:auto;transform:none!important;
+    box-shadow:none;border:none;overflow:visible}
+  html[data-mode="deck"] .slide{display:flex!important;position:relative;inset:auto;height:900px;
+    width:1600px;page-break-after:always;break-after:page;border-bottom:1px solid #ddd;animation:none!important}
+  /* ── 阅读模式：A4 文档流 ── */
+  html[data-mode="doc"] #app{height:auto;display:block}
+  html[data-mode="doc"] #stage{display:block;overflow:visible;height:auto;padding:0}
+  html[data-mode="doc"] #canvas{width:auto;max-width:none;height:auto;transform:none!important;
+    box-shadow:none;border:none;border-radius:0;overflow:visible;margin:0}
+  html[data-mode="doc"] .slide{
+    display:block!important;position:static!important;inset:auto;height:auto!important;min-height:0;
+    padding:20px 0 24px;background:transparent;border-bottom:none;
+    page-break-after:always;break-after:page;page-break-inside:auto;animation:none!important
+  }
+  html[data-mode="doc"] .slide:last-child{page-break-after:auto;break-after:auto}
+  html[data-mode="doc"] .slide.cover{padding-top:0}
+  html[data-mode="doc"] .wf{height:500px}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   READ MODE · 阅读模式（默认形态）
+   文档流排版：纵向滚动、限宽行、真实字号、全文可搜索、可直印 A4
+   ═══════════════════════════════════════════════════════════════ */
+html[data-mode="doc"]{--doc-w:1240px;scroll-padding-top:84px}
+html[data-mode="doc"] html,html[data-mode="doc"] body{height:auto}
+html[data-mode="doc"] body{overflow:auto}
+
+/* ── shell ── */
+html[data-mode="doc"] #app{height:auto;display:block}
+html[data-mode="doc"] #head{
+  position:sticky;top:0;z-index:30;min-height:56px;height:auto;padding:9px 26px;
+  border-bottom:1px solid var(--line);box-shadow:0 6px 22px rgba(20,32,58,.05)
+}
+html[data-mode="doc"] #head .crumb{max-width:none}
+html[data-mode="doc"] #stage{display:block;overflow:visible;padding:0 34px 130px}
+html[data-mode="doc"] #canvas{
+  width:100%;max-width:var(--doc-w);height:auto;transform:none!important;
+  margin:0 auto;background:transparent;border:none;border-radius:0;box-shadow:none;overflow:visible
+}
+html[data-mode="doc"] #foot{
+  position:fixed;left:0;right:0;bottom:0;z-index:25;height:46px;
+  border-top:1px solid var(--line);background:var(--chrome);backdrop-filter:blur(14px)
+}
+html[data-mode="doc"] #ttl{max-width:430px;font-size:13.4px}
+html[data-mode="doc"] #segs{height:20px}
+html[data-mode="doc"] .tools button.modebtn{
+  padding:0 12px;font-family:var(--f-sans);font-size:12.6px;font-weight:700;letter-spacing:.02em
+}
+
+/* ── overlays：文档流下必须脱离 #canvas ── */
+html[data-mode="doc"] #ov,
+html[data-mode="doc"] #help,
+html[data-mode="doc"] #toast{position:fixed}
+
+/* ── 阅读进度条 ── */
+#rprog{display:none}
+html[data-mode="doc"] #rprog{display:block;position:absolute;left:0;right:0;bottom:-1px;height:2px}
+html[data-mode="doc"] #rprogBar{display:block;height:100%;width:0;
+  background:linear-gradient(90deg,var(--brand-2),var(--brand));transition:width .12s linear}
+
+/* ── sections ── */
+html[data-mode="doc"] .slide{
+  position:static!important;inset:auto;display:block!important;
+  padding:52px 0 46px;background:transparent;overflow:visible;
+  border-bottom:1px solid var(--line-2);animation:none!important
+}
+html[data-mode="doc"] .slide:last-child{border-bottom:none;padding-bottom:8px}
+html[data-mode="doc"] .slide.on{display:block!important;animation:none!important}
+html[data-mode="doc"] .slide.dense .body{gap:20px}
+html[data-mode="doc"] .slide.dense .card p,html[data-mode="doc"] .slide.dense .card li,
+html[data-mode="doc"] .slide.dense ul.cl li,html[data-mode="doc"] .slide.dense .verdict .txt,
+html[data-mode="doc"] .slide.dense .note,html[data-mode="doc"] .slide.dense .art .en,
+html[data-mode="doc"] .slide.dense .art .zh,html[data-mode="doc"] .slide.dense table,
+html[data-mode="doc"] .slide.dense .layer p{font-size:revert}
+
+/* cover */
+html[data-mode="doc"] .slide.cover{
+  padding:74px 0 50px;background:transparent;
+  background-image:radial-gradient(820px 520px at 88% 0%,var(--brand-soft),transparent 62%),
+                   radial-gradient(620px 440px at 2% 100%,var(--gold-soft),transparent 60%)
+}
+html[data-mode="doc"] .cover .cv-top{grid-template-columns:1fr 296px;gap:48px;align-items:start;flex:none}
+html[data-mode="doc"] .cover .crest{margin-bottom:26px}
+html[data-mode="doc"] .cover h1{font-size:52px;margin-bottom:18px}
+html[data-mode="doc"] .cover .lede{font-size:17px;line-height:1.86;max-width:770px}
+html[data-mode="doc"] .cover-grid{padding-top:18px;margin-top:14px}
+
+/* divider */
+html[data-mode="doc"] .slide.divider{position:relative;padding:74px 0 62px;background:transparent}
+html[data-mode="doc"] .divider .num{font-size:96px}
+html[data-mode="doc"] .divider h1{font-size:40px;margin-bottom:14px}
+html[data-mode="doc"] .divider p{font-size:16px;line-height:1.82;max-width:780px;margin-bottom:26px}
+html[data-mode="doc"] .divider .toc-mini{gap:11px}
+html[data-mode="doc"] .divider .toc-mini div{font-size:14.2px}
+html[data-mode="doc"] .divider .stamp{right:0;bottom:62px}
+
+/* slide head */
+html[data-mode="doc"] .shead{margin-bottom:26px}
+html[data-mode="doc"] .eyebrow{font-size:12.4px;margin-bottom:10px}
+html[data-mode="doc"] h1.st{font-size:31px;line-height:1.3}
+html[data-mode="doc"] p.sub{font-size:14.8px;line-height:1.74;max-width:880px;margin-top:10px}
+html[data-mode="doc"] .body{gap:20px}
+
+/* ── 解除固定高度 / 内部滚动 ── */
+html[data-mode="doc"] .body > *{flex:none!important;min-height:auto!important}
+html[data-mode="doc"] .tbl-wrap{flex:none!important;max-height:none!important;overflow:visible!important}
+html[data-mode="doc"] th{position:static}
+html[data-mode="doc"] .explorer{flex:none;min-height:auto}
+html[data-mode="doc"] .ex-list{overflow:visible;max-height:none}
+html[data-mode="doc"] .ex-panel{overflow:visible;flex:none}
+html[data-mode="doc"] .ex-panel .art{flex:none}
+html[data-mode="doc"] .ex-applic{margin-top:0}
+html[data-mode="doc"] .wf-wrap{flex:none;min-height:auto}
+html[data-mode="doc"] .wf-stage{min-height:auto}
+html[data-mode="doc"] .wf{flex:none;height:548px}
+html[data-mode="doc"] .wf-legend{overflow:visible;min-height:auto}
+html[data-mode="doc"] .src-cols{flex:none;min-height:auto}
+html[data-mode="doc"] .agenda{flex:none}
+html[data-mode="doc"] .kpis{flex:none}
+html[data-mode="doc"] .foot{margin-top:28px;padding-top:14px}
+
+/* ── 阅读字号：取消压缩，按真实尺寸呈现 ── */
+html[data-mode="doc"] .art{max-width:900px}
+html[data-mode="doc"] .art .en{font-size:13.9px;line-height:1.92}
+html[data-mode="doc"] .art .zh{font-size:13.8px;line-height:1.82}
+html[data-mode="doc"] .verdict{max-width:980px}
+html[data-mode="doc"] .verdict .txt{font-size:14.8px;line-height:1.8}
+html[data-mode="doc"] .note{max-width:900px;font-size:13.4px;line-height:1.8}
+html[data-mode="doc"] .card p,html[data-mode="doc"] .card li{font-size:14.1px;line-height:1.78}
+html[data-mode="doc"] .card h4{font-size:14.9px}
+html[data-mode="doc"] ul.cl li{font-size:14.5px;line-height:1.78;margin-bottom:9px}
+html[data-mode="doc"] table{font-size:13.9px;line-height:1.7}
+html[data-mode="doc"] td{line-height:1.74}
+html[data-mode="doc"] .srclist{font-size:13.9px;line-height:1.84}
+html[data-mode="doc"] .layer h4{font-size:15.2px}
+html[data-mode="doc"] .layer p{font-size:13.9px;line-height:1.7}
+html[data-mode="doc"] .wf-msg{font-size:13.8px}
+html[data-mode="doc"] .ck-item .tx{font-size:14px}
+html[data-mode="doc"] .ex-zh{font-size:14.4px;line-height:1.96}
+html[data-mode="doc"] .ex-item .tt{font-size:13.9px}
+html[data-mode="doc"] .ag li{font-size:13.6px;line-height:1.72}
+html[data-mode="doc"] .wf-note{font-size:13.4px;line-height:1.75}
+</style>
+<style id="printcss"></style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ══ TOP BAR ══ -->
+  <header id="head">
+    <div class="mark">
+      <div class="seal">EU</div>
+      <div class="brand">欧盟 AI Act 披露义务合规研究报告<small>AI VOICE ASSISTANT · DISCLOSURE</small></div>
+    </div>
+    <div class="divider"></div>
+    <div class="crumb" id="crumb"></div>
+    <div class="spacer"></div>
+    <div class="meta">基准日 <b>2026-10-18</b><i>·</i>核心条款 Art. 50(1)<i>·</i>经 Reg. (EU) 2026/1744 修订</div>
+    <div id="rprog" aria-hidden="true"><i id="rprogBar"></i></div>
+  </header>
+
+  <!-- ══ STAGE ══ -->
+  <main id="stage">
+    <div id="canvas">
+
+<!-- ═══════════════ 01 · COVER ═══════════════ -->
+<section class="slide cover on" data-k="封面" data-sec="Cover">
+  <div class="cv-top">
+    <div class="cv-main">
+      <div class="crest">
+        <div class="ring">⚖</div>
+        <div class="txt"><b>Regulatory Compliance Brief</b>European Union · Regulation (EU) 2024/1689</div>
+      </div>
+      <h1>欧盟 AI Act 披露义务<span class="l2">合规研究报告</span></h1>
+      <p class="lede">
+        面向欧盟用户的 <b>AI 语音助手</b>（网页 + App）——「用户首次与 AI 交互时必须告知这是 AI」的
+        法律依据、触发条件、界面呈现要求、与 GDPR 的衔接、三类法律责任，以及 <b>可直接落地的分级整改方案</b>。
+      </p>
+      <div class="chips">
+        <span class="hot">Art. 50 义务自 2026-08-02 起适用</span>
+        <span class="hot">行政罚款敞口 €15M / 全球营收 3%</span>
+        <span class="ok">Digital Omnibus 未予延期</span>
+        <span>15 项整改动作 · 高 5 / 中 6 / 低 4</span>
+      </div>
+    </div>
+    <aside class="cv-side">
+      <div class="cv-card">
+        <div class="lab">核心法律依据</div>
+        <div class="art-ref">Art. 50(1)</div>
+        <div class="sub">Regulation (EU) 2024/1689<br>透明度义务 · 逐字原文见第 06 页</div>
+      </div>
+      <div class="cv-card warn">
+        <div class="lab">合规状态</div>
+        <div class="art-ref">77<span>天</span></div>
+        <div class="sub">自义务适用日 2026-08-02 起<br>Digital Omnibus 未提供缓冲期</div>
+      </div>
+      <div class="cv-card">
+        <div class="lab">行政罚款敞口</div>
+        <div class="art-ref">€15M<span>/3%</span></div>
+        <div class="sub">Art. 99(4)(g) 明文对应<br>Art. 50 违反为独立罚则事项</div>
+      </div>
+    </aside>
+  </div>
+  <div class="cover-grid">
+    <div><div class="lab">适用法域</div><div class="val">欧盟（EU）<small>域外适用 · Art. 2(1)(a)</small></div></div>
+    <div><div class="lab">产品形态</div><div class="val">AI 语音助手<small>网页 + 移动 App</small></div></div>
+    <div><div class="lab">主体身份</div><div class="val">中国科技公司<small>无欧盟实体 · provider</small></div></div>
+    <div><div class="lab">报告日期</div><div class="val">2026 年 10 月 18 日<small>研究基准日</small></div></div>
+    <div><div class="lab">报告结构</div><div class="val">22 页 · 4 章节<small>全部引用可回链官方源</small></div></div>
+  </div>
+  <div class="foot">
+    研究基准日 2026-10-18。全部法律结论均标注可回链的法规原文或官方来源。<b>法规正文以 EUR-Lex 官方公报文本为最终依据</b>；
+    条款逐字引文另附权威条款数据库镜像以便阅读，援引前建议以 EUR-Lex 合并文本复核。<br>
+    本报告为合规决策参考，不构成对特定事实的法律意见；成员国罚则设定、刑事化程度与程序法部分须由具备相应成员国执业资格的律师出具意见。
+  </div>
+</section>
+
+<!-- ═══════════════ 02 · EXECUTIVE SUMMARY ═══════════════ -->
+<section class="slide" data-k="执行摘要" data-sec="Summary">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>执行摘要 / Executive Summary</div>
+    <h1 class="st">六问六答：<em>披露义务已生效，且正在执法射程内</em></h1>
+  </div>
+  <div class="body">
+    <div class="kpis">
+      <div class="kpi b"><div class="lab">披露义务依据</div><div class="v">Art. 50(1)</div></div>
+      <div class="kpi r"><div class="lab">适用起始日</div><div class="v">2026-08-02 <small>已适用 77 天</small></div></div>
+      <div class="kpi r"><div class="lab">行政罚款上限</div><div class="v">€15M / 3%</div></div>
+      <div class="kpi g"><div class="lab">是否获延期</div><div class="v">未获延期</div></div>
+    </div>
+
+    <div class="grid g3" style="flex:1;min-height:0">
+      <div class="card key">
+        <h4><span class="ix">Q1</span>是否强制披露「这是 AI」？</h4>
+        <p><b style="color:var(--ink)">是。</b>Art. 50(1) 要求 provider 在用户首次交互时告知对方正在与 AI 系统交互。</p>
+        <p style="margin-top:5px">但请注意：<span class="hl-r">强制条款是 Art. 50，不是 Art. 52</span>。Art. 52 在最终条例中已改为「GPAI 模型系统性风险认定程序」，与交互披露无关。</p>
+      </div>
+      <div class="card">
+        <h4><span class="ix">Q2</span>触发条件与豁免</h4>
+        <p>适用于「<b style="color:var(--ink)">旨在与自然人直接交互</b>」的 AI 系统，AI 语音助手<b style="color:var(--ink)">高度可能落入</b>适用范围。</p>
+        <p style="margin-top:5px">豁免仅限执法／刑事用途，以及「对一个理性知情、谨慎的自然人而言显而易见（obviously）」的情形；后者对消费级语音助手<span class="hl-r">极难成立</span>。</p>
+      </div>
+      <div class="card">
+        <h4><span class="ix">Q3</span>界面要求</h4>
+        <p>Art. 50(5) 定下三要素：<b style="color:var(--ink)">清晰可辨</b>（clear and distinguishable）、<b style="color:var(--ink)">最迟在首次交互或首次接触时</b>、<b style="color:var(--ink)">符合无障碍要求</b>。</p>
+        <p style="margin-top:5px">叠加 EAA（Dir. (EU) 2019/882），语音播报须配视觉等价呈现。</p>
+      </div>
+      <div class="card">
+        <h4><span class="ix">Q4</span>与 GDPR 衔接</h4>
+        <p>Art. 50 管「<b style="color:var(--ink)">AI 身份告知</b>」，GDPR Art. 13 管「<b style="color:var(--ink)">数据处理告知</b>」，两者叠加而非替代。</p>
+        <p style="margin-top:5px">Art. 50(6) 明确不影响 GDPR。合规上应做<b style="color:var(--ink)">一份告知、双重覆盖</b>。</p>
+      </div>
+      <div class="card">
+        <h4><span class="ix">Q5</span>违规后果</h4>
+        <p><b style="color:var(--ink)">行政：</b>Art. 99(4)(g) 明文将 Art. 50 列为 €15M / 3% 罚款事项；<br>
+           <b style="color:var(--ink)">民事：</b>GDPR Art. 82 + 欧盟法院判例，<span class="hl">不设严重性门槛</span>；<br>
+           <b style="color:var(--ink)">刑事：</b>AI Act 本身<span class="hl-r">不设刑事罚则</span>，但成员国可依 Art. 99(1) 自行刑事化。</p>
+      </div>
+      <div class="card">
+        <h4><span class="ix">Q6</span>整改建议</h4>
+        <p>本报告给出 <b style="color:var(--ink)">高 5 项 / 中 6 项 / 低 4 项</b> 共 15 项动作，逐项含责任部门、完成时限与法律依据。</p>
+        <p style="margin-top:5px">另附<b style="color:var(--ink)">条款—证据追溯矩阵</b>（第 21 页），可直接转为内部工单系统字段。</p>
+      </div>
+    </div>
+
+    <div class="verdict red">
+      <span class="badge">时间紧迫</span>
+      <span class="txt">
+        <b>Digital Omnibus 已成法，但未给 Art. 50 任何缓冲。</b>Regulation (EU) 2026/1744 于 2026-07-24 在官方公报公布、2026-07-27 生效，
+        其核心是将高风险系统义务延后至 2027-12-02（Annex III）／2028-08-02（Annex I）。
+        <b>Art. 50 透明度义务与 Art. 5 禁止性条款均未因此延期</b>：依 Art. 113，Art. 50 属 Chapter IV，自 <b>2026-08-02</b> 起适用；
+        Art. 5 属 Chapter II，自 <b>2025-02-02</b> 起适用，仅 2026/1744 新增的 Art. 5(1)(ba)(bb) 两项禁止性实践延至 <b>2026-12-02</b>。
+        换言之，<b>Art. 50 的 77 天合规敞口是当下唯一的新增压力，而 Art. 5 项下 €35M/7% 档的敞口其实已存在一年半</b>。
+        <b>本项目若为 2026-08-02 之后投放的新产品，无法主张 Art. 50(2) 标记义务的过渡期，须立即合规。</b>
+      </span>
+    </div>
+  </div>
+  <div class="foot">
+    来源：Regulation (EU) 2024/1689 Art. 50 / 99 / 113（EUR-Lex 及条款数据库）；Regulation (EU) 2026/1744（OJ L 2026/1744，2026-07-24 公布，2026-07-27 生效）。<br>
+    <b>术语说明：</b>条例本身于 2024-08-01 生效（公布后第 20 日），<b>各项义务的「适用（apply）」日期则分阶段确定</b>：Chapter I &amp; II 自 2025-02-02、部分条款自 2025-08-02、<b>Art. 50 自 2026-08-02</b>、高风险条款经 2026/1744 延后至 2027-12-02 / 2028-08-02。
+  </div>
+</section>
+
+<!-- ═══════════════ 03 · AGENDA ═══════════════ -->
+<section class="slide" data-k="报告结构与方法" data-sec="Agenda">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>报告结构 / Agenda</div>
+    <h1 class="st">研究框架、<em>证据标准</em>与方法说明</h1>
+  </div>
+  <div class="body">
+    <div class="agenda" id="agenda">
+      <div class="ag c1" data-go="4">
+        <div class="n">01</div>
+        <h4>义务定位与法律依据</h4>
+        <ul><li>条号溯源：Art. 52 与 Art. 50 的沿革辨析</li><li>Art. 50 第 1–7 款全景与逐字原文</li><li>Art. 50(1) 三项法定构成要件</li><li>触发条件、豁免边界与域外适用</li></ul>
+        <div class="pg">P05 — P08</div>
+      </div>
+      <div class="ag c2" data-go="9">
+        <div class="n">02</div>
+        <h4>界面呈现与规则衔接</h4>
+        <ul><li>Art. 50(5) 三要素与无障碍叠加</li><li>合规 UI 原型：披露位置示意</li><li>三层披露模型与 Art. 50(2) 标记</li><li>与 GDPR 透明度要求的衔接设计</li></ul>
+        <div class="pg">P10 — P12</div>
+      </div>
+      <div class="ag c3" data-go="13">
+        <div class="n">03</div>
+        <h4>法律责任与后果</h4>
+        <ul><li>行政：Art. 99 罚款阶梯与执法机制</li><li>民事：GDPR Art. 82 判例链 + 产品责任</li><li>刑事：AI Act 无罚则但成员国可入刑</li><li>三类责任的边界与叠加关系</li></ul>
+        <div class="pg">P14 — P16</div>
+      </div>
+      <div class="ag c4" data-go="17">
+        <div class="n">04</div>
+        <h4>落地路径与保障机制</h4>
+        <ul><li>高 / 中 / 低优先级整改清单</li><li>甘特路线图与外部硬期限</li><li>条款—证据—责任追溯矩阵</li><li>来源总表与使用说明</li></ul>
+        <div class="pg">P18 — P22</div>
+      </div>
+    </div>
+
+    <h2 style="font-family:var(--f-serif);font-size:17.4px;font-weight:750;margin:2px 0 0;padding-left:10px;border-left:3px solid var(--brand)">研究方法与证据标准</h2>
+    <div class="grid g3">
+      <div class="card">
+        <h4><span class="tag t-ok">已核实</span>　一手法规原文</h4>
+        <p>直接引自 EUR-Lex 官方公报文本或权威条款数据库镜像的英文原文，逐字保留、不做改写。本报告所有 Art. 50、99、113 引用均属此类。</p>
+        <p style="margin-top:5px" class="fine"><span style="font-size:12.5px;color:var(--gold)">注：条款正文以 EUR-Lex 官方文本为最终依据；镜像站仅用于阅读便利，引用前建议以 EUR-Lex 合并文本复核。</span></p>
+      </div>
+      <div class="card">
+        <h4><span class="tag t-ok">已核实</span>　官方来源</h4>
+        <p>欧委会官网、EUR-Lex 官方公报页、EDPB 官方文件、CURIA 裁判档案。用于动态类事实（准则发布、条例生效日、判决日期）。</p>
+        <p style="margin-top:5px">凡未经核验的细节（行为准则版本日期、法院名称等），报告内均以<span class="hl">显式标注</span>提示回链确认。</p>
+      </div>
+      <div class="card">
+        <h4><span class="tag t-na">判断</span>　法律意见部分</h4>
+        <p>触发条件、豁免适用性、整改建议属专业判断，已明确标注为分析结论，与法条原文分栏呈现（<span class="term">.verdict</span> 区块）。</p>
+        <p style="margin-top:5px">报告不将任何分析判断伪装为法条原文。</p>
+      </div>
+    </div>
+
+    <div class="verdict">
+      <span class="badge">重要提示</span>
+      <span class="txt">
+        本报告<b>纠正了一处广泛流传的条号错误</b>：多个中文与二手资料称「AI Act 第 52 条规定 AI 交互披露义务」，
+        该表述源自 2021 年委员会提案 COM(2021) 206 的编号。<b>最终通过的 Regulation (EU) 2024/1689 中，该义务位于第 50 条</b>；
+        第 52 条的内容是「通用人工智能模型系统性风险认定程序」（Procedure）。若在整改文件中引用错误条号，可能导致举证与适用条款错配。
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 04 · DIVIDER 1 ═══════════════ -->
+<section class="slide divider" data-k="第一部分 · 义务定位" data-sec="Part 01" data-div="1">
+  <div class="num">01</div>
+  <h1>义务定位与<em>法律依据</em></h1>
+  <p>先厘清「义务到底在第几条、谁承担、什么时候触发」，再谈界面与责任。所有条文均以逐字原文呈现，并与 2021 年提案编号做出显式区分。</p>
+  <div class="toc-mini">
+    <div><b>P05</b><span>条号溯源：Art. 52 与 Art. 50 的沿革陷阱</span></div>
+    <div><b>P06</b><span>Art. 50(1) 逐字原文与三项法定构成要件</span></div>
+    <div><b>P07</b><span>Art. 50 第 1–7 款全景（本项目适用性判定）</span></div>
+    <div><b>P08</b><span>触发条件、三类豁免与域外适用</span></div>
+  </div>
+  <div class="stamp">PART 01 / 04<br>OBLIGATION LOCATING</div>
+</section>
+
+<!-- ═══════════════ 05 · ARTICLE NUMBER PROVENANCE ═══════════════ -->
+<section class="slide" data-k="条号溯源 Art.52 vs Art.50" data-sec="Part 01">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>Q1 前置 · 条号溯源</div>
+    <h1 class="st">Art. 52 还是 Art. 50？<em>这是一条需要澄清的沿革陷阱</em></h1>
+    <p class="sub">条号误引是本议题最常见的错误。厘清它，后续所有义务定位才不会错配。</p>
+  </div>
+  <div class="body">
+    <div class="tbl-wrap" style="flex:none">
+      <table>
+        <thead><tr>
+          <th style="width:15%">文本</th><th style="width:11%">交互披露<br>所在条号</th>
+          <th style="width:41%">Art. 52 的实际内容</th><th style="width:33%">法律效力</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><b>COM(2021) 206</b><br><span style="font-size:12.5px;color:var(--ink-3)">2021 委员会提案</span></td>
+            <td><span class="tag t-na">Art. 52</span></td>
+            <td>提案阶段的透明度义务（<i>AI systems interacting with natural persons</i>）</td>
+            <td>提案，<b>不具法律效力</b></td>
+          </tr>
+          <tr class="hl-row">
+            <td><b>Reg. (EU) 2024/1689</b><br><span style="font-size:12.5px;color:var(--ink-3)">最终条例</span></td>
+            <td><span class="tag t-hi">Art. 50</span></td>
+            <td><b>「程序（Procedure）」条款</b><span class="cite">Procedure</span>——GPAI 模型达到 Art. 51(1)(a) 门槛后的<b>系统性风险认定与指定程序</b>：通知欧委会（52(1)）、例外抗辩（52(2)）、欧委会主动认定（52(4)）、复评请求（52(5)）、清单公布（52(6)）</td>
+            <td><b>现行有效，具约束力</b></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="art">
+      <span class="lbl">Art. 52(1) 最终条例原文 · 节录</span>
+      <span class="en">"Where a general-purpose AI model meets the condition referred to in Article 51(1), point (a), the relevant provider shall notify the Commission without delay and in any event within two weeks after that requirement is met or it becomes known to the provider that it will be met."</span>
+      <span class="zh">通用人工智能模型符合第 51 条第 1 款（a）项所指条件的，相关提供者应在该条件满足或其可知之日起<b>不迟于两周内</b>通知欧委会。</span>
+      <span class="src">Regulation (EU) 2024/1689, Art. 52(1) — <a href="https://artificialintelligenceact.eu/article/52/" target="_blank" rel="noopener">条款数据库镜像</a></span>
+    </div>
+
+    <div class="grid g2">
+      <div class="card">
+        <h4>为什么这个差异有实际后果</h4>
+        <ul>
+          <li>Art. 52 的通知义务<b>只对 GPAI 模型提供者</b>触发，且以 10<sup>25</sup> FLOPs 计算能力阈值为前提（Art. 51(1)(a)）。</li>
+          <li>若贵司仅调用第三方大模型而不自行训练达标模型，Art. 52 与贵司无关。</li>
+          <li>Art. 52 所在的 Chapter V <b>本身不含罚款条款</b>；相关罚则为 <b>Art. 101</b>——由欧委会对<b>通用人工智能模型提供者</b>处，上限 <b>全球年营业额 3% 或 €15M（取较高者）</b>。</li>
+        </ul>
+      </div>
+      <div class="card key">
+        <h4>对贵司的正确引用方式</h4>
+        <ul>
+          <li>披露义务 → <b>Art. 50(1)</b>（provider 交互披露）</li>
+          <li>披露时点与形式 → <b>Art. 50(5)</b></li>
+          <li>合成音频标记 → <b>Art. 50(2)</b></li>
+          <li>罚款依据 → <b>Art. 99(4)(g)</b></li>
+          <li>适用日期 → <b>Art. 113</b>（经 2026/1744 修订）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      提示：条款数据库页面将 Art. 52 与 Art. 99 标注为「amended」，提示其内容可能已被修订。
+      <b>该标注属数据库的界面提示而非官方法源</b>，具体修订内容须以 EUR-Lex 上 Regulation (EU) 2026/1744 的官方文本及其对 2024/1689 的合并文本核验。
+      引用时建议注明「经 Regulation (EU) 2026/1744 修订的合并文本」。
+    </div>
+  </div>
+  <div class="foot">来源：Regulation (EU) 2024/1689 Art. 52（https://artificialintelligenceact.eu/article/52/）；COM(2021) 206（EUR-Lex CELEX:52021PC0206）。</div>
+</section>
+
+<!-- ═══════════════ 06 · ART 50(1) VERBATIM ═══════════════ -->
+<section class="slide" data-k="Art.50(1) 逐字原文" data-sec="Part 01">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>Q1 · 法律依据</div>
+    <h1 class="st">Art. 50(1) 逐字原文：<em>这是披露义务的唯一直接依据</em></h1>
+  </div>
+  <div class="body">
+    <div class="art">
+      <span class="lbl">Regulation (EU) 2024/1689 · Article 50(1) · 官方英文原文</span>
+      <span class="en">"Providers shall ensure that AI systems intended to interact directly with natural persons are designed and developed in such a way that the natural persons concerned are informed that they are interacting with an AI system, <b>unless this is obvious from the point of view of a natural person who is reasonably well-informed, observant and circumspect, taking into account the circumstances and the context of use.</b> This obligation shall not apply to AI systems authorised by law to detect, prevent, investigate or prosecute criminal offences, subject to appropriate safeguards to the rights and freedoms of third parties, unless those systems are available for the public to report a criminal offence."</span>
+      <span class="zh">提供者应确保，旨在与自然人直接交互的 AI 系统，在设计与开发上使相关自然人被告知其正在与一个 AI 系统交互，<b>但若对一个理性知情、谨慎且注意周到的自然人而言，在考虑使用情形与使用情境后此事属显而易见的情形，则不在此限。</b>本义务不适用于依法获授权用于侦测、防止、调查或追究刑事犯罪的 AI 系统（须对第三方权利与自由采取适当保障），但此类系统已向公众开放以举报刑事犯罪的除外。</span>
+      <span class="src">Regulation (EU) 2024/1689, Art. 50(1) — <a href="https://artificialintelligenceact.eu/article/50/" target="_blank" rel="noopener">条款数据库镜像</a>　｜　EUR-Lex: <a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">官方公报</a></span>
+    </div>
+
+    <h2 style="font-family:var(--f-serif);font-size:17.4px;font-weight:750;padding-left:10px;border-left:3px solid var(--brand)">拆解为三项法定构成要件</h2>
+    <div class="grid g3">
+      <div class="card">
+        <h4><span class="ix">01</span>　义务主体：Provider</h4>
+        <p>义务落在 <b>provider（提供者）</b>，即以自己名义开发并投放市场或投入使用 AI 系统的自然人或法人（Art. 3(3)）。</p>
+        <p style="margin-top:5px">贵司以自有品牌向欧盟用户上线 App 与网页 → <span class="tag t-hi">构成 provider</span>，义务直接落在贵司身上。</p>
+      </div>
+      <div class="card">
+        <h4><span class="ix">02</span>　行为标准：Designed &amp; Developed</h4>
+        <p>法条要求的是<b>「设计与开发上」</b>使相对人被告知——即前置设计义务，属于产品级义务，<b>不能靠事后客服解释或 FAQ 页面替代</b>。</p>
+        <p style="margin-top:5px">这直接决定了整改动作必须落在前端交互层，而非法务文档层。</p>
+      </div>
+      <div class="card">
+        <h4><span class="ix">03</span>　例外：Obvious 抗辩</h4>
+        <p>唯一实体豁免是「显而易见」。判断基准是<b>「理性知情、谨慎且注意周到的自然人」，并须考虑使用情形与情境</b>。</p>
+        <p style="margin-top:5px">对消费级语音助手，<span class="tag t-no">该抗辩基本不可用</span>（详见第 8 页）。</p>
+      </div>
+    </div>
+
+    <div class="verdict">
+      <span class="badge">结论</span>
+      <span class="txt">
+        <b>Q1 答案：必须披露，且法律依据为 AI Act Art. 50(1)。</b>
+        需要同时注意义务的<b>设计前置性</b>与<b>不得诉诸「显而易见」</b>两个限制——
+        前者决定了整改必须改产品，后者的举证责任在贵司一侧。
+        另请注意：Art. 50(1) 的义务主体是 provider，而 Art. 50(3)(4) 的义务主体是 deployer，两者不可混同。
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 07 · ART 50 FULL MAP (interactive) ═══════════════ -->
+<section class="slide" data-k="Art.50 全景与适用性" data-sec="Part 01">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>Q1 · 条款全景 <span style="color:var(--ink-4);letter-spacing:.04em;text-transform:none;font-weight:500">（可点击切换）</span></div>
+    <h1 class="st">Art. 50 七款全景：<em>哪一款约束贵司？</em></h1>
+  </div>
+  <div class="body">
+    <div class="explorer">
+      <div class="ex-list" id="exList"></div>
+      <div class="ex-panel" id="exPanel"></div>
+    </div>
+  </div>
+  <div class="foot">
+    逐字引文取自 Regulation (EU) 2024/1689 Art. 50（https://artificialintelligenceact.eu/article/50/）。
+    <b>标注「要点归纳」的款项为专业归纳，非逐字引文</b>；正式援引前请以 EUR-Lex 合并文本核对。
+    圆点图例：<span style="color:var(--red)">● 直接适用</span>　<span style="color:var(--gold)">● 条件适用</span>　<span style="color:var(--ink-4)">● 视功能而定</span>
+  </div>
+</section>
+
+<!-- ═══════════════ 08 · TRIGGER & EXEMPTIONS ═══════════════ -->
+<section class="slide" data-k="触发条件与豁免" data-sec="Part 01">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>Q2 · 触发条件与豁免</div>
+    <h1 class="st">什么时候触发？<em>哪些情形可以不做？</em></h1>
+  </div>
+  <div class="body">
+    <div class="grid g2">
+      <div class="card hot">
+        <h4><span class="tag t-hi">触发</span>　本产品的适用判断</h4>
+        <table style="margin-top:6px">
+          <tbody>
+            <tr><td style="width:42%"><b>intended to interact<br>directly with natural persons</b></td>
+                <td>AI 语音助手以自然语言与用户语音／文字对话，属典型「直接交互」，<b>落入适用范围</b></td></tr>
+            <tr><td><b>generating synthetic<br>audio … content</b></td>
+                <td>输出合成语音，同时触发 <b>Art. 50(2)</b> 机器可读标记义务（详见第 11 页）</td></tr>
+            <tr><td><b>第三国主体无豁免</b></td>
+                <td>Art. 2(1)(a) 明文：适用于提供者，<b>「无论其设立或位于欧盟境内还是第三国」</b>；Art. 2(1)(c) 另覆盖输出在欧盟被使用的情形</td></tr>
+            <tr><td><b>开源不豁免</b></td>
+                <td>Art. 2(12)：以自由开源许可证发布<b>本身不豁免</b>落入 <b>Art. 5 或 Art. 50</b> 的 AI 系统。<span class="cite">（与本项目关联度低）</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h4><span class="tag t-ok">豁免</span>　三类法定除外情形</h4>
+        <table style="margin-top:6px">
+          <tbody>
+            <tr><td style="width:42%"><b>① Obvious<br>（显而易见）</b></td>
+                <td>Art. 50(1) 但书。主观标准较高：须对一个<b>理性知情、谨慎、注意周到</b>的自然人而言显而易见，<b>并考虑使用情形与情境</b></td></tr>
+            <tr><td><b>② 刑事执法用途</b></td>
+                <td>Art. 50(1) 末句与 50(2) 末句：依法授权用于侦测、防止、调查、追究刑事犯罪，<b>但须对第三方权利自由有适当保障</b>；且若系统已向公众开放用于举报犯罪，则不豁免</td></tr>
+            <tr><td><b>③ 纯辅助编辑</b></td>
+                <td>Art. 50(2) 末句：仅就<b>「标准编辑的辅助功能」或「不实质改变输入数据及其语义」</b>的情形，机器可读标记义务不适用</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="verdict amber">
+      <span class="badge">分析判断</span>
+      <span class="txt">
+        <b>「显而易见」抗辩对消费级 AI 语音助手几乎不可用。</b>理由有三：
+        ① 法条的基准人是「理性知情、谨慎」的成年人，而非普通用户——这是<b>较高</b>而非较低的标准；
+        ② 语音交互本身信息隐蔽（无文字界面、无产品标识、用户可能误以为在与真人对话），
+        在<b>「考虑使用情形与使用情境」</b>这一要件下更难以主张显而易见；
+        ③ 欧盟委员会发布的《AI 生成内容透明度行为准则》将「向用户告知正在与交互式 AI 系统（如 chatbot）对话」列为需明确标注的情形，
+        监管立场倾向于<b>要求明示</b>。
+        <br><b>建议：</b>在合规论证中不将「显而易见」作为主要抗辩，而应按已披露来设计产品，并同步准备书面论证作为备用防线。
+      </span>
+    </div>
+
+    <div class="art red">
+      <span class="lbl">Art. 2(1)(a) 域外适用 · 原文摘录</span>
+      <span class="en">"(a) providers placing on the market or a general-purpose AI model on the Union market, <b>irrespective of whether those providers are established or located within the Union or in a third country;</b>"</span>
+      <span class="zh">在欧盟市场上投放 AI 系统或通用人工智能模型的提供者，<b>无论该等提供者设立或位于欧盟境内还是第三国</b>。</span>
+      <span class="src">Regulation (EU) 2024/1689, Art. 2(1)(a) — <a href="https://artificialintelligenceact.eu/article/2/" target="_blank" rel="noopener">条款数据库镜像</a></span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 09 · DIVIDER 2 ═══════════════ -->
+<section class="slide divider" data-k="第二部分 · 界面与衔接" data-sec="Part 02" data-div="2">
+  <div class="num">02</div>
+  <h1>界面呈现与<em>规则衔接</em></h1>
+  <p>披露义务不是一条文案，而是「视觉告知 + 技术标记 + 无障碍等价」三层结构。本部分给出可直接交付给设计与工程的界面规格与原型示意。</p>
+  <div class="toc-mini">
+    <div><b>P10</b><span>Art. 50(5) 三要素与合规 UI 原型</span></div>
+    <div><b>P11</b><span>三层披露模型与 Art. 50(2) 合成标记</span></div>
+    <div><b>P12</b><span>与 GDPR 透明度要求的衔接设计</span></div>
+  </div>
+  <div class="stamp">PART 02 / 04<br>INTERFACE &amp; INTERLOCK</div>
+</section>
+
+<!-- ═══════════════ 10 · UI REQUIREMENTS + WIREFRAME ═══════════════ -->
+<section class="slide" data-k="Art.50(5) 与 UI 原型" data-sec="Part 02">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>Q3 · 披露方式与界面要求</div>
+    <h1 class="st">Art. 50(5)：<em>「最迟首次交互」+ 清晰可辨 + 无障碍</em></h1>
+  </div>
+  <div class="body">
+    <div class="art">
+      <span class="lbl">Regulation (EU) 2024/1689 · Article 50(5) · 官方英文原文</span>
+      <span class="en">"<b>The information referred to in paragraphs 1 to 4 shall be provided to the natural persons concerned in a clear and distinguishable manner at the latest at the time of the first interaction or exposure. The information shall conform to the applicable accessibility requirements.</b>"</span>
+      <span class="zh"><b>第 1 至 4 款所指信息，应以清晰可辨的方式提供给相关自然人，最迟不得晚于首次交互或首次接触之时。该信息应符合适用的无障碍要求。</b></span>
+      <span class="src">Regulation (EU) 2024/1689, Art. 50(5) — <a href="https://artificialintelligenceact.eu/article/50/" target="_blank" rel="noopener">条款数据库镜像</a></span>
+    </div>
+
+    <div class="wf-wrap">
+      <div class="wf-stage">
+        <div class="wf-toggle">
+          <span class="lb">原型状态</span>
+          <button id="wfBad" class="bad">✕ 不合规布局</button>
+          <button id="wfGood" class="on">✓ 合规布局</button>
+          <span class="ck-hint" style="margin:0 0 0 6px">点击切换 · 对照 Art. 50(5) 三要素</span>
+        </div>
+        <div class="wf" id="wf">
+          <div class="wf-bar"><i></i><i></i><i></i><span class="u">assistant.example.eu / voice</span></div>
+          <div class="wf-banner">
+            <div class="ic">i</div>
+            <div class="tx"><b>您正在与 AI 语音助手交互</b>本服务由人工智能驱动，回复与语音均由 AI 生成。您的语音将用于生成回复。</div>
+            <div class="wf-cta" style="top:5px;right:6px">1</div>
+            <div class="wf-cta" style="bottom:-9px;left:16px">2</div>
+          </div>
+          <div class="wf-chat">
+            <div class="wf-msg me">帮我总结一下今天的会议要点</div>
+            <div class="wf-voice">
+              <div class="wf-wave">
+                <i style="height:6px"></i><i style="height:11px"></i><i style="height:16px"></i><i style="height:9px"></i>
+                <i style="height:14px"></i><i style="height:7px"></i><i style="height:12px"></i><i style="height:5px"></i>
+              </div>
+              <span class="lb">AI 合成语音 · 已标记</span>
+            </div>
+            <div class="wf-msg bot">好的，本次会议主要讨论了三项议题……（此处为 AI 生成回复）</div>
+          </div>
+          <div class="wf-input">
+            <div class="ic">🎙</div>
+            <span class="ph">按住说话，或输入文字…</span>
+            <span class="ai">AI 助手</span>
+            <div class="wf-cta" style="bottom:-9px;right:16px">3</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wf-legend">
+        <div class="wf-note ok"><b>① 首屏常驻告知条</b>清晰可辨的独立模块，位于对话区上方，<b>不折叠、不隐藏、不依赖滚动</b>。满足「clear and distinguishable」＋「at the latest at the time of the first interaction」。</div>
+        <div class="wf-note ok"><b>② 语音输出标记</b>合成语音须在音频元数据中嵌入机器可读标记（Art. 50(2)），并在界面提供<b>视觉等价提示</b>，兼顾无障碍要求。</div>
+        <div class="wf-note ok"><b>③ 输入区常驻身份标识</b>在用户视线停留最久的输入区域保持 AI 身份可识别，配合 ARIA 标注供屏幕阅读器读取。</div>
+        <div class="wf-note no"><b>不合规布局的三个典型缺陷</b>① 告知仅存在于「设置 → 关于」；② 身份标识做成了极低对比度灰色小字；③ 首次交互完成后才弹出告知。三者均直接违反 Art. 50(5)。</div>
+      </div>
+    </div>
+
+    <div class="grid g3">
+      <div class="card"><h4>要素一 · 清晰可辨</h4>
+        <p><b>clear and distinguishable manner</b>——不能是隐藏在多层菜单内的小字条款。</p>
+        <ul><li>网页／App：<b>首次进入即</b>可见的独立告知模块</li><li>建议在对话界面固定位置常驻显示</li><li>不得仅以「详情」链接或悬浮提示承载</li></ul></div>
+      <div class="card"><h4>要素二 · 最迟首次交互</h4>
+        <p><b>at the latest at the time of the first interaction</b>——法定上限是「首次交互之时」。</p>
+        <ul><li>指用户首次发出请求的那一刻之前或同时</li><li><b>不建议</b>推迟到首次回复后或设置页</li><li>语音助手须在<b>唤醒后首次播报前</b>完成告知</li></ul></div>
+      <div class="card"><h4>要素三 · 无障碍</h4>
+        <p><b>conform to the applicable accessibility requirements</b>——叠加 EAA。</p>
+        <ul><li>Dir. (EU) 2019/882 自 <b>2025-06-28</b> 适用于电子通信与电商服务</li><li>须可被辅助技术感知、识别、操作与理解</li><li>语音播报须配<b>视觉等价呈现</b></li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 11 · THREE-LAYER MODEL + 50(2) ═══════════════ -->
+<section class="slide" data-k="三层披露与合成标记" data-sec="Part 02">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>Q3 · 披露的三层结构</div>
+    <h1 class="st">披露义务不是一条文案，<em>而是三层同时到位</em></h1>
+    <p class="sub">工程与设计须按层拆解交付物；任何一层的缺失都会留下可被认定为「未清晰可辨」的空间。</p>
+  </div>
+  <div class="body">
+    <div class="layers">
+      <div class="layer l1">
+        <div class="ix">L1</div>
+        <div>
+          <h4>身份告知层 —— 用户看得见</h4>
+          <p>首屏常驻模块 + 输入区标识 + 首次语音播报前置声明。三端（网页／App／语音）同步，不可仅在设置页存在。</p>
+          <div class="lay-vis"><span>首屏 Banner</span><span>输入区 Chip</span><span>语音前置播报</span><span>ARIA 标注</span></div>
+        </div>
+        <div class="law"><b>法律依据</b>Art. 50(1) + 50(5)</div>
+      </div>
+      <div class="layer l2">
+        <div class="ix">L2</div>
+        <div>
+          <h4>技术标记层 —— 机器读得出</h4>
+          <p>合成语音／文本／图像输出须以机器可读格式标记，且可被检测为人工生成或操纵。用户通常不可见，需 C2PA 类内容凭证、不可感知水印或音频指纹。</p>
+          <div class="lay-vis"><span>C2PA 凭证</span><span>音频水印</span><span>检测器可验证</span><span>技术文档留存</span></div>
+        </div>
+        <div class="law"><b>法律依据</b>Art. 50(2)</div>
+      </div>
+      <div class="layer l3">
+        <div class="ix">L3</div>
+        <div>
+          <h4>无障碍等价层 —— 各类用户都能感知</h4>
+          <p>视觉与听觉双通道呈现；屏幕阅读器可读；对比度、字号、键盘操作、状态播报满足 WCAG 与 EAA 要求。语音播报内容须有视觉等价文本。</p>
+          <div class="lay-vis"><span>视觉等价</span><span>屏幕阅读器</span><span>高对比度</span><span>键盘可达</span></div>
+        </div>
+        <div class="law"><b>法律依据</b>Art. 50(5) 末句 + EAA</div>
+      </div>
+    </div>
+
+    <div class="art amber">
+      <span class="lbl">Art. 50(2) 原文摘录 · 适用于合成语音</span>
+      <span class="en">"Providers of AI systems, including general-purpose AI systems, <b>generating synthetic audio</b>, image, video or text content, shall ensure that the outputs of the AI system <b>are marked in a machine-readable format and detectable as artificially generated or manipulated.</b> Providers shall ensure their technical solutions are <b>effective, interoperable, robust and reliable</b> as far as this is technically feasible, taking into account the specificities and limitations of various types of content, the costs of implementation and the generally acknowledged state of the art…"</span>
+      <span class="zh">生成合成<b>音频</b>、图像、视频或文本内容的 AI 系统（含通用人工智能系统）提供者，应确保输出<b>以机器可读格式被标记且可被检测为人工生成或操纵</b>。技术方案应在技术可行范围内<b>有效、可互操作、稳健、可靠</b>。</span>
+      <span class="src">Regulation (EU) 2024/1689, Art. 50(2) — <a href="https://artificialintelligenceact.eu/article/50/" target="_blank" rel="noopener">条款数据库镜像</a></span>
+    </div>
+
+    <div class="grid g2" style="flex:none">
+      <div class="verdict green">
+        <span class="badge">过渡期提示</span>
+        <span class="txt">
+          依 Art. 111(4)，<b>在 2026-08-02 之前已投放市场</b>的生成式 AI 系统，其 Art. 50(2) 机器可读标记义务
+          <b>过渡至 2026-12-02</b>。<b>本项目若为该日之后投放的新产品，不适用该过渡期，L2 须在上线前完成。</b>
+          该过渡仅针对标记义务，<b>不延及 L1 身份告知与 L3 无障碍</b>。
+        </span>
+      </div>
+      <div class="verdict">
+        <span class="badge">行为准则</span>
+        <span class="txt">
+          《AI 生成内容透明度行为准则》为<b>自愿性</b>，依 Art. 50(7) 制定。<b>签署方可在其措施范围内直接援引准则证明合规</b>；
+          未签署方则须由各成员国市场监管机构<b>个案评估</b>其措施是否充分。对应整改项 <b>M1（D+45）</b>。
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 12 · GDPR INTERLOCK ═══════════════ -->
+<section class="slide" data-k="与 GDPR 的衔接" data-sec="Part 02">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>Q4 · 与 GDPR 透明度要求的衔接</div>
+    <h1 class="st">两套义务<em>叠加而非替代</em>：一份告知，双重覆盖</h1>
+  </div>
+  <div class="body">
+    <div class="art">
+      <span class="lbl">Regulation (EU) 2024/1689 · Article 50(6) · 衔接条款</span>
+      <span class="en">"<b>Paragraphs 1 to 4 shall not affect the requirements and obligations set out in Chapter III, and shall be without prejudice to other transparency obligations laid down in Union or national law for deployers of AI systems.</b>"</span>
+      <span class="zh"><b>第 1 至 4 款不影响第三章规定的各项要求与义务，且不妨碍欧盟或国家法律为 AI 系统部署者规定的其他透明度义务。</b></span>
+      <span class="src">Regulation (EU) 2024/1689, Art. 50(6) — <a href="https://artificialintelligenceact.eu/article/50/" target="_blank" rel="noopener">条款数据库镜像</a></span>
+    </div>
+
+    <h2 style="font-family:var(--f-serif);font-size:16.4px;font-weight:750;padding-left:10px;border-left:3px solid var(--brand)">AI Act 管什么 <span style="font-family:var(--f-mono);font-size:12.2px;color:var(--ink-4);font-weight:400">WHO / WHEN / HOW</span></h2>
+    <div class="grid g2">
+      <div class="card key" style="padding:15.6px 16.2px">
+        <table>
+          <tbody>
+            <tr><td style="width:28%"><b>对象</b></td><td>「这是 AI」这一<b>身份</b>本身</td></tr>
+            <tr><td><b>受众</b></td><td>所有与 AI 系统交互的自然人</td></tr>
+            <tr><td><b>时点</b></td><td>最迟首次交互／首次接触</td></tr>
+            <tr><td><b>形式</b></td><td>清晰可辨 + 无障碍</td></tr>
+            <tr><td><b>不回答</b></td><td>数据如何处理、存哪、保存多久</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card" style="padding:15.6px 16.2px">
+        <h4 style="font-size:13.3px;margin-bottom:5px">GDPR 管什么 <span style="font-family:var(--f-mono);font-size:11.8px;color:var(--ink-4);font-weight:400">WHO / WHEN / HOW</span></h4>
+        <table>
+          <tbody>
+            <tr><td style="width:28%"><b>对象</b></td><td>个人数据的处理<b>事实</b>（Art. 13/14）</td></tr>
+            <tr><td><b>受众</b></td><td>数据主体</td></tr>
+            <tr><td><b>时点</b></td><td>收集时（Art. 12(1)）</td></tr>
+            <tr><td><b>形式</b></td><td>简明、透明、易懂、清晰可访问</td></tr>
+            <tr><td><b>配套</b></td><td>Art. 5(1)(a)、Art. 22、Art. 15/17</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <h2 style="font-family:var(--f-serif);font-size:15.5px;font-weight:750;padding-left:10px;border-left:3px solid var(--green);margin-bottom:2px">叠加后的实际合规形态　<span style="font-family:var(--f-mono);font-size:12.2px;color:var(--ink-4);font-weight:400">SIX PRACTICE POINTS</span></h2>
+    <div class="grid g2" style="flex:none;gap:11.2px">
+      <ul class="cl ok" style="margin:0">
+        <li><b>一份文件、两个标签：</b>隐私政策中同时含「本服务由 AI 驱动（AI Act Art. 50(1)）」与数据处理告知（GDPR Art. 13）两节，互不替代。</li>
+        <li><b>交互层与文档层分工：</b>Art. 50 的「这是 AI」属<b>即时界面告知</b>；GDPR 的处理细节属<b>政策文档</b>。二者时点与形式要求不同，不可互相顶替。</li>
+        <li><b>EDPB Opinion 28/2024：</b><b>合法利益（Art. 6(1)(f)）不能作为 AI 模型训练与运行的「默认」法律依据</b>；控制器须完成三步检验，并主动提供超出 Art. 13/14 最低要求的透明度（披露数据集来源与选择标准）。语音数据应单独评估。</li>
+      </ul>
+      <ul class="cl ok" style="margin:0">
+        <li><b>AI 素养义务并行：</b>Art. 4(1)（2025-02-02 起适用）要求 <b>采取措施（shall take measures）</b>支持员工及代其操作的 AI 素养，并明文规定<b>「不要求保证任何特定水平」</b>——义务在于「采取措施」这一行为本身。<b>无法事后补文件，须有实际培训记录。</b></li>
+        <li><b>敏感数据触发额外禁止：</b>若涉及情感识别，Art. 5(1)(f) 对<b>工作场所与教育机构</b>设有禁止性规定（另设医疗或安全原因例外）；2026/1744 新增 Art. 5(1)(ba)(bb)，依 Art. 113(a) 自 <b>2026-12-02</b> 起适用，须在设计阶段排除。</li>
+        <li><b>声音克隆的额外义务：</b>若具备语音克隆能力，可能同时落入 Art. 50(4)（深度伪造披露，主体为 deployer）与 Dir. (EU) 2024/1385 的刑事化射程（见第 16 页）。贵司虽非 50(4) 义务主体，但<b>产品设计决定了下游能否履责</b>，宜主动提供披露技术手段。</li>
+      </ul>
+    </div>
+
+    <div class="note" style="padding:6px 10px;font-size:12px;line-height:1.5">
+      依据：<a href="https://artificialintelligenceact.eu/article/50/" target="_blank" rel="noopener">Art. 50(6)</a>　·　<a href="https://www.edpb.europa.eu/system/files/2024-12/edpb_opinion_202428_ai-models_en.pdf" target="_blank" rel="noopener">EDPB Opinion 28/2024（2024-12-17）</a>　·　<a href="https://artificialintelligenceact.eu/article/4/" target="_blank" rel="noopener">Art. 4（AI 素养）</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 13 · DIVIDER 3 ═══════════════ -->
+<section class="slide divider" data-k="第三部分 · 责任与后果" data-sec="Part 03" data-div="3">
+  <div class="num">03</div>
+  <h1>法律责任与<em>违规后果</em></h1>
+  <p>违规成本并非单一罚款，而是行政、民事、刑事三条并行通道，且可相互叠加。本部分逐条测算敞口，并明确 AI Act 本身不设刑事罚则这一事实。</p>
+  <div class="toc-mini">
+    <div><b>P14</b><span>行政责任：Art. 99 罚款阶梯与执法机制</span></div>
+    <div><b>P15</b><span>民事责任：GDPR Art. 82 判例链 + 产品责任指令</span></div>
+    <div><b>P16</b><span>刑事责任与三类责任的叠加关系</span></div>
+  </div>
+  <div class="stamp">PART 03 / 04<br>LIABILITY &amp; ENFORCEMENT</div>
+</section>
+
+<!-- ═══════════════ 14 · ADMINISTRATIVE ═══════════════ -->
+<section class="slide" data-k="行政责任：罚款阶梯" data-sec="Part 03">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>Q5 · 行政责任</div>
+    <h1 class="st">罚款阶梯：<span class="lit">Art. 50 明文对应 €15M 或 3%</span></h1>
+  </div>
+  <div class="body">
+    <div class="art red">
+      <span class="lbl">Art. 99(4)(g) · 直接对应条款 · 官方原文</span>
+      <span class="en">"Non-compliance with any of the following provisions related to operators or notified bodies, other than those laid down in Articles 5, shall be subject to administrative fines of up to <b>EUR 15 000 000</b> or, if the offender is an undertaking, <b>up to 3 % of its total worldwide annual turnover</b> for the preceding financial year, whichever is higher: … <b>(g) transparency obligations for providers and deployers pursuant to Article 50.</b>"</span>
+      <span class="zh">违反下列与运营者或公告机构相关的规定（<b>第 5 条所列规定除外</b>），应处最高 <b>1500 万欧元</b>的行政罚款；违者为企业的，最高为其上一财年<b>全球年营业额 3%</b>，以较高者为准：……<b>(g) 依据第 50 条对提供者和部署者规定的透明度义务。</b></span>
+      <span class="src">Regulation (EU) 2024/1689, Art. 99(4)(g) — <a href="https://artificialintelligenceact.eu/article/99/" target="_blank" rel="noopener">条款数据库镜像</a></span>
+    </div>
+
+    <div class="grid g-3-2">
+      <div class="chart">
+        <div class="ct">罚款上限横向对照 · 按全球年营业额百分比</div>
+        <div class="lad">
+          <div class="lad-row">
+            <div class="lb"><b>Art. 99(3)</b>Art. 5 禁令</div>
+            <div class="lad-track"><div class="lad-fill dim" style="width:100%"></div></div>
+            <div class="vv">€35M <small>/ 7%</small></div>
+          </div>
+          <div class="lad-row hot">
+            <div class="lb"><b>Art. 99(4)(g)</b>Art. 50 透明度</div>
+            <div class="lad-track"><div class="lad-fill hot" style="width:42.8%"></div></div>
+            <div class="vv">€15M <small>/ 3%</small></div>
+          </div>
+          <div class="lad-row">
+            <div class="lb"><b>Art. 99(5)</b>误导性信息</div>
+            <div class="lad-track"><div class="lad-fill" style="width:14.3%"></div></div>
+            <div class="vv">€7.5M <small>/ 1%</small></div>
+          </div>
+          <div class="lad-row">
+            <div class="lb"><b>Art. 101</b>GPAI 提供者</div>
+            <div class="lad-track"><div class="lad-fill dim" style="width:42.8%"></div></div>
+            <div class="vv">€15M <small>/ 3%</small></div>
+          </div>
+        </div>
+        <div class="lad-axis">
+          <div></div>
+          <div class="ax"><i style="left:0%">0%</i><i style="left:14.3%">1%</i><i style="left:42.8%">3%</i><i style="left:71.4%">5%</i><i style="left:100%">7%</i></div>
+          <div></div>
+        </div>
+        <div class="note" style="margin-top:8px">
+          条形长度按<b>全球年营业额百分比</b>等比绘制；最终罚款取<b>百分比与固定金额中的较高者</b>。
+          Art. 101 与 Art. 99(4)(g) 百分比相同，但<b>义务主体不同</b>（GPAI 模型提供者 vs 贵司）。
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:13.8px">
+        <div class="card hot">
+          <div class="big">€15M / 3%</div>
+          <div class="unit">ART. 99(4)(G) · 本项目适用</div>
+          <p style="margin-top:6px"><b>违反 Art. 50 透明度义务。</b>这是本项目最直接、现实的风险敞口，<b>且已生效 77 天</b>。<span class="tag t-hi">立即适用</span></p>
+        </div>
+        <div class="card">
+          <div class="big">€1.5M / €750k</div>
+          <div class="unit">ART. 100(2) 与 100(3)</div>
+          <p style="margin-top:6px">Art. 100 通篇适用于<b>欧盟机构</b>（Union institutions），由<b>欧洲数据保护监督员（EDPS）</b>执行。贵司为私营企业，<b>不适用</b>本条，此处仅为区分条款而列。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g3" style="flex:none">
+      <div class="card tint">
+        <h4>Art. 99(3) · €35M / 7%</h4>
+        <p>违反 <b>Art. 5 禁止性实践</b>（自 2025-02-02 起）。<b>本产品一般不触发</b>，除非涉及情感识别、语音克隆生成非自愿私密材料等禁止场景。</p>
+      </div>
+      <div class="card tint">
+        <h4>Art. 99(5) · €7.5M / 1%</h4>
+        <p>向公告机构或国家主管机关提供<b>不正确、不完整或误导性信息</b>。整改问答、市场宣传与监管答复口径不一致时易触发。</p>
+      </div>
+      <div class="card tint">
+        <h4>SME / 小型 midsize 公司上限</h4>
+        <p><b>Art. 99(6)</b>：中小企业（含初创）——第 3、4、5 款罚款按<b>百分比或金额中较低者</b>封顶。<b>Art. 99(6a)</b>：小型 midsize 公司（SMC）同规则封顶。<span class="cite">2026/1744 新增</span></p>
+      </div>
+    </div>
+
+    <div class="note">
+      <b>裁量因素（Art. 99(7)）：</b>违规性质、严重程度与持续时间、受影响人数与损害程度、经营者规模与市场份额、已获其他机关罚款、<b>是否主动报告违规</b>、<b>故意或过失性质</b>、配合程度、已采取措施减轻损害的行为等。<b>实务含义：</b>自查发现后主动报告，是 Art. 99(7) 明列的减轻因素之一。
+      <b>执法机制：</b>成员国指定市场监管机构；任何人可依 <b>Art. 85</b> 提出投诉；<b>Art. 86</b> 规定受决定影响的 deployer 享有决策理由的<b>解释权</b>。Art. 99(9) 允许成员国将罚款规则交由国内法院执行，但须具备同等效果。
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 15 · CIVIL ═══════════════ -->
+<section class="slide" data-k="民事责任：两条路径" data-sec="Part 03">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>Q5 · 民事责任</div>
+    <h1 class="st">两条并行的<em>赔偿路径</em>：GDPR Art. 82 与产品责任</h1>
+  </div>
+  <div class="body">
+    <h2 style="font-family:var(--f-serif);font-size:16.4px;font-weight:750;padding-left:10px;border-left:3px solid var(--brand)">路径一 · GDPR Art. 82 损害赔偿 —— 欧盟法院已确立的低门槛</h2>
+    <div class="tbl-wrap" style="flex:none;max-height:222px">
+      <table>
+        <thead><tr><th style="width:17%">案号</th><th style="width:11%">裁判日期</th><th>裁判要点</th></tr></thead>
+        <tbody>
+          <tr><td><b>C-300/21</b><br>Österreichische Post<br><span style="font-size:12.2px"><a class="cite" href="https://curia.europa.eu/juris/liste.jsf?num=C-300/21" target="_blank" rel="noopener">curia</a></span></td><td class="num">2023-05-04</td>
+              <td>确立 Art. 82 三项累积要件（<b>违规 + 损害 + 因果关系</b>）；<b>拒绝设定严重性门槛</b>——国家法不得要求非物质损害达到一定严重程度方可获赔；并确立赔偿为<b>补偿性而非惩罚性</b>、<b>Art. 83 罚款裁量标准不得类推适用</b>于赔偿额计算；<b>控制者须证明其安全措施适当</b>，不能简单归咎于员工</td></tr>
+          <tr><td><b>C-340/21</b><br>VB v Natsionalna agentsia<br><span style="font-size:12.2px"><a class="cite" href="https://curia.europa.eu/juris/liste.jsf?num=C-340/21" target="_blank" rel="noopener">curia</a></span></td><td class="num">2023-12-14</td>
+              <td><b>对数据被滥用之恐惧</b>本身可构成非物质损害；GDPR 未明文排除该类损害。但主张方须<b>证明恐惧有据</b>，纯属假设性风险不足</td></tr>
+          <tr><td><b>C-687/21</b><br>BL v MediaMarktSaturn<br><span style="font-size:12.2px"><a class="cite" href="https://curia.europa.eu/juris/liste.jsf?num=C-687/21" target="_blank" rel="noopener">curia</a></span></td><td class="num">2024-01-25</td>
+              <td><b>因失去控制而产生的担忧</b>（即使只是暂时）可构成非物质损害；但重申<b>仅违反不足以获得赔偿</b>，原告仍须证明其确实遭受损害</td></tr>
+          <tr><td><b>C-590/22</b><br>（援引 C-300/21）<br><span style="font-size:12.2px"><a class="cite" href="https://curia.europa.eu/juris/liste.jsf?num=C-590/22" target="_blank" rel="noopener">curia</a></span></td><td class="num">2024-06-20</td>
+              <td>重申「违规 + 损害 + 因果关系」三项要件为<b>已确立之判例法</b>；损害不须达到特定严重程度，但<span class="hl">不可对标准化函件批量推定损害成立</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      上述四项要点的规范来源为 CJEU 判决主文；裁判文书以 CURIA 官方档案为准。<b>C-741/21</b>（2024-04-11）就 Art. 82(1) 的解释作了进一步阐明，其要点与 C-300/21 一脉相承，本报告不重复列举。
+    </div>
+
+    <div class="verdict amber">
+      <span class="badge">风险放大点</span>
+      <span class="txt">
+        若大量用户因「与 AI 对话却未被告知」而主张<b>「丧失对自身语音数据的控制」</b>，按 C-340/21 / C-687/21 的标准，
+        此类<b>「失控感」有可能被认定为非物质损害</b>，而 Art. 82 <b>没有金额上限、不设严重性门槛</b>。
+        叠加 <b>Dir. (EU) 2020/1828</b> 集体诉讼机制（GDPR 已被列入其附件 I），单一告知缺陷可能被放大为<b>规模化集体索赔</b>。
+      </span>
+    </div>
+
+    <h2 style="font-family:var(--f-serif);font-size:16.4px;font-weight:750;padding-left:10px;border-left:3px solid var(--gold)">路径二 · 产品责任 Directive (EU) 2024/2853 —— 2026-12-09 起适用</h2>
+    <div class="grid g3">
+      <div class="card"><h4>软件与 AI 明确纳入「产品」</h4>
+        <p>新指令将「产品」定义扩展至<b>数字制造文件与软件</b>，AI 系统属软件；<b>固件与 AI 系统适用本责任制度</b>。</p></div>
+      <div class="card"><h4>缺陷推定（举证倒置）</h4>
+        <p>当技术或科学复杂性致<b>证明缺陷或因果关系过度困难</b>时，法院可<b>推定</b>两者成立。</p>
+        <p style="margin-top:5px"><b>「模型不可解释」这一惯用抗辩，在新制度下可能转为对我方不利之推定。</b></p></div>
+      <div class="card"><h4>证据披露义务 + 免责条款失效</h4>
+        <p>须披露其控制下的必要且相称证据，<b>拒绝披露则法院可推定产品有缺陷</b>；<b>不得以服务条款排除或限制该责任</b>。</p></div>
+    </div>
+    <div class="note">
+      适用时间：Directive (EU) 2024/2853 于 2024-12-08 生效，成员国须于 <b>2026-12-09</b> 前完成转置，<b>适用于该日之后投放市场或投入使用的产品</b>。
+      可赔损害包括死亡、人身伤害（含经医学认定的心理伤害）、财产损坏，以及<b>非职业用途数据的灭失或损坏</b>；已取消旧指令的最低损害门槛，且<b>不再有 €70M 责任上限</b>。
+      另：AI Liability Directive 已于 2025 年 2 月被委员会撤回，产品责任指令遂成为 AI 民事责任的主要路径。
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 16 · CRIMINAL ═══════════════ -->
+<section class="slide" data-k="刑事责任与责任叠加" data-sec="Part 03">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>Q5 · 刑事责任</div>
+    <h1 class="st">AI Act <em>本身不设刑事罚则</em>，但风险并未消失</h1>
+  </div>
+  <div class="body">
+    <div class="verdict red">
+      <span class="badge">核心事实</span>
+      <span class="txt">
+        <b>Regulation (EU) 2024/1689 全篇不包含直接对自然人规定刑事处罚的条款。</b>
+        其制裁体系为「成员国依 Art. 99(1) 制定罚则 + 欧委会对 GPAI 提供者罚款 + 市场监管机构执法」。
+        但 Art. 99(1) 授权成员国设定罚则时，<b>并未排除刑事罚则</b>，因此成员国完全可能将违反 Art. 50 的行为<b>刑事化</b>。
+        中国公司在无欧盟实体的情况下，<b>通过 GDPR Art. 27 代表与刑事程序管辖连接点被实际追责的风险不可忽视</b>。
+      </span>
+    </div>
+
+    <div class="grid g2">
+      <div class="card">
+        <h4>GDPR Art. 84：成员国须设「其他罚则」</h4>
+        <p>Art. 84 要求成员国为违反本条例义务的行为规定其他罚则，<b>并须采取一切措施确保其适用</b>；
+        成员国对 Art. 13/14 等义务违反的刑事化程度不一，<b>具体罪名与量刑须逐一核对目标市场国的国内法</b>。</p>
+        <p style="margin-top:6px">因此「是否入刑」是<b>成员国法问题</b>，不能依赖欧盟层面判断。落地前应对主要目标市场逐国核实。</p>
+      </div>
+      <div class="card">
+        <h4>Directive (EU) 2024/1385：深度伪造入刑已成硬性义务</h4>
+        <p>该指令将<b>非自愿分享私密或被操纵材料（含 AI 深度伪造）、网络追踪、网络骚扰、基于性别的仇恨煽动</b>列为须在欧盟层面刑事化的行为。</p>
+        <p style="margin-top:6px">成员国转置截止日：<b>2027-06-14</b>。</p>
+        <p style="margin-top:6px"><b>与本项目的关联：</b>若语音助手具备语音克隆、形象／声音模仿或生成能力，则滥用风险进入该指令射程，<b>须在产品设计层设置滥用防护与举报机制</b>。</p>
+      </div>
+    </div>
+
+    <h2 style="font-family:var(--f-serif);font-size:17px;font-weight:750;padding-left:10px;border-left:3px solid var(--red)">三类责任的边界与叠加关系</h2>
+    <div class="tbl-wrap" style="flex:1;min-height:0">
+      <table>
+        <thead><tr><th style="width:11%">责任类型</th><th style="width:27%">主要依据</th><th style="width:26%">可能后果</th><th>对贵司的现实意义</th></tr></thead>
+        <tbody>
+          <tr class="hl-row">
+            <td><span class="tag t-hi">行政</span></td>
+            <td>AI Act Art. 99(4)(g)；成员国市场监管机构；Art. 85 投诉权</td>
+            <td>最高 €15M 或全球营业额 3%（取高）；SME 取低；附警告与纠正令</td>
+            <td><b>最直接、最迫近。</b>Art. 50 自 2026-08-02 已适用，欧盟层面监管能力已进入实操</td>
+          </tr>
+          <tr>
+            <td><span class="tag t-md">民事</span></td>
+            <td>GDPR Art. 82 + CJEU 判例；Dir. (EU) 2024/2853（2026-12-09）；Dir. (EU) 2020/1828 集体救济</td>
+            <td>无上限损害赔偿（无严重性门槛）；产品责任 + 举证倒置；可集体起诉</td>
+            <td><b>规模化风险。</b>单一告知缺陷可能被集体诉讼放大；PLD 生效后不可再用免责条款</td>
+          </tr>
+          <tr>
+            <td><span class="tag t-lo">刑事</span></td>
+            <td>AI Act 本身无；GDPR Art. 84 授权成员国；Dir. (EU) 2024/1385（转置截止 2027-06-14）</td>
+            <td>依成员国法，可能涉及罚金乃至监禁；滥用类行为另受刑事追诉</td>
+            <td><b>间接但真实。</b>取决于目标市场国的刑事化程度与语音克隆滥用情形，须逐国核实</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      执法现实参考：意大利 Garante 曾于 2024-12 对 OpenAI 处 <b>€15M</b> 罚款（理由含透明度义务违反、缺乏有效法律依据、年龄验证不足、未通报 2023-03 数据泄露），
+      <b>该罚款其后被撤销</b>——据公开报道，意大利法院于 2026 年以<b>管辖权</b>为由撤销该决定，理由为爱尔兰 DPC 已成为一站式机制下的主导监管机关；
+      该撤销<b>属程序性管辖争议，法院并未就实体违法性作出裁判</b>。<b>（该案判决的法院名称、案号与具体日期未经本报告核验，引用前须回链判决原文确认。）</b>
+      <b>对本项目的启示：</b>该案<b>既不能据以认定 OpenAI 行为合法，也不能据以认定其违法</b>。它真正揭示的是——
+      <b>在欧盟设立实体这一动作会改变一站式机制下的主导监管机关，进而改变由谁处罚、以何程序处罚</b>。
+      贵司若计划在欧盟落地实体或雇佣当地人员，应将此纳入整体合规与市场进入策略，而非仅视为人事安排。
+      <br><span style="color:var(--ink-3)">另需注意：Art. 50 透明度义务的独立价值在于，<b>其违反无需证明 GDPR 项下的任何损害即可成立</b>——这与 GDPR 诉权须过损害证明关的结构不同，也是本项目应优先落实 Art. 50 的原因。</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 17 · DIVIDER 4 ═══════════════ -->
+<section class="slide divider" data-k="第四部分 · 落地与保障" data-sec="Part 04" data-div="4">
+  <div class="num">04</div>
+  <h1>落地路径与<em>保障机制</em></h1>
+  <p>15 项整改动作按高／中／低三档排布，逐项标注责任部门、完成时限与法律依据，并配套可勾选的执行看板与条款—证据追溯矩阵。</p>
+  <div class="toc-mini">
+    <div><b>P18</b><span>高优先级整改清单（H1–H5）· D+14 ~ D+30</span></div>
+    <div><b>P19</b><span>中优先级整改清单（M1–M6）· D+45 ~ D+90</span></div>
+    <div><b>P20</b><span>低优先级清单（L1–L4）与落地路线图</span></div>
+    <div><b>P21 — P22</b><span>条款—证据追溯矩阵 · 来源总表</span></div>
+  </div>
+  <div class="stamp">PART 04 / 04<br>EXECUTION &amp; ASSURANCE</div>
+</section>
+
+<!-- ═══════════════ 18 · HIGH PRIORITY ═══════════════ -->
+<section class="slide" data-k="整改：高优先级" data-sec="Part 04">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>Q6 · 整改建议（一）</div>
+    <h1 class="st"><span class="tag t-hi">高优先级</span>　30 日内必须完成</h1>
+    <p class="sub">对应义务自 2026-08-02 起适用，属「现在不做即持续违规」的状态。右侧清单可勾选，进度将自动保存在本机。</p>
+  </div>
+  <div class="body">
+    <div class="grid g-3-2" style="flex:1;min-height:0">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:5%">#</th><th style="width:26%">整改动作</th><th style="width:31%">具体交付物</th><th style="width:16%">责任部门</th><th style="width:9%">时限</th><th>法律依据</th></tr></thead>
+          <tbody>
+            <tr><td class="num"><b>H1</b></td>
+              <td><b>首次交互前的「这是 AI」告知</b><br>网页 / App / 语音播报三端同步</td>
+              <td>独立告知模块（非常驻小字、非折叠）；固定于对话区可视位置；语音助手在<b>首次播报内容前</b>先播报 AI 身份；适配深色模式与放大字号</td>
+              <td>产品负责人 + 前端负责人 + UX 设计</td><td class="num">D+14</td><td>Art. 50(1) + 50(5)</td></tr>
+            <tr><td class="num"><b>H2</b></td>
+              <td><b>合成语音输出机器可读标记</b></td>
+              <td>在音频元数据中嵌入标记（C2PA 类内容凭证、不可感知水印、音频指纹）；建立<b>可被第三方检测器验证</b>的方案；留存技术文档证明「有效、可互操作、稳健、可靠」</td>
+              <td>算法工程 + 安全工程 + 法务</td><td class="num">D+21</td><td>Art. 50(2) + 50(5)</td></tr>
+            <tr><td class="num"><b>H3</b></td>
+              <td><b>无障碍等价呈现</b></td>
+              <td>AI 身份告知提供<b>视觉 + 听觉双通道</b>；确认屏幕阅读器可读（ARIA 标注）；无闪烁；键盘可操作；服务条款页发布<b>无障碍声明</b></td>
+              <td>无障碍负责人 + 前端 + 法务</td><td class="num">D+21</td><td>Art. 50(5) 末句 + Dir. (EU) 2019/882</td></tr>
+            <tr><td class="num"><b>H4</b></td>
+              <td><b>隐私政策与 GDPR 告知改造</b></td>
+              <td>新增「本服务由 AI 驱动」专节；补齐语音数据处理依据、<b>保存期限、跨境传输、权利行使路径</b>；对齐 EDPB Op. 28/2024 关于合法利益不可作默认依据的意见</td>
+              <td>DPO / 法务 + 隐私工程</td><td class="num">D+25</td><td>GDPR Art. 12/13/14/5(1)(a)；EDPB Op. 28/2024</td></tr>
+            <tr><td class="num"><b>H5</b></td>
+              <td><b>AI 素养义务落实</b></td>
+              <td>面向产品、客服、运营团队的 AI Act 专项培训（含<b>何为「显而易见」</b>的判断标准）；留存培训记录与考核结果</td>
+              <td>HR + 法务 + 业务负责人</td><td class="num">D+30</td><td>Art. 4（2025-02-02 起适用）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:13.8px">
+        <div class="ck-panel">
+          <div class="ring">
+            <svg width="104" height="104" viewBox="0 0 104 104">
+              <circle class="rbg" cx="52" cy="52" r="43"></circle>
+              <circle class="rfg" id="ringH" cx="52" cy="52" r="43" stroke-dasharray="270.2" stroke-dashoffset="270.2"></circle>
+            </svg>
+            <div class="rtx"><div><b id="ringHv">0/5</b><span>已完成</span></div></div>
+          </div>
+          <div>
+            <div class="ck-items" id="ckH">
+              <div class="ck-item" data-id="H1"><span class="bx"></span><span class="tx"><b>H1</b>　首次交互 AI 身份告知（三端）</span><span class="dd">D+14</span></div>
+              <div class="ck-item" data-id="H2"><span class="bx"></span><span class="tx"><b>H2</b>　合成语音机器可读标记</span><span class="dd">D+21</span></div>
+              <div class="ck-item" data-id="H3"><span class="bx"></span><span class="tx"><b>H3</b>　无障碍等价呈现</span><span class="dd">D+21</span></div>
+              <div class="ck-item" data-id="H4"><span class="bx"></span><span class="tx"><b>H4</b>　隐私政策与 GDPR 告知改造</span><span class="dd">D+25</span></div>
+              <div class="ck-item" data-id="H5"><span class="bx"></span><span class="tx"><b>H5</b>　AI 素养培训与记录</span><span class="dd">D+30</span></div>
+            </div>
+            <div class="ck-hint">点击切换完成状态 · 进度保存在本机 localStorage</div>
+          </div>
+        </div>
+        <div class="verdict red" style="flex:1">
+          <span class="badge">为何最高优先</span>
+          <span class="txt">
+            H1／H2 直接对应 <b>Art. 99(4)(g)</b> 的 €15M / 3% 敞口，且义务<b>已于 2026-08-02 生效</b>；
+            Digital Omnibus 未给予延期。H3 属「技术可行即须满足」的独立叠加义务。
+            H4／H5 是<b>唯一能与 H1 一并完成的低成本项</b>——因为告知文案改动必然要触及隐私政策，合并实施可节省一轮评审。
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 19 · MEDIUM PRIORITY ═══════════════ -->
+<section class="slide" data-k="整改：中优先级" data-sec="Part 04">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>Q6 · 整改建议（二）</div>
+    <h1 class="st"><span class="tag t-md">中优先级</span>　60–90 日内完成</h1>
+    <p class="sub">属「制度与流程」层：单次技术改造无法覆盖，需在发布后 1–2 个迭代内建制。</p>
+  </div>
+  <div class="body">
+    <div class="grid g-3-2" style="flex:1;min-height:0">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:5%">#</th><th style="width:26%">整改动作</th><th style="width:31%">具体交付物</th><th style="width:16%">责任部门</th><th style="width:9%">时限</th><th>法律依据</th></tr></thead>
+          <tbody>
+            <tr><td class="num"><b>M1</b></td>
+                <td><b>签署《AI 生成内容透明度行为准则》</b></td>
+                <td>完成签署评估与提交；建立准则要求与内部规范映射表；参加签署方 Taskforce</td>
+                <td>法务 + 战略合作</td><td class="num">D+45</td><td>Art. 50(7) + Art. 56(6)</td></tr>
+            <tr><td class="num"><b>M2</b></td>
+                <td><b>DPIA 与 AI 风险文档</b></td>
+                <td>完成 DPIA（含语音数据、未成年人保护、跨境传输）；建立 Art. 50 义务的合规证据卷宗（供 Art. 85 投诉应对与 PLD 举证倒置之需）</td>
+                <td>DPO + 隐私工程 + 风控</td><td class="num">D+60</td><td>GDPR Art. 35；PLD 2024/2853 举证规则</td></tr>
+            <tr><td class="num"><b>M3</b></td>
+                <td><b>GDPR 代表与欧盟联络点</b></td>
+                <td>依 Art. 27 指定欧盟代表并公开其身份与联系方式；设立欧盟联络邮箱承接 Art. 85 投诉；<b>明确「设立欧盟实体将改变一站式机制下的主导监管机关」这一管辖影响</b></td>
+                <td>法务 + 外部欧盟律师</td><td class="num">D+60</td><td>GDPR Art. 27；AI Act Art. 85 / 86</td></tr>
+            <tr><td class="num"><b>M4</b></td>
+                <td><b>滥用防护与滥用场景治理</b></td>
+                <td>评估并限制语音克隆、形象模仿、生成非自愿私密材料等滥用能力；建立举报通道与下架流程；留存防护措施证据</td>
+                <td>安全工程 + 内容安全 + 产品</td><td class="num">D+75</td><td>Dir. (EU) 2024/1385（转置截止 2027-06-14）；Art. 5(1)(ba)(bb) 自 2026-12-02 起</td></tr>
+            <tr><td class="num"><b>M5</b></td>
+                <td><b>供应商与模型侧义务对齐</b></td>
+                <td>书面要求上游模型／语音合成供应商提供<b>标记能力说明</b>与输出标记合规承诺；确认是否触发 Art. 51/52（系统性风险）与 Art. 54 授权代表义务</td>
+                <td>采购 + 法务 + 算法</td><td class="num">D+75</td><td>Art. 50(2)；Art. 25（价值链分工）；Art. 51 / 52 / 54</td></tr>
+            <tr><td class="num"><b>M6</b></td>
+                <td><b>内部一致性与对外口径</b></td>
+                <td>统一市场宣传、商店页面、客服话术中的 AI 披露表述；<b>对监管机关的答复口径须单独建档</b>，以避免触发 Art. 99(5)</td>
+                <td>市场 + 客服 + 法务</td><td class="num">D+90</td><td>Dir. 2006/114/EC；Art. 99(5)（仅限向主管机关答复场景）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:13.8px">
+        <div class="ck-panel">
+          <div class="ring">
+            <svg width="104" height="104" viewBox="0 0 104 104">
+              <circle class="rbg" cx="52" cy="52" r="43"></circle>
+              <circle class="rfg" id="ringM" cx="52" cy="52" r="43" stroke-dasharray="270.2" stroke-dashoffset="270.2" style="stroke:var(--gold)"></circle>
+            </svg>
+            <div class="rtx"><div><b id="ringMv">0/6</b><span>已完成</span></div></div>
+          </div>
+          <div>
+            <div class="ck-items" id="ckM">
+              <div class="ck-item" data-id="M1"><span class="bx"></span><span class="tx"><b>M1</b>　签署透明度行为准则</span><span class="dd">D+45</span></div>
+              <div class="ck-item" data-id="M2"><span class="bx"></span><span class="tx"><b>M2</b>　DPIA 与合规证据卷宗</span><span class="dd">D+60</span></div>
+              <div class="ck-item" data-id="M3"><span class="bx"></span><span class="tx"><b>M3</b>　GDPR 欧盟代表与联络点</span><span class="dd">D+60</span></div>
+              <div class="ck-item" data-id="M4"><span class="bx"></span><span class="tx"><b>M4</b>　滥用防护与场景治理</span><span class="dd">D+75</span></div>
+              <div class="ck-item" data-id="M5"><span class="bx"></span><span class="tx"><b>M5</b>　供应商义务对齐</span><span class="dd">D+75</span></div>
+              <div class="ck-item" data-id="M6"><span class="bx"></span><span class="tx"><b>M6</b>　内部一致性与对外口径</span><span class="dd">D+90</span></div>
+            </div>
+            <div class="ck-hint">点击切换完成状态 · 进度保存在本机 localStorage</div>
+          </div>
+        </div>
+        <div class="verdict amber" style="flex:1">
+          <span class="badge">分析判断</span>
+          <span class="txt">
+            <b>M1 的价值：</b>《AI 生成内容透明度行为准则》为自愿性。据欧委会公开说明，该准则由 AI Office 推动、依 Art. 50(7) 制定，
+            并辅以委员会关于 Art. 50 适用范围的指南；经委员会与 AI 委员会评估后，<b>签署方可在其措施范围内援引准则证明合规</b>，
+            而选择以其他方式合规者则须<b>由各成员国市场监管机构个案评估其措施是否充分</b>。
+            这意味着未签署方可能面对 27 份口径不完全一致的评估——<b>这是本清单中性价比最高的一项</b>。
+            <br><span style="font-size:12.5px;color:var(--gold)">注：准则的具体版本日期、签署方数量与「充分性」评估的法律形式，应以欧委会官方发布页为准复核。</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 20 · LOW PRIORITY + ROADMAP ═══════════════ -->
+<section class="slide" data-k="整改：低优先级与路线图" data-sec="Part 04">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>Q6 · 整改建议（三）与路线图</div>
+    <h1 class="st"><span class="tag t-lo">低优先级</span>　前瞻性与常态化工作</h1>
+  </div>
+  <div class="body">
+    <div class="grid g-1-2">
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th style="width:7%">#</th><th style="width:30%">整改动作</th><th style="width:38%">具体交付物</th><th style="width:25%">责任 / 时限</th></tr></thead>
+          <tbody>
+            <tr><td class="num"><b>L1</b></td>
+                <td><b>PLD 2024/2853 应对准备</b></td>
+                <td>盘点「软件与 AI 作为产品」的对外免责条款，<b>移除在 PLD 下不再有效的免责表述</b>；建立可支撑「举证倒置」的测试与监控记录体系</td>
+                <td>法务 + 研发 + 保险经纪<br><span class="tag t-lo">2026-11-30</span></td></tr>
+            <tr><td class="num"><b>L2</b></td>
+                <td><b>技术文档体系化</b></td>
+                <td>将 Art. 50 标记方案、训练／评测记录、版本变更日志、投诉处理记录纳入统一文档体系，<b>按 PLD 证据披露义务标准可检索</b></td>
+                <td>研发效能 + 法务 + 合规<br><span class="tag t-lo">2026-12-31</span></td></tr>
+            <tr><td class="num"><b>L3</b></td>
+                <td><b>成员国执法动态监测</b></td>
+                <td>建立 27 国市场监管机构与数据保护机关的公告监测；重点跟踪 Art. 50 首例执法与判定标准</td>
+                <td>合规 + 外部顾问<br><span class="tag t-lo">持续 / 季度</span></td></tr>
+            <tr><td class="num"><b>L4</b></td>
+                <td><b>集体诉讼预案</b></td>
+                <td>评估在主要市场启动 <b>Directive (EU) 2020/1828</b> 项下集体诉讼的现实风险；建立索赔应对与准备金评估机制</td>
+                <td>法务 + 财务 + 保险<br><span class="tag t-lo">2027-03-31</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:12.5px;min-height:0">
+        <div class="gantt" style="flex:1">
+          <div class="g-head">
+            <div style="font-family:var(--f-mono);font-size:11.8px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-weight:700">整改路线图 · D0 = 2026-10-18</div>
+            <div class="g-axis">
+              <i style="left:0%">D0</i><i style="left:16.7%">D30</i><i style="left:33.3%">D60</i>
+              <i style="left:50%">D90</i><i style="left:66.7%">D120</i><i style="left:83.3%">D150</i><i style="left:100%">D180</i>
+            </div>
+          </div>
+          <div class="g-row"><div class="g-lb hi"><b>H1</b>首次交互告知</div><div class="g-track"><div class="g-bar hi" style="left:0;width:7.8%">D+14</div></div></div>
+          <div class="g-row"><div class="g-lb hi"><b>H2</b>合成标记</div><div class="g-track"><div class="g-bar hi" style="left:0;width:11.7%">D+21</div></div></div>
+          <div class="g-row"><div class="g-lb hi"><b>H3</b>无障碍</div><div class="g-track"><div class="g-bar hi" style="left:0;width:11.7%">D+21</div></div></div>
+          <div class="g-row"><div class="g-lb hi"><b>H4</b>隐私政策</div><div class="g-track"><div class="g-bar hi" style="left:0;width:13.9%">D+25</div></div></div>
+          <div class="g-row"><div class="g-lb hi"><b>H5</b>AI 素养</div><div class="g-track"><div class="g-bar hi" style="left:0;width:16.7%">D+30</div></div></div>
+          <div class="g-row"><div class="g-lb md"><b>M1</b>签署行为准则</div><div class="g-track"><div class="g-bar md" style="left:0;width:25%">D+45</div></div></div>
+          <div class="g-row"><div class="g-lb md"><b>M2/M3</b>DPIA · 欧盟代表</div><div class="g-track"><div class="g-bar md" style="left:0;width:33.3%">D+60</div></div></div>
+          <div class="g-row"><div class="g-lb md"><b>M4/M5</b>滥用防护 · 供应商</div><div class="g-track"><div class="g-bar md" style="left:0;width:41.7%">D+75</div></div></div>
+          <div class="g-row"><div class="g-lb md"><b>M6</b>对外口径</div><div class="g-track"><div class="g-bar md" style="left:0;width:50%">D+90</div></div></div>
+          <div class="g-row"><div class="g-lb lo"><b>L1</b>免责条款清理</div><div class="g-track"><div class="g-bar lo" style="left:0;width:30.6%">2026-11-30</div></div></div>
+          <div class="g-row"><div class="g-lb lo"><b>L2</b>技术文档体系</div><div class="g-track"><div class="g-bar lo" style="left:0;width:41.7%">2026-12-31</div></div></div>
+          <div class="g-row"><div class="g-lb lo"><b>L3</b>执法动态监测</div><div class="g-track"><div class="g-bar cont" style="left:0;width:100%">持续 / 季度复盘</div></div></div>
+          <div class="g-row"><div class="g-lb lo"><b>L4</b>集体诉讼预案</div><div class="g-track"><div class="g-bar lo" style="left:0;width:100%">2027-03-31</div></div></div>
+          <div class="g-track" style="margin-top:2px;height:14px">
+            <div class="g-pin" data-l="2026-12-02 Art.5(1)(ba)(bb)" style="left:26.4%"></div>
+            <div class="g-pin" data-l="2026-12-09 PLD 适用" style="left:30.6%"></div>
+          </div>
+        </div>
+        <div class="note">
+          <b>外部硬期限（不受贵司进度控制）：</b>2026-12-02 Art. 5(1)(ba)(bb) 新增禁止性实践适用（M4）；2026-12-09 Dir. (EU) 2024/2853 适用、免责条款失效（L1）；
+          2027-06-14 Dir. (EU) 2024/1385 转置截止。<b>2027-12-02 / 2028-08-02</b> 为 Annex III / Annex I 高风险义务期限，已由 Digital Omnibus 延后，AI 语音助手通常不属高风险。
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-top:11px">
+      <div class="card tint">
+        <h4>关键路径 ①：H1 是全部工作的前置</h4>
+        <p>H1（首次交互身份告知）<b>不依赖任何其他整改项</b>，且是 H3、H4 的界面载体。
+        若 D+14 无法完成 H1，<b>H3/H4 的界面改造将无处落地</b>，须优先保障。</p>
+      </div>
+      <div class="card tint">
+        <h4>关键路径 ②：L1 不可压缩</h4>
+        <p>技术材料强化的前置是 <b>L1（PLD 2024/2853 缺陷台账）</b>，须在 D+30 前完成，
+        否则 D+90 的插件文档化<b>缺少证据基础</b>。二者不可并行压缩。</p>
+      </div>
+      <div class="card tint">
+        <h4>关键路径 ③：M1 时点最宽松但价值最高</h4>
+        <p>行为准则签署（D+45）<b>无外部截止日</b>，是唯一可从容决策的高价值项。
+        但逾期签署意味着后续每次监管问询都需<b>个案自证充分性</b>，隐性成本随时间上升。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 21 · TRACEABILITY MATRIX ═══════════════ -->
+<section class="slide" data-k="追溯矩阵" data-sec="Part 04">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>附录 A · 追溯矩阵</div>
+    <h1 class="st">条款 → 义务 → <em>必备证据</em> → 责任人</h1>
+    <p class="sub">本表可直接映射为内部工单系统的字段。核心逻辑：<b style="color:var(--ink)">每一项义务都必须对应一份可被第三方（监管机关、原告、法院）检索的证据</b>，否则在 Art. 99(7) 裁量与 PLD 举证倒置下无从主张已尽注意义务。</p>
+  </div>
+  <div class="body">
+    <div class="tbl-wrap">
+      <table class="trace">
+        <thead><tr><th>义务</th><th>法律依据</th><th>必备证据（举证材料）</th><th>责任人</th><th>时限</th><th>状态</th></tr></thead>
+        <tbody>
+          <tr><td><b>交互身份告知</b></td><td>Art. 50(1) + 50(5)</td><td>前端代码提交记录、界面截图与设计规范、语音话术脚本、发布日志</td><td>产品 + 前端 + UX</td><td class="num">D+14</td><td><span class="stt no">未开始</span></td></tr>
+          <tr><td><b>合成内容机器可读标记</b></td><td>Art. 50(2)</td><td>标记方案技术文档、第三方检测器验证报告、音频样本元数据、检测失败处置记录</td><td>算法 + 安全工程</td><td class="num">D+21</td><td><span class="stt no">未开始</span></td></tr>
+          <tr><td><b>无障碍等价呈现</b></td><td>Art. 50(5) + EAA</td><td>无障碍审计报告、屏幕阅读器测试记录、对比度与键盘可达性测试、无障碍声明公示页</td><td>无障碍负责人</td><td class="num">D+21</td><td><span class="stt no">未开始</span></td></tr>
+          <tr><td><b>数据处理告知</b></td><td>GDPR Art. 12/13/14</td><td>隐私政策版本记录与发布时点、告知同意日志、DPIA 报告</td><td>DPO + 隐私工程</td><td class="num">D+25</td><td><span class="stt ip">进行中</span></td></tr>
+          <tr><td><b>AI 素养措施</b></td><td>Art. 4(1)</td><td>培训签到表、课程材料、考核结果、覆盖岗位清单</td><td>HR + 法务</td><td class="num">D+30</td><td><span class="stt no">未开始</span></td></tr>
+          <tr><td><b>行为准则签署</b></td><td>Art. 50(7)</td><td>签署回执、准则要求与内部规范映射表、参与 Taskforce 记录</td><td>法务 + 战略</td><td class="num">D+45</td><td><span class="stt ev">评估中</span></td></tr>
+          <tr><td><b>欧盟代表与联络点</b></td><td>GDPR Art. 27 / AI Act Art. 85</td><td>代表委任书、公示页面截图、联络邮箱与工单响应记录</td><td>法务 + 外部律师</td><td class="num">D+60</td><td><span class="stt no">未开始</span></td></tr>
+          <tr><td><b>滥用防护与场景排除</b></td><td>Dir. 2024/1385 / Art. 5(1)(ba)(bb)</td><td>滥用场景评估报告、功能限制策略、举报通道与下架流程记录</td><td>安全 + 内容安全</td><td class="num">D+75</td><td><span class="stt ev">评估中</span></td></tr>
+          <tr><td><b>技术文档可检索</b></td><td>PLD 证据披露义务</td><td>文档索引、版本变更日志、评测记录、投诉处理台账</td><td>研发效能 + 法务</td><td class="num">2026-12-31</td><td><span class="stt no">未开始</span></td></tr>
+          <tr><td><b>免责条款清理</b></td><td>Dir. (EU) 2024/2853</td><td>对外条款对照表、法务签署的清理确认函</td><td>法务</td><td class="num">2026-11-30</td><td><span class="stt no">未开始</span></td></tr>
+          <tr><td><b>监管答复口径</b></td><td>Art. 99(5) 风险规避</td><td>答复模板库、口径审批流、对外沟通留痕</td><td>法务 + 客服</td><td class="num">D+90</td><td><span class="stt fe">待启动</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      状态字段建议与内部工单系统打通；「必备证据」列直接对应 PLD 2024/2853 项下的证据披露义务与 Art. 99(7) 裁量中「已采取措施减轻损害」的举证需要。
+      <b>本表为建议模板，具体条目须结合贵司实际产品功能与目标市场国清单增删。</b>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 22 · SOURCES ═══════════════ -->
+<section class="slide" data-k="来源总表与声明" data-sec="Appendix">
+  <div class="shead">
+    <div class="eyebrow"><span class="dot"></span>来源总表 / Sources</div>
+    <h1 class="st">全部引用<em>可回链至原文</em></h1>
+  </div>
+  <div class="body">
+    <div class="verdict">
+      <span class="badge">来源层级</span>
+      <span class="txt">
+        <b>一级（官方法源）：</b>EUR-Lex（eur-lex.europa.eu）承载条例与指令的官方公报文本，为最终依据；
+        EDPB（edpb.europa.eu）承载监管机构正式文件；欧委会（digital-strategy.ec.europa.eu）与 CURIA（curia.europa.eu）承载官方发布与裁判档案。<br>
+        <b>二级（条款阅读镜像）：</b>artificialintelligenceact.eu 提供逐条排版文本，便于核对款项结构；<b>援引前应以 EUR-Lex 合并文本复核</b>，特别是经 Digital Omnibus 修订后的款项。
+      </span>
+    </div>
+    <div class="src-cols">
+      <div>
+        <h2 style="font-family:var(--f-serif);font-size:16px;font-weight:750;padding-left:9px;border-left:3px solid var(--brand);margin-bottom:8px">欧盟 AI Act · Regulation (EU) 2024/1689</h2>
+        <ul class="srclist">
+          <li><b>Art. 50</b>透明度义务（第 1–7 款逐字）<span class="u"><a href="https://artificialintelligenceact.eu/article/50/" target="_blank" rel="noopener">https://artificialintelligenceact.eu/article/50/</a>　｜　<a href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj" target="_blank" rel="noopener">EUR-Lex 官方公报</a></span></li>
+          <li><b>Art. 52</b>GPAI 模型提供者义务，含系统性风险认定程序 —— <b>非</b>交互披露<span class="u"><a href="https://artificialintelligenceact.eu/article/52/" target="_blank" rel="noopener">https://artificialintelligenceact.eu/article/52/</a></span></li>
+          <li><b>Art. 99</b>罚则，含 99(4)(g) 透明度义务 €15M/3%<span class="u"><a href="https://artificialintelligenceact.eu/article/99/" target="_blank" rel="noopener">https://artificialintelligenceact.eu/article/99/</a></span></li>
+          <li><b>Art. 100</b>对欧盟机构的行政罚款（由 EDPS 执行）<span class="u"><a href="https://artificialintelligenceact.eu/article/100/" target="_blank" rel="noopener">https://artificialintelligenceact.eu/article/100/</a></span></li>
+          <li><b>Art. 101</b>欧委会对 GPAI 模型提供者的罚款：3% 或 €15M 取高<span class="u"><a href="https://artificialintelligenceact.eu/article/101/" target="_blank" rel="noopener">https://artificialintelligenceact.eu/article/101/</a></span></li>
+          <li><b>Art. 113</b>生效与适用时间线（经 2026/1744 修订）<span class="u"><a href="https://artificialintelligenceact.eu/article/113/" target="_blank" rel="noopener">https://artificialintelligenceact.eu/article/113/</a></span></li>
+          <li><b>Art. 2 / Art. 4</b>适用范围（含第三国提供者）／AI 素养<span class="u"><a href="https://artificialintelligenceact.eu/article/2/" target="_blank" rel="noopener">/article/2/</a>　<a href="https://artificialintelligenceact.eu/article/4/" target="_blank" rel="noopener">/article/4/</a></span></li>
+          <li><b>Reg. (EU) 2026/1744</b>Digital Omnibus on AI（2026-07-24 公布，2026-07-27 生效）<span class="u"><a href="https://eur-lex.europa.eu/eli/reg/2026/1744/oj" target="_blank" rel="noopener">https://eur-lex.europa.eu/eli/reg/2026/1744/oj</a>　｜　CELEX: 32026R1744</span></li>
+          <li><b>COM(2021) 206</b>2021 年提案，Art. 52 为交互披露 —— 条号来源<span class="u"><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52021PC0206" target="_blank" rel="noopener">EUR-Lex CELEX:52021PC0206</a></span></li>
+        </ul>
+      </div>
+      <div>
+        <h2 style="font-family:var(--f-serif);font-size:16px;font-weight:750;padding-left:9px;border-left:3px solid var(--gold);margin-bottom:8px">GDPR 与欧盟机构文件</h2>
+        <ul class="srclist">
+          <li><b>Reg. (EU) 2016/679</b>GDPR — Art. 5(1)(a)/12/13/14/22/27/35/82/83/84<span class="u"><a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj" target="_blank" rel="noopener">https://eur-lex.europa.eu/eli/reg/2016/679/oj</a></span></li>
+          <li><b>EDPB Opinion 28/2024</b>AI 模型数据保护（2024-12-17 通过）<span class="u"><a href="https://www.edpb.europa.eu/system/files/2024-12/edpb_opinion_202428_ai-models_en.pdf" target="_blank" rel="noopener">edpb.europa.eu/…/edpb_opinion_202428_ai-models_en.pdf</a></span></li>
+          <li><b>Code of Practice on Transparency of AI-generated Content</b>（2026-06 发布最终版，自愿性）<span class="u"><a href="https://digital-strategy.ec.europa.eu/en/news/commission-publishes-code-practice-marking-and-labelling-ai-generated-content" target="_blank" rel="noopener">digital-strategy.ec.europa.eu/en/news/commission-publishes-code-practice-marking-and-labelling-ai-generated-content</a></span></li>
+          <li><b>CJEU 判例（CURIA 官方档案）</b>C-300/21（2023-05-04）｜C-340/21（2023-12-14）｜C-687/21（2024-01-25）｜C-590/22（2024-06-20）<span class="u"><a href="https://curia.europa.eu/juris/liste.jsf?num=C-300/21" target="_blank" rel="noopener">curia.europa.eu/juris/liste.jsf?num=C-300/21</a>　（同式替换案号）</span></li>
+          <li><b>Dir. (EU) 2024/2853</b>产品责任（2026-12-09 适用）<span class="u"><a href="https://eur-lex.europa.eu/eli/dir/2024/2853/oj" target="_blank" rel="noopener">https://eur-lex.europa.eu/eli/dir/2024/2853/oj</a></span></li>
+          <li><b>Dir. (EU) 2024/1385</b>反对针对妇女的暴力（2027-06-14 转置截止）<span class="u"><a href="https://eur-lex.europa.eu/eli/dir/2024/1385/oj" target="_blank" rel="noopener">https://eur-lex.europa.eu/eli/dir/2024/1385/oj</a></span></li>
+          <li><b>Dir. (EU) 2020/1828</b>代表诉讼（GDPR 列入附件 I）<span class="u"><a href="https://eur-lex.europa.eu/eli/dir/2020/1828/oj" target="_blank" rel="noopener">https://eur-lex.europa.eu/eli/dir/2020/1828/oj</a></span></li>
+          <li><b>Dir. (EU) 2019/882</b>欧洲无障碍法案（2025-06-28 起适用）<span class="u"><a href="https://eur-lex.europa.eu/eli/dir/2019/882/oj" target="_blank" rel="noopener">https://eur-lex.europa.eu/eli/dir/2019/882/oj</a></span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="verdict amber">
+      <span class="badge">免责声明</span>
+      <span class="txt">
+        本报告依据截至 <b>2026 年 10 月 18 日</b>的公开法规文本与官方来源编制，所引条款均取自官方英文原文并附可回链来源。
+        <b>本报告为合规决策参考，不构成法律意见</b>，亦不建立律师—客户关系。成员国层面涉及罚则设定、刑事化程度、程序法与法院管辖的部分，
+        本报告仅能指出问题所在，<b>具体结论须由具备相应成员国执业资格的律师出具</b>。
+        法规处于动态演进中（Digital Omnibus 已修订 Art. 50 以外的多项条款与 Art. 113 时间线），
+        <b>建议在每次产品重大版本发布前复核本报告所引条款是否仍然有效</b>。
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ OVERLAYS ══ -->
+<div id="ov">
+  <div class="oh">
+    <h3>目录总览</h3>
+    <p>22 个章节 · 点击卡片跳转 · ESC 关闭</p>
+    <button class="btn x tools" id="ovClose" style="height:28px">✕ 关闭</button>
+  </div>
+  <div class="ov-grid" id="ovGrid"></div>
+</div>
+
+<div id="help">
+  <div class="help-box">
+    <h3>快捷键与操作</h3>
+    <p>本报告为单文件 HTML，所有资源已内联，可离线打开。默认<b>阅读模式</b>（可滚动、全文可搜索、可直接打印为 A4 报告）；按 <kbd>M</kbd> 切换为<b>演示模式</b>（16:9 逐页放映）。</p>
+    <div class="help-grid">
+      <div><kbd>M</kbd>阅读 / 演示形态切换</div>
+      <div><kbd>O</kbd>目录总览</div>
+      <div><kbd>→</kbd><kbd>空格</kbd>下一页<span style="font-family:var(--f-mono);font-size:11px;color:var(--ink-4)">（演示模式）</span></div>
+      <div><kbd>←</kbd>上一页</div>
+      <div><kbd>Home</kbd>首页</div>
+      <div><kbd>End</kbd>末页</div>
+      <div><kbd>T</kbd>深/浅主题切换</div>
+      <div><kbd>F</kbd>全屏</div>
+      <div><kbd>P</kbd>打印 / 导出 PDF</div>
+      <div><kbd>?</kbd>本帮助</div>
+      <div><kbd>Esc</kbd>关闭浮层</div>
+    </div>
+    <div class="help-foot">
+      <button class="btn" id="helpPrint">打印 / 导出 PDF</button>
+      <button class="btn" id="helpTheme">切换主题</button>
+      <button class="btn" id="helpReset">清除清单勾选状态</button>
+      <button class="btn" id="helpClose">知道了</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+    </div><!-- /#canvas -->
+  </main>
+
+  <!-- ══ BOTTOM BAR ══ -->
+  <footer id="foot">
+    <span id="ttl"></span>
+    <div id="segs"></div>
+    <span id="pos"><b>01</b> / 22</span>
+    <div class="tools">
+      <button id="btnMode" class="modebtn" title="切换阅读 / 演示形态 (M)">演示模式</button>
+      <button id="btnOv" title="目录总览 (O)">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      </button>
+      <button id="btnTheme" title="主题切换 (T)">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8"/></svg>
+      </button>
+      <button id="btnHelp" title="快捷键帮助 (?)">?</button>
+      <button id="btnPrint" title="打印 / 导出 PDF">
+        <svg viewBox="0 0 24 24"><path d="M7 9V3h10v6"/><rect x="4" y="9" width="16" height="8" rx="1.6"/><path d="M7 15h10v6H7z"/></svg>
+      </button>
+      <button id="btnFs" title="全屏 (F)">
+        <svg viewBox="0 0 24 24"><path d="M3 9V3h6M21 9V3h-6M3 15v6h6M21 15v6h-6"/></svg>
+      </button>
+      <button id="first" title="首页 (Home)">⇤</button>
+      <button id="prev" title="上一页 (←)">◀</button>
+      <button id="next" title="下一页 (→)">▶</button>
+      <button id="last" title="末页 (End)">⇥</button>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ══ DATA: Article 50 paragraph explorer ══ */
+  var ART50 = [
+    { no:"50(1)", t:"交互身份披露", st:"y", stl:"直接适用",
+      en:"Providers shall ensure that AI systems intended to interact directly with natural persons are designed and developed in such a way that the natural persons concerned are informed that they are interacting with an AI system, <b>unless this is obvious from the point of view of a natural person who is reasonably well-informed, observant and circumspect, taking into account the circumstances and the context of use.</b>",
+      zh:"旨在与自然人直接交互的 AI 系统，其提供者应确保在设计与开发上使相关自然人被告知其正在与 AI 系统交互。<b>但若对一个理性知情、谨慎且注意周到的自然人而言，在考虑使用情形与使用情境后此事属显而易见的情形，则不在此限。</b>",
+      el:[["① 适用前提","系统 <b>intended to interact directly</b> with natural persons — 语音助手天然满足"],
+          ["② 行为要求","<b>designed and developed</b> 使相关人被告知 — 属设计义务，须在产品设计阶段嵌入，事后加挂弹窗不足以举证"],
+          ["③ 唯一豁免","<b>obvious</b> 于理性知情、谨慎且注意周到的自然人 — 基准较高，语音交互信息隐蔽，消费级产品极难主张"]],
+      ap:[["义务主体","<span style='color:var(--red)'>Provider</span>（贵司）"],["本项目适用性","<span style='color:var(--red)'>核心条款 · 必须履行</span>"],["对应整改项","H1（D+14）"]] },
+    { no:"50(2)", t:"合成内容机器可读标记", st:"y", stl:"直接适用",
+      en:"Providers of AI systems, including general-purpose AI systems, <b>generating synthetic audio</b>, image, video or text content, shall ensure that the outputs of the AI system <b>are marked in a machine-readable format and detectable as artificially generated or manipulated.</b> Providers shall ensure their technical solutions are <b>effective, interoperable, robust and reliable</b> as far as this is technically feasible…",
+      zh:"生成合成<b>音频</b>、图像、视频或文本内容的 AI 系统（含通用人工智能系统）提供者，应确保输出<b>以机器可读格式被标记且可被检测为人工生成或操纵</b>。技术方案应在技术可行范围内<b>有效、可互操作、稳健、可靠</b>。",
+      el:[["① 适用前提","输出含 <b>synthetic audio</b> — 语音助手的合成语音输出即落入，与 50(1) 身份告知并行不悖"],
+          ["② 行为要求","<b>machine-readable format</b> 且 <b>detectable</b> — 用户可见提示<b>不能</b>满足本款，须嵌入音频水印/元数据等技术层标记"],
+          ["③ 质量标准","<b>effective, interoperable, robust, reliable</b> — 受 <b>as far as this is technically feasible</b> 限制；须留存技术方案文档以证明四性"]],
+      ap:[["义务主体","<span style='color:var(--red)'>Provider</span>（贵司）"],["本项目适用性","<span style='color:var(--red)'>合成语音输出即触发</span>"],["对应整改项","H2（D+21）"]] },
+    { no:"50(3)", t:"深度伪造与公共利益文本", st:"c", stl:"条件适用",
+      en:null,
+      zh:"<b>要点归纳（非逐字引文）</b>：deployer 须以清晰可辨方式告知自然人其所接触的内容属深度伪造；对艺术、讽刺、虚构等情形设有例外；<br>公共利益事项的文本须告知其由 AI 生成或操纵。",
+      el:[["① 义务主体","<b>Deployer</b> — 与 50(1)(2) 的 provider 义务主体不同，是本款最易误判之处"],
+          ["② 触发场景","自然人接触的公开利益事项文本（新闻、广告等）；深度伪造内容（艺术、讽刺、虚构例外）"],
+          ["③ 对贵司的影响","贵司非直接义务主体，但<b>产品是否提供披露技术手段</b>决定下游 deployer 能否履责"]],
+      ap:[["义务主体","<span style='color:var(--gold)'>Deployer</span>（非贵司直接义务）"],["本项目适用性","<span style='color:var(--gold)'>若具备语音克隆能力则下游触发</span>"],["对应整改项","M4 / M5（D+75）"]] },
+    { no:"50(4)", t:"情感识别与生物特征分类", st:"c", stl:"视功能而定",
+      en:null,
+      zh:"<b>要点归纳（非逐字引文）</b>：使用情感识别系统或生物特征分类系统的，须告知受影响的自然人；工作场所与教育机构场景另受 Art. 5(1)(f) 禁止性规定约束（该款设有医疗或安全原因例外）。",
+      el:[["① 适用前提","使用<b>情感识别系统</b>或<b>生物特征分类系统</b> — 纯语音合成不落入，但声纹情感分析会落入"],
+          ["② 双重约束","告知义务 + <b>Art. 5(1)(f) 禁令</b>：工作场所与教育机构场景原则上<b>禁止</b>使用情感识别"],
+          ["③ 设计前置","禁令为设计阶段义务，<b>产品定型的成本远低于上线后剥离</b>，须在需求阶段即评估"]],
+      ap:[["义务主体","<span style='color:var(--gold)'>Deployer / Provider</span>"],["本项目适用性","<span style='color:var(--gold)'>取决于是否含情感识别功能</span>"],["对应整改项","M4 场景排除（D+75）"]] },
+    { no:"50(5)", t:"呈现方式：清晰可辨 + 首次 + 无障碍", st:"y", stl:"直接适用",
+      en:"<b>The information referred to in paragraphs 1 to 4 shall be provided to the natural persons concerned in a clear and distinguishable manner at the latest at the time of the first interaction or exposure. The information shall conform to the applicable accessibility requirements.</b>",
+      zh:"<b>第 1 至 4 款所指信息，应以清晰可辨的方式提供给相关自然人，最迟不得晚于首次交互或首次接触之时。该信息应符合适用的无障碍要求。</b>",
+      el:[["① 形式要件","<b>clear and distinguishable</b> manner — 清晰且可辨析，须为「可辨识」而非「存在」即可"],
+          ["② 时间要件","<b>at the latest at the time of the first interaction or exposure</b> — 最迟首次交互/首次接触，不得后置"],
+          ["③ 无障碍","<b>conform to the applicable accessibility requirements</b> — 叠加 EAA (EU) 2019/882，语音播报须配视觉等价"]],
+      ap:[["义务主体","<span style='color:var(--red)'>Provider + Deployer</span>"],["本项目适用性","<span style='color:var(--red)'>界面规格的唯一直接依据</span>"],["对应整改项","H1 + H3（D+14/21）"]] },
+    { no:"50(6)", t:"与其他法律义务的关系", st:"y", stl:"衔接条款",
+      en:"<b>Paragraphs 1 to 4 shall not affect the requirements and obligations set out in Chapter III, and shall be without prejudice to other transparency obligations laid down in Union or national law for deployers of AI systems.</b>",
+      zh:"<b>第 1 至 4 款不影响第三章规定的各项要求与义务，且不妨碍欧盟或国家法律为 AI 系统部署者规定的其他透明度义务。</b>",
+      el:[["① 规范性质","<b>shall not affect</b> — 对第三章（高风险义务）的<strong>单向排除</strong>，防止 Art. 50 被误读为高风险义务的替代"],
+          ["② 横向效力","<b>without prejudice to</b> — 不妨碍欧盟或国家法为 deployer 规定的<b>其他</b>透明度义务"],
+          ["③ 合规形态","GDPR 独立适用 → <b>一份告知、双重覆盖</b>，两套义务不可互相顶替"]],
+      ap:[["法律效果","<span style='color:var(--red)'>与 GDPR 叠加而非替代</span>"],["本项目适用性","<span style='color:var(--red)'>一份告知、双重覆盖</span>"],["对应整改项","H4（D+25）"]] },
+    { no:"50(7)", t:"行为准则（codes of practice）", st:"n", stl:"自愿机制",
+      en:null,
+      zh:"<b>要点归纳（非逐字引文）</b>：委员会与 AI 委员会应推动制定行为准则，以便利 Art. 50 义务的有效实施与合规验证；签署方可在其措施范围内援引准则证明合规。",
+      el:[["① 性质","<b>自愿性</b>准则（codes of practice），非直接义务来源"],
+          ["② 签署效力","签署方可在<b>其措施范围内</b>直接援引准则证明合规，未签署方须逐一证明自身措施充分"],
+          ["③ 评估主体","未签署 → 由<b>各成员国市场监管机构分别</b>个案评估，等于面对 27 份口径可能不一致的审查"]],
+      ap:[["性质","<span style='color:var(--ink-4)'>自愿性</span>"],["本项目适用性","<span style='color:var(--gold)'>签署 = 性价比最高的合规选择</span>"],["对应整改项","M1（D+45）"]] }
+  ];
+
+  /* ══ SLIDES ══ */
+  var slides = [].slice.call(document.querySelectorAll('.slide'));
+  var N = slides.length;
+  var i = 0;
+  var $ = function(s){ return document.querySelector(s); };
+
+  var canvas = $('#canvas'), stage = $('#stage');
+  var segs = $('#segs'), ttl = $('#ttl'), pos = $('#pos'), crumb = $('#crumb');
+  var ov = $('#ov'), ovGrid = $('#ovGrid'), help = $('#help');
+  var toastEl = $('#toast');
+
+  /* ══ MODE: doc = 阅读模式（默认） / deck = 演示模式 ══ */
+  var root = document.documentElement;
+  var rprogBar = document.getElementById('rprogBar');
+  var btnMode = document.getElementById('btnMode');
+  var printcss = document.getElementById('printcss');
+  var MODE = 'doc';
+  try{
+    var mv = localStorage.getItem('euaiact-mode');
+    if(mv === 'deck' || mv === 'doc') MODE = mv;
+  }catch(err){}
+
+  function isDoc(){ return MODE === 'doc'; }
+
+  function applyMode(){
+    root.setAttribute('data-mode', MODE);
+    btnMode.textContent = isDoc() ? '演示模式' : '阅读模式';
+    btnMode.title = isDoc()
+      ? '切换为 16:9 放映 (M)'
+      : '切换为网页阅读 · 可滚动可搜索 (M)';
+    // @page 无法用 CSS 条件化，按形态注入
+    printcss.textContent = isDoc()
+      ? '@page{size:A4 portrait;margin:14mm 12mm}'
+      : '@page{size:1600px 900px;margin:0}';
+    if(isDoc()){
+      slides.forEach(function(s){ s.classList.remove('dense'); s.style.setProperty('--fit','1'); });
+      canvas.style.transform = 'none';
+    }else{
+      fit(); autofit();
+    }
+  }
+
+  function setMode(m){
+    if(m === MODE) return;
+    MODE = m;
+    try{ localStorage.setItem('euaiact-mode', m); }catch(err){}
+    applyMode();
+    if(isDoc()){
+      window.scrollTo(0, 0);
+      i = 0; syncChrome(0); spy(0);
+      toast('已切换至阅读模式 · 可滚动 · 全文可搜索 · 可打印为 A4');
+    }else{
+      i = 0; render(0); fit(); autofit();
+      toast('已切换至演示模式 · 16:9 逐页放映 · 方向键翻页');
+    }
+  }
+  $('#btnMode').onclick = function(){ setMode(isDoc() ? 'deck' : 'doc'); };
+
+  /* ── fit canvas to viewport（仅演示模式） ── */
+  function fit(){
+    if(isDoc()){ canvas.style.transform = 'none'; return; }
+    var pad = 26;
+    var w = stage.clientWidth - pad*2, h = stage.clientHeight - pad*2;
+    var s = Math.min(w/1600, h/900);
+    if(!isFinite(s) || s<=0) s = 1;
+    canvas.style.transform = 'scale(' + s + ')';
+  }
+  window.addEventListener('resize', function(){ fit(); if(isDoc()) spy(); });
+
+  /* ── build segments ── */
+  (function(){
+    var f = document.createDocumentFragment();
+    for(var n=0;n<N;n++){
+      var d = document.createElement('div');
+      d.className = 'seg'; d.dataset.n = n;
+      f.appendChild(d);
+    }
+    segs.appendChild(f);
+  })();
+  segs.addEventListener('click', function(e){
+    var t = e.target.closest('.seg'); if(!t) return;
+    go(parseInt(t.dataset.n,10));
+  });
+
+  /* ── build overview grid ── */
+  (function(){
+    var f = document.createDocumentFragment();
+    slides.forEach(function(s,n){
+      var c = document.createElement('div');
+      c.className = 'ov-card' + (s.dataset.div ? ' div' : '');
+      c.dataset.n = n;
+      c.innerHTML = '<div class="n">' + String(n+1).padStart(2,'0') + '</div>' +
+                    '<div class="k">' + (s.dataset.sec||'') + '</div>' +
+                    '<div class="t">' + (s.dataset.k||'') + '</div>';
+      c.addEventListener('click', function(){ go(n); closeOv(); });
+      f.appendChild(c);
+    });
+    ovGrid.appendChild(f);
+  })();
+
+  /* ── render ── */
+  function render(dir){
+    slides.forEach(function(s,n){
+      var on = (n===i);
+      s.classList.toggle('on', on);
+      s.classList.remove('from-l','from-r');
+      if(on && dir){
+        s.classList.add(dir>0 ? 'from-r' : 'from-l');
+      }
+      if(on) s.scrollTop = 0;
+    });
+    syncChrome(i);
+
+    var s = slides[i];
+    $('#prev').disabled = $('#first').disabled = (i===0);
+    $('#next').disabled = $('#last').disabled = (i===N-1);
+  }
+  function go(n){
+    if(n<0 || n>=N) return;
+    if(isDoc()){
+      i = n;
+      var t = slides[i].getBoundingClientRect().top + window.pageYOffset - 74;
+      window.scrollTo({ top: Math.max(0, t), behavior: 'smooth' });
+      syncChrome(i);
+      return;
+    }
+    if(n===i) return;
+    var dir = n>i ? 1 : -1;
+    i = n; render(dir);
+  }
+
+  /* ── 阅读模式：同步底部栏 / 面包屑 / 进度（不触碰 slide.on） ── */
+  function syncChrome(n){
+    var s = slides[n];
+    ttl.textContent = s.dataset.k || ('第 ' + (n+1) + ' 节');
+    pos.innerHTML = '<b>' + String(n+1).padStart(2,'0') + '</b> / ' + N;
+    crumb.innerHTML = '<b>' + (s.dataset.sec||'') + '</b><span class="sep">›</span>' + (s.dataset.k||'');
+    [].forEach.call(segs.children, function(el,k){
+      el.classList.toggle('on', k===n);
+      el.classList.toggle('done', k<n);
+    });
+    [].forEach.call(ovGrid.children, function(el,k){ el.classList.toggle('on', k===n); });
+  }
+
+  /* ── 阅读模式：滚动高亮当前章节 + 进度条 ── */
+  var spyTick = false;
+  function spy(force){
+    if(spyTick) return;
+    spyTick = true;
+    requestAnimationFrame(function(){
+      spyTick = false;
+      var doc = document.documentElement;
+      var max = doc.scrollHeight - window.innerHeight;
+      rprogBar.style.width = (max > 4 ? Math.min(100, window.pageYOffset / max * 100) : 0).toFixed(2) + '%';
+      if(force) return;
+      var probe = window.pageYOffset + 140, cur = 0;
+      for(var k=0;k<N;k++){
+        if(slides[k].offsetTop <= probe) cur = k; else break;
+      }
+      if(max > 4 && window.pageYOffset >= max - 6) cur = N - 1;
+      if(cur !== i){ i = cur; syncChrome(cur); }
+    });
+  }
+  window.addEventListener('scroll', function(){ if(isDoc()) spy(); }, {passive:true});
+
+  /* ── nav buttons ── */
+  $('#first').onclick = function(){ go(0); };
+  $('#prev').onclick  = function(){ go(i-1); };
+  $('#next').onclick  = function(){ go(i+1); };
+  $('#last').onclick  = function(){ go(N-1); };
+
+  /* ── keyboard ── */
+  document.addEventListener('keydown', function(e){
+    if(e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key;
+    if(k==='m'||k==='M'){ e.preventDefault(); setMode(isDoc() ? 'deck' : 'doc'); return; }
+    // 阅读模式：方向键 / 空格 / PageUp/Down 交还浏览器原生滚动
+    if(isDoc()){
+      if(k==='Home'){ e.preventDefault(); window.scrollTo({top:0,behavior:'smooth'}); }
+      else if(k==='End'){ e.preventDefault(); window.scrollTo({top:document.documentElement.scrollHeight,behavior:'smooth'}); }
+      else if(k==='o'||k==='O'){ toggleOv(); }
+      else if(k==='t'||k==='T'){ toggleTheme(); }
+      else if(k==='f'||k==='F'){ toggleFs(); }
+      else if(k==='p'||k==='P'){ e.preventDefault(); window.print(); }
+      else if(k==='?'||k==='/'){ e.preventDefault(); toggleHelp(); }
+      else if(k==='Escape'){ closeOv(); hideHelp(); }
+      return;
+    }
+    if(k==='ArrowRight'||k==='PageDown'||k===' '||k==='Spacebar'){ e.preventDefault(); go(i+1); }
+    else if(k==='ArrowLeft'||k==='PageUp'){ e.preventDefault(); go(i-1); }
+    else if(k==='ArrowDown'){ e.preventDefault(); go(i+1); }
+    else if(k==='ArrowUp'){ e.preventDefault(); go(i-1); }
+    else if(k==='Home'){ e.preventDefault(); go(0); }
+    else if(k==='End'){ e.preventDefault(); go(N-1); }
+    else if(k==='o'||k==='O'){ toggleOv(); }
+    else if(k==='t'||k==='T'){ toggleTheme(); }
+    else if(k==='f'||k==='F'){ toggleFs(); }
+    else if(k==='p'||k==='P'){ e.preventDefault(); window.print(); }
+    else if(k==='?'||k==='/'){ e.preventDefault(); toggleHelp(); }
+    else if(k==='Escape'){ closeOv(); hideHelp(); }
+  });
+
+  /* ── touch / swipe ── */
+  var x0=null,y0=null;
+  document.addEventListener('touchstart',function(e){
+    x0=e.changedTouches[0].clientX; y0=e.changedTouches[0].clientY;
+  },{passive:true});
+  document.addEventListener('touchend',function(e){
+    if(x0===null) return;
+    if(isDoc()){ x0=y0=null; return; }
+    var dx=e.changedTouches[0].clientX-x0, dy=e.changedTouches[0].clientY-y0;
+    if(Math.abs(dx)>56 && Math.abs(dx)>Math.abs(dy)*1.4) go(i+(dx<0?1:-1));
+    x0=y0=null;
+  },{passive:true});
+
+  /* ── theme ── */
+  function toggleTheme(){
+    var cur = document.documentElement.getAttribute('data-theme');
+    var nxt = cur==='dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nxt);
+    try{ localStorage.setItem('euaiact-theme', nxt); }catch(err){}
+    toast(nxt==='dark' ? '已切换至深色主题' : '已切换至浅色主题');
+  }
+  try{
+    var sv = localStorage.getItem('euaiact-theme');
+    if(sv) document.documentElement.setAttribute('data-theme', sv);
+  }catch(err){}
+
+  /* ── fullscreen ── */
+  function toggleFs(){
+    if(!document.fullscreenElement){
+      (document.documentElement.requestFullscreen||function(){}).call(document.documentElement);
+    } else if(document.exitFullscreen){
+      document.exitFullscreen();
+    }
+  }
+  document.addEventListener('fullscreenchange', function(){ setTimeout(fit,60); });
+
+  /* ── overlays ── */
+  function openOv(){ ov.classList.add('on'); }
+  function closeOv(){ ov.classList.remove('on'); }
+  function toggleOv(){ ov.classList.contains('on') ? closeOv() : openOv(); }
+  function showHelp(){ help.classList.add('on'); }
+  function hideHelp(){ help.classList.remove('on'); }
+  function toggleHelp(){ help.classList.contains('on') ? hideHelp() : showHelp(); }
+  $('#btnOv').onclick = toggleOv;
+  $('#ovClose').onclick = closeOv;
+  $('#btnTheme').onclick = toggleTheme;
+  $('#btnHelp').onclick = toggleHelp;
+  $('#btnPrint').onclick = function(){ window.print(); };
+  $('#btnFs').onclick = toggleFs;
+  $('#helpClose').onclick = hideHelp;
+  $('#helpPrint').onclick = function(){ window.print(); };
+  $('#helpTheme').onclick = toggleTheme;
+  $('#helpReset').onclick = function(){
+    try{ localStorage.removeItem('euaiact-ck'); }catch(err){}
+    restoreCk();
+    toast('已清除清单勾选状态');
+  };
+  help.addEventListener('click', function(e){ if(e.target===help) hideHelp(); });
+
+  /* ── toast ── */
+  var tTimer=null;
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('on');
+    clearTimeout(tTimer);
+    tTimer = setTimeout(function(){ toastEl.classList.remove('on'); }, 1900);
+  }
+
+  /* ══ Article 50 explorer ══ */
+  var exList = $('#exList'), exPanel = $('#exPanel');
+  var exIdx = 0;
+  function buildEx(){
+    ART50.forEach(function(a,n){
+      var d = document.createElement('div');
+      d.className = 'ex-item' + (n===0?' on':'');
+      d.dataset.n = n;
+      d.innerHTML = '<span class="no">'+a.no+'</span><span class="tt">'+a.t+'</span><span class="st '+a.st+'"></span>';
+      d.addEventListener('click', function(){ pickEx(n); });
+      exList.appendChild(d);
+    });
+    paintEx(0);
+  }
+  function pickEx(n){
+    exIdx = n;
+    [].forEach.call(exList.children, function(el,k){ el.classList.toggle('on', k===n); });
+    paintEx(n);
+  }
+  function paintEx(n){
+    var a = ART50[n];
+    var stTag = a.st==='y' ? '<span class="tag t-hi">直接适用</span>'
+               : a.st==='c' ? '<span class="tag t-md">条件适用</span>'
+               : '<span class="tag t-na">自愿机制</span>';
+    var html = '<div class="ex-head"><div class="no">'+a.no+'</div><h3><span class="an">Article</span>&nbsp;'+a.no+'　'+a.t+'</h3><div class="st">'+stTag+'</div></div>';
+    if(a.en){
+      html += '<div class="art" style="margin:0"><span class="lbl">逐字原文 · Verbatim</span><span class="en">"'+a.en+'"</span></div>';
+    }
+    html += '<div class="ex-zh">'+a.zh+'</div>';
+    if(a.el){
+      html += '<div class="ex-el"><div class="ex-el-h">义务三要素拆解</div><div class="ex-el-g">'+
+        a.el.map(function(e){
+          return '<div class="ex-el-i"><b>'+e[0]+'</b><span>'+e[1]+'</span></div>';
+        }).join('')+'</div></div>';
+    }
+    html += '<div class="ex-applic">'+a.ap.map(function(p){
+      return '<div><b>'+p[0]+'</b><span>'+p[1]+'</span></div>';
+    }).join('')+'</div>';
+    exPanel.innerHTML = html;
+    exPanel.scrollTop = 0;
+  }
+  buildEx();
+
+  /* ══ UI wireframe toggle ══ */
+  var wf = $('#wf'), wfBad = $('#wfBad'), wfGood = $('#wfGood');
+  wfBad.addEventListener('click', function(){
+    wf.classList.add('bad');
+    wfBad.classList.add('on'); wfGood.classList.remove('on');
+    toast('已切换至不合规布局对照');
+  });
+  wfGood.addEventListener('click', function(){
+    wf.classList.remove('bad');
+    wfGood.classList.add('on'); wfBad.classList.remove('on');
+    toast('已切换至合规布局');
+  });
+
+  /* ══ Agenda click-to-jump ══ */
+  [].forEach.call(document.querySelectorAll('.ag[data-go]'), function(el){
+    el.addEventListener('click', function(){ go(parseInt(el.dataset.go,10)); });
+  });
+
+  /* ══ Interactive checklists with localStorage ══ */
+  var CK_KEY = 'euaiact-ck';
+  function getCk(){
+    try{ return JSON.parse(localStorage.getItem(CK_KEY)) || {}; }catch(err){ return {}; }
+  }
+  function saveCk(obj){ try{ localStorage.setItem(CK_KEY, JSON.stringify(obj)); }catch(err){} }
+
+  function ringUpdate(id, done, total){
+    var C = 2 * Math.PI * 43;
+    var el = document.getElementById('ring'+id);
+    if(!el) return;
+    el.style.strokeDasharray = C.toFixed(1);
+    el.style.strokeDashoffset = (C * (1 - done/total)).toFixed(1);
+    var tx = document.getElementById('ring'+id+'v');
+    if(tx) tx.textContent = done + '/' + total;
+  }
+
+  function initCk(boxId, ringId, ids){
+    var box = document.getElementById(boxId);
+    if(!box) return;
+    var state = getCk();
+    function paint(){
+      var n = 0;
+      [].forEach.call(box.children, function(el){
+        var on = !!state[el.dataset.id];
+        el.classList.toggle('done', on);
+        if(on) n++;
+      });
+      ringUpdate(ringId, n, ids.length);
+    }
+    box.addEventListener('click', function(e){
+      var it = e.target.closest('.ck-item'); if(!it) return;
+      var id = it.dataset.id;
+      state[id] = !state[id];
+      saveCk(state); paint();
+    });
+    paint();
+  }
+  initCk('ckH','H',['H1','H2','H3','H4','H5']);
+  initCk('ckM','M',['M1','M2','M3','M4','M5','M6']);
+
+  function restoreCk(){
+    var state = {};
+    saveCk(state);
+    [].forEach.call(document.querySelectorAll('.ck-item'), function(el){
+      el.classList.remove('done');
+    });
+    ringUpdate('H',0,5); ringUpdate('M',0,6);
+  }
+
+  /* ══ Overflow compensation ══
+     逐页测量内容高度，按需微调 --fit 字号比例，直到内容落入 900px 画布。
+     保持信息完整（不裁剪、不折叠），仅缩放排版密度。
+     注意：隐藏页 (display:none) 的 scrollHeight 恒为 0，必须先临时显示再测量。 */
+  function autofit(){
+    if(isDoc()) return;
+    var cur = i;
+    slides.forEach(function(s){
+      s.classList.remove('dense');
+      s.style.setProperty('--fit','1');
+    });
+    slides.forEach(function(s){
+      if(s.classList.contains('cover') || s.classList.contains('divider')) return;
+      // 临时置为可见以获取真实布局尺寸
+      var prev = s.style.display;
+      s.style.display = 'flex';
+      s.classList.add('on');
+      var guard = 0;
+      while(s.scrollHeight - s.clientHeight > 2 && guard < 16){
+        var v = parseFloat(s.style.getPropertyValue('--fit')) || 1;
+        var next = +(v - 0.02).toFixed(3);
+        if(next < 0.92) break;
+        s.style.setProperty('--fit', next);
+        s.classList.add('dense');
+        guard++;
+      }
+      s.classList.remove('on');
+      s.style.display = prev;
+    });
+    // 恢复到调用前的当前页
+    go(cur);
+  }
+
+  /* ══ boot ══ */
+  applyMode();
+  if(isDoc()){
+    i = 0; syncChrome(0); spy(0);
+    // 目录卡片 → 滚动定位（go 已按形态分流）
+    setTimeout(function(){ spy(); }, 120);
+    window.addEventListener('load', function(){ spy(); });
+  }else{
+    render(0);
+    fit();
+    autofit();
+    setTimeout(function(){ fit(); autofit(); }, 140);
+    window.addEventListener('load', function(){ fit(); autofit(); });
+  }
+})();
+</script>
+</body>
+</html>

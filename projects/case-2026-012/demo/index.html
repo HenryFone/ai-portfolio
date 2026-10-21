@@ -1,0 +1,78 @@
+</style>
+</head>
+<body data-sp-bindable="database" data-sp-database-id="A0w9Y5l57S5nIeUCMfvoVr">
+<div class="sb-mask" id="sbmask" onclick="closeSb()"></div>
+<div class="app">
+
+  <!-- ========== 侧边栏 ========== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brandbox">
+      <div class="brandrow">
+        <div class="logo"><svg viewBox="0 0 24 24"><path d="M12 2l2.6 6.3 6.8.5-5.2 4.4 1.6 6.6L12 16.3 6.2 19.8l1.6-6.6L2.6 8.8l6.8-.5z"/></svg></div>
+        <div>
+          <div class="brandname">个人 IP 成长台</div>
+          <div class="brandsub">Creator Growth Hub</div>
+        </div>
+      </div>
+      <div class="brandtag">✦ 商业化成品版 v3.0</div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="sidefoot">
+      <div class="syncpill">
+        <span class="syncdot" id="syncdot"></span>
+        <span id="synctxt">本地模式</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========== 主区 ========== -->
+  <main class="main">
+    <header class="topbar">
+      <button class="iconbtn menubtn" style="display:none" onclick="openSb()" aria-label="菜单">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18v2.2H3zm0 4.9h18v2.2H3zM3 16h18v2.2H3z"/></svg>
+      </button>
+      <div>
+        <div class="tb-title"><span class="dot"></span><span id="tbTitle">今日总览</span></div>
+        <div class="tb-sub" id="tbSub">一眼看清你的 IP 现状</div>
+      </div>
+      <div class="tb-actions">
+        <button class="iconbtn" onclick="openCmdk()" title="命令面板" aria-label="命令面板">
+          <svg viewBox="0 0 24 24"><path d="M15.5 14h-.8l-.3-.3a6.5 6.5 0 10-.7.7l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0a4 4 0 110-8 4 4 0 010 8z"/></svg>
+          <span class="k">⌘K</span>
+        </button>
+        <button class="iconbtn" onclick="toggleTheme()" title="切换主题" aria-label="切换主题" id="themeBtn"></button>
+        <button class="btn" onclick="quickAdd()">
+          <svg viewBox="0 0 24 24"><path d="M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z"/></svg>
+          <span class="nowrap">快速记录</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 存储降级提示条（仅在无法持久化时出现） -->
+    <div class="noticebar" id="noticebar" hidden></div>
+
+    <div class="content" id="view"></div>
+  </main>
+</div>
+
+<!-- ========== 移动端底部 Tab ========== -->
+<nav class="mobile-tab" id="mtab"></nav>
+
+<!-- ========== 模态框 ========== -->
+<div class="mask" id="mask" onclick="maskClose(event)">
+  <div class="modal" id="modal"></div>
+</div>
+
+<!-- ========== 命令面板 ========== -->
+<div class="cmdk" id="cmdk" onclick="cmdkClose(event)">
+  <div class="cmdk-box">
+    <div class="cmdk-in">
+      <svg viewBox="0 0 24 24"><path d="M15.5 14h-.8l-.3-.3a6.5 6.5 0 10-.7.7l.3.3v.8l5 5 1.5-1.5-5-5zm-6 0a4 4 0 110-8 4 4 0 010 8z"/></svg>
+      <input id="cmdkInput" placeholder="搜索模块、跳转页面、快捷操作…" autocomplete="off" spellcheck="false">
+      <span class="tag tiny">Esc</span>
+    </div>
+    <div class="cmdk-list" id="cmdkList"></div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>

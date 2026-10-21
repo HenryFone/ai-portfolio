@@ -15,16 +15,16 @@
 
 ```text
 ai-portfolio/
-├── index.html                    # 6 件精选作品的主展示页
+├── index.html                    # 作品集首页（精选案例、搜索、筛选和收藏）
 ├── projects/
-│   ├── index.html                # 21 个补充项目的目录页
+│   ├── index.html                # 88 个补充项目的目录页
 │   ├── README.md                # 补充项目公开规则和清单
 │   ├── manifest.json             # 公开项目的机器可读清单
 │   └── 每个项目一个目录/
 │       ├── README.md             # 脱敏项目说明
 │       ├── index.html             # 项目说明网页
 │       └── demo/                 # 可运行网页、图片或筛选后的成品视频
-├── 原始成果/                     # 原有 6 件精选作品的公开展示文件
+├── 原始成果/                     # 6 件首页精选作品的公开展示文件
 ├── 发给HR的网址-粘贴用.md         # 招聘表单使用说明
 ├── README.md                     # 仓库总说明
 ├── PUBLIC-STRUCTURE.md           # 本文件

@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>恒锐精密 · 产线良率与返工分析（示例数据）</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('hr-quality-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+<style>
+/* ================= 主题变量 ================= */
+:root,html[data-theme="dark"]{
+  --bg:#0A0F16; --bg-soft:#0C121C; --panel:#111A26; --panel-2:#0D1520; --panel-hi:#15202F;
+  --border:#1E2A3A; --border-2:#2B3B51; --fg:#E8EFF6; --mut:#8FA1B3; --faint:#5A6B7D;
+  --acc:#22D3EE; --acc-2:#7DEBFA; --acc-ink:#67E8F9; --acc-bg:rgba(34,211,238,.09); --ring:rgba(34,211,238,.45);
+  --ok:#34D399; --ok-bg:rgba(52,211,153,.12);
+  --warn:#FBBF24; --warn-bg:rgba(251,191,36,.13);
+  --bad:#F87171; --bad-bg:rgba(248,113,113,.14);
+  --miss:#A78BFA; --miss-bg:rgba(167,139,250,.14);
+  --pri:#38BDF8; --pri-bg:rgba(56,189,248,.13);
+  --grid-line:#1A2534; --topbar-bg:rgba(10,15,22,.82);
+  --shadow:0 10px 30px rgba(0,0,0,.38); --shadow-sm:0 2px 10px rgba(0,0,0,.28);
+  --glow:0 0 0 1px rgba(34,211,238,.18),0 8px 30px rgba(34,211,238,.08);
+  --l1:#38BDF8; --l2:#FBBF24; --l3:#34D399;
+  --r1:#38BDF8; --r2:#F87171; --r3:#FBBF24; --r4:#34D399; --r5:#A78BFA; --r6:#FB923C;
+  --btn-fg:#062A33;
+}
+html[data-theme="light"]{
+  --bg:#F3F5F8; --bg-soft:#EDF0F4; --panel:#FFFFFF; --panel-2:#F7F9FB; --panel-hi:#FFFFFF;
+  --border:#E2E7EE; --border-2:#C7D1DC; --fg:#17222E; --mut:#5C6B7A; --faint:#94A2B0;
+  --acc:#0891B2; --acc-2:#06B6D4; --acc-ink:#0E7490; --acc-bg:rgba(8,145,178,.08); --ring:rgba(8,145,178,.35);
+  --ok:#15803D; --ok-bg:#E8F5EC;
+  --warn:#B45309; --warn-bg:#FBF0DC;
+  --bad:#B91C1C; --bad-bg:#FBEAEA;
+  --miss:#6D28D9; --miss-bg:#EFEAFB;
+  --pri:#0369A1; --pri-bg:#E5F0F8;
+  --grid-line:#E8ECF1; --topbar-bg:rgba(243,245,248,.86);
+  --shadow:0 10px 26px rgba(23,34,46,.10); --shadow-sm:0 2px 8px rgba(23,34,46,.06);
+  --glow:0 0 0 1px rgba(8,145,178,.16),0 8px 24px rgba(8,145,178,.08);
+  --l1:#0284C7; --l2:#B45309; --l3:#15803D;
+  --r1:#0284C7; --r2:#B91C1C; --r3:#B45309; --r4:#15803D; --r5:#6D28D9; --r6:#C2410C;
+  --btn-fg:#FFFFFF;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-behavior:smooth}
+body{font-family:"Inter","Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  background:var(--bg);color:var(--fg);font-size:14.5px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+html[data-theme="dark"] body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(900px 500px at 85% -10%,rgba(34,211,238,.07),transparent 60%),
+             radial-gradient(700px 420px at -10% 30%,rgba(167,139,250,.05),transparent 60%),
+             radial-gradient(600px 400px at 50% 110%,rgba(52,211,153,.04),transparent 60%)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{touch-action:manipulation}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:4px}
+::selection{background:rgba(34,211,238,.25)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:8px;border:2px solid var(--bg)}
+::-webkit-scrollbar-track{background:transparent}
+.num{font-variant-numeric:lining-nums tabular-nums}
+.mono{font-family:ui-monospace,"JetBrains Mono","Cascadia Code",Menlo,Consolas,"PingFang SC",monospace}
+.eyebrow{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--acc-ink)}
+
+/* ================= 徽标 / 标签 ================= */
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;line-height:1;padding:5px 9px;border-radius:999px;font-weight:600;letter-spacing:.03em;white-space:nowrap;border:1px solid transparent}
+.tag.demo{background:var(--warn-bg);color:var(--warn);border:1px dashed var(--warn)}
+.tag.local{background:var(--ok-bg);color:var(--ok)}
+.tag.off{background:transparent;color:var(--faint);border-color:var(--border-2)}
+.tag.ok{background:var(--ok-bg);color:var(--ok)}
+.tag.warn{background:var(--warn-bg);color:var(--warn)}
+.tag.bad{background:var(--bad-bg);color:var(--bad)}
+.tag.miss{background:var(--miss-bg);color:var(--miss)}
+.tag.pri{background:var(--pri-bg);color:var(--pri)}
+
+/* ================= 布局骨架 ================= */
+.shell{display:grid;grid-template-columns:236px minmax(0,1fr);min-height:100vh}
+.side{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:6px;padding:18px 14px;background:var(--bg-soft);border-right:1px solid var(--border);z-index:30}
+.s-brand{display:flex;gap:11px;align-items:center;padding:4px 6px 14px;border-bottom:1px solid var(--border);margin-bottom:10px}
+.logo{width:42px;height:42px;border-radius:11px;flex:none;display:grid;place-items:center;font-weight:800;font-size:19px;color:var(--btn-fg);
+  background:linear-gradient(135deg,var(--acc),#34D399);box-shadow:0 4px 16px rgba(34,211,238,.35)}
+.s-brand b{display:block;font-size:15.5px;letter-spacing:.01em;line-height:1.25}
+.s-brand small{display:block;font-size:10.5px;color:var(--faint);letter-spacing:.06em}
+.nav{display:grid;gap:2px}
+.nav button{display:flex;align-items:center;gap:10px;border:0;background:transparent;color:var(--mut);padding:10px 12px;border-radius:9px;cursor:pointer;font-size:13.5px;font-weight:500;text-align:left;transition:background 180ms,color 180ms}
+.nav button svg{width:17px;height:17px;flex:none}
+.nav button:hover{background:var(--panel);color:var(--fg)}
+.nav button.on{background:var(--acc-bg);color:var(--acc-ink)}
+.s-foot{margin-top:auto;display:grid;gap:8px;padding-top:12px;border-top:1px solid var(--border)}
+.s-foot .ver{font-size:10.5px;color:var(--faint);letter-spacing:.06em}
+
+.content{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:40;background:var(--topbar-bg);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);padding:12px 26px;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.tb-title{margin:0;font-size:19px;font-weight:750;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.tb-title .sub{font-size:11px;color:var(--faint);font-weight:500;letter-spacing:.04em}
+.top-right{margin-left:auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.rolebox{display:flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:10px;padding:3px 6px 3px 11px;background:var(--panel)}
+.rolebox label{font-size:10.5px;letter-spacing:.12em;color:var(--acc-ink);font-weight:700}
+.rolebox select{border:0;background:transparent;font-size:13px;padding:5px 2px;min-height:32px;color:var(--fg)}
+.savehint{font-size:11px;color:var(--faint);letter-spacing:.03em}
+.iconbtn{width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--panel);cursor:pointer;display:grid;place-items:center;color:var(--mut);transition:border-color 180ms,color 180ms,transform 180ms}
+.iconbtn:hover{border-color:var(--acc);color:var(--acc);transform:translateY(-1px)}
+.iconbtn svg{width:18px;height:18px}
+
+.btn{border:1px solid var(--border-2);background:var(--panel);border-radius:10px;padding:9px 16px;cursor:pointer;font-weight:600;font-size:13.5px;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;transition:all 180ms;color:var(--fg)}
+.btn:hover{border-color:var(--acc);color:var(--acc);box-shadow:var(--shadow-sm)}
+.btn.pri{background:linear-gradient(135deg,var(--acc),#0EA5B7);border-color:transparent;color:var(--btn-fg);box-shadow:0 4px 16px rgba(34,211,238,.3)}
+.btn.pri:hover{box-shadow:0 6px 22px rgba(34,211,238,.45);transform:translateY(-1px);color:var(--btn-fg)}
+.btn.danger{color:var(--bad);border-color:var(--bad)}
+.btn.danger:hover{background:var(--bad-bg);color:var(--bad)}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--mut)}
+.btn.ghost:hover{background:var(--panel);color:var(--fg)}
+.btn.sm{padding:5px 11px;font-size:12.5px;border-radius:8px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn:disabled:hover{transform:none;box-shadow:none}
+
+/* ================= 筛选条 ================= */
+.filters{position:sticky;top:63px;z-index:35;background:var(--topbar-bg);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);padding:10px 26px;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center}
+.fgroup{display:flex;align-items:center;gap:9px;min-width:0}
+.fgroup>label{font-size:10.5px;letter-spacing:.16em;color:var(--acc-ink);font-weight:700;white-space:nowrap}
+.seg{display:flex;background:var(--panel-2);border:1px solid var(--border);border-radius:10px;padding:3px;gap:3px;overflow-x:auto;scrollbar-width:none}
+.seg::-webkit-scrollbar{display:none}
+.seg button{border:0;background:transparent;padding:6px 13px;border-radius:7px;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--mut);white-space:nowrap;transition:all 180ms}
+.seg button:hover{color:var(--fg);background:var(--panel-hi)}
+.seg button.on{background:linear-gradient(135deg,var(--acc),#0EA5B7);color:var(--btn-fg);box-shadow:0 2px 8px rgba(34,211,238,.3)}
+.scope{margin-left:auto;font-size:11.5px;color:var(--mut)}
+.scope b{color:var(--fg);font-size:14px}
+
+/* ================= 主体 ================= */
+main{padding:22px 26px 70px;max-width:1460px;width:100%;margin:0 auto;display:grid;gap:16px}
+section{animation:rise 480ms cubic-bezier(.2,.7,.3,1) backwards}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* KPI 卡 */
+.kpis{display:grid;grid-template-columns:2fr repeat(5,1fr);gap:13px}
+.kpi{background:linear-gradient(180deg,var(--panel-hi),var(--panel));border:1px solid var(--border);border-radius:16px;padding:15px 17px;position:relative;min-width:0;overflow:hidden;transition:transform 200ms,box-shadow 200ms,border-color 200ms;box-shadow:var(--shadow-sm)}
+.kpi::after{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,transparent,var(--kc,var(--border-2)),transparent);opacity:.7}
+.kpi:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--border-2)}
+.kpi .k{font-size:10.5px;letter-spacing:.14em;color:var(--mut);font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:6px;text-transform:uppercase}
+.kpi .v{font-size:31px;font-weight:800;letter-spacing:-.02em;margin-top:5px;line-height:1.12;font-variant-numeric:lining-nums tabular-nums}
+.kpi .s{font-size:11.5px;color:var(--mut);margin-top:4px}
+.kpi.ok{--kc:var(--ok)}.kpi.ok .v{color:var(--ok)}
+.kpi.warn{--kc:var(--warn)}.kpi.warn .v{color:var(--warn)}
+.kpi.bad{--kc:var(--bad)}.kpi.bad .v{color:var(--bad)}
+.kpi.missk{--kc:var(--miss)}.kpi.missk .v{color:var(--miss)}
+.kpi .spark{margin-top:8px;display:block}
+.kpi .spark polyline{fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+.kpi.main{display:flex;gap:20px;align-items:center;box-shadow:var(--glow);border-color:var(--border-2)}
+.kpi.main::after{background:linear-gradient(90deg,transparent,var(--acc),transparent)}
+.gauge{flex:none}
+.gauge .track{stroke:var(--border-2)}
+.gauge .val{transition:stroke-dashoffset 900ms cubic-bezier(.2,.7,.3,1)}
+.gauge .gnum{font-size:24px;font-weight:800;fill:var(--fg);font-variant-numeric:lining-nums tabular-nums}
+.gauge .glab{font-size:9px;letter-spacing:.16em;fill:var(--mut);font-weight:700}
+.kpi.main .body{min-width:0;flex:1}
+.kpi.main .v{font-size:42px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+.kpi.main .k>span:first-child{white-space:nowrap}
+.kpi.main .s{font-size:12.5px}
+.deltachip{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;border-radius:999px;padding:3px 10px;margin-top:6px;white-space:nowrap}
+.deltachip.up{background:var(--ok-bg);color:var(--ok)}
+.deltachip.down{background:var(--bad-bg);color:var(--bad)}
+
+/* 报警条 */
+.alerts{background:linear-gradient(90deg,var(--bad-bg),transparent 65%),var(--panel);border:1px solid var(--border);border-left:3px solid var(--bad);border-radius:14px;padding:11px 16px;display:flex;flex-wrap:wrap;gap:9px;align-items:center;box-shadow:var(--shadow-sm)}
+.alerts.none{border-left-color:var(--ok);background:var(--panel)}
+.alerts .ttl{font-weight:800;color:var(--bad);font-size:15px;display:flex;align-items:center;gap:8px;margin-right:4px}
+.alerts.none .ttl{color:var(--ok)}
+.pulse{width:9px;height:9px;border-radius:50%;background:var(--bad);flex:none;animation:pulse 1.6s ease-in-out infinite}
+.alerts.none .pulse{background:var(--ok);animation:none}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(248,113,113,.45)}50%{box-shadow:0 0 0 7px rgba(248,113,113,0)}}
+.chip{border:1px solid var(--border-2);background:var(--panel-2);border-radius:999px;padding:5px 13px;font-size:12.5px;cursor:pointer;transition:all 180ms;display:inline-flex;align-items:center;gap:6px}
+.chip:hover{border-color:var(--bad);background:var(--bad-bg);transform:translateY(-1px)}
+.chip b{color:var(--bad);font-size:13px}
+
+/* 面板 */
+.grid{display:grid;gap:16px}
+.g-trend{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+.g-pareto{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:17px 19px;min-width:0;box-shadow:var(--shadow-sm);transition:border-color 200ms}
+.panel:hover{border-color:var(--border-2)}
+.ph{display:flex;align-items:flex-end;gap:9px;flex-wrap:wrap;margin-bottom:11px}
+.panel>.ph:first-child{border-bottom:1px solid var(--border);padding-bottom:11px;margin-bottom:13px}
+.ph h2{margin:0;font-size:17.5px;font-weight:750;letter-spacing:-.01em;line-height:1.25}
+.ph h2[data-en]::before{content:attr(data-en);display:block;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--acc-ink);margin-bottom:3px}
+.ph .sp{flex:1}
+.ph .hint,.hint{font-size:12px;color:var(--mut);line-height:1.6}
+.legend{display:flex;gap:13px;font-size:12px;color:var(--mut);flex-wrap:wrap}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
+svg text{font-family:inherit}
+.chart{width:100%;height:auto;display:block}
+#trendWrap{position:relative}
+#chartTip{position:absolute;z-index:50;pointer-events:none;background:var(--panel-hi);border:1px solid var(--border-2);border-radius:12px;box-shadow:var(--shadow);padding:10px 13px;min-width:190px;display:none;font-size:12px}
+#chartTip .tt{font-weight:700;font-size:12.5px;margin-bottom:6px;display:flex;justify-content:space-between;gap:10px}
+#chartTip .tr{display:flex;align-items:center;gap:7px;padding:2px 0}
+#chartTip .tr .n{flex:1}
+#chartTip .tr b{font-variant-numeric:tabular-nums}
+.pt{cursor:pointer}
+.bar-g{cursor:pointer}
+.bar-g rect.b{transition:opacity 180ms}
+.bar-g:hover rect.b{opacity:.8}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.trend-line{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.1s cubic-bezier(.4,0,.2,1) forwards}
+.pbar{transform-box:fill-box;transform-origin:50% 100%;animation:grow .65s cubic-bezier(.2,.7,.3,1) backwards}
+.pfade{animation:fadein .5s ease backwards}
+
+/* 产线快读 */
+.lines{display:grid;gap:11px}
+.lcard{border:1px solid var(--border);border-radius:13px;padding:12px 14px;display:grid;grid-template-columns:auto 1fr auto;gap:2px 10px;align-items:center;border-left:3px solid;background:var(--panel-2);transition:all 200ms}
+.lcard:hover{border-color:var(--border-2);box-shadow:var(--shadow-sm)}
+.lcard .nm{font-weight:750;font-size:14.5px}
+.lcard .lead{font-size:11px;color:var(--mut)}
+.lcard .big{grid-row:1/3;grid-column:3;font-size:32px;font-weight:800;text-align:right;line-height:1;font-variant-numeric:lining-nums tabular-nums}
+.lcard .row2{grid-column:1/4;display:flex;gap:11px;flex-wrap:wrap;font-size:11.5px;color:var(--mut);border-top:1px solid var(--border);padding-top:7px;margin-top:7px;align-items:center}
+.lcard .row2 b{color:var(--fg);font-weight:700}
+.lcard.dim{opacity:.45}
+.lspark{grid-column:1/4;margin-top:2px}
+.lspark polyline{fill:none;stroke-width:1.6;stroke-linecap:round}
+.splitbar{grid-column:1/4;height:5px;border-radius:3px;background:var(--border);overflow:hidden;display:flex;margin-top:2px}
+.splitbar i{height:100%}
+
+/* 表格 */
+table{border-collapse:collapse;width:100%}
+.tbl th,.tbl td{padding:9px 8px;border-bottom:1px solid var(--border);text-align:left;font-size:12.8px;white-space:nowrap}
+.tbl th{font-size:10.5px;letter-spacing:.1em;color:var(--mut);font-weight:700;background:var(--panel);border-bottom:1px solid var(--border-2);position:sticky;top:0;z-index:2;text-transform:uppercase}
+.tbl td.r,.tbl th.r{text-align:right}
+.tbl tr.click{cursor:pointer}
+.tbl tbody tr{transition:background 160ms}
+.tbl tr.click:hover td{background:var(--panel-2)}
+.tbl tbody tr:last-child td{border-bottom:0}
+.minibar{display:inline-block;height:6px;border-radius:2px;vertical-align:middle;margin-right:7px;border-radius:3px}
+.rank{display:inline-grid;place-items:center;width:23px;height:23px;border-radius:7px;font-size:11.5px;font-weight:800;color:var(--mut);background:var(--panel-2);border:1px solid var(--border)}
+.rank.r1{background:linear-gradient(135deg,#F87171,#DC2626);border:0;color:#fff;box-shadow:0 2px 8px rgba(248,113,113,.4)}
+.rank.r2{background:linear-gradient(135deg,#FBBF24,#D97706);border:0;color:#fff}
+.rank.r3{background:linear-gradient(135deg,#38BDF8,#0284C7);border:0;color:#fff}
+.keytag{font-size:10px;padding:2px 7px;border-radius:999px;background:var(--bad-bg);color:var(--bad);font-weight:700;letter-spacing:.03em}
+
+.side-stack{display:grid;gap:16px;align-content:start}
+.miss-sum{display:flex;gap:13px;align-items:baseline;background:var(--miss-bg);border-left:3px solid var(--miss);border-radius:10px;padding:10px 13px;margin-bottom:10px;flex-wrap:wrap}
+.miss-sum .v{font-size:28px;font-weight:800;color:var(--miss);line-height:1.1}
+.miss-sum .s{font-size:12px;color:var(--mut)}
+.mlist{max-height:252px;overflow:auto;display:grid;gap:8px;padding-right:2px}
+.mitem{display:grid;grid-template-columns:1fr auto;gap:6px 8px;align-items:center;border:1px solid var(--border);border-radius:11px;padding:9px 11px;background:var(--panel-2);transition:border-color 180ms}
+.mitem:hover{border-color:var(--miss)}
+.mitem .t{font-weight:700;font-size:12.8px}
+.mitem .d{font-size:11.5px;color:var(--mut)}
+.mitem .fix{grid-column:1/3;display:flex;gap:6px}
+.mitem select{flex:1;min-width:0;border:1px solid var(--border);border-radius:8px;padding:6px 9px;background:var(--panel);color:var(--fg)}
+.aiitem{display:grid;grid-template-columns:auto 1fr;gap:4px 11px;align-items:start;border:1px dashed var(--border-2);border-radius:11px;padding:10px 12px;background:var(--panel-2)}
+.aiitem .ic{font-size:16px;line-height:1.4}
+.aiitem .t{font-size:13.5px;font-weight:700;color:var(--pri)}
+.aiitem .d{font-size:12.5px;color:var(--mut);line-height:1.6}
+.aiitem .go{grid-column:2;justify-self:start;margin-top:3px}
+.alist{display:grid;gap:10px;max-height:380px;overflow:auto;padding-right:2px}
+.acard{border:1px solid var(--border);border-radius:12px;padding:11px 13px;transition:all 200ms;background:var(--panel-2)}
+.acard:hover{box-shadow:var(--shadow-sm);border-color:var(--border-2)}
+.acard.overdue{border-color:var(--bad);background:linear-gradient(90deg,var(--bad-bg),transparent 70%),var(--panel-2)}
+.acard .h{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.acard .h b{font-size:14.5px;font-weight:750}
+.acard .m{font-size:13px;margin:6px 0;line-height:1.65}
+.acard .f{font-size:11.5px;color:var(--mut);display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.acard .ops{margin-left:auto;display:flex;gap:6px}
+.empty{border:1px dashed var(--border-2);border-radius:13px;padding:24px 18px;text-align:center;color:var(--mut);font-size:13px;background:var(--panel-2)}
+.empty b{display:block;color:var(--fg);font-weight:750;font-size:15.5px;margin-bottom:4px}
+
+/* 批次明细 */
+.tablewrap{overflow:auto;max-height:580px;border:1px solid var(--border);border-radius:12px}
+.btbl{min-width:1060px}
+.btbl td.fpy{font-weight:800;font-size:14.5px}
+.btbl tr.lowrow td{background:var(--bad-bg)}
+.btbl tr.flash td{animation:flash 1.8s ease-out}
+@keyframes flash{0%{background:rgba(34,211,238,.3)}100%{background:transparent}}
+.btbl td.sticky,.btbl th.sticky{position:sticky;left:0;background:var(--panel);z-index:1;font-weight:700}
+.btbl td.sticky{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+.btbl th.sticky{z-index:3}
+.btbl tr.lowrow td.sticky{background:var(--panel)}
+.ctrl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.ctrl select,.ctrl input{border:1px solid var(--border);border-radius:9px;padding:8px 11px;background:var(--panel-2);font-size:13px;color:var(--fg);transition:border-color 160ms}
+.ctrl select:hover,.ctrl input:hover{border-color:var(--border-2)}
+.ctrl input::placeholder,.field input::placeholder,.field textarea::placeholder{color:var(--faint)}
+.focuschip{background:var(--acc);color:var(--btn-fg);border-radius:999px;padding:4px 6px 4px 13px;font-size:11px;font-weight:700;display:inline-flex;gap:7px;align-items:center}
+.focuschip button{border:0;background:rgba(0,0,0,.22);color:inherit;border-radius:999px;width:20px;height:20px;cursor:pointer;line-height:1}
+.c-ok{color:var(--ok)}.c-warn{color:var(--warn)}.c-bad{color:var(--bad)}.c-miss{color:var(--miss)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle;flex:none}
+
+/* 弹窗 */
+.mask{position:fixed;inset:0;background:rgba(4,8,14,.6);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);display:none;align-items:flex-start;justify-content:center;z-index:100;padding:38px 12px;overflow:auto}
+.mask.open{display:flex;animation:fade 200ms ease-out}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.dialog{background:var(--panel);border:1px solid var(--border-2);border-radius:18px;width:min(740px,100%);box-shadow:var(--shadow);overflow:hidden;animation:pop 240ms cubic-bezier(.2,.9,.3,1.2)}
+@keyframes pop{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:none}}
+.dialog.sm{width:min(460px,100%)}
+.dh{padding:16px 21px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.dh h3{margin:0;font-size:19px;font-weight:750;letter-spacing:-.01em}
+.dh .x{margin-left:auto;border:1px solid var(--border);background:transparent;border-radius:9px;width:36px;height:36px;cursor:pointer;font-size:17px;color:var(--mut);transition:all 160ms}
+.dh .x:hover{border-color:var(--bad);color:var(--bad)}
+.db{padding:17px 21px;display:grid;gap:14px}
+.df{padding:13px 21px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;background:var(--panel-2)}
+.frow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.field{display:grid;gap:5px}
+.field>span{font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--mut);text-transform:uppercase}
+.field input,.field select,.field textarea{border:1px solid var(--border);border-radius:10px;padding:10px 12px;min-height:44px;background:var(--panel-2);width:100%;font-size:14.5px;color:var(--fg);transition:border-color 160ms,box-shadow 160ms}
+.field input:hover,.field select:hover,.field textarea:hover{border-color:var(--border-2)}
+.field textarea{min-height:82px;resize:vertical;line-height:1.6}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px var(--ring)}
+.field.err input,.field.err textarea,.field.err select{border-color:var(--bad)}
+.field em{font-style:normal;font-size:12px;color:var(--bad)}
+.info{background:var(--panel-2);border:1px solid var(--border);border-left:3px solid var(--acc);border-radius:10px;padding:9px 13px;font-size:12.8px;color:var(--mut);display:flex;gap:14px;flex-wrap:wrap}
+.info b{color:var(--fg)}
+.dl{display:grid;gap:6px}
+.dlrow{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) 92px 34px;gap:6px}
+.dlrow select,.dlrow input{border:1px solid var(--border);border-radius:9px;padding:8px 10px;background:var(--panel-2);min-width:0;color:var(--fg);transition:border-color 160ms}
+.dlrow select:focus,.dlrow input:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px var(--ring)}
+.dlrow.missrow select:first-child{border-color:var(--miss);background:var(--miss-bg);color:var(--miss)}
+.dlrow .rm{border:1px solid var(--border);background:transparent;border-radius:9px;cursor:pointer;color:var(--bad);font-size:15px;transition:border-color 160ms}
+.dlrow .rm:hover{border-color:var(--bad);background:var(--bad-bg)}
+.dlhead{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) 92px 34px;gap:6px;font-size:10px;letter-spacing:.1em;color:var(--mut);font-weight:700;text-transform:uppercase}
+.balance{border-radius:12px;padding:11px 15px;display:grid;gap:7px;border:1px solid;border-left-width:4px}
+.balance.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.balance.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.balance .eq{font-size:13.8px;font-weight:700;font-variant-numeric:lining-nums tabular-nums}
+.balance .acts{display:flex;gap:6px;flex-wrap:wrap}
+.balance .btn.sm{background:var(--panel)}
+.preview{display:flex;gap:16px;align-items:baseline;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:11px}
+.preview .v{font-size:40px;font-weight:800;line-height:1.1;letter-spacing:-.02em}
+
+/* Toast */
+.toast-wrap{position:fixed;left:50%;top:14px;transform:translateX(-50%);display:grid;gap:8px;z-index:300;width:max-content;max-width:calc(100vw - 24px);pointer-events:none}
+.toast{background:var(--panel-hi);color:var(--fg);border:1px solid var(--border-2);border-left:3px solid var(--ok);padding:11px 17px;border-radius:12px;font-size:13.5px;box-shadow:var(--shadow);animation:tin 240ms cubic-bezier(.2,.9,.3,1.15)}
+.toast.err{border-left-color:var(--bad)}.toast.info{border-left-color:var(--acc)}
+@keyframes tin{from{opacity:0;transform:translateY(-8px) scale(.96)}to{opacity:1;transform:none}}
+
+/* 复盘报告（恒定浅色纸面） */
+.report-bar{position:sticky;top:0;width:min(210mm,100%);margin:0 auto 13px;display:flex;gap:8px;align-items:center;background:#101826;color:#E8EFF6;border-radius:13px;padding:10px 15px;flex-wrap:wrap;font-size:14px}
+.report-bar b{font-weight:750;font-size:15.5px}
+.report-bar .sp{flex:1}
+.report-bar .btn{border-color:#33435C;color:#E8EFF6;background:transparent}
+.report-bar .btn:hover{border-color:#22D3EE;color:#7DEBFA}
+.report-bar .btn.pri{background:linear-gradient(135deg,#22D3EE,#0EA5B7);border-color:transparent;color:#062A33}
+.report-holder{width:100%}
+.report-page{width:210mm;max-width:100%;min-height:297mm;margin:0 auto 30px;background:#fff;padding:11mm 12mm;box-shadow:0 20px 60px rgba(0,0,0,.5);font-size:11px;color:#17222E;line-height:1.45;border-radius:4px}
+.rp-h{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px double #17222E;padding-bottom:7px;gap:10px;flex-wrap:wrap}
+.rp-h h1{margin:0;font-size:21px;font-weight:800;letter-spacing:-.01em}
+.rp-h .co{font-size:10px;letter-spacing:.06em;color:#5C6B7A;margin-top:2px}
+.rp-meta{display:flex;flex-wrap:wrap;gap:4px 14px;margin:7px 0 9px;font-size:10.5px;color:#4A5560}
+.rp-kpi{display:grid;grid-template-columns:repeat(6,1fr);border-top:1.5px solid #17222E;border-bottom:1.5px solid #17222E}
+.rp-kpi div{padding:6px 8px;border-right:1px solid #E2E7EE}
+.rp-kpi div:last-child{border-right:0}
+.rp-kpi small{display:block;color:#5C6B7A;font-size:8.5px;letter-spacing:.08em;font-weight:700}
+.rp-kpi b{font-size:18.5px;font-weight:800;font-variant-numeric:lining-nums tabular-nums}
+.rp-sec{margin-top:10px}
+.rp-sec h4{margin:0 0 5px;font-size:12.5px;font-weight:800;padding-bottom:3px;border-bottom:1px solid #E2E7EE;position:relative}
+.rp-sec h4::after{content:"";position:absolute;left:0;bottom:-1px;width:28px;height:2px;background:#0891B2}
+.rp-concl{margin:0;padding-left:16px}
+.rp-concl li{margin:1.5px 0}
+.rp-t{width:100%;border-collapse:collapse}
+.rp-t th,.rp-t td{border:0;border-bottom:1px solid #EDF0F3;padding:3px 5px;font-size:10px;text-align:left}
+.rp-t th{font-size:8.5px;letter-spacing:.06em;font-weight:700;color:#5C6B7A;border-bottom:1px solid #17222E}
+.rp-t td.r,.rp-t th.r{text-align:right}
+.rp-2{display:grid;grid-template-columns:1.15fr 1fr;gap:12px}
+.heat td{text-align:center!important;font-weight:700;border-right:1px solid #fff}
+.rp-sign{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;font-size:10.5px}
+.rp-sign div{border-top:1px solid #17222E;padding-top:4px;color:#5C6B7A;letter-spacing:.06em}
+.rp-foot{margin-top:8px;font-size:9.5px;color:#5C6B7A;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+
+/* 响应式 */
+@media (max-width:1180px){
+  .shell{grid-template-columns:1fr}
+  .side{display:none}
+  .kpis{grid-template-columns:repeat(3,1fr)}
+  .kpi.main{grid-column:1/-1}
+  .g-trend,.g-pareto{grid-template-columns:1fr}
+  .lines{grid-template-columns:repeat(3,1fr)}
+}
+@media (max-width:760px){
+  .topbar{padding:11px 14px}
+  .tb-title{font-size:16.5px}
+  .filters{padding:10px 14px;top:0;position:static}
+  .fgroup{width:100%}
+  .scope{margin-left:0}
+  main{padding:14px 12px 50px;gap:13px}
+  .kpis{grid-template-columns:repeat(2,1fr);gap:10px}
+  .kpi .v{font-size:26px}
+  .kpi.main .v{font-size:44px}
+  .kpi.main{gap:13px}
+  .gauge svg{width:104px;height:104px}
+  .lines{grid-template-columns:1fr}
+  .panel{padding:14px}
+  .frow{grid-template-columns:1fr}
+  .dlrow,.dlhead{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) 72px 32px}
+  .report-page{padding:6mm;font-size:10px}
+  .rp-kpi{grid-template-columns:repeat(3,1fr)}
+  .rp-2{grid-template-columns:1fr}
+  .mask{padding:0}
+  .dialog{border-radius:0;min-height:100%}
+}
+@media (pointer:coarse){
+  .btn,.seg button,.dh .x,.chip,.iconbtn{min-height:44px}
+  .btn.sm{min-height:40px}
+  .mitem select,.ctrl select,.ctrl input,.dlrow select,.dlrow input{min-height:44px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* 打印 */
+@media print{
+  @page{size:A4 portrait;margin:8mm}
+  body{background:#fff}
+  html[data-theme="dark"] body::before{display:none}
+  .shell,.toast-wrap,.mask:not(#reportOverlay){display:none!important}
+  #reportOverlay{display:block!important;position:static;background:none;padding:0;overflow:visible;-webkit-backdrop-filter:none;backdrop-filter:none;animation:none}
+  .report-bar{display:none!important}
+  .report-page{box-shadow:none;width:auto;min-height:0;margin:0;padding:0;border-radius:0}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <!-- ============ 侧边导航 ============ -->
+  <aside class="side">
+    <div class="s-brand">
+      <div class="logo">恒</div>
+      <div><b>恒锐精密 · 质量看板</b><small>二车间 · 产线良率与返工</small></div>
+    </div>
+    <nav class="nav" id="sideNav">
+      <button data-act="nav" data-target="#kpis" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>总览仪表</button>
+      <button data-act="nav" data-target="#sec-trend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>良率趋势</button>
+      <button data-act="nav" data-target="#sec-pareto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 21V13"/><path d="M12 21V7"/><path d="M19 21V3"/></svg>缺陷帕累托</button>
+      <button data-act="nav" data-target="#sec-missing"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M8 11h6"/></svg>缺失与改进</button>
+      <button data-act="nav" data-target="#sec-batch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3.5 6h.01"/><path d="M3.5 12h.01"/><path d="M3.5 18h.01"/></svg>批次明细</button>
+    </nav>
+    <div class="s-foot">
+      <span class="tag demo" style="justify-content:center">示例数据 · 虚构主体</span>
+      <span class="tag off" style="justify-content:center">MES/ERP：未连接 · 纯本地演示</span>
+      <span class="ver">Quality Board v2.0 · 本地运行，无任何外部请求</span>
+    </div>
+  </aside>
+
+  <div class="content">
+    <!-- ============ 顶栏 ============ -->
+    <header class="topbar">
+      <h1 class="tb-title">产线良率与返工分析<span class="sub" id="brandSub">恒锐精密制造有限公司（虚构）· 二车间 · 质量工程师 林蔚（本地演示身份）</span></h1>
+      <div class="top-right">
+        <div class="rolebox"><label>角色</label>
+          <select id="roleSel" title="切换仅改变报告署名与页面身份，属本地演示">
+            <option value="质量工程师 林蔚">质量工程师 林蔚</option>
+            <option value="生产主管 郑海">生产主管 郑海</option>
+            <option value="L2 线长 何嘉">L2 线长 何嘉</option>
+          </select>
+        </div>
+        <span class="tag local" id="storeBadge" title="所有编辑仅保存在本浏览器 localStorage">本地演示 · 浏览器本地保存</span>
+        <span class="tag off" title="提示由页面本地规则生成，未调用任何大模型">AI 提示：本地规则</span>
+        <span class="tag off" title="改进记录不会通知责任人">消息通知：未连接</span>
+        <span class="savehint" id="saveHint">—</span>
+        <button class="iconbtn" data-act="theme" id="themeBtn" title="切换深色 / 浅色主题"><svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+        <button class="iconbtn" data-act="exportCsv" title="导出当前筛选范围 CSV"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg></button>
+        <button class="btn pri" data-act="openReport">🖨 质量复盘报告</button>
+        <button class="btn ghost" data-act="reset">↺ 重置示例</button>
+      </div>
+    </header>
+
+    <div class="filters" id="filters"></div>
+
+    <main>
+      <section class="kpis" id="kpis"></section>
+      <section class="alerts" id="alerts"></section>
+
+      <section class="grid g-trend" id="sec-trend">
+        <div class="panel">
+          <div class="ph"><h2 data-en="01 — Line FPY Trend">产线一次合格率趋势</h2><span class="tag demo">示例数据</span><span class="sp"></span>
+            <div class="legend" id="trendLegend"></div></div>
+          <div id="trendWrap"><div id="trend"></div><div id="chartTip"></div></div>
+          <div class="ph" style="margin:6px 0 0"><span class="hint">按「日期 × 产线」汇总当前筛选范围内的批次；虚线为目标 95%，红色区域为 &lt;90% 预警带。悬停查看当日各线读数，点击可在批次明细中聚焦。</span></div>
+        </div>
+        <div class="panel">
+          <div class="ph"><h2 data-en="02 — Line Snapshot">产线快读</h2><span class="tag demo">示例数据</span><span class="sp"></span><span class="hint" id="lastDayHint"></span></div>
+          <div class="lines" id="lineCards"></div>
+        </div>
+      </section>
+
+      <section class="grid g-pareto" id="sec-pareto">
+        <div class="panel">
+          <div class="ph"><h2 data-en="03 — Defect Pareto">缺陷帕累托图</h2><span class="tag demo">示例数据</span><span class="sp"></span><span class="hint">占比 = 该原因件数 ÷ 已归因不良件数；点击柱子或行可建立改进记录</span></div>
+          <div id="pareto"></div>
+          <div style="overflow:auto;margin-top:6px"><table class="tbl" id="paretoTbl"></table></div>
+        </div>
+        <div class="side-stack" id="sec-missing">
+          <div class="panel">
+            <div class="ph"><h2 data-en="04 — Missing Causes">缺陷原因缺失</h2><span class="tag miss">单独列出 · 不计入帕累托</span><span class="tag demo">示例数据</span></div>
+            <div id="missing"></div>
+          </div>
+          <div class="panel">
+            <div class="ph"><h2 data-en="05 — Corrective Actions">改进记录</h2><span class="tag off">本地演示 · 不通知责任人</span><span class="sp"></span><span class="hint" id="actCount"></span></div>
+            <div id="actions"></div>
+          </div>
+          <div class="panel">
+            <div class="ph"><h2 data-en="06 — Local Hints">现场提示（本地规则）</h2><span class="tag off">未连接大模型</span><span class="tag demo">示例数据</span></div>
+            <div id="aihints"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="sec-batch">
+        <div class="ph"><h2 data-en="07 — Batch Ledger">批次明细</h2><span class="tag demo">示例数据</span><span id="focusChip"></span><span class="sp"></span>
+          <div class="ctrl">
+            <input id="q" type="search" placeholder="搜索批次号，如 L3-1009" style="width:190px">
+            <select id="sortSel">
+              <option value="date">按日期</option>
+              <option value="fpyAsc">一次合格率 低→高</option>
+              <option value="defDesc">不良件数 多→少</option>
+            </select>
+          </div>
+        </div>
+        <div class="ph" style="margin-top:-2px"><span class="hint">一次合格率 = 一次合格件数 ÷ 投入件数；数量关系：投入 = 一次合格 + 返工 + 报废（缺陷明细按处置汇总，编辑时强制平衡）。</span></div>
+        <div class="tablewrap"><table class="tbl btbl" id="batchTbl"></table></div>
+        <div id="batchEmpty"></div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div class="mask" id="batchModal"><div class="dialog">
+  <div class="dh"><h3 id="bmTitle">编辑批次</h3><span class="tag demo">示例数据</span><button class="x" data-act="close" data-target="batchModal">×</button></div>
+  <div class="db" id="bmBody"></div>
+  <div class="df"><button class="btn" data-act="close" data-target="batchModal">取消</button><button class="btn pri" id="bmSave" data-act="saveBatch">保存批次</button></div>
+</div></div>
+
+<div class="mask" id="actModal"><div class="dialog">
+  <div class="dh"><h3 id="amTitle">建立改进记录</h3><span class="tag off">本地演示 · 不发送通知</span><button class="x" data-act="close" data-target="actModal">×</button></div>
+  <div class="db" id="amBody"></div>
+  <div class="df"><button class="btn danger" id="amDel" data-act="delAction" style="margin-right:auto;display:none">删除</button><button class="btn" data-act="close" data-target="actModal">取消</button><button class="btn pri" data-act="saveAction">保存记录</button></div>
+</div></div>
+
+<div class="mask" id="confirmModal"><div class="dialog sm">
+  <div class="dh"><h3 id="cfTitle">确认</h3><button class="x" data-act="close" data-target="confirmModal">×</button></div>
+  <div class="db" id="cfBody"></div>
+  <div class="df"><button class="btn" data-act="close" data-target="confirmModal">取消</button><button class="btn pri" id="cfOk">确认</button></div>
+</div></div>
+
+<div class="mask" id="reportOverlay">
+  <div class="report-holder">
+    <div class="report-bar"><b>质量复盘报告预览</b><span class="tag demo" style="background:#3A2E12;color:#E9D29A;border-color:#8A6508">示例数据</span><span style="font-size:12px;color:#8B98A9">随筛选与编辑实时更新 · A4 单页</span><span class="sp"></span>
+      <button class="btn sm pri" data-act="print">打印 / 另存 PDF</button><button class="btn sm" data-act="close" data-target="reportOverlay">关闭</button></div>
+    <div class="report-page" id="reportPage"></div>
+  </div>
+</div>
+
+<datalist id="people">
+  <option value="林蔚">质量工程师</option>
+  <option value="郑海">生产主管</option>
+  <option value="周启明">L1 线长</option>
+  <option value="何嘉">L2 线长</option>
+  <option value="唐思远">L3 线长</option>
+  <option value="宋立">工艺工程师</option>
+  <option value="许诺">设备工程师</option>
+</datalist>
+<div class="toast-wrap" id="toasts"></div>
+
+<script>
+/* ====================== 基础配置（全部为虚构示例） ====================== */
+const STORE_KEY = 'hr-quality-yield-demo-v1';
+const THEME_KEY = 'hr-quality-theme';
+const TARGET = 95;
+const DROP_ABS = 90;
+const DROP_DELTA = 5;
+const LINES = [
+  {id:'L1', name:'L1 压铸整理线', lead:'周启明', color:'var(--l1)'},
+  {id:'L2', name:'L2 端盖冲压线', lead:'何嘉',   color:'var(--l2)'},
+  {id:'L3', name:'L3 柔性装配线', lead:'唐思远', color:'var(--l3)'}
+];
+const PRODUCTS = [{id:'A', name:'HR-A 齿轮箱壳体'},{id:'B', name:'HR-B 电机端盖'}];
+const SHIFTS = ['白班','夜班'];
+const DAYS = ['2026-10-05','2026-10-06','2026-10-07','2026-10-08','2026-10-09','2026-10-12','2026-10-13','2026-10-14','2026-10-15','2026-10-16'];
+const REASONS = ['尺寸超差','气孔','毛刺','划伤','螺纹不良','平面度超差'];
+const REASON_COLOR = {'尺寸超差':'var(--r1)','气孔':'var(--r2)','毛刺':'var(--r3)','划伤':'var(--r4)','螺纹不良':'var(--r5)','平面度超差':'var(--r6)'};
+const MISS_LABEL = '原因缺失';
+const ROLES = ['质量工程师 林蔚','生产主管 郑海','L2 线长 何嘉'];
+const lineOf = id => LINES.find(l=>l.id===id);
+const prodOf = id => PRODUCTS.find(p=>p.id===id);
+
+/* ====================== 示例数据生成（固定种子，可重置） ====================== */
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function pickW(r,w){const ks=Object.keys(w);const tot=ks.reduce((s,k)=>s+w[k],0);let x=r()*tot;for(const k of ks){x-=w[k];if(x<=0)return k;}return ks[ks.length-1];}
+const SCRAP_P = {'气孔':1,'尺寸超差':.4,'毛刺':0,'划伤':.3,'螺纹不良':.1,'平面度超差':.5};
+const WEIGHTS = {A:{'气孔':30,'尺寸超差':22,'毛刺':20,'划伤':12,'螺纹不良':16}, B:{'尺寸超差':30,'平面度超差':20,'毛刺':28,'划伤':22}};
+
+function seedData(){
+  const r = rng(20261005);
+  const batches = [];
+  DAYS.forEach((d,di)=>LINES.forEach((ln,li)=>SHIFTS.forEach((sh,si)=>{
+    const product = ln.id==='L1'?'A':ln.id==='L2'?'B':(si===0?'A':'B');
+    const input = 380 + Math.round(r()*140);
+    let rate = [0.032,0.038,0.044][li] + (si?0.006:0) + (r()-0.5)*0.014;
+    let w = {...WEIGHTS[product]};
+    // 骤降样例：L2 10-12 夜班夹具定位销磨损，平面度超差集中爆发；10-13 白班部分恢复
+    if(ln.id==='L2' && di===5 && si===1){ rate = 0.195; w['平面度超差'] = 300; }
+    if(ln.id==='L2' && di===6 && si===0){ rate = 0.098; w['平面度超差'] = 110; }
+    const total = Math.max(2, Math.round(input*rate));
+    const map = {};
+    for(let i=0;i<total;i++){
+      const rs = pickW(r,w); const disp = r()<SCRAP_P[rs]?'报废':'返工';
+      const k = rs+'|'+disp; map[k]=(map[k]||0)+1;
+    }
+    let defects = Object.entries(map).map(([k,q])=>{const [reason,disp]=k.split('|');return {reason,disp,qty:q};});
+    const moveToMissing = (n,disp)=>{
+      const src = defects.filter(x=>x.disp===disp).sort((a,b)=>b.qty-a.qty)[0];
+      if(!src) return; const m = Math.min(n, src.qty); src.qty-=m;
+      defects.push({reason:'',disp,qty:m});
+    };
+    // 原因缺失样例：L3 夜班若干批次、L1 一个白班批次未登记缺陷原因
+    if(ln.id==='L3' && si===1 && [1,3,6,8].includes(di)) moveToMissing([5,7,4,6][[1,3,6,8].indexOf(di)],'返工');
+    if(ln.id==='L1' && di===3 && si===0) moveToMissing(2,'报废');
+    defects = defects.filter(x=>x.qty>0).sort((a,b)=>b.qty-a.qty);
+    const dsumv = defects.reduce((s,x)=>s+x.qty,0);
+    let fp = input - dsumv;
+    let in2 = input;
+    // 验收样例：L3 10-09 白班 投入 1000、一次合格 950、返工 30、报废 20 → 一次合格率 95.0%
+    if(ln.id==='L3' && di===4 && si===0){
+      fp = 950; in2 = 1000;
+      defects = [{reason:'划伤',disp:'返工',qty:30},{reason:'气孔',disp:'报废',qty:20}];
+    }
+    batches.push({
+      id:`${ln.id}-${d.slice(5).replace('-','')}-${si?'N':'D'}`,
+      date:d, line:ln.id, product, shift:sh, input:in2, fp, defects
+    });
+  })));
+  const actions = [
+    {id:'A1', reason:'平面度超差', scope:'L2 端盖冲压线 · HR-B 电机端盖 · 夜班', owner:'何嘉', measure:'更换 L2 冲压夹具定位销（实测磨损 0.08mm），首件及每 2 小时增加平面度抽检', due:'2026-10-24', result:'未验证', note:'', createdAt:'2026-10-13 09:20'},
+    {id:'A2', reason:'气孔', scope:'L1 压铸整理线 · HR-A 齿轮箱壳体', owner:'宋立', measure:'清理压铸模排气槽，真空度由 -85kPa 调至 -92kPa，连续跟踪 5 个班次', due:'2026-10-18', result:'部分有效', note:'10-14 后气孔件数下降约三成，仍高于基线', createdAt:'2026-10-08 14:05'}
+  ];
+  return {batches, actions, seq:3, role:ROLES[0]};
+}
+
+/* ====================== 状态与存储 ====================== */
+let S, F = {line:'all', product:'all', shift:'all'}, FOCUS = null, flashId = null, editing = null, editingAct = null;
+const Store = (()=>{
+  let ls = null, ok = false;
+  try{ ls = window.localStorage; const k='__hr_probe__'; ls.setItem(k,'1'); ls.removeItem(k); ok = true; }catch(e){ ok = false; }
+  const mem = {};
+  return {
+    get ok(){return ok;},
+    get(k){ if(ok){try{return ls.getItem(k);}catch(e){ok=false;}} return mem[k] ?? null; },
+    set(k,v){ if(ok){try{ls.setItem(k,v);return true;}catch(e){ok=false;}} mem[k]=v; return false; },
+    remove(k){ if(ok){try{ls.removeItem(k);}catch(e){ok=false;}} delete mem[k]; }
+  };
+})();
+function load(){
+  try{const raw = Store.get(STORE_KEY); if(raw){S = JSON.parse(raw); if(S && Array.isArray(S.batches)) return 'local';}}catch(e){}
+  S = seedData(); return 'seed';
+}
+let warnedNoStore = false;
+function save(msg){
+  const persisted = Store.set(STORE_KEY, JSON.stringify(S));
+  setSaveHint();
+  if(!persisted && !warnedNoStore){ warnedNoStore = true; toast('当前环境禁止浏览器本地存储，编辑仅在本页有效；用浏览器直接打开此文件可持久保存','info'); }
+  if(msg) toast(msg);
+}
+function setSaveHint(){
+  const t = new Date().toTimeString().slice(0,8);
+  const badge = $('#storeBadge');
+  if(Store.ok){
+    $('#saveHint').textContent = '已保存到本地 '+t;
+    badge.textContent = '本地演示 · 浏览器本地保存'; badge.className = 'tag local';
+    badge.title = '所有编辑仅保存在本浏览器 localStorage';
+  }else{
+    $('#saveHint').textContent = '已更新（未持久化）'+t;
+    badge.textContent = '本地演示 · 临时保存（刷新后丢失）'; badge.className = 'tag warn';
+    badge.title = '当前预览环境禁止 localStorage，编辑只保留在本页内存中；用浏览器直接打开 index.html 可持久保存';
+  }
+}
+
+/* ====================== 工具 ====================== */
+const $ = s=>document.querySelector(s);
+const $$ = s=>Array.from(document.querySelectorAll(s));
+const esc = s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n=>Number(n).toLocaleString('zh-CN');
+const pc = (a,b)=> b>0 ? a/b*100 : NaN;
+const f1 = v=> isFinite(v) ? v.toFixed(1)+'%' : '—';
+const rwOf = b=>b.defects.filter(d=>d.disp==='返工').reduce((s,d)=>s+d.qty,0);
+const scOf = b=>b.defects.filter(d=>d.disp==='报废').reduce((s,d)=>s+d.qty,0);
+const dsOf = b=>b.defects.reduce((s,d)=>s+d.qty,0);
+const fpyOf = b=>pc(b.fp,b.input);
+const lvl = v=> !isFinite(v)?'':(v>=TARGET?'ok':v>=DROP_ABS?'warn':'bad');
+const md = d=>d.slice(5);
+const todayStr = ()=>{const t=new Date();return t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');};
+const nowStr = ()=>{const t=new Date();return todayStr()+' '+t.toTimeString().slice(0,5);};
+function toast(msg,type='ok'){const el=document.createElement('div');el.className='toast '+(type==='ok'?'':type);el.textContent=msg;$('#toasts').appendChild(el);setTimeout(()=>{el.style.opacity='0';el.style.transition='opacity .3s';setTimeout(()=>el.remove(),320);},3000);}
+const reducedMotion = ()=>window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function countUp(el, fmtFn, target, dur=650){
+  if(reducedMotion() || !isFinite(target)){ el.textContent = fmtFn(target); return; }
+  const t0 = performance.now();
+  (function step(t){
+    const p = Math.min(1,(t-t0)/dur), e = 1-Math.pow(1-p,3);
+    el.textContent = fmtFn(target*e);
+    if(p<1) requestAnimationFrame(step); else el.textContent = fmtFn(target);
+  })(t0);
+}
+function sparkSVG(vals, color, w=96, h=26){
+  const vs = vals.filter(v=>isFinite(v));
+  if(vs.length<2) return '';
+  const min = Math.min(...vs)-.5, max = Math.max(...vs)+.5;
+  const X=i=>i/(vals.length-1)*(w-4)+2, Y=v=>h-3-(v-min)/(max-min||1)*(h-6);
+  let pts=''; vals.forEach((v,i)=>{ if(!isFinite(v))return; pts+=X(i).toFixed(1)+','+Y(v).toFixed(1)+' '; });
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" aria-hidden="true"><polyline points="${pts}" stroke="${color}"/></svg>`;
+}
+function scopeText(){
+  const a = F.line==='all'?'全部产线':lineOf(F.line).name;
+  const b = F.product==='all'?'全部产品':prodOf(F.product).name;
+  const c = F.shift==='all'?'全部班次':F.shift;
+  return `${a} · ${b} · ${c}`;
+}
+function filtered(){return S.batches.filter(b=>(F.line==='all'||b.line===F.line)&&(F.product==='all'||b.product===F.product)&&(F.shift==='all'||b.shift===F.shift));}
+function stats(list){
+  const s={n:list.length,input:0,fp:0,rework:0,scrap:0,def:0,miss:0,by:{}};
+  list.forEach(b=>{
+    s.input+=b.input; s.fp+=b.fp;
+    b.defects.forEach(d=>{
+      if(d.disp==='返工') s.rework+=d.qty; else s.scrap+=d.qty;
+      s.def+=d.qty;
+      if(!d.reason){s.miss+=d.qty;return;}
+      const o = s.by[d.reason] || (s.by[d.reason]={reason:d.reason,qty:0,rework:0,scrap:0,batches:new Set()});
+      o.qty+=d.qty; if(d.disp==='返工') o.rework+=d.qty; else o.scrap+=d.qty; if(d.qty>0) o.batches.add(b.id);
+    });
+  });
+  s.fpy = pc(s.fp,s.input); s.rwRate = pc(s.rework,s.input); s.scRate = pc(s.scrap,s.input);
+  s.attributed = s.def - s.miss;
+  let cum=0;
+  s.pareto = Object.values(s.by).filter(o=>o.qty>0).sort((a,b)=>b.qty-a.qty||a.reason.localeCompare(b.reason,'zh')).map(o=>{
+    cum+=o.qty; return {...o, nb:o.batches.size, pct:pc(o.qty,s.attributed), cum:pc(cum,s.attributed), pctAll:pc(o.qty,s.def)};
+  });
+  return s;
+}
+function dropInfo(b){
+  const key = x=>x.date+(x.shift==='白班'?'0':'1');
+  const seq = S.batches.filter(x=>x.line===b.line).sort((x,y)=>key(x).localeCompare(key(y)));
+  const i = seq.findIndex(x=>x.id===b.id); const prev = seq.slice(Math.max(0,i-4),i);
+  const avg = prev.length? prev.reduce((s,x)=>s+fpyOf(x),0)/prev.length : NaN;
+  const v = fpyOf(b); const delta = isFinite(avg)? avg - v : 0;
+  return {drop: v<DROP_ABS || delta>=DROP_DELTA, avg, delta, v};
+}
+function topDefect(b){const d=[...b.defects].sort((x,y)=>y.qty-x.qty)[0];return d?(d.reason||MISS_LABEL):'—';}
+function actionStatus(a){
+  if(a.result==='有效') return {t:'已关闭 · 有效',c:'ok'};
+  const over = a.due && a.due < todayStr();
+  if(a.result==='无效') return {t: over?'无效 · 已逾期':'无效 · 需重新制定',c:'bad',over};
+  if(over) return {t:'已逾期 · '+a.result,c:'bad',over:true};
+  return {t:a.result==='部分有效'?'进行中 · 部分有效':'进行中 · 待验证',c:a.result==='部分有效'?'warn':'pri'};
+}
+
+/* ====================== 渲染：筛选 ====================== */
+function renderFilters(){
+  const seg=(k,opts)=>`<div class="seg">${opts.map(([v,t])=>`<button class="${F[k]===v?'on':''}" data-act="filter" data-k="${k}" data-v="${v}">${t}</button>`).join('')}</div>`;
+  $('#filters').innerHTML = `
+    <div class="fgroup"><label>产线</label>${seg('line',[['all','全部'],...LINES.map(l=>[l.id,l.id])])}</div>
+    <div class="fgroup"><label>产品</label>${seg('product',[['all','全部'],...PRODUCTS.map(p=>[p.id,p.name])])}</div>
+    <div class="fgroup"><label>班次</label>${seg('shift',[['all','全部'],...SHIFTS.map(s=>[s,s])])}</div>
+    <div class="scope">统计期间 10-05 至 10-16（10 个生产日）· <b>${filtered().length}</b> 个批次</div>`;
+}
+
+/* ====================== 渲染：KPI（环形仪表 + 数字滚动） ====================== */
+function gaugeSVG(p, color){
+  const R=52, C=2*Math.PI*R, off = C*(1-Math.max(0,Math.min(1,p/100)));
+  return `<svg class="gauge" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="一次合格率仪表">
+    <circle class="track" cx="64" cy="64" r="${R}" fill="none" stroke-width="9"/>
+    <circle class="val" cx="64" cy="64" r="${R}" fill="none" stroke="${color}" stroke-width="9" stroke-linecap="round"
+      stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 64 64)"/>
+    <text class="gnum" x="64" y="62" text-anchor="middle">${isFinite(p)?p.toFixed(1)+'%':'—'}</text>
+    <text class="glab" x="64" y="82" text-anchor="middle">FPY</text></svg>`;
+}
+function renderKPI(s){
+  const L = lvl(s.fpy);
+  const color = {ok:'var(--ok)',warn:'var(--warn)',bad:'var(--bad)'}[L]||'var(--faint)';
+  const daily = DAYS.map(d=>{const bs=filtered().filter(b=>b.date===d);return bs.length?pc(bs.reduce((a,b)=>a+b.fp,0),bs.reduce((a,b)=>a+b.input,0)):NaN;});
+  const rwDaily = DAYS.map(d=>filtered().filter(b=>b.date===d).reduce((a,b)=>a+rwOf(b),0));
+  const scDaily = DAYS.map(d=>filtered().filter(b=>b.date===d).reduce((a,b)=>a+scOf(b),0));
+  const dfp = isFinite(s.fpy)? s.fpy-TARGET : NaN;
+  const deltaChip = isFinite(dfp)
+    ? `<span class="deltachip ${dfp>=0?'up':'down'}">${dfp>=0?'▲':'▼'} 较目标 ${Math.abs(dfp).toFixed(1)} pt</span>`:'';
+  $('#kpis').innerHTML = `
+    <div class="kpi main ${L}">${gaugeSVG(s.fpy,color)}
+      <div class="body">
+        <div class="k"><span>一次合格率 FPY</span><span class="tag demo">示例数据</span></div>
+        <div class="v num" data-anim="pct" data-num="${isFinite(s.fpy)?s.fpy.toFixed(1):''}">${f1(s.fpy)}</div>
+        <div class="s num">= ${fmt(s.fp)} ÷ ${fmt(s.input)} · 目标 ${TARGET}% · ${isFinite(s.fpy)?(s.fpy>=TARGET?'达标':'差 '+(TARGET-s.fpy).toFixed(1)+' 个百分点'):'无数据'}</div>
+        ${deltaChip}
+      </div></div>
+    <div class="kpi"><div class="k">投入件数</div><div class="v num" data-anim="int" data-num="${s.input}">${fmt(s.input)}</div><div class="s">${s.n} 个批次</div>${sparkSVG(daily,'var(--acc)')}</div>
+    <div class="kpi"><div class="k">一次合格件数</div><div class="v num" data-anim="int" data-num="${s.fp}">${fmt(s.fp)}</div><div class="s">不良合计 ${fmt(s.def)} 件</div>${sparkSVG(daily,'var(--ok)')}</div>
+    <div class="kpi ${s.rwRate>3?'warn':''}"><div class="k">返工件数</div><div class="v num" data-anim="int" data-num="${s.rework}">${fmt(s.rework)}</div><div class="s">返工率 ${f1(s.rwRate)}</div>${sparkSVG(rwDaily,'var(--warn)')}</div>
+    <div class="kpi ${s.scRate>2?'bad':''}"><div class="k">报废件数</div><div class="v num" data-anim="int" data-num="${s.scrap}">${fmt(s.scrap)}</div><div class="s">报废率 ${f1(s.scRate)}</div>${sparkSVG(scDaily,'var(--bad)')}</div>
+    <div class="kpi missk"><div class="k">原因缺失</div><div class="v num" data-anim="int" data-num="${s.miss}">${fmt(s.miss)}</div><div class="s">占全部不良 ${f1(pc(s.miss,s.def))}</div></div>`;
+  $$('#kpis .v[data-anim]').forEach(el=>{
+    const v = parseFloat(el.dataset.num);
+    if(!isFinite(v)){ el.textContent = el.dataset.anim==='pct'?'—':'0'; return; }
+    countUp(el, el.dataset.anim==='pct' ? (x=>x.toFixed(1)+'%') : (x=>fmt(Math.round(x))), v);
+  });
+}
+
+/* ====================== 渲染：骤降报警 ====================== */
+function renderAlerts(list){
+  const drops = list.map(b=>({b,...dropInfo(b)})).filter(x=>x.drop).sort((a,b)=>a.v-b.v);
+  const el = $('#alerts');
+  if(!drops.length){el.className='alerts none';el.innerHTML='<span class="ttl"><span class="pulse"></span>当前范围无一次合格率骤降批次</span><span class="hint" style="font-size:12px">判定：低于 90% 或较本线前 4 批均值下降 ≥ 5 个百分点</span>';return;}
+  el.className='alerts';
+  el.innerHTML = `<span class="ttl"><span class="pulse"></span>一次合格率骤降 ${drops.length} 批</span>` + drops.slice(0,6).map(x=>
+    `<span class="chip" data-act="focusBatch" data-id="${x.b.id}"><b class="num">${f1(x.v)}</b> ${x.b.id} · ${x.b.shift} · ${topDefect(x.b)}${isFinite(x.avg)?` · 较前 4 批均值 ↓${x.delta.toFixed(1)}pt`:''}</span>`).join('')
+    + (drops.length>6?`<span class="hint" style="font-size:12px">另有 ${drops.length-6} 批见明细</span>`:'');
+}
+
+/* ====================== 渲染：趋势图（十字线 + tooltip） ====================== */
+let TREND_CTX = null;
+function renderTrend(list){
+  const W=760,H=286,pl=44,pr=16,pt=16,pb=34,iw=W-pl-pr,ih=H-pt-pb;
+  const lines = LINES.filter(l=>F.line==='all'||l.id===F.line);
+  const series = lines.map(l=>({l,pts:DAYS.map((d,i)=>{const bs=list.filter(b=>b.line===l.id&&b.date===d);if(!bs.length)return null;const inp=bs.reduce((s,b)=>s+b.input,0),fp=bs.reduce((s,b)=>s+b.fp,0);return {i,d,v:pc(fp,inp),inp,fp,n:bs.length};})}));
+  const vals = series.flatMap(s=>s.pts.filter(Boolean).map(p=>p.v));
+  $('#trendLegend').innerHTML = lines.map(l=>`<span><i style="background:${l.color}"></i>${l.name}</span>`).join('')+`<span><i style="background:var(--mut);height:0;border-top:2px dashed var(--mut)"></i>目标 95%</span>`;
+  if(!vals.length){$('#trend').innerHTML='<div class="empty"><b>当前筛选无批次</b>该产线不生产所选产品/班次，请调整筛选条件。</div>';TREND_CTX=null;return;}
+  const yMin = Math.min(85, Math.floor((Math.min(...vals)-2)/5)*5), yMax=100;
+  const X=i=>pl+iw*(i+0.5)/DAYS.length, Y=v=>pt+ih*(1-(v-yMin)/(yMax-yMin));
+  let g='';
+  for(let v=yMin;v<=yMax;v+=5){g+=`<line x1="${pl}" x2="${W-pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--grid-line)"/><text x="${pl-7}" y="${Y(v)+4}" text-anchor="end" font-size="11" fill="var(--mut)" font-weight="600">${v}%</text>`;}
+  g+=`<rect x="${pl}" y="${Y(DROP_ABS)}" width="${iw}" height="${Y(yMin)-Y(DROP_ABS)}" fill="var(--bad)" opacity=".07"/>`;
+  g+=`<line x1="${pl}" x2="${W-pr}" y1="${Y(TARGET)}" y2="${Y(TARGET)}" stroke="var(--fg)" stroke-dasharray="6 4" stroke-width="1.4" opacity=".8"/>`;
+  DAYS.forEach((d,i)=>{g+=`<text x="${X(i)}" y="${H-12}" text-anchor="middle" font-size="11" fill="var(--mut)" font-weight="600">${md(d)}</text>`;});
+  series.forEach((s,si)=>{
+    let path='',pen=false;
+    s.pts.forEach(p=>{if(!p){pen=false;return;}path+=(pen?'L':'M')+X(p.i).toFixed(1)+','+Y(p.v).toFixed(1);pen=true;});
+    g+=`<path class="trend-line" d="${path}" fill="none" stroke="${s.l.color}" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" pathLength="1" style="animation-delay:${si*140}ms"/>`;
+    s.pts.forEach((p,pi)=>{if(!p)return;const low=p.v<DROP_ABS;
+      g+=`<circle class="pfade" cx="${X(p.i)}" cy="${Y(p.v)}" r="${low?7:4.5}" fill="${low?'var(--bad)':s.l.color}" stroke="${low?'var(--bad)':s.l.color}" stroke-width="${low?3:2}" style="animation-delay:${300+pi*40}ms" opacity="${low?1:.95}"/>`;
+      if(low) g+=`<text class="pfade" x="${X(p.i)}" y="${Y(p.v)+21}" text-anchor="middle" font-size="12" font-weight="800" fill="var(--bad)">${s.l.id} ${p.v.toFixed(1)}%</text>`;
+    });
+  });
+  g+=`<line id="xhair" x1="0" x2="0" y1="${pt}" y2="${pt+ih}" stroke="var(--acc)" stroke-width="1" opacity="0"/>`;
+  for(let i=0;i<DAYS.length;i++){
+    g+=`<rect data-dayhover="${i}" x="${pl+iw*i/DAYS.length}" y="${pt}" width="${iw/DAYS.length}" height="${ih}" fill="transparent" style="cursor:crosshair"/>`;
+  }
+  $('#trend').innerHTML = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="产线一次合格率趋势">${g}</svg>`;
+  TREND_CTX = {series, X, W, pl, iw};
+  bindTrendHover();
+}
+function bindTrendHover(){
+  const tip = $('#chartTip');
+  const wrap = $('#trendWrap');
+  $$('#trend [data-dayhover]').forEach(rc=>{
+    const di = +rc.dataset.dayhover;
+    rc.addEventListener('pointermove',e=>{
+      if(!TREND_CTX) return;
+      const {series,X} = TREND_CTX;
+      const rows = series.map(s=>({s,p:s.pts[di]})).filter(r=>r.p);
+      if(!rows.length){tip.style.display='none';return;}
+      tip.innerHTML = `<div class="tt"><span>${DAYS[di]}</span><span style="color:var(--faint)">目标 95%</span></div>`+
+        rows.map(r=>`<div class="tr"><span class="dot" style="background:${r.s.l.color};margin:0"></span><span class="n">${r.s.l.id} ${r.s.l.name.replace(r.s.l.id+' ','')}</span><b class="num" style="color:${r.p.v<TARGET?'var(--bad)':'var(--ok)'}">${r.p.v.toFixed(1)}%</b></div>`+
+        `<div class="tr" style="color:var(--faint)"><span class="n" style="padding-left:15px">${fmt(r.p.fp)} / ${fmt(r.p.inp)} · ${r.p.n} 批</span></div>`).join('');
+      const wr = wrap.getBoundingClientRect();
+      let x = e.clientX-wr.left+16, y = e.clientY-wr.top-10;
+      const tw = 210, th = tip.offsetHeight||110;
+      if(x+tw>wr.width-8) x = e.clientX-wr.left-tw-16;
+      if(y+th>wr.height-4) y = wr.height-th-6;
+      tip.style.left = x+'px'; tip.style.top = Math.max(4,y)+'px'; tip.style.display='block';
+      const xh = $('#xhair'); if(xh){xh.setAttribute('x1',X(di));xh.setAttribute('x2',X(di));xh.setAttribute('opacity','.35');}
+    });
+    rc.addEventListener('pointerleave',()=>{tip.style.display='none';const xh=$('#xhair');if(xh)xh.setAttribute('opacity','0');});
+    rc.addEventListener('click',()=>{
+      const hit = TREND_CTX && TREND_CTX.series.find(s=>s.pts[di]);
+      if(!hit) return;
+      FOCUS={line:hit.l.id,date:DAYS[di]}; renderAll();
+      document.querySelector('#batchTbl').scrollIntoView({behavior:'smooth',block:'center'});
+      toast(`批次明细已聚焦 ${hit.l.id} · ${md(DAYS[di])}`,'info');
+    });
+  });
+}
+
+/* ====================== 渲染：产线快读 ====================== */
+function renderLineCards(list){
+  const last = DAYS[DAYS.length-1];
+  $('#lastDayHint').textContent = '大数字为统计期一次合格率';
+  $('#lineCards').innerHTML = LINES.map(l=>{
+    const bs = list.filter(b=>b.line===l.id);
+    const dim = F.line!=='all'&&F.line!==l.id;
+    if(!bs.length) return `<div class="lcard dim" style="border-left-color:${l.color}"><div class="nm">${l.name}</div><div class="lead">线长 ${l.lead}</div><div class="big" style="font-size:16px;color:var(--faint)">无批次</div><div class="row2">当前筛选下该产线无生产记录</div></div>`;
+    const s = stats(bs); const L=lvl(s.fpy);
+    const lb = bs.filter(b=>b.date===last); const ls = lb.length?stats(lb):null;
+    const drops = bs.filter(b=>dropInfo(b).drop).length;
+    const daily = DAYS.map(d=>{const db=bs.filter(b=>b.date===d);return db.length?pc(db.reduce((a,b)=>a+b.fp,0),db.reduce((a,b)=>a+b.input,0)):NaN;});
+    const tot = s.rework+s.scrap||1;
+    return `<div class="lcard ${dim?'dim':''}" style="border-left-color:${l.color}">
+      <div class="nm">${l.name}</div><div class="lead">线长 ${l.lead} · ${s.n} 批</div>
+      <div class="big num c-${L}">${f1(s.fpy)}</div>
+      <div class="row2"><span>${md(last)} <b class="num c-${ls?lvl(ls.fpy):''}">${ls?f1(ls.fpy):'—'}</b></span><span>返工 <b class="num">${fmt(s.rework)}</b></span><span>报废 <b class="num">${fmt(s.scrap)}</b></span><span>首要缺陷 <b>${s.pareto[0]?s.pareto[0].reason:'—'}</b></span>${drops?`<span class="tag bad">骤降 ${drops} 批</span>`:''}${s.miss?`<span class="tag miss">缺原因 ${s.miss}</span>`:''}</div>
+      <div class="lspark">${sparkSVG(daily,l.color,300,26)}</div>
+      <div class="splitbar" title="返工 / 报废占比"><i style="width:${(s.rework/tot*100).toFixed(1)}%;background:var(--warn)"></i><i style="width:${(s.scrap/tot*100).toFixed(1)}%;background:var(--bad)"></i></div></div>`;
+  }).join('');
+}
+
+/* ====================== 渲染：帕累托 ====================== */
+function paretoSVG(p, opt={}){
+  const W=opt.w||680,H=opt.h||280,pl=44,pr=44,pt=18,pb=opt.pb||42,iw=W-pl-pr,ih=H-pt-pb;
+  const max = Math.max(...p.map(x=>x.qty),1); const step = Math.pow(10,Math.floor(Math.log10(max))); const top = Math.ceil(max/step*2)/2*step || 1;
+  const bw = iw/p.length; let g='';
+  for(let k=0;k<=4;k++){const y=pt+ih*k/4;g+=`<line x1="${pl}" x2="${W-pr}" y1="${y}" y2="${y}" stroke="var(--grid-line)"/><text x="${pl-7}" y="${y+4}" text-anchor="end" font-size="10.5" fill="var(--mut)" font-weight="600">${Math.round(top*(1-k/4))}</text><text x="${W-pr+7}" y="${y+4}" font-size="10.5" fill="var(--mut)" font-weight="600">${100-k*25}%</text>`;}
+  const y80 = pt+ih*0.2; g+=`<line x1="${pl}" x2="${W-pr}" y1="${y80}" y2="${y80}" stroke="var(--bad)" stroke-dasharray="4 4" opacity=".8"/><text x="${W-pr-4}" y="${y80-5}" text-anchor="end" font-size="10.5" fill="var(--bad)" font-weight="700">80%</text>`;
+  p.forEach((x,i)=>{
+    const h = ih*x.qty/top, bx=pl+i*bw+bw*.16, by=pt+ih-h;
+    const col = REASON_COLOR[x.reason]||'var(--mut)';
+    g+=`<g class="bar-g" data-act="newAction" data-reason="${esc(x.reason)}">
+      <rect class="b pbar" x="${bx}" y="${by}" width="${bw*.68}" height="${Math.max(h,1)}" rx="4" fill="${col}" style="animation-delay:${i*70}ms"/>
+      <text x="${bx+bw*.34}" y="${by-6}" text-anchor="middle" font-size="12.5" font-weight="800" fill="var(--fg)">${x.qty}</text>
+      <text x="${bx+bw*.34}" y="${H-pb+16}" text-anchor="middle" font-size="12" font-weight="700" fill="var(--fg)">${esc(x.reason)}</text>
+      <text x="${bx+bw*.34}" y="${H-pb+31}" text-anchor="middle" font-size="10.5" fill="var(--mut)" font-weight="600">${x.pct.toFixed(1)}%</text>
+      <title>${esc(x.reason)}：${x.qty} 件，占已归因不良 ${x.pct.toFixed(1)}%，累计 ${x.cum.toFixed(1)}%\n点击建立改进记录</title></g>`;
+  });
+  const pts = p.map((x,i)=>[pl+i*bw+bw/2, pt+ih*(1-x.cum/100)]);
+  g+=`<polyline class="pfade" points="${pts.map(q=>q.join(',')).join(' ')}" fill="none" stroke="var(--fg)" stroke-width="2" opacity=".85" style="animation-delay:400ms"/>`;
+  pts.forEach((q,i)=>{g+=`<circle class="pfade" cx="${q[0]}" cy="${q[1]}" r="3.6" fill="var(--panel)" stroke="var(--fg)" stroke-width="2" style="animation-delay:${420+i*60}ms"/><text class="pfade" x="${q[0]+6}" y="${q[1]-7}" font-size="10" font-weight="800" fill="var(--fg)" stroke="var(--panel)" stroke-width="3" paint-order="stroke" style="animation-delay:${420+i*60}ms">${p[i].cum.toFixed(0)}%</text>`;});
+  return `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="缺陷帕累托图">${g}</svg>`;
+}
+function renderPareto(s){
+  if(!s.pareto.length){
+    $('#pareto').innerHTML = `<div class="empty"><b>${s.n?'当前范围暂无已归因缺陷':'当前筛选无批次'}</b>${s.n?(s.miss?`有 ${s.miss} 件不良缺少原因，请在右侧补录后再看帕累托。`:'全部为一次合格。'):'请调整产线 / 产品 / 班次筛选。'}</div>`;
+    $('#paretoTbl').innerHTML=''; return;
+  }
+  $('#pareto').innerHTML = paretoSVG(s.pareto);
+  const maxq = s.pareto[0].qty;
+  const actCnt = r=>S.actions.filter(a=>a.reason===r).length;
+  $('#paretoTbl').innerHTML = `<thead><tr><th>排名</th><th>缺陷原因</th><th class="r">件数</th><th>占比（已归因）</th><th class="r">累计</th><th class="r">返工 / 报废</th><th class="r">涉及批次</th><th>改进记录</th><th></th></tr></thead><tbody>`+
+    s.pareto.map((x,i)=>`<tr class="click" data-act="newAction" data-reason="${esc(x.reason)}">
+      <td><span class="rank ${i<3?'r'+(i+1):''}">${i+1}</span></td>
+      <td><span class="dot" style="background:${REASON_COLOR[x.reason]||'var(--mut)'}"></span><b>${esc(x.reason)}</b>${x.cum<=80.0001||i===0?' <span class="keytag">关键少数</span>':''}</td>
+      <td class="r num"><b>${x.qty}</b></td>
+      <td class="num"><span class="minibar" style="width:${Math.max(3,x.qty/maxq*90)}px;background:${REASON_COLOR[x.reason]||'var(--mut)'}"></span>${x.pct.toFixed(1)}%</td>
+      <td class="r num">${x.cum.toFixed(1)}%</td>
+      <td class="r num">${x.rework} / ${x.scrap}</td>
+      <td class="r num">${x.nb}</td>
+      <td>${actCnt(x.reason)?`<span class="tag pri">${actCnt(x.reason)} 条</span>`:'<span style="color:var(--faint)">—</span>'}</td>
+      <td><button class="btn sm" data-act="newAction" data-reason="${esc(x.reason)}">＋ 建立改进</button></td></tr>`).join('')+
+    (s.miss?`<tr><td></td><td colspan="8" style="color:var(--miss);font-size:12px">另有 <b>${s.miss}</b> 件「${MISS_LABEL}」未计入排序（占全部不良 ${f1(pc(s.miss,s.def))}），见右侧单独清单。</td></tr>`:'')+'</tbody>';
+}
+
+/* ====================== 渲染：原因缺失 ====================== */
+function renderMissing(list,s){
+  const items=[]; list.forEach(b=>b.defects.forEach((d,idx)=>{if(!d.reason&&d.qty>0) items.push({b,d,idx});}));
+  if(!items.length){$('#missing').innerHTML='<div class="empty"><b>✓ 当前范围所有不良均已登记原因</b>帕累托统计覆盖全部不良件数。</div>';return;}
+  const opts = REASONS.map(r=>`<option value="${r}">${r}</option>`).join('');
+  $('#missing').innerHTML = `<div class="miss-sum"><span class="v num">${s.miss} 件</span><span class="s">${items.length} 条记录 · ${new Set(items.map(x=>x.b.id)).size} 个批次 · 占全部不良 ${f1(pc(s.miss,s.def))}</span></div>
+    <div class="mlist">${items.map(x=>`<div class="mitem"><div><div class="t">${x.b.id} · ${x.b.shift}</div><div class="d">${lineOf(x.b.line).name} · ${prodOf(x.b.product).name}</div></div>
+      <div style="text-align:right"><b class="num c-miss" style="font-size:17px">${x.d.qty}</b> <span class="tag ${x.d.disp==='报废'?'bad':'warn'}">${x.d.disp}</span></div>
+      <div class="fix"><select data-mb="${x.b.id}" data-mi="${x.idx}"><option value="">补录缺陷原因…</option>${opts}</select><button class="btn sm" data-act="fixMissing" data-id="${x.b.id}" data-idx="${x.idx}">补录</button></div></div>`).join('')}</div>`;
+}
+
+/* ====================== 渲染：改进记录 ====================== */
+function renderActions(){
+  $('#actCount').textContent = S.actions.length? `共 ${S.actions.length} 条 · 逾期 ${S.actions.filter(a=>actionStatus(a).over).length} 条`:'';
+  if(!S.actions.length){$('#actions').innerHTML='<div class="empty"><b>还没有改进记录</b>点击帕累托图中的缺陷柱或表格行，填写责任人、措施、目标日期与验证结果。</div>';return;}
+  const list=[...S.actions].sort((a,b)=>(a.result==='有效')-(b.result==='有效')||a.due.localeCompare(b.due));
+  $('#actions').innerHTML = `<div class="alist">${list.map(a=>{const st=actionStatus(a);return `<div class="acard ${st.over?'overdue':''}">
+    <div class="h"><span class="dot" style="background:${REASON_COLOR[a.reason]||'var(--mut)'};margin:0"></span><b>${esc(a.reason)}</b><span class="tag ${st.c}">${st.t}</span><span class="ops"><button class="btn sm" data-act="editAction" data-id="${a.id}">编辑</button></span></div>
+    <div class="m">${esc(a.measure)}</div>
+    <div class="f"><span>责任人 <b style="color:var(--fg)">${esc(a.owner)}</b></span><span>目标 <b class="num" style="color:${st.over?'var(--bad)':'var(--fg)'}">${esc(a.due)}</b></span><span>验证：${esc(a.result)}${a.note?'（'+esc(a.note)+'）':''}</span></div>
+    <div class="f" style="margin-top:3px;color:var(--faint)">范围：${esc(a.scope)} · 建立 ${esc(a.createdAt)}</div></div>`;}).join('')}</div>`;
+}
+
+/* ====================== 渲染：本地规则提示（非 AI 连接） ====================== */
+function renderHints(list,s){
+  const drops = list.map(b=>({b,...dropInfo(b)})).filter(x=>x.drop).sort((a,b)=>a.v-b.v);
+  const overActs = S.actions.filter(a=>actionStatus(a).over);
+  const hints=[];
+  if(s.pareto.length){
+    const t=s.pareto[0];
+    if(t.pct>=20) hints.push({ic:'🎯',t:`首要缺陷「${t.reason}」占已归因不良 ${t.pct.toFixed(1)}%`,d:`共 ${t.qty} 件、涉及 ${t.nb} 批，建议立项改进并跟踪至关闭。`,btn:'建立改进记录',act:'newAction',reason:t.reason});
+  }
+  if(drops.length) hints.push({ic:'📉',t:`${drops.length} 批一次合格率骤降，最低 ${drops[0].b.id}（${f1(drops[0].v)}）`,d:`主要缺陷 ${topDefect(drops[0].b)}，建议按批次倒查设备与工艺参数。`,btn:'定位该批次',act:'focusBatch',id:drops[0].b.id});
+  if(s.miss) hints.push({ic:'🕳️',t:`${s.miss} 件不良未登记缺陷原因`,d:`占全部不良 ${f1(pc(s.miss,s.def))}，未计入帕累托，建议当班补录。`,btn:'查看缺失清单',act:'scrollMissing'});
+  if(overActs.length) hints.push({ic:'⏰',t:`${overActs.length} 条改进记录已逾期`,d:`逾期未闭环会放大质量成本，建议更新目标日期或验证结果。`,btn:'查看改进记录',act:'scrollActions'});
+  if(!hints.length){$('#aihints').innerHTML='<div class="empty"><b>✓ 当前范围未见明显异常</b>首要缺陷占比、骤降批次、原因缺失与逾期改进均无提醒。</div>';return;}
+  $('#aihints').innerHTML = hints.map(h=>`<div class="aiitem"><span class="ic">${h.ic}</span><div><div class="t">${esc(h.t)}</div><div class="d">${esc(h.d)}</div></div>
+    <button class="btn sm go" data-act="${h.act}" ${h.reason?`data-reason="${esc(h.reason)}"`:''} ${h.id?`data-id="${h.id}"`:''}>${h.btn}</button></div>`).join('')
+    + `<div class="hint" style="margin-top:8px">以上由页面本地规则生成，未连接大模型、未发送任何消息；仅为演示。</div>`;
+}
+
+/* ====================== 渲染：批次明细 ====================== */
+function renderTable(list){
+  let rows = list;
+  if(FOCUS){ rows = rows.filter(b=> FOCUS.id ? b.id===FOCUS.id : (b.line===FOCUS.line && b.date===FOCUS.date)); }
+  const q = $('#q').value.trim().toUpperCase(); if(q) rows = rows.filter(b=>b.id.toUpperCase().includes(q));
+  const sort = $('#sortSel').value;
+  rows = [...rows].sort((a,b)=> sort==='fpyAsc'? fpyOf(a)-fpyOf(b) : sort==='defDesc'? dsOf(b)-dsOf(a) : (a.date.localeCompare(b.date)||a.line.localeCompare(b.line)||(a.shift==='白班'?-1:1)));
+  $('#focusChip').innerHTML = FOCUS? `<span class="focuschip">仅显示：${FOCUS.id?FOCUS.id:FOCUS.line+' · '+md(FOCUS.date)}<button data-act="clearFocus" title="清除聚焦">×</button></span>`:'';
+  if(!rows.length){
+    $('#batchTbl').innerHTML=''; $('#batchTbl').parentElement.style.display='none';
+    $('#batchEmpty').innerHTML = `<div class="empty"><b>没有符合条件的批次</b>${q?'未找到批次号包含「'+esc(q)+'」的记录。':'请调整产线 / 产品 / 班次筛选。'} ${(q||FOCUS)?'<br><button class="btn sm" data-act="clearAll" style="margin-top:9px">清除搜索与聚焦</button>':''}</div>`; return;
+  }
+  $('#batchTbl').parentElement.style.display=''; $('#batchEmpty').innerHTML='';
+  $('#batchTbl').innerHTML = `<thead><tr><th class="sticky">批次号</th><th>日期</th><th>班次</th><th>产线</th><th>产品</th><th class="r">投入</th><th class="r">一次合格</th><th class="r">返工</th><th class="r">报废</th><th class="r">一次合格率</th><th>主要缺陷</th><th>状态</th><th></th></tr></thead><tbody>`+
+    rows.map(b=>{const v=fpyOf(b),L=lvl(v),di=dropInfo(b),hasMiss=b.defects.some(d=>!d.reason&&d.qty>0);
+      return `<tr class="${di.drop?'lowrow':''} ${flashId===b.id?'flash':''}" data-row="${b.id}">
+      <td class="sticky">${b.id}</td><td class="num">${md(b.date)}</td><td>${b.shift}</td><td><span class="dot" style="background:${lineOf(b.line).color}"></span>${b.line}</td><td>${prodOf(b.product).name}</td>
+      <td class="r num">${fmt(b.input)}</td><td class="r num">${fmt(b.fp)}</td><td class="r num">${fmt(rwOf(b))}</td><td class="r num">${fmt(scOf(b))}</td>
+      <td class="r num fpy c-${L}">${f1(v)}</td><td>${topDefect(b)}</td>
+      <td>${di.drop?'<span class="tag bad">骤降</span> ':''}${hasMiss?'<span class="tag miss">原因缺失</span>':''}${!di.drop&&!hasMiss?`<span class="tag ${L}">${L==='ok'?'达标':'未达标'}</span>`:''}</td>
+      <td><button class="btn sm" data-act="editBatch" data-id="${b.id}">编辑</button></td></tr>`;}).join('')+'</tbody>';
+  flashId=null;
+}
+
+/* ====================== 渲染：复盘报告 ====================== */
+function renderReport(){
+  const list = filtered(), s = stats(list);
+  const drops = list.map(b=>({b,...dropInfo(b)})).filter(x=>x.drop).sort((a,b)=>a.v-b.v);
+  const top3 = s.pareto.slice(0,3); const top3cum = top3.length? top3[top3.length-1].cum : NaN;
+  const lines = LINES.filter(l=>F.line==='all'||l.id===F.line);
+  const heat = lines.map(l=>({l,cells:DAYS.map(d=>{const bs=list.filter(b=>b.line===l.id&&b.date===d);if(!bs.length)return null;return pc(bs.reduce((a,b)=>a+b.fp,0),bs.reduce((a,b)=>a+b.input,0));}),tot:stats(list.filter(b=>b.line===l.id))}));
+  const hc = v=> v==null?'#F5F7F9': v>=TARGET?'#E4F2E8': v>=DROP_ABS?'#F9F0DB':'#F7E2DC';
+  const concl = [];
+  if(s.n){
+    concl.push(`统计范围一次合格率 <b>${f1(s.fpy)}</b>（${fmt(s.fp)}/${fmt(s.input)}），${s.fpy>=TARGET?'达到':'低于'}目标 ${TARGET}%${s.fpy<TARGET?' '+(TARGET-s.fpy).toFixed(1)+' 个百分点':''}；返工率 ${f1(s.rwRate)}，报废率 ${f1(s.scRate)}。`);
+    if(s.pareto.length) concl.push(`首要缺陷为 <b>${s.pareto[0].reason}</b>，${s.pareto[0].qty} 件，占已归因不良 <b>${s.pareto[0].pct.toFixed(1)}%</b>；前 ${top3.length} 项（${top3.map(x=>x.reason).join('、')}）累计 ${top3cum.toFixed(1)}%。`);
+    concl.push(drops.length? `出现一次合格率骤降 <b>${drops.length}</b> 批，最低为 ${drops[0].b.id}（${drops[0].b.shift}）${f1(drops[0].v)}，主要缺陷 ${topDefect(drops[0].b)}。` : '统计范围内未出现一次合格率骤降批次。');
+    concl.push(s.miss? `有 <b>${s.miss}</b> 件不良未登记原因（占全部不良 ${f1(pc(s.miss,s.def))}），未计入帕累托，需由对应线长补录。` : '全部不良均已登记原因。');
+    const open = S.actions.filter(a=>a.result!=='有效'); const over = S.actions.filter(a=>actionStatus(a).over);
+    concl.push(`改进记录 ${S.actions.length} 条，未关闭 ${open.length} 条，其中逾期 ${over.length} 条。`);
+  }
+  const acts = [...S.actions].sort((a,b)=>a.due.localeCompare(b.due)).slice(0,6);
+  $('#reportPage').innerHTML = `
+    <div class="rp-h"><div><h1>质量复盘报告 · 产线良率与返工</h1><div class="co">恒锐精密制造有限公司（虚构）· 二车间 · <b style="color:#B45309">示例数据</b></div></div>
+      <div style="text-align:right;font-size:10.5px;color:#4A5560">编制：${esc(S.role||ROLES[0])}<br>生成：${nowStr()}（本地生成，未走审批）</div></div>
+    <div class="rp-meta"><span>统计范围：<b>${scopeText()}</b></span><span>期间：2026-10-05 至 2026-10-16（10 个生产日）</span><span>批次：<b>${s.n}</b></span><span>口径：一次合格率 = 一次合格件数 ÷ 投入件数</span></div>
+    ${!s.n?'<div class="empty"><b>当前筛选无批次</b>请在页面调整筛选后再打印。</div>':`
+    <div class="rp-kpi">
+      <div><small>一次合格率</small><b class="num" style="color:${{ok:'#15803D',warn:'#B45309',bad:'#B91C1C'}[lvl(s.fpy)]||'#17222E'}">${f1(s.fpy)}</b></div>
+      <div><small>投入件数</small><b class="num">${fmt(s.input)}</b></div>
+      <div><small>一次合格件数</small><b class="num">${fmt(s.fp)}</b></div>
+      <div><small>返工 / 返工率</small><b class="num">${fmt(s.rework)}</b> <span>${f1(s.rwRate)}</span></div>
+      <div><small>报废 / 报废率</small><b class="num">${fmt(s.scrap)}</b> <span>${f1(s.scRate)}</span></div>
+      <div><small>原因缺失</small><b class="num" style="color:#6D28D9">${fmt(s.miss)}</b> <span>件</span></div>
+    </div>
+    <div class="rp-sec"><h4>复盘结论</h4><ol class="rp-concl">${concl.map(c=>`<li>${c}</li>`).join('')}</ol></div>
+    <div class="rp-2 rp-sec">
+      <div><h4>缺陷帕累托（已归因 ${fmt(s.attributed)} 件）</h4>
+        ${s.pareto.length?paretoReportSVG(s.pareto):'<div class="empty">暂无已归因缺陷</div>'}
+      </div>
+      <div><h4>缺陷占比明细</h4>
+        <table class="rp-t"><thead><tr><th>#</th><th>缺陷原因</th><th class="r">件数</th><th class="r">占比</th><th class="r">累计</th><th class="r">返工/报废</th></tr></thead><tbody>
+        ${s.pareto.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.reason)}</td><td class="r">${x.qty}</td><td class="r">${x.pct.toFixed(1)}%</td><td class="r">${x.cum.toFixed(1)}%</td><td class="r">${x.rework}/${x.scrap}</td></tr>`).join('')}
+        <tr style="color:#6D28D9"><td>—</td><td>${MISS_LABEL}（单列）</td><td class="r">${s.miss}</td><td class="r" colspan="2">占全部不良 ${f1(pc(s.miss,s.def))}</td><td class="r">—</td></tr>
+        </tbody></table></div>
+    </div>
+    <div class="rp-sec"><h4>产线 × 生产日 一次合格率</h4>
+      <table class="rp-t heat"><thead><tr><th style="text-align:left">产线</th>${DAYS.map(d=>`<th style="text-align:center">${md(d)}</th>`).join('')}<th style="text-align:center">合计</th></tr></thead><tbody>
+      ${heat.map(h=>`<tr><td style="text-align:left!important">${h.l.name}</td>${h.cells.map(v=>`<td style="background:${hc(v)}">${v==null?'—':v.toFixed(1)}</td>`).join('')}<td style="background:${hc(h.tot.n?h.tot.fpy:null)}">${h.tot.n?h.tot.fpy.toFixed(1):'—'}</td></tr>`).join('')}
+      </tbody></table><div style="font-size:9.5px;color:#5C6B7A;margin-top:2px">绿 ≥95% · 黄 90–95% · 红 &lt;90%</div></div>
+    <div class="rp-2 rp-sec">
+      <div><h4>骤降批次（${drops.length}）</h4>${drops.length?`<table class="rp-t"><thead><tr><th>批次</th><th>班次</th><th class="r">投入</th><th class="r">一次合格</th><th class="r">FPY</th><th>主要缺陷</th></tr></thead><tbody>${drops.slice(0,5).map(x=>`<tr><td>${x.b.id}</td><td>${x.b.shift}</td><td class="r">${x.b.input}</td><td class="r">${x.b.fp}</td><td class="r" style="color:#B91C1C;font-weight:700">${f1(x.v)}</td><td>${topDefect(x.b)}</td></tr>`).join('')}</tbody></table>${drops.length>5?`<div style="font-size:9.5px;color:#5C6B7A">另有 ${drops.length-5} 批略</div>`:''}`:'<div style="color:#4A5560">无</div>'}</div>
+      <div><h4>原因缺失批次</h4>${(()=>{const m=list.filter(b=>b.defects.some(d=>!d.reason&&d.qty>0));return m.length?`<table class="rp-t"><thead><tr><th>批次</th><th>班次</th><th class="r">缺失件数</th><th>责任线长</th></tr></thead><tbody>${m.slice(0,5).map(b=>`<tr><td>${b.id}</td><td>${b.shift}</td><td class="r">${b.defects.filter(d=>!d.reason).reduce((a,d)=>a+d.qty,0)}</td><td>${lineOf(b.line).lead}</td></tr>`).join('')}</tbody></table>${m.length>5?`<div style="font-size:9.5px;color:#5C6B7A">另有 ${m.length-5} 批略</div>`:''}`:'<div style="color:#4A5560">无</div>';})()}</div>
+    </div>
+    <div class="rp-sec"><h4>改进记录（${S.actions.length}）</h4>${acts.length?`<table class="rp-t"><thead><tr><th>缺陷</th><th>措施</th><th>责任人</th><th>目标日期</th><th>验证结果</th><th>状态</th></tr></thead><tbody>${acts.map(a=>`<tr><td>${esc(a.reason)}</td><td style="max-width:300px;white-space:normal">${esc(a.measure)}</td><td>${esc(a.owner)}</td><td>${esc(a.due)}</td><td>${esc(a.result)}${a.note?'：'+esc(a.note):''}</td><td>${actionStatus(a).t}</td></tr>`).join('')}</tbody></table>${S.actions.length>6?`<div style="font-size:9.5px;color:#5C6B7A">另有 ${S.actions.length-6} 条略</div>`:''}`:'<div style="color:#4A5560">暂无改进记录</div>'}</div>`}
+    <div class="rp-sign"><div>质量工程师：</div><div>生产主管：</div><div>工艺工程师：</div></div>
+    <div class="rp-foot"><span>本报告由本地演示页面生成，数据为虚构示例，未连接 MES/ERP，签字栏需线下确认。</span><span>第 1 页 / 共 1 页</span></div>`;
+}
+/* 报告用帕累托（恒定浅色，不依赖主题变量） */
+function paretoReportSVG(p){
+  const W=420,H=170,pl=30,pr=30,pt=10,pb=32,iw=W-pl-pr,ih=H-pt-pb;
+  const max = Math.max(...p.map(x=>x.qty),1);
+  const bw = iw/p.length; let g='';
+  for(let k=0;k<=3;k++){const y=pt+ih*k/3;g+=`<line x1="${pl}" x2="${W-pr}" y1="${y}" y2="${y}" stroke="#EDF0F3"/><text x="${pl-4}" y="${y+3}" text-anchor="end" font-size="8" fill="#5C6B7A">${Math.round(max*(1-k/3))}</text>`;}
+  const RPT_COLOR = {'尺寸超差':'#0284C7','气孔':'#B91C1C','毛刺':'#B45309','划伤':'#15803D','螺纹不良':'#6D28D9','平面度超差':'#C2410C'};
+  p.forEach((x,i)=>{
+    const h = ih*x.qty/max, bx=pl+i*bw+bw*.18, by=pt+ih-h;
+    g+=`<rect x="${bx}" y="${by}" width="${bw*.64}" height="${Math.max(h,1)}" rx="2" fill="${RPT_COLOR[x.reason]||'#5C6B7A'}"/>
+      <text x="${bx+bw*.32}" y="${H-pb+12}" text-anchor="middle" font-size="8.5" font-weight="700" fill="#17222E">${esc(x.reason)}</text>
+      <text x="${bx+bw*.32}" y="${by-2}" text-anchor="middle" font-size="7.5" fill="#4A5560">${x.qty}</text>`;
+  });
+  const pts = p.map((x,i)=>[pl+i*bw+bw/2, pt+ih*(1-x.cum/100)]);
+  g+=`<polyline points="${pts.map(q=>q.join(',')).join(' ')}" fill="none" stroke="#17222E" stroke-width="1.4"/>`;
+  pts.forEach(q=>{g+=`<circle cx="${q[0]}" cy="${q[1]}" r="2.2" fill="#fff" stroke="#17222E" stroke-width="1.4"/>`;});
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block" role="img" aria-label="帕累托">${g}</svg>`;
+}
+
+/* ====================== 总渲染 ====================== */
+function renderAll(){
+  const list = filtered(), s = stats(list);
+  renderFilters(); renderKPI(s); renderAlerts(list); renderTrend(list); renderLineCards(list);
+  renderPareto(s); renderMissing(list,s); renderActions(); renderHints(list,s); renderTable(list);
+  if($('#reportOverlay').classList.contains('open')) renderReport();
+}
+
+/* ====================== 批次编辑 ====================== */
+function openBatch(id){
+  const b = S.batches.find(x=>x.id===id); if(!b) return;
+  editing = {id, input:b.input, fp:b.fp, defects:b.defects.map(d=>({...d})), orig:fpyOf(b)};
+  $('#bmTitle').textContent = '编辑批次 '+b.id;
+  drawBatchForm(true);
+  $('#batchModal').classList.add('open');
+  setTimeout(()=>$('#bmInput')&&$('#bmInput').focus(),30);
+}
+function drawBatchForm(full){
+  const b = S.batches.find(x=>x.id===editing.id);
+  const reasonOpts = sel=>`<option value="" ${sel===''?'selected':''}>（空）${MISS_LABEL}</option>`+REASONS.map(r=>`<option ${sel===r?'selected':''}>${r}</option>`).join('');
+  if(full){
+    $('#bmBody').innerHTML = `
+      <div class="info"><span>日期 <b>${b.date}</b></span><span>班次 <b>${b.shift}</b></span><span>产线 <b>${lineOf(b.line).name}</b></span><span>产品 <b>${prodOf(b.product).name}</b></span></div>
+      <div class="frow">
+        <label class="field" id="fInput"><span>投入件数</span><input id="bmInput" type="number" min="1" step="1" inputmode="numeric" value="${editing.input}"><em></em></label>
+        <label class="field" id="fFp"><span>一次合格件数</span><input id="bmFp" type="number" min="0" step="1" inputmode="numeric" value="${editing.fp}"><em></em></label>
+      </div>
+      <div><div style="display:flex;align-items:center;margin-bottom:7px;flex-wrap:wrap;gap:6px"><b style="font-size:14px">缺陷明细</b><span style="font-size:12px;color:var(--mut)">返工 / 报废件数按处置自动汇总；件数即缺陷数量，改完点下方按钮可反算</span><button class="btn sm" data-act="addDefect" style="margin-left:auto">＋ 添加缺陷</button></div>
+        <div class="dlhead"><span>缺陷原因</span><span>处置</span><span>件数</span><span></span></div>
+        <div class="dl" id="bmDefects"></div></div>
+      <div id="bmBalance"></div>`;
+  }
+  $('#bmDefects').innerHTML = editing.defects.length? editing.defects.map((d,i)=>`<div class="dlrow ${d.reason?'':'missrow'}">
+      <select data-di="${i}" data-f="reason">${reasonOpts(d.reason)}</select>
+      <select data-di="${i}" data-f="disp"><option ${d.disp==='返工'?'selected':''}>返工</option><option ${d.disp==='报废'?'selected':''}>报废</option></select>
+      <input data-di="${i}" data-f="qty" type="number" min="0" step="1" inputmode="numeric" value="${d.qty}">
+      <button class="rm" data-act="rmDefect" data-i="${i}" title="删除">×</button></div>`).join('') : '<div class="empty" style="padding:10px">无缺陷记录（本批全部一次合格）</div>';
+  updateBalance();
+}
+function readInt(v){ if(v===''||v==null) return NaN; const n=Number(v); return Number.isInteger(n)?n:NaN; }
+function validateBatch(){
+  const errs={}; const inp=editing.input, fp=editing.fp;
+  if(!isFinite(inp)||inp<1) errs.input='请输入 ≥1 的整数';
+  if(!isFinite(fp)||fp<0) errs.fp='请输入 ≥0 的整数';
+  else if(isFinite(inp)&&fp>inp) errs.fp='一次合格件数不能大于投入件数';
+  const badQty = editing.defects.some(d=>!isFinite(d.qty)||d.qty<0);
+  return {errs,badQty};
+}
+function updateBalance(){
+  const {errs,badQty}=validateBatch();
+  [['fInput','input'],['fFp','fp']].forEach(([id,k])=>{const f=$('#'+id); f.classList.toggle('err',!!errs[k]); f.querySelector('em').textContent=errs[k]||'';});
+  const sum = editing.defects.reduce((s,d)=>s+(isFinite(d.qty)?d.qty:0),0);
+  const rw = editing.defects.filter(d=>d.disp==='返工').reduce((s,d)=>s+(isFinite(d.qty)?d.qty:0),0);
+  const sc = sum-rw;
+  const okNums = !errs.input && !errs.fp && !badQty;
+  const gap = okNums? editing.input - editing.fp - sum : NaN;
+  const v = okNums? pc(editing.fp,editing.input):NaN;
+  const balanced = okNums && gap===0;
+  let html = `<div class="preview"><div><div style="font-size:12px;color:var(--mut)">一次合格率预览</div><div class="v num c-${lvl(v)}">${f1(v)}</div></div>
+    <div style="font-size:13px;color:var(--mut)">原值 ${f1(editing.orig)} · ${isFinite(v)?`${editing.fp} ÷ ${editing.input}`:'请修正输入'}</div></div>`;
+  if(badQty) html += `<div class="balance bad"><div class="eq">缺陷件数必须为 ≥0 的整数</div></div>`;
+  else if(okNums){
+    html += `<div class="balance ${balanced?'ok':'bad'}"><div class="eq num">投入 ${editing.input} ${balanced?'=':'≠'} 一次合格 ${editing.fp} + 返工 ${rw} + 报废 ${sc}${balanced?' ✓ 数量平衡':`（差额 ${gap>0?'+':''}${gap}）`}</div>
+      ${balanced?'':`<div style="font-size:13px">${gap>0?`有 ${gap} 件不良未登记到缺陷明细`:`缺陷合计比（投入 − 一次合格）多 ${-gap} 件`}，数量平衡后才能保存。</div>
+      <div class="acts">${gap>0?`<button class="btn sm" data-act="gapToMissing">差额 ${gap} 件计入「${MISS_LABEL}」（返工）</button>`:''}
+        ${(editing.input-sum)>=0?`<button class="btn sm" data-act="recalcFp">按缺陷合计反算一次合格 = ${editing.input-sum}</button>`:''}
+        <button class="btn sm" data-act="recalcInput">按合格+缺陷反算投入 = ${editing.fp+sum}</button></div>`}</div>`;
+  }
+  $('#bmBalance').innerHTML = html;
+  $('#bmSave').disabled = !balanced;
+}
+function saveBatch(){
+  const b = S.batches.find(x=>x.id===editing.id);
+  const {errs,badQty}=validateBatch(); const sum=editing.defects.reduce((s,d)=>s+d.qty,0);
+  if(Object.keys(errs).length||badQty||editing.input-editing.fp-sum!==0){toast('数量不平衡或输入有误，未保存','err');return;}
+  const m={}; editing.defects.forEach(d=>{if(d.qty<=0)return;const k=d.reason+'|'+d.disp;m[k]=(m[k]||0)+d.qty;});
+  const before = fpyOf(b);
+  b.input=editing.input; b.fp=editing.fp; b.defects=Object.entries(m).map(([k,q])=>{const [reason,disp]=k.split('|');return {reason,disp,qty:q};}).sort((a,c)=>c.qty-a.qty);
+  $('#batchModal').classList.remove('open');
+  flashId=b.id; save(); renderAll();
+  toast(`已保存 ${b.id}：一次合格率 ${f1(before)} → ${f1(fpyOf(b))}，帕累托与报告已同步`);
+}
+
+/* ====================== 改进记录 ====================== */
+function openAction(reason, id){
+  const a = id? S.actions.find(x=>x.id===id) : null;
+  const d = new Date(); d.setDate(d.getDate()+14);
+  editingAct = a? {...a} : {id:null, reason, scope:scopeText(), owner:'', measure:'', due:d.toISOString().slice(0,10), result:'未验证', note:''};
+  const s = stats(filtered()); const p = s.pareto.find(x=>x.reason===editingAct.reason);
+  $('#amTitle').textContent = a? '编辑改进记录' : '建立改进记录';
+  $('#amDel').style.display = a? '' : 'none';
+  $('#amBody').innerHTML = `
+    <div class="info"><span>缺陷原因 <b style="color:var(--acc-ink)">${esc(editingAct.reason)}</b></span>${p?`<span>当前范围 <b>${p.qty}</b> 件 · 占比 <b>${p.pct.toFixed(1)}%</b> · 涉及 ${p.nb} 批</span>`:''}<span>范围 <b>${esc(editingAct.scope)}</b></span></div>
+    <div class="frow">
+      <label class="field" id="aOwner"><span>责任人 *</span><input id="amOwner" list="people" placeholder="如：何嘉" value="${esc(editingAct.owner)}"><em></em></label>
+      <label class="field" id="aDue"><span>目标日期 *</span><input id="amDue" type="date" value="${esc(editingAct.due)}"><em></em></label>
+    </div>
+    <label class="field" id="aMeasure"><span>改进措施 *</span><textarea id="amMeasure" placeholder="写清楚做什么、在哪里做、怎么确认，例如：更换夹具定位销，首件增加平面度检验">${esc(editingAct.measure)}</textarea><em></em></label>
+    <div class="frow">
+      <label class="field"><span>验证结果</span><select id="amResult">${['未验证','有效','部分有效','无效'].map(x=>`<option ${editingAct.result===x?'selected':''}>${x}</option>`).join('')}</select></label>
+      <label class="field"><span>验证说明</span><input id="amNote" placeholder="如：连续 5 班次该缺陷 ≤ 2 件" value="${esc(editingAct.note)}"></label>
+    </div>
+    <div style="font-size:12px;color:var(--mut)">保存后仅记录在本浏览器，<b>不会</b>通知责任人（消息通知：未连接）。验证结果为「有效」时记录自动关闭。</div>`;
+  $('#actModal').classList.add('open');
+  setTimeout(()=>$('#amOwner').focus(),30);
+}
+function saveAction(){
+  const owner=$('#amOwner').value.trim(), measure=$('#amMeasure').value.trim(), due=$('#amDue').value;
+  const errs={aOwner:!owner&&'请填写责任人', aMeasure:!measure&&'请填写改进措施', aDue:!due&&'请选择目标日期'};
+  let bad=false; Object.entries(errs).forEach(([k,m])=>{const f=$('#'+k);f.classList.toggle('err',!!m);f.querySelector('em').textContent=m||'';if(m)bad=true;});
+  if(bad){toast('请补全必填项','err');return;}
+  Object.assign(editingAct,{owner,measure,due,result:$('#amResult').value,note:$('#amNote').value.trim()});
+  if(editingAct.id){const i=S.actions.findIndex(x=>x.id===editingAct.id);S.actions[i]={...editingAct};}
+  else{editingAct.id='A'+(S.seq++);editingAct.createdAt=nowStr();S.actions.push({...editingAct});}
+  $('#actModal').classList.remove('open'); save(); renderAll();
+  toast(`改进记录已保存：${editingAct.reason} · ${owner} · ${due}（本地演示，未通知）`);
+}
+
+/* ====================== 确认框 ====================== */
+function confirmBox(title,body,ok){
+  $('#cfTitle').textContent=title; $('#cfBody').innerHTML=body; $('#confirmModal').classList.add('open');
+  $('#cfOk').onclick=()=>{$('#confirmModal').classList.remove('open');ok();};
+}
+
+/* ====================== 主题 / 导出 / 导航 ====================== */
+function applyTheme(t){
+  document.documentElement.dataset.theme = t;
+  try{localStorage.setItem(THEME_KEY,t);}catch(e){}
+  $('#themeIcon').innerHTML = t==='dark'
+    ? '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/>'
+    : '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>';
+}
+function exportCsv(){
+  const list = filtered();
+  const rows = [['批次号','日期','班次','产线','产品','投入件数','一次合格件数','返工件数','报废件数','一次合格率','缺陷明细']];
+  list.forEach(b=>rows.push([b.id,b.date,b.shift,lineOf(b.line).name,prodOf(b.product).name,b.input,b.fp,rwOf(b),scOf(b),isFinite(fpyOf(b))?fpyOf(b).toFixed(1)+'%':'',
+    b.defects.map(d=>(d.reason||MISS_LABEL)+':'+d.disp+':'+d.qty).join('; ')]));
+  const csv = '\uFEFF'+rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download = '产线良率示例数据_'+todayStr()+'.csv';
+  a.click(); URL.revokeObjectURL(a.href);
+  toast(`已导出 ${list.length} 个批次（示例数据，本地生成）`);
+}
+function markNav(){
+  $$('#sideNav button').forEach(b=>{
+    const sec = document.querySelector(b.dataset.target);
+    if(!sec) return;
+    const r = sec.getBoundingClientRect();
+    b.classList.toggle('on', r.top<window.innerHeight*.45 && r.bottom>window.innerHeight*.2);
+  });
+}
+window.addEventListener('scroll',markNav,{passive:true});
+
+/* ====================== 事件 ====================== */
+document.addEventListener('click',e=>{
+  const t = e.target.closest('[data-act]'); if(!t) return;
+  const act = t.dataset.act;
+  if(act!=='newAction' && t.tagName==='TR') return;
+  switch(act){
+    case 'filter': F[t.dataset.k]=t.dataset.v; FOCUS=null; renderAll(); break;
+    case 'close': $('#'+t.dataset.target).classList.remove('open'); break;
+    case 'openReport': renderReport(); $('#reportOverlay').classList.add('open'); break;
+    case 'print': renderReport(); window.print(); break;
+    case 'theme': applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'); renderAll(); break;
+    case 'exportCsv': exportCsv(); break;
+    case 'nav': document.querySelector(t.dataset.target).scrollIntoView({behavior:'smooth',block:'start'}); break;
+    case 'reset': confirmBox('重置示例数据','将清除本浏览器中保存的所有批次修改与改进记录，恢复为初始示例数据（60 个批次、2 条改进记录）。此操作不可撤销。',()=>{Store.remove(STORE_KEY);S=seedData();F={line:'all',product:'all',shift:'all'};FOCUS=null;$('#q').value='';$('#roleSel').value=S.role;save();renderAll();toast('已重置为示例数据','info');}); break;
+    case 'focusDay': FOCUS={line:t.dataset.line,date:t.dataset.date}; renderAll(); document.querySelector('#batchTbl').scrollIntoView({behavior:'smooth',block:'center'}); toast(`批次明细已聚焦 ${t.dataset.line} · ${md(t.dataset.date)}`,'info'); break;
+    case 'focusBatch': FOCUS={id:t.dataset.id}; renderAll(); document.querySelector('#batchTbl').scrollIntoView({behavior:'smooth',block:'center'}); break;
+    case 'clearFocus': FOCUS=null; renderAll(); break;
+    case 'clearAll': FOCUS=null; $('#q').value=''; renderAll(); break;
+    case 'scrollMissing': document.querySelector('#missing').scrollIntoView({behavior:'smooth',block:'center'}); break;
+    case 'scrollActions': document.querySelector('#actions').scrollIntoView({behavior:'smooth',block:'center'}); break;
+    case 'editBatch': openBatch(t.dataset.id); break;
+    case 'addDefect': editing.defects.push({reason:REASONS[0],disp:'返工',qty:1}); drawBatchForm(false); break;
+    case 'rmDefect': editing.defects.splice(+t.dataset.i,1); drawBatchForm(false); break;
+    case 'gapToMissing': { const gap=editing.input-editing.fp-editing.defects.reduce((s,d)=>s+d.qty,0); const ex=editing.defects.find(d=>!d.reason&&d.disp==='返工'); if(ex) ex.qty+=gap; else editing.defects.push({reason:'',disp:'返工',qty:gap}); drawBatchForm(false); toast(`已将差额 ${gap} 件计入「${MISS_LABEL}」，保存后会出现在缺失清单`,'info'); break; }
+    case 'recalcFp': editing.fp = editing.input - editing.defects.reduce((s,d)=>s+d.qty,0); $('#bmFp').value=editing.fp; updateBalance(); break;
+    case 'recalcInput': editing.input = editing.fp + editing.defects.reduce((s,d)=>s+d.qty,0); $('#bmInput').value=editing.input; updateBalance(); break;
+    case 'saveBatch': saveBatch(); break;
+    case 'newAction': e.stopPropagation(); openAction(t.dataset.reason); break;
+    case 'editAction': openAction(null,t.dataset.id); break;
+    case 'saveAction': saveAction(); break;
+    case 'delAction': confirmBox('删除改进记录',`确定删除「${esc(editingAct.reason)} · ${esc(editingAct.owner)}」这条改进记录？`,()=>{S.actions=S.actions.filter(x=>x.id!==editingAct.id);$('#actModal').classList.remove('open');save();renderAll();toast('改进记录已删除','info');}); break;
+    case 'fixMissing': {
+      const sel = document.querySelector(`select[data-mb="${t.dataset.id}"][data-mi="${t.dataset.idx}"]`);
+      if(!sel.value){toast('请先选择要补录的缺陷原因','err');sel.focus();return;}
+      const b=S.batches.find(x=>x.id===t.dataset.id); const d=b.defects[+t.dataset.idx];
+      const same=b.defects.find(x=>x!==d&&x.reason===sel.value&&x.disp===d.disp);
+      if(same){same.qty+=d.qty;b.defects.splice(+t.dataset.idx,1);} else d.reason=sel.value;
+      b.defects.sort((a,c)=>c.qty-a.qty); flashId=b.id; save(); renderAll();
+      toast(`已补录 ${b.id}：${d.qty} 件 → ${sel.value}，帕累托已更新`); break; }
+  }
+});
+document.addEventListener('input',e=>{
+  if(!editing || !$('#batchModal').classList.contains('open')) return;
+  const t=e.target;
+  if(t.id==='bmInput'){editing.input=readInt(t.value);updateBalance();}
+  else if(t.id==='bmFp'){editing.fp=readInt(t.value);updateBalance();}
+  else if(t.dataset.di!=null){const d=editing.defects[+t.dataset.di]; if(t.dataset.f==='qty'){d.qty=readInt(t.value);updateBalance();}}
+});
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(editing && t.dataset.di!=null && t.dataset.f!=='qty'){editing.defects[+t.dataset.di][t.dataset.f]=t.value; drawBatchForm(false);}
+});
+$('#q').addEventListener('input',()=>renderTable(filtered()));
+$('#sortSel').addEventListener('change',()=>renderTable(filtered()));
+$('#roleSel').addEventListener('change',()=>{
+  S.role = $('#roleSel').value;
+  $('#brandSub').textContent = `恒锐精密制造有限公司（虚构）· 二车间 · ${S.role}（本地演示身份）`;
+  save('角色已切换（本地演示，仅改变署名）：'+S.role); renderAll();
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){document.querySelectorAll('.mask.open').forEach(m=>m.classList.remove('open'));return;}
+  if(e.key==='/' && !e.target.closest('input,textarea,select') && !document.querySelector('.mask.open')){e.preventDefault();$('#q').focus();}
+});
+document.querySelectorAll('.mask').forEach(m=>m.addEventListener('mousedown',e=>{if(e.target===m) m.classList.remove('open');}));
+function fitReport(){
+  const pg=$('#reportPage'); pg.style.zoom='';
+  const mm = px=>px*25.4/96;
+  const cs = getComputedStyle(pg);
+  const innerH = pg.scrollHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+  const innerW = pg.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  const hPrint = mm(innerH) * (194 / mm(innerW));
+  if(hPrint > 279) pg.style.zoom = (279 / hPrint).toFixed(3);
+}
+window.addEventListener('beforeprint',()=>{renderReport();fitReport();});
+window.addEventListener('afterprint',()=>{$('#reportPage').style.zoom='';});
+
+/* ====================== 启动 ====================== */
+applyTheme(document.documentElement.dataset.theme||'dark');
+const src = load();
+$('#roleSel').value = S.role || ROLES[0];
+$('#brandSub').textContent = `恒锐精密制造有限公司（虚构）· 二车间 · ${S.role||ROLES[0]}（本地演示身份）`;
+renderAll();
+markNav();
+if(src==='local'){ setSaveHint(); $('#saveHint').textContent='已载入本地保存的编辑'; toast('已载入本浏览器保存的编辑，可点「重置示例」恢复','info'); }
+else { save(); }
+</script>
+</body>
+</html>

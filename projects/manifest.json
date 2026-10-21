@@ -239,10 +239,6 @@
       [
         "bg.png",
         "./demo/bg.png"
-      ],
-      [
-        "assets",
-        "./demo/assets"
       ]
     ]
   },
@@ -445,17 +441,38 @@
     "slug": "air-fryer-listing-images",
     "title": "米白6合1空气炸锅-亚马逊商品套图",
     "kind": "海报 / 电商商品视觉",
-    "demo": null,
+    "demo": "./demo/index.html",
     "assets": [
       [
-        "空气炸锅套图_总览.png",
-        "./demo/%E7%A9%BA%E6%B0%94%E7%82%B8%E9%94%85%E5%A5%97%E5%9B%BE_%E6%80%BB%E8%A7%88.png"
+        "01_主图_白底.png",
+        "./demo/单图/01_%E4%B8%BB%E5%9B%BE_%E7%99%BD%E5%BA%95.png"
       ],
       [
-        "单图",
-        "./demo/%E5%8D%95%E5%9B%BE"
+        "02_卖点_6合1多功能.png",
+        "./demo/单图/02_%E5%8D%96%E7%82%B9_6%E5%90%881%E5%A4%9A%E5%8A%9F%E8%83%BD.png"
+      ],
+      [
+        "03_卖点_紧凑机身尺寸.png",
+        "./demo/单图/03_%E5%8D%96%E7%82%B9_%E7%B4%A7%E5%87%91%E6%9C%BA%E8%BA%AB%E5%B0%BA%E5%AF%B8.png"
+      ],
+      [
+        "04_卖点_4QT家庭容量.png",
+        "./demo/单图/04_%E5%8D%96%E7%82%B9_4QT%E5%AE%B6%E5%BA%AD%E5%AE%B9%E9%87%8F.png"
+      ],
+      [
+        "05_生活场景图.png",
+        "./demo/单图/05_%E7%94%9F%E6%B4%BB%E5%9C%BA%E6%99%AF%E5%9B%BE.png"
+      ],
+      [
+        "06_促销主视觉.png",
+        "./demo/单图/06_%E4%BF%83%E9%94%80%E4%B8%BB%E8%A7%86%E8%A7%89.png"
+      ],
+      [
+        "07_大促横幅_横版.png",
+        "./demo/单图/07_%E5%A4%A7%E4%BF%83%E6%A8%AA%E5%B9%85_%E6%A8%AA%E7%89%88.png"
       ]
-    ]
+    ],
+    "cover": "./demo/空气炸锅套图_总览.png"
   },
   {
     "source": "海报-ai作品/雨落之后-AFTER-THE-RAIN电影海报",
@@ -473,5 +490,392 @@
         "./demo/%E9%9B%A8%E8%90%BD%E4%B9%8B%E5%90%8E-2160x3240.png"
       ]
     ]
+  },
+  {
+    "source": "app工具-ai作品/活动报名微信小程序-行业峰会",
+    "slug": "case-2026-001",
+    "title": "活动报名微信小程序-行业峰会",
+    "kind": "交互原型 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.png"
+  },
+  {
+    "source": "app工具-ai作品/社区团购微信小程序-生鲜团长",
+    "slug": "case-2026-002",
+    "title": "社区团购微信小程序-生鲜团长",
+    "kind": "交互原型 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.jpg"
+  },
+  {
+    "source": "app工具-ai作品/门店预约微信小程序-丽人美业",
+    "slug": "case-2026-003",
+    "title": "门店预约微信小程序-丽人美业",
+    "kind": "交互原型 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.jpg"
+  },
+  {
+    "source": "app工具-ai作品/餐饮点单微信小程序-半山小馆",
+    "slug": "case-2026-004",
+    "title": "餐饮点单微信小程序-半山小馆",
+    "kind": "交互原型 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.jpg"
+  },
+  {
+    "source": "html-ai作品/AI工具测评博客-个人站点",
+    "slug": "case-2026-005",
+    "title": "AI工具测评博客-个人站点",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.jpg"
+  },
+  {
+    "source": "html-ai作品/AI笔记竞品图谱-竞品雷达与机会矩阵",
+    "slug": "case-2026-006",
+    "title": "AI笔记竞品图谱-竞品雷达与机会矩阵",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/AI编程工具赛道商业模式研究报告",
+    "slug": "case-2026-007",
+    "title": "AI编程工具赛道商业模式研究报告",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/AUREATE余烬鎏金-暗黑奇幻游戏发售页",
+    "slug": "case-2026-008",
+    "title": "AUREATE余烬鎏金-暗黑奇幻游戏发售页",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.jpg"
+  },
+  {
+    "source": "html-ai作品/LUMEN数字银行App-液态玻璃卡面设计",
+    "slug": "case-2026-009",
+    "title": "LUMEN数字银行App-液态玻璃卡面设计",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.jpg"
+  },
+  {
+    "source": "html-ai作品/MESHLINE-2026Q3产品战略一页纸",
+    "slug": "case-2026-010",
+    "title": "MESHLINE-2026Q3产品战略一页纸",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/RICE需求优先级决策矩阵-产品管理工具",
+    "slug": "case-2026-011",
+    "title": "RICE需求优先级决策矩阵-产品管理工具",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/个人IP成长台",
+    "slug": "case-2026-012",
+    "title": "个人IP成长台",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/产线良率与返工分析看板",
+    "slug": "case-2026-013",
+    "title": "产线良率与返工分析看板",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.png"
+  },
+  {
+    "source": "html-ai作品/仿Linear项目管理工具-单页应用",
+    "slug": "case-2026-014",
+    "title": "仿Linear项目管理工具-单页应用",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/企业协同办公赛道竞品调研报告",
+    "slug": "case-2026-015",
+    "title": "企业协同办公赛道竞品调研报告",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/企业官网-云图智联品牌站",
+    "slug": "case-2026-016",
+    "title": "企业官网-云图智联品牌站",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/public/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/冥想睡眠App高保真设计-极光夜色",
+    "slug": "case-2026-017",
+    "title": "冥想睡眠App高保真设计-极光夜色",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.png"
+  },
+  {
+    "source": "html-ai作品/初一学习台-作业记忆错题成就工作台-资料库数据页",
+    "slug": "case-2026-018",
+    "title": "初一学习台-作业记忆错题成就工作台-资料库数据页",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.png"
+  },
+  {
+    "source": "html-ai作品/大学成长地图工作台-资料库数据页",
+    "slug": "case-2026-020",
+    "title": "大学成长地图工作台-资料库数据页",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/大学生兼职情报站-产品用户画像报告",
+    "slug": "case-2026-021",
+    "title": "大学生兼职情报站-产品用户画像报告",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/客户投诉处理标准作业流程SOP",
+    "slug": "case-2026-022",
+    "title": "客户投诉处理标准作业流程SOP",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.jpg"
+  },
+  {
+    "source": "html-ai作品/工位分配工作台",
+    "slug": "case-2026-023",
+    "title": "工位分配工作台",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/幼小衔接-我不怕-学习成长工作台",
+    "slug": "case-2026-024",
+    "title": "幼小衔接-我不怕-学习成长工作台",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.png"
+  },
+  {
+    "source": "html-ai作品/异想飞行-目标火星",
+    "slug": "case-2026-025",
+    "title": "异想飞行-目标火星",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/打倒那个猪妖TDEE减肥搭子工作台-资料库数据页",
+    "slug": "case-2026-026",
+    "title": "打倒那个猪妖TDEE减肥搭子工作台-资料库数据页",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/护照签证速查面板-57国",
+    "slug": "case-2026-027",
+    "title": "护照签证速查面板-57国",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/数码3C配件电商网站首页",
+    "slug": "case-2026-028",
+    "title": "数码3C配件电商网站首页",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.png"
+  },
+  {
+    "source": "html-ai作品/星澜Stellar春季发布会-产品发布Keynote",
+    "slug": "case-2026-030",
+    "title": "星澜Stellar春季发布会-产品发布Keynote",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.jpg"
+  },
+  {
+    "source": "html-ai作品/智能客服Agent产品解决方案页",
+    "slug": "case-2026-031",
+    "title": "智能客服Agent产品解决方案页",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/未来玻璃产品落地页-液态玻璃风格",
+    "slug": "case-2026-032",
+    "title": "未来玻璃产品落地页-液态玻璃风格",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "html-ai作品/植愈PLANTHEA-植物养护App高保真设计",
+    "slug": "case-2026-033",
+    "title": "植愈PLANTHEA-植物养护App高保真设计",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.png"
+  },
+  {
+    "source": "html-ai作品/欧盟AI Act披露义务合规研究",
+    "slug": "case-2026-034",
+    "title": "欧盟AI Act披露义务合规研究",
+    "kind": "网页 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": []
+  },
+  {
+    "source": "PPT、Excel、Word-ai作品/明成化斗彩鸡缸杯-文博工艺图解",
+    "slug": "case-2026-037",
+    "title": "明成化斗彩鸡缸杯-文博工艺图解",
+    "kind": "办公演示 / 作品展示",
+    "demo": "./demo/preview.png",
+    "assets": []
+  },
+  {
+    "source": "PPT、Excel、Word-ai作品/西班牙旅行杂志风PPT-地中海建筑艺术美食",
+    "slug": "case-2026-038",
+    "title": "西班牙旅行杂志风PPT-地中海建筑艺术美食",
+    "kind": "办公演示 / 作品展示",
+    "demo": "./demo/preview.png",
+    "assets": []
+  },
+  {
+    "source": "海报-ai作品/RetroFuturism中国仙女-电影海报",
+    "slug": "case-2026-039",
+    "title": "RetroFuturism中国仙女-电影海报",
+    "kind": "视觉 / 作品展示",
+    "demo": "./demo/preview.png",
+    "assets": []
+  },
+  {
+    "source": "海报-ai作品/SMALL-DUMBO小蜜蜂IP形象设计",
+    "slug": "case-2026-040",
+    "title": "SMALL-DUMBO小蜜蜂IP形象设计",
+    "kind": "视觉 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.jpg"
+  },
+  {
+    "source": "海报-ai作品/儿童竹纤维童装-亚马逊A+内容图集",
+    "slug": "case-2026-041",
+    "title": "儿童竹纤维童装-亚马逊A+内容图集",
+    "kind": "视觉 / 作品展示",
+    "demo": "./demo/index.html",
+    "assets": [],
+    "cover": "./demo/cover.webp"
+  },
+  {
+    "source": "海报-ai作品/玉米机器人IP形象-3D潮玩三视图",
+    "slug": "case-2026-043",
+    "title": "玉米机器人IP形象-3D潮玩三视图",
+    "kind": "视觉 / 作品展示",
+    "demo": "./demo/preview.png",
+    "assets": []
+  },
+  {
+    "source": "海报-ai作品/绿白几何印花挂脖套装-AI面料到成衣",
+    "slug": "case-2026-044",
+    "title": "绿白几何印花挂脖套装-AI面料到成衣",
+    "kind": "视觉 / 作品展示",
+    "demo": "./demo/preview.jpg",
+    "assets": []
+  },
+  {
+    "source": "海报-ai作品/马年迷幻交通灯新春海报",
+    "slug": "case-2026-045",
+    "title": "马年迷幻交通灯新春海报",
+    "kind": "视觉 / 作品展示",
+    "demo": "./demo/preview.png",
+    "assets": []
+  },
+  {
+    "source": "视频-ai作品/GPT-6 Astra代码生成视频-作品集",
+    "slug": "case-2026-046",
+    "title": "GPT-6 Astra代码生成视频-作品集",
+    "kind": "视频 / 作品展示",
+    "demo": "./demo/preview.mp4",
+    "assets": []
+  },
+  {
+    "source": "视频-ai作品/SHOWREEL代码风格视频-作品集",
+    "slug": "case-2026-047",
+    "title": "SHOWREEL代码风格视频-作品集",
+    "kind": "视频 / 作品展示",
+    "demo": "./demo/preview.mp4",
+    "assets": []
+  },
+  {
+    "source": "视频-ai作品/云南环线旅行短片-Remotion代码驱动动画",
+    "slug": "case-2026-049",
+    "title": "云南环线旅行短片-Remotion代码驱动动画",
+    "kind": "视频 / 作品展示",
+    "demo": "./demo/preview.png",
+    "assets": []
+  },
+  {
+    "source": "视频-ai作品/包豪斯-Synthwave-像素-液态流动-综艺花字风格商业视频作品集GPT6astra生成",
+    "slug": "case-2026-050",
+    "title": "包豪斯-Synthwave-像素-液态流动-综艺花字风格商业视频作品集GPT6astra生成",
+    "kind": "视频 / 作品展示",
+    "demo": "./demo/preview.mp4",
+    "assets": []
+  },
+  {
+    "source": "视频-ai作品/形变-贴纸科普-HUD-拼贴-玻璃拟态五风格动画视频",
+    "slug": "case-2026-051",
+    "title": "形变-贴纸科普-HUD-拼贴-玻璃拟态五风格动画视频",
+    "kind": "视频 / 作品展示",
+    "demo": "./demo/preview-video.mp4",
+    "assets": [],
+    "cover": "./demo/cover.jpg"
+  },
+  {
+    "source": "视频-ai作品/手绘-等轴2.5D-扁平矢量-线条动画-真实3D风格商业视频作品集GPT6astra生成",
+    "slug": "case-2026-052",
+    "title": "手绘-等轴2.5D-扁平矢量-线条动画-真实3D风格商业视频作品集GPT6astra生成",
+    "kind": "视频 / 作品展示",
+    "demo": "./demo/preview-video.mp4",
+    "assets": [],
+    "cover": "./demo/cover.jpg"
   }
 ]

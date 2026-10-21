@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark">
+<title>异想飞行 · 目标火星</title>
+<style>
+:root{color-scheme:dark;--ink:#eee6d9;--muted:#a6a9ad;--line:#ffffff24;--copper:#efac80}*{box-sizing:border-box}body{margin:0;color:var(--ink);background:radial-gradient(ellipse at 75% 0,#27313b,#0d1219 66%);font-family:"Segoe UI","Microsoft YaHei",sans-serif}main{max-width:1504px;margin:auto;padding:28px 32px 22px}.masthead,.identity,.bottom,.controls{display:flex;align-items:center}.masthead,.bottom{justify-content:space-between;gap:20px}.masthead{margin-bottom:20px}.identity{gap:17px}.mark{width:38px;height:38px;border:1px solid #a08268;border-radius:50%;display:grid;place-items:center;font:italic 22px Georgia}.eyebrow{margin:0 0 6px;font-size:10px;letter-spacing:3px;color:#b8a18c}h1{font-size:18px;letter-spacing:3px;font-weight:450;margin:0}.edition{font:11px Georgia;letter-spacing:2px;color:#b7a08b}.scene{overflow:hidden;border:1px solid var(--line);border-radius:5px;box-shadow:0 25px 80px #0005;background:#111d2d}.art{display:block;width:100%;height:auto}.bottom{padding-top:17px}.caption{font-size:12px;line-height:1.9;letter-spacing:1px;color:var(--muted)}.caption strong{color:#e4c9ad;font-weight:400}.controls{gap:9px;flex-shrink:0}button{font:12px "Microsoft YaHei",sans-serif;cursor:pointer;color:var(--ink);background:#ffffff06;border:1px solid var(--line);border-radius:4px;padding:10px 15px;display:flex;align-items:center;gap:8px}button:hover{background:#ffffff13;border-color:#b18d6c}button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid #f1b58a;outline-offset:4px}button:disabled{opacity:.45;cursor:default}button svg{width:13px;height:13px;fill:currentColor}.note{font-size:10px;letter-spacing:1px;line-height:1.8;color:#838995;margin:17px 0 0}.references{margin-top:13px;border-top:1px solid #ffffff12;padding-top:12px;font-size:11px;color:#8c96a4;line-height:2}.references summary{cursor:pointer;width:fit-content;letter-spacing:1px}.references ul{padding-left:20px}.references a{color:#c0b29f;text-underline-offset:3px}.flight{transform-box:view-box;transform-origin:820px 520px;animation:flight 7s ease-in-out infinite}.flame{transform-box:fill-box;transform-origin:right center;animation:flame .22s ease-in-out infinite alternate}.flame.alt{animation-delay:-.1s}.tie{transform-box:fill-box;transform-origin:right top;animation:tie 2s ease-in-out infinite alternate}.coattail{transform-box:fill-box;transform-origin:right top;animation:coat 2.5s ease-in-out infinite alternate}.route{stroke-dasharray:6 11;animation:route 3s linear infinite}.target{transform-box:fill-box;transform-origin:center;animation:target 5s ease-in-out infinite}.streak{animation:streak 5s linear infinite}.streak.alt{animation-delay:-2.5s}.thruster{animation:light .7s ease-in-out infinite alternate}.stars-distant{animation:stars 12s ease-in-out infinite alternate}.edge-cloud{animation:cloud 80s linear infinite}@keyframes flight{0%,100%{transform:translate(0,5px) rotate(-.7deg)}50%{transform:translate(4px,-12px) rotate(.5deg)}}@keyframes flame{from{transform:scaleX(.9) scaleY(.94);opacity:.8}to{transform:scaleX(1.08) scaleY(1.05);opacity:1}}@keyframes tie{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}@keyframes coat{from{transform:rotate(-1deg)}to{transform:rotate(2deg)}}@keyframes route{to{stroke-dashoffset:-102}}@keyframes target{0%,100%{opacity:.3}50%{opacity:.75}}@keyframes streak{0%{transform:translateX(240px);opacity:0}20%,70%{opacity:.4}100%{transform:translateX(-420px);opacity:0}}@keyframes light{from{opacity:.65}to{opacity:1}}@keyframes stars{from{opacity:.45}to{opacity:.9}}@keyframes cloud{to{transform:translateX(-260px)}}@media(max-width:700px){main{padding:18px 12px}.masthead{margin-bottom:15px}.identity{gap:10px}h1{font-size:15px}.eyebrow{font-size:8px;letter-spacing:1.5px}.edition{font-size:9px;max-width:100px;line-height:1.8;text-align:right}.bottom{align-items:flex-start;flex-direction:column;gap:12px}.controls{align-self:flex-end}.caption{font-size:11px}}@media(prefers-reduced-motion:reduce){.flight,.flame,.tie,.coattail,.route,.target,.streak,.thruster,.stars-distant,.edge-cloud{animation:none!important}}
+</style>
+</head>
+<body><main>
+<header class="masthead"><div class="identity"><span class="mark" aria-hidden="true">F</span><div><p class="eyebrow">AN IMPOSSIBLE PORTRAIT IN MOTION</p><h1>异想飞行 · 目标火星</h1></div></div><span class="edition">MARS EDITION — III</span></header>
+<section class="scene" aria-label="懂王骑着身穿 SPACEX 概念机甲的马斯克飞向火星">
+<svg class="art" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="artTitle artDesc">
+<title id="artTitle">懂王与马斯克：目标火星</title><desc id="artDesc">参考公开照片重绘的特朗普与马斯克 SVG 肖像。身形丰满、身穿蓝西装红领带的特朗普坐在马斯克背上。马斯克穿有醒目 SPACEX 字样的白银色机械装甲，靴部推进器喷出蓝白火焰；右上方的红色火星带目标标记，虚线航线指向火星。这是一幅虚构的科幻插画。</desc>
+<defs>
+<linearGradient id="space" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#08121f"/><stop offset=".5" stop-color="#1a2c41"/><stop offset="1" stop-color="#42505a"/></linearGradient>
+<radialGradient id="nebula"><stop stop-color="#bf775a" stop-opacity=".22"/><stop offset="1" stop-color="#bd805c" stop-opacity="0"/></radialGradient>
+<radialGradient id="marsBase" cx=".28" cy=".27" r=".82"><stop stop-color="#ecbc8f"/><stop offset=".28" stop-color="#d58e61"/><stop offset=".57" stop-color="#b86543"/><stop offset=".81" stop-color="#693b35"/><stop offset="1" stop-color="#1a2332"/></radialGradient>
+<linearGradient id="marsShadow" x1="0" y1="0" x2="1" y2=".4"><stop offset=".32" stop-color="#090f1d" stop-opacity="0"/><stop offset=".7" stop-color="#0a1221" stop-opacity=".13"/><stop offset="1" stop-color="#0a1221" stop-opacity=".92"/></linearGradient>
+<radialGradient id="marsHalo"><stop offset=".7" stop-color="#da9465" stop-opacity="0"/><stop offset=".87" stop-color="#e1b08a" stop-opacity=".22"/><stop offset="1" stop-color="#cc906a" stop-opacity="0"/></radialGradient>
+<linearGradient id="earth" x1=".2" y1="0" x2=".6" y2="1"><stop stop-color="#597c91"/><stop offset=".16" stop-color="#2f5b78"/><stop offset=".5" stop-color="#1c354e"/><stop offset="1" stop-color="#081522"/></linearGradient>
+<linearGradient id="skinT" x1="0" y1=".5" x2="1" y2=".2"><stop stop-color="#7c554b"/><stop offset=".27" stop-color="#b9856c"/><stop offset=".57" stop-color="#dba487"/><stop offset=".82" stop-color="#edc7a5"/><stop offset="1" stop-color="#b38366"/></linearGradient>
+<linearGradient id="skinM" x1="0" y1=".5" x2="1" y2=".25"><stop stop-color="#766064"/><stop offset=".25" stop-color="#b59689"/><stop offset=".54" stop-color="#e0c1ae"/><stop offset=".81" stop-color="#f2d8be"/><stop offset="1" stop-color="#bca18d"/></linearGradient>
+<radialGradient id="faceLight" cx=".65" cy=".3" r=".8"><stop stop-color="#ffecd1" stop-opacity=".5"/><stop offset="1" stop-color="#ffdfb4" stop-opacity="0"/></radialGradient>
+<radialGradient id="cheek"><stop stop-color="#cb7466" stop-opacity=".48"/><stop offset="1" stop-color="#cb7466" stop-opacity="0"/></radialGradient>
+<linearGradient id="neck" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#644b48"/><stop offset=".65" stop-color="#b48a70"/><stop offset="1" stop-color="#e1bb98"/></linearGradient>
+<linearGradient id="noseT"><stop stop-color="#ac765a"/><stop offset=".5" stop-color="#efc19d"/><stop offset=".8" stop-color="#e6b08a"/><stop offset="1" stop-color="#95654d"/></linearGradient>
+<linearGradient id="noseM"><stop stop-color="#a48c7f" stop-opacity=".25"/><stop offset=".55" stop-color="#efd0b8"/><stop offset=".78" stop-color="#f9e2c7"/><stop offset="1" stop-color="#aa8872"/></linearGradient>
+<linearGradient id="hairT" x1="0" y1="1" x2=".8" y2="0"><stop stop-color="#75664f"/><stop offset=".3" stop-color="#b0a185"/><stop offset=".63" stop-color="#d4c8ab"/><stop offset="1" stop-color="#f6e7c7"/></linearGradient>
+<linearGradient id="hairM" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#19252d"/><stop offset=".4" stop-color="#342e2b"/><stop offset=".75" stop-color="#645344"/><stop offset="1" stop-color="#a18a66"/></linearGradient>
+<linearGradient id="suit" x1="0" y1=".7" x2="1" y2=".15"><stop stop-color="#0d1d32"/><stop offset=".35" stop-color="#1d3c60"/><stop offset=".7" stop-color="#375d83"/><stop offset="1" stop-color="#7e8f9a"/></linearGradient>
+<linearGradient id="suitDark" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4b6681"/><stop offset=".4" stop-color="#223e61"/><stop offset="1" stop-color="#0d1a2e"/></linearGradient>
+<linearGradient id="shirt" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#8694a0"/><stop offset=".45" stop-color="#c6cdcc"/><stop offset="1" stop-color="#faf0da"/></linearGradient>
+<linearGradient id="red"><stop stop-color="#5d1e2b"/><stop offset=".5" stop-color="#a7403e"/><stop offset=".8" stop-color="#de7454"/><stop offset="1" stop-color="#882b30"/></linearGradient>
+<linearGradient id="armor" x1=".1" y1="1" x2=".65" y2="0"><stop stop-color="#3f5666"/><stop offset=".25" stop-color="#788b96"/><stop offset=".51" stop-color="#b4c0c3"/><stop offset=".79" stop-color="#e5e6db"/><stop offset="1" stop-color="#fff0d0"/></linearGradient>
+<linearGradient id="armorDark" x1="0" y1="1" x2=".8" y2="0"><stop stop-color="#101f2d"/><stop offset=".5" stop-color="#293e50"/><stop offset="1" stop-color="#758997"/></linearGradient>
+<linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f1eee0"/><stop offset=".22" stop-color="#8497a3"/><stop offset=".5" stop-color="#152b40"/><stop offset=".73" stop-color="#738e9f"/><stop offset="1" stop-color="#d9e9e4"/></linearGradient>
+<linearGradient id="flame"><stop stop-color="#769ac9" stop-opacity="0"/><stop offset=".3" stop-color="#4593cf" stop-opacity=".1"/><stop offset=".68" stop-color="#9de6ff" stop-opacity=".8"/><stop offset="1" stop-color="#f8ffff"/></linearGradient>
+<linearGradient id="flameCore"><stop stop-color="#bcecff" stop-opacity="0"/><stop offset=".7" stop-color="#dbf8ff" stop-opacity=".7"/><stop offset="1" stop-color="#fff8e6"/></linearGradient>
+<radialGradient id="vignette"><stop offset=".5" stop-color="#040b16" stop-opacity="0"/><stop offset="1" stop-color="#040b16" stop-opacity=".48"/></radialGradient>
+<filter id="blur"><feGaussianBlur stdDeviation="14"/></filter><filter id="soft"><feGaussianBlur stdDeviation="1.1"/></filter><filter id="glow" x="-50%" y="-200%" width="200%" height="500%"><feGaussianBlur stdDeviation="6"/></filter>
+<filter id="shadow" x="-25%" y="-30%" width="160%" height="180%"><feDropShadow dx="-8" dy="17" stdDeviation="12" flood-color="#040e1c" flood-opacity=".55"/></filter>
+<filter id="marsTerrain" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence baseFrequency=".042" numOctaves="4" seed="22" type="fractalNoise" result="n"/><feColorMatrix in="n" type="matrix" values=".5 0 0 0 .2  .2 0 0 0 .08  .08 0 0 0 .04  0 0 0 .38 0"/></filter>
+<filter id="grain"><feTurbulence baseFrequency=".7" numOctaves="3" seed="16" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 .1"/></feComponentTransfer></filter>
+<clipPath id="marsClip"><circle cx="1208" cy="252" r="137"/></clipPath>
+<clipPath id="earthClip"><ellipse cx="390" cy="1780" rx="1200" ry="1000"/></clipPath>
+<pattern id="stars" width="440" height="310" patternUnits="userSpaceOnUse"><g fill="#d9e9fc"><circle cx="26" cy="42" r=".9"/><circle cx="117" cy="173" r=".7"/><circle cx="224" cy="51" r="1.1"/><circle cx="408" cy="119" r=".8"/><circle cx="322" cy="266" r=".6"/><circle cx="65" cy="279" r="1.3"/><circle cx="337" cy="83" r=".6"/><circle cx="263" cy="184" r=".65"/><circle cx="173" cy="298" r=".5"/><circle cx="397" cy="288" r=".7"/></g></pattern>
+<pattern id="stubble" width="8" height="7" patternUnits="userSpaceOnUse"><path d="M1 2 2 3M5 5 6 6" stroke="#665955" stroke-width=".55" opacity=".4"/></pattern>
+<g id="spacex"><text font-family="Arial,sans-serif" font-size="27" font-style="italic" font-weight="700" letter-spacing="2.7" fill="currentColor">SPACEX</text><path d="M117-8C140-33 166-41 191-41C158-37 143-24 128-7Z" fill="currentColor"/></g>
+<g id="bolt"><circle r="3.3" fill="#1f3547"/><circle r="2.1" fill="#b9c9ca"/><path d="M-1.2 0H1.2" stroke="#415465" stroke-width=".8"/></g>
+</defs>
+<!-- 轨道背景与清晰的火星目的地 -->
+<rect width="1440" height="900" fill="url(#space)"/><ellipse cx="1150" cy="330" rx="600" ry="500" fill="url(#nebula)"/>
+<rect class="stars-distant" width="1440" height="770" fill="url(#stars)" opacity=".7"/>
+<g fill="#edf3fb" opacity=".7"><circle cx="636" cy="97" r="1.8"/><circle cx="978" cy="167" r="1.3"/><circle cx="1339" cy="563" r="1.3"/><circle cx="524" cy="371" r="1.4"/><circle cx="119" cy="537" r="1.2"/><circle cx="915" cy="72" r="1.5"/></g>
+<circle cx="1208" cy="252" r="164" fill="url(#marsHalo)"/>
+<g clip-path="url(#marsClip)"><circle cx="1208" cy="252" r="137" fill="url(#marsBase)"/>
+<path d="M1080 193C1120 172 1151 186 1179 168L1218 172 1237 194 1284 197 1303 217 1271 237 1218 224 1183 237 1138 225 1103 238Z" fill="#884f37" opacity=".5"/>
+<path d="M1111 285 1143 265 1170 277 1194 266 1240 281 1265 271 1307 296 1320 331 1278 339 1241 316 1204 322 1176 296 1148 308Z" fill="#75452f" opacity=".46"/>
+<path d="M1130 243 1158 250 1183 243 1204 251 1243 243 1271 252" fill="none" stroke="#753b2d" stroke-width="9" opacity=".5"/><path d="M1130 239 1159 246 1184 239 1204 247 1243 239 1265 246" fill="none" stroke="#ecb083" stroke-width="2" opacity=".7"/>
+<path d="M1169 124C1190 118 1211 120 1228 127L1212 141 1185 140Z" fill="#e8d7ba" opacity=".7"/>
+<g fill="#a8694c" stroke="#e7b184" stroke-width="1.2" opacity=".42"><ellipse cx="1142" cy="204" rx="13" ry="8"/><ellipse cx="1248" cy="311" rx="19" ry="13"/><ellipse cx="1126" cy="271" rx="8" ry="6"/><ellipse cx="1199" cy="327" rx="9" ry="7"/><ellipse cx="1219" cy="206" rx="6" ry="4"/><ellipse cx="1250" cy="170" rx="10" ry="6"/></g>
+<rect x="1071" y="115" width="274" height="274" filter="url(#marsTerrain)" opacity=".67"/>
+<circle cx="1208" cy="252" r="137" fill="url(#marsShadow)"/>
+</g>
+<path d="M1113 150A137 137 0 0 1 1274 132" fill="none" stroke="#f3caa0" stroke-width="1.5" opacity=".65"/>
+<g class="target" stroke="#e9b391" stroke-width="1" fill="none"><path d="M1046 148V108H1086M1330 108H1370V148M1046 356V396H1086M1330 396H1370V356"/><circle cx="1208" cy="252" r="154" stroke-dasharray="2 16" opacity=".55"/></g>
+<g fill="#dfb596" font-family="'Segoe UI','Microsoft YaHei',sans-serif"><text x="1208" y="76" text-anchor="middle" font-size="13" letter-spacing="5">目的地 · 火星</text><text x="1370" y="429" text-anchor="end" font-size="13" letter-spacing="5">MARS / TARGET LOCKED</text></g>
+<path class="route" d="M1276 535C1395 534 1410 411 1322 352" fill="none" stroke="#e7b697" stroke-width="1.5" opacity=".75"/><path d="m1322 352 5 15m-5-15 16 2" fill="none" stroke="#f6c4a0" stroke-width="1.7"/>
+<ellipse cx="390" cy="1780" rx="1200" ry="1000" fill="none" stroke="#69b9ed" stroke-width="18" opacity=".2" filter="url(#blur)"/><ellipse cx="390" cy="1780" rx="1200" ry="1000" fill="url(#earth)" stroke="#9bceec" stroke-opacity=".6" stroke-width="2"/>
+<g clip-path="url(#earthClip)" fill="none" stroke="#b8d6df" opacity=".16" class="edge-cloud"><path d="M-100 847C144 776 345 852 552 824S902 884 1280 1020" stroke-width="24" filter="url(#blur)"/><path d="M-100 893C170 814 401 897 580 855S1020 933 1420 1090" stroke-width="15" filter="url(#blur)"/></g>
+<g fill="#e9dfcb"><text x="77" y="102" font-family="Georgia,serif" font-size="12" letter-spacing="5" opacity=".7">A FICTIONAL INTERPLANETARY FLIGHT</text><path d="M78 124H145" stroke="#ccae8e"/><text x="72" y="206" font-family="Georgia,'SimSun',serif" font-size="65" letter-spacing="11">下一站，火星</text><text x="78" y="245" font-family="Georgia,serif" font-size="17" letter-spacing="6">NEXT STOP: MARS</text><text x="80" y="285" font-family="'Microsoft YaHei',sans-serif" font-size="12" letter-spacing="3" opacity=".55">地球留在身后，脑洞飞向远方。</text></g>
+<g class="streak" stroke="#b7d7e9" stroke-width="1" opacity=".3"><path d="M151 398H350M249 418H477"/></g><g class="streak alt" stroke="#c1dbed" opacity=".3"><path d="M982 715H1362M1198 735H1393"/></g>
+<g class="flight">
+<g class="flame"><path d="M364 590C200 568 140 618-80 610C100 643 244 646 370 624Z" fill="url(#flame)" filter="url(#glow)"/><path d="M366 596C242 584 197 616 38 615C212 626 265 631 370 617Z" fill="url(#flame)"/><path d="M365 603 163 615 369 612Z" fill="url(#flameCore)"/></g>
+<g class="flame alt"><path d="M412 666C257 646 132 702-69 702C155 729 272 723 415 697Z" fill="url(#flame)" filter="url(#glow)"/><path d="M413 672C279 660 219 697 63 704C211 706 296 710 414 689Z" fill="url(#flame)"/><path d="M412 677 200 703 415 685Z" fill="url(#flameCore)"/></g>
+<g filter="url(#shadow)">
+<!-- Far leg of the rider, behind the flying figure. -->
+<g stroke-linejoin="round" stroke-linecap="round">
+  <path d="M839 521C880 522 925 541 948 568C963 585 955 610 945 632L930 663L897 654L911 595C879 587 845 579 820 561Z" fill="url(#suitDark)" stroke="#101b2a" stroke-width="3"/>
+  <path d="M932 662L918 680C924 690 960 700 973 693C980 685 960 675 946 668L944 655Z" fill="#121b25" stroke="#080e16" stroke-width="3"/>
+  <path d="M930 678L958 688" fill="none" stroke="#6c7782" stroke-width="2" opacity=".65"/>
+</g>
+<!-- Musk's flight suit: articulated limbs, brushed plates and exposed joints. -->
+<g stroke-linejoin="round" stroke-linecap="round">
+  <!-- Far leg / calf / boot. -->
+  <path d="M731 578C662 558 598 558 553 571L450 580L400 597L403 626L519 627L606 613L721 622Z" fill="url(#armorDark)" stroke="#121d29" stroke-width="3"/>
+  <path d="M668 570L580 573L545 586L545 609L624 605L698 606L716 586Z" fill="url(#armor)" stroke="#65798a" stroke-width="2"/>
+  <path d="M555 582L550 610L528 619L516 613L521 585Z" fill="#233745" stroke="#8a9fae" stroke-width="2"/>
+  <path d="M537 587L531 609M544 589L538 610" stroke="#82949d" stroke-width="3"/>
+  <path d="M504 584L453 589L414 604L417 622L503 613L515 601Z" fill="url(#armor)" stroke="#6a7d89" stroke-width="2"/>
+  <path d="M450 593L452 612L495 606" fill="none" stroke="#ecf7ff" stroke-width="3" opacity=".8"/>
+  <path d="M416 593L390 589L364 600L363 615L387 632L420 626L430 611Z" fill="url(#metal)" stroke="#172330" stroke-width="3"/>
+  <ellipse cx="369" cy="609" rx="9" ry="15" transform="rotate(-16 369 609)" fill="#111c29" stroke="#8babc0" stroke-width="3"/>
+  <ellipse class="thruster" cx="368" cy="608" rx="4" ry="10" transform="rotate(-16 368 608)" fill="#c8fcff"/>
+  <path d="M399 600L408 604M393 607L410 611M394 617L407 620" stroke="#92b6c8" stroke-width="2"/>
+  <!-- Far arm, parallel to the flight path. -->
+  <path d="M960 535C1017 503 1077 480 1140 455L1194 435L1212 451L1147 483L1044 539L995 564Z" fill="url(#armorDark)" stroke="#0d1925" stroke-width="3"/>
+  <path d="M1009 510L1085 477L1115 481L1123 498L1050 535L1028 540Z" fill="url(#armor)" stroke="#6c8292" stroke-width="2"/>
+  <path d="M1102 479L1117 497L1137 487L1131 470Z" fill="#283d4c" stroke="#9cabb3" stroke-width="2"/>
+  <path d="M1139 467L1190 446L1204 457L1152 484L1137 478Z" fill="url(#armor)" stroke="#6c8292" stroke-width="2"/>
+  <path d="M1191 438L1206 431L1237 434L1249 442L1245 450L1210 458L1200 453Z" fill="url(#armorDark)" stroke="#7b8e9a" stroke-width="2"/>
+  <path d="M1210 437L1239 440M1213 444L1241 446" fill="none" stroke="#bdcbd2" stroke-width="3"/>
+  <!-- Exoskeleton pelvis and trunk. -->
+  <path d="M688 570C731 543 781 537 839 534L947 509C972 505 1000 515 1016 538L1022 572L973 618C918 649 821 661 750 643L697 619Z" fill="url(#armorDark)" stroke="#0c1723" stroke-width="4"/>
+  <path d="M739 558C795 548 853 549 907 536L951 521L975 538L941 561L816 580L746 582Z" fill="url(#armor)" stroke="#879baa" stroke-width="2"/>
+  <path d="M746 565C800 557 871 558 929 540" fill="none" stroke="#f4fcff" stroke-width="3" opacity=".85"/>
+  <path d="M747 585L814 585L814 639L759 637L733 622Z" fill="url(#metal)" stroke="#5b7183" stroke-width="2"/>
+  <path d="M767 592L805 589M762 602L804 599M758 612L803 609M760 623L802 620" stroke="#162431" stroke-width="5"/>
+  <path d="M768 591L804 589M763 601L803 599M759 611L802 609" stroke="#a8b7c0" stroke-width="1"/>
+  <path d="M820 578L943 557L974 567L959 604C927 624 878 636 823 636L812 614Z" fill="url(#armor)" stroke="#5b7386" stroke-width="2.5"/>
+  <path d="M829 582L940 564L958 571M827 628C878 629 922 619 948 602" fill="none" stroke="#f2fbff" stroke-width="2.5" opacity=".9"/>
+  <path d="M855 622L898 617" stroke="#16384b" stroke-width="3"/>
+  <path d="M903 615L927 607" stroke="#7ef6ff" stroke-width="3"/>
+  <g transform="translate(833 609) rotate(-9) scale(.67)" color="#152735"><use href="#spacex"/></g>
+  <text x="836" y="621" font-family="Arial,sans-serif" font-size="6.5" letter-spacing="2" fill="#455e6c" transform="rotate(-9 836 621)">EXPLORATION / MARS SYSTEMS</text>
+  <use href="#bolt" x="829" y="588"/><use href="#bolt" x="943" y="575"/><use href="#bolt" x="830" y="625"/><use href="#bolt" x="944" y="602"/>
+  <!-- Back-mounted power unit, thin glowing rim. -->
+  <path d="M757 546L912 516L937 531L927 547L791 572L754 561Z" fill="#283c4b" stroke="#89a4b6" stroke-width="2"/>
+  <path d="M789 552L896 530" fill="none" stroke="#c0faff" stroke-width="3"/>
+  <path d="M921 528L928 532L923 540" fill="none" stroke="#7eeeff" stroke-width="2"/>
+  <!-- Near leg: hip to knee, and knee to boot. -->
+  <path d="M755 614C711 614 665 625 614 642L538 651L455 655L418 674L421 698L539 705L634 690L735 665L765 643Z" fill="url(#armorDark)" stroke="#101d29" stroke-width="4"/>
+  <path d="M736 630L675 633L602 654L605 683L671 674L734 655L752 642Z" fill="url(#armor)" stroke="#6b8496" stroke-width="2.5"/>
+  <path d="M672 640L728 637L739 642L672 663" fill="none" stroke="#f7fdff" stroke-width="2.5"/>
+  <path d="M663 641L661 673" stroke="#5c7283" stroke-width="2"/>
+  <path d="M594 652L612 659L606 689L584 698L570 683L578 660Z" fill="#233542" stroke="#8aa4b3" stroke-width="2.5"/>
+  <circle cx="589" cy="678" r="13" fill="url(#metal)" stroke="#152734" stroke-width="3"/>
+  <circle cx="589" cy="678" r="6" fill="#183746" stroke="#81e7f3" stroke-width="2"/>
+  <path d="M568 660L522 663L467 668L441 681L450 699L523 696L563 687Z" fill="url(#armor)" stroke="#7a91a3" stroke-width="2.5"/>
+  <path d="M470 673L520 670L550 669M462 692L521 689" fill="none" stroke="#effaff" stroke-width="3"/>
+  <path d="M524 670L524 689" stroke="#596e7d" stroke-width="2"/>
+  <g transform="translate(479 686) rotate(-4) scale(.35)" color="#1c3341"><use href="#spacex"/></g>
+  <path d="M448 665L427 661L408 671L402 687L421 706L451 703L462 687Z" fill="url(#metal)" stroke="#0f1c28" stroke-width="3"/>
+  <ellipse cx="413" cy="684" rx="8" ry="16" transform="rotate(-19 413 684)" fill="#112838" stroke="#a1bece" stroke-width="3"/>
+  <ellipse class="thruster" cx="411" cy="683" rx="4" ry="11" transform="rotate(-19 411 683)" fill="#c8fcff"/>
+  <path d="M432 670L445 676M430 679L449 685M432 693L444 696" fill="none" stroke="#b5c9d5" stroke-width="2"/>
+  <path d="M471 705L560 695" stroke="#101b25" stroke-width="5"/>
+  <path d="M474 704L545 696" stroke="#bdc8cb" stroke-width="2"/>
+  <use href="#bolt" x="621" y="662"/><use href="#bolt" x="725" y="646"/><use href="#bolt" x="536" y="674"/><use href="#bolt" x="455" y="688"/>
+  <!-- Chest, shoulder and near arm. -->
+  <path d="M969 508C1001 500 1026 519 1032 544L1015 571L979 584L957 563L950 533Z" fill="url(#armor)" stroke="#647f92" stroke-width="3"/>
+  <path d="M970 515C994 509 1013 520 1020 538" fill="none" stroke="#f8fcff" stroke-width="4"/>
+  <path d="M964 548L973 568L1006 557L1015 545" fill="#263f4e" stroke="#9baeb9" stroke-width="2"/>
+  <path d="M973 553L980 560L1002 552" fill="none" stroke="#9ff7ff" stroke-width="3"/>
+  <circle cx="994" cy="534" r="10" fill="#152c3d" stroke="#7eb5ca" stroke-width="2"/>
+  <path d="M988 534H1000M994 528V540" stroke="#d5f9ff" stroke-width="1.5"/>
+  <path d="M1019 546C1053 538 1086 531 1115 520L1141 500L1158 516L1143 540L1086 565L1043 578L1018 568Z" fill="url(#armorDark)" stroke="#11212d" stroke-width="3"/>
+  <path d="M1043 542L1100 526L1122 530L1125 546L1070 568L1041 570L1032 558Z" fill="url(#armor)" stroke="#6c8495" stroke-width="2.5"/>
+  <path d="M1048 548L1102 533M1050 562L1103 543" stroke="#effaff" stroke-width="2"/>
+  <path d="M1123 520L1139 513L1150 529L1135 545L1123 539Z" fill="url(#metal)" stroke="#8d9faa" stroke-width="2"/>
+  <circle cx="1136" cy="528" r="6" fill="#234657" stroke="#b8d2da" stroke-width="2"/>
+  <path d="M1144 509L1204 487L1219 494L1215 512L1165 533L1148 528Z" fill="url(#armor)" stroke="#667f91" stroke-width="2.5"/>
+  <path d="M1154 514L1199 497L1209 499M1164 527L1206 509" fill="none" stroke="#effaff" stroke-width="2"/>
+  <path d="M1157 516L1192 504" stroke="#223c4d" stroke-width="4"/>
+  <path d="M1205 486L1225 480L1239 483L1260 493L1265 502L1259 509L1216 519L1209 510Z" fill="url(#armorDark)" stroke="#8198a7" stroke-width="2.5"/>
+  <path d="M1226 488L1244 491L1253 496M1223 496L1247 501M1222 504L1244 508" fill="none" stroke="#c0cfd8" stroke-width="3"/>
+  <path d="M1214 489L1219 496L1213 510" fill="none" stroke="#89f0fc" stroke-width="2"/>
+  <use href="#bolt" x="1050" y="554"/><use href="#bolt" x="1198" y="503"/>
+</g>
+<!-- Rider: broad shoulders, fuller stomach, heavy thighs and a double-breasted silhouette. -->
+<g stroke-linejoin="round" stroke-linecap="round">
+  <path class="coattail" d="M779 467C741 486 693 508 661 493C691 530 742 553 791 545L825 517Z" fill="url(#suitDark)" stroke="#142333" stroke-width="3"/>
+  <path d="M685 509C711 524 740 532 769 527" fill="none" stroke="#54627a" stroke-width="2" opacity=".55"/>
+  <path d="M776 381C800 373 824 368 854 370C884 370 913 376 929 405C943 433 953 474 946 506C941 535 918 555 890 566C852 581 799 567 773 547C750 529 741 504 744 474L747 419C748 402 760 388 776 381Z" fill="url(#suit)" stroke="#142235" stroke-width="3"/>
+  <path d="M775 391C761 413 762 451 769 478C777 513 794 537 829 552" fill="none" stroke="#72809b" stroke-width="3" opacity=".42"/>
+  <path d="M885 393C918 412 932 450 935 479C940 511 921 537 889 550" fill="none" stroke="#8290a6" stroke-width="2.5" opacity=".4"/>
+  <path d="M792 389L821 367L880 373L907 395L891 486L868 519L833 466Z" fill="url(#shirt)"/>
+  <path d="M817 375L845 399L862 385L881 400L895 380L884 370L831 368Z" fill="#f4f6f6" stroke="#a0aebc" stroke-width="1.5"/>
+  <path d="M789 386L811 371L814 414L840 411L855 452L869 518L814 467L794 435L805 417L782 407Z" fill="#344860" stroke="#637186" stroke-width="1.5"/>
+  <path d="M898 383L917 403L917 432L898 435L905 454L878 511L869 518L884 451Z" fill="#1c2d42" stroke="#59697e" stroke-width="1.5"/>
+  <path d="M839 394L858 389L869 404L857 423L843 416Z" fill="url(#red)" stroke="#641921" stroke-width="1"/>
+  <path class="tie" d="M849 414C849 441 832 455 807 460C784 465 754 452 731 459L715 478L738 485C774 473 803 493 833 477C859 463 868 442 858 416Z" fill="url(#red)" stroke="#641921" stroke-width="1.5"/>
+  <path d="M845 422C839 451 815 463 786 465" fill="none" stroke="#f3988e" stroke-width="2" opacity=".58"/>
+  <path d="M867 512L879 548" stroke="#0d1d31" stroke-width="2"/>
+  <circle cx="878" cy="529" r="3.5" fill="#111b28" stroke="#68748a" stroke-width="1.2"/>
+  <path d="M892 471L919 468L921 476L893 479Z" fill="#14243a" stroke="#647388" stroke-width="1"/>
+  <path d="M798 452L814 463" stroke="#728099" stroke-width="1.3" opacity=".6"/>
+  <!-- Lapel flag pin. -->
+  <g transform="translate(894 411) rotate(12)"><rect width="13" height="9" rx=".7" fill="#e4e7e9" stroke="#c6b58b" stroke-width="1"/><path d="M0 1H13M0 4H13M0 7H13" stroke="#b74d51" stroke-width="1.2"/><rect width="5.5" height="4.8" fill="#2f4c71"/></g>
+  <!-- Near bent thigh; weighted fabric folds at the knee. -->
+  <path d="M782 525C807 523 839 534 861 556L887 588C896 601 892 618 881 632L854 669L837 706L803 697L813 650L834 612C804 601 778 588 764 567C754 548 763 533 782 525Z" fill="url(#suit)" stroke="#142235" stroke-width="3"/>
+  <path d="M783 540C811 542 841 565 856 583L867 603L851 626" fill="none" stroke="#69758c" stroke-width="3" opacity=".6"/>
+  <path d="M837 613L862 614M837 624L853 631M819 670L838 675M807 691L835 699" fill="none" stroke="#142337" stroke-width="3"/>
+  <path d="M812 649L805 680" stroke="#53637c" stroke-width="2" opacity=".8"/>
+  <path d="M805 694L835 703L832 715L812 717L800 709Z" fill="#152133"/>
+  <path d="M802 709L825 713C834 718 841 727 854 730C865 733 866 744 857 748C845 754 824 747 808 743L789 737L790 722Z" fill="#131b26" stroke="#080e16" stroke-width="3"/>
+  <path d="M794 736C813 741 842 752 857 746" fill="none" stroke="#73808a" stroke-width="2"/>
+  <path d="M807 717L819 723M803 722L817 728M800 727L814 733" stroke="#424e5c" stroke-width="2"/>
+  <path d="M832 732L849 737" stroke="#a2aab1" stroke-width="2" opacity=".5"/>
+  <!-- Rider's left arm, resting on the saddle behind him. -->
+  <path d="M769 398C753 394 740 411 733 434L725 477C724 491 734 504 749 512L778 523L789 502L758 483L769 454L784 416Z" fill="url(#suitDark)" stroke="#142235" stroke-width="3"/>
+  <path d="M745 417L739 466C736 480 742 487 756 493" fill="none" stroke="#64758b" stroke-width="2.5" opacity=".6"/>
+  <path d="M772 497L786 500L797 512L789 525L776 521L768 513Z" fill="url(#shirt)" stroke="#b2bcc4" stroke-width="1.5"/>
+  <path d="M789 508C798 508 808 513 815 520L832 527C837 533 831 539 825 537L810 533C818 539 811 545 805 541L791 535L782 524Z" fill="url(#skinT)" stroke="#9d6553" stroke-width="1.5"/>
+  <path d="M793 520L813 530M790 526L808 536M804 518L819 529" fill="none" stroke="#a76f5c" stroke-width="1.5"/>
+  <!-- Right arm extends forward to grip the shoulder, without covering the logo. -->
+  <path d="M909 401C925 401 937 418 941 440L948 470L972 493L959 519L927 499C915 489 909 475 905 458L893 423Z" fill="url(#suit)" stroke="#18283b" stroke-width="3"/>
+  <path d="M918 415C927 429 929 455 933 470L957 496" fill="none" stroke="#8290a5" stroke-width="2.5" opacity=".55"/>
+  <path d="M941 486L948 481M944 494L950 489" stroke="#112036" stroke-width="2"/>
+  <path d="M968 490L980 497L971 518L958 514Z" fill="url(#shirt)" stroke="#c0c7c9" stroke-width="1.5"/>
+  <path d="M977 496C986 496 996 504 1000 513L1010 520C1016 526 1010 532 1004 528L995 522C998 530 991 534 987 528L982 518L980 529C978 535 971 533 971 527L970 509Z" fill="url(#skinT)" stroke="#996050" stroke-width="1.5"/>
+  <path d="M981 504L987 516M988 507L994 518M977 516L977 527" fill="none" stroke="#b47762" stroke-width="1.4"/>
+</g>
+<!-- Reference-image portrait: Donald Trump, rounded 3D-cartoon treatment. -->
+<g id="trump-reference-portrait" transform="translate(768 159) scale(.89)" stroke-linecap="round" stroke-linejoin="round">
+ <defs>
+  <radialGradient id="t4Skin" cx="38%" cy="27%" r="78%"><stop stop-color="#ffe6ce"/><stop offset=".42" stop-color="#f3bc9b"/><stop offset=".76" stop-color="#d18d71"/><stop offset="1" stop-color="#875144"/></radialGradient>
+  <radialGradient id="t4Blush"><stop stop-color="#dc746b" stop-opacity=".66"/><stop offset="1" stop-color="#df8772" stop-opacity="0"/></radialGradient>
+  <radialGradient id="t4Nose" cx="38%" cy="25%" r="75%"><stop stop-color="#ffe1c1"/><stop offset=".55" stop-color="#f1ac8d"/><stop offset="1" stop-color="#bb6f61"/></radialGradient>
+  <linearGradient id="t4Hair" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff6d6"/><stop offset=".28" stop-color="#f8d89b"/><stop offset=".63" stop-color="#e0b373"/><stop offset="1" stop-color="#a67c4f"/></linearGradient>
+  <radialGradient id="t4Eye" cx="38%" cy="28%"><stop stop-color="#fffef8"/><stop offset=".78" stop-color="#f4e4d6"/><stop offset="1" stop-color="#b99587"/></radialGradient>
+  <radialGradient id="t4Iris" cx="40%" cy="35%"><stop stop-color="#72b6de"/><stop offset=".7" stop-color="#397ca7"/><stop offset="1" stop-color="#264862"/></radialGradient>
+  <clipPath id="t4Face"><path d="M33 74C50 50 147 45 167 73C182 94 179 120 183 143C193 174 181 207 164 224C148 243 128 251 105 250C80 249 56 237 42 217C25 195 21 169 28 142C25 116 24 94 33 74Z"/></clipPath>
+  <clipPath id="t4LeftEye"><path d="M42 131C49 118 73 116 86 129C80 145 54 147 42 131Z"/></clipPath>
+  <clipPath id="t4RightEye"><path d="M122 129C132 116 156 117 165 129C155 145 132 144 122 129Z"/></clipPath>
+ </defs>
+ <path d="M63 212L156 212L162 252L135 267L92 265L61 248Z" fill="url(#t4Skin)" stroke="#a46c53" stroke-width="1.2"/>
+ <path d="M65 227C89 251 132 260 155 231L156 246C132 268 87 257 66 240Z" fill="#865443" opacity=".48"/>
+ <path d="M30 122C16 109 9 120 14 141L20 162C26 175 36 175 40 161Z" fill="#e3a38b" stroke="#ad7261" stroke-width="1.2"/>
+ <path d="M25 126C17 119 19 137 27 143L25 157L31 159" fill="none" stroke="#b16e61" stroke-width="2"/>
+ <path d="M177 121C192 109 199 122 192 145L184 164C178 173 171 167 168 157Z" fill="#d2947e" stroke="#9b6155" stroke-width="1.2"/>
+ <path d="M184 126C190 122 188 137 180 145L181 155" fill="none" stroke="#a56658" stroke-width="1.9"/>
+ <path d="M33 74C50 50 147 45 167 73C182 94 179 120 183 143C193 174 181 207 164 224C148 243 128 251 105 250C80 249 56 237 42 217C25 195 21 169 28 142C25 116 24 94 33 74Z" fill="url(#t4Skin)" stroke="#bb8066" stroke-width="1.2"/>
+ <g clip-path="url(#t4Face)">
+  <ellipse cx="60" cy="169" rx="36" ry="35" fill="url(#t4Blush)"/><ellipse cx="151" cy="168" rx="33" ry="34" fill="url(#t4Blush)"/>
+  <path d="M36 100C31 150 39 192 62 220C49 217 26 191 22 161L23 100Z" fill="#ffe4c3" opacity=".32" filter="url(#soft)"/>
+  <path d="M163 81C181 123 165 157 176 177C177 213 144 240 123 247L176 253L202 137Z" fill="#70463f" opacity=".22" filter="url(#soft)"/>
+  <ellipse cx="91" cy="88" rx="45" ry="24" fill="#fff0d4" opacity=".24" filter="url(#soft)"/>
+  <path d="M46 195C53 220 74 239 107 242C132 243 156 229 168 205C151 217 132 224 107 223C80 222 64 213 46 195Z" fill="#edaf8c" opacity=".63"/>
+  <path d="M69 225C88 240 123 244 145 229" fill="none" stroke="#a36753" stroke-width="2" opacity=".43" filter="url(#soft)"/>
+  <!-- Raised brow pads and short furrows, avoiding a generic narrow-eyed face. -->
+  <path d="M40 117C42 95 72 96 89 116L89 123C67 110 55 110 40 124Z" fill="#eeb595"/>
+  <path d="M119 119C129 98 155 93 169 113L167 121C150 109 137 108 120 125Z" fill="#e6ac8a"/>
+  <path d="M50 89C67 83 84 85 95 89M112 90C126 85 143 86 154 91" fill="none" stroke="#c18b6d" stroke-width="1" opacity=".6"/>
+  <path d="M55 91C69 88 83 89 93 92M117 92C130 89 141 90 151 93" fill="none" stroke="#ffe7c5" stroke-width="1" opacity=".6"/>
+  <path d="M97 106C101 112 100 121 101 125M113 105C108 112 110 118 108 123" fill="none" stroke="#b78164" stroke-width="1.8"/>
+  <path d="M103 105L103 117" fill="none" stroke="#ffe0b8" stroke-width="1.6"/>
+  <path d="M38 133C45 115 74 112 89 129C86 148 51 154 38 133Z" fill="#b47b6a" opacity=".53" filter="url(#soft)"/>
+  <path d="M119 131C132 112 158 114 168 129C165 150 130 151 119 131Z" fill="#aa7261" opacity=".51" filter="url(#soft)"/>
+  <path d="M42 131C49 118 73 116 86 129C80 145 54 147 42 131Z" fill="url(#t4Eye)"/>
+  <path d="M122 129C132 116 156 117 165 129C155 145 132 144 122 129Z" fill="url(#t4Eye)"/>
+  <g clip-path="url(#t4LeftEye)"><ellipse cx="64" cy="130" rx="9.1" ry="10.4" fill="url(#t4Iris)"/><ellipse cx="65" cy="129" rx="4.8" ry="6.8" fill="#102737"/><path d="M60 137L62 140M68 137L69 139M57 131L56 135M72 130L73 134" stroke="#9dd3f0" stroke-width="1"/><circle cx="61.5" cy="125" r="2.8" fill="#fff"/><circle cx="68" cy="133" r="1.1" fill="#d8f5ff"/></g>
+  <g clip-path="url(#t4RightEye)"><ellipse cx="144" cy="128" rx="9.2" ry="10.4" fill="url(#t4Iris)"/><ellipse cx="144.5" cy="127" rx="4.8" ry="6.8" fill="#102737"/><path d="M139 136L141 138M149 135L151 136M136 129L136 133M152 129L153 132" stroke="#9dd3f0" stroke-width="1"/><circle cx="141" cy="123" r="2.7" fill="#fff"/><circle cx="148" cy="132" r="1.1" fill="#d8f5ff"/></g>
+  <path d="M42 131C49 118 73 116 86 129M122 129C132 116 156 117 165 129" fill="none" stroke="#906255" stroke-width="2"/>
+  <path d="M43 134C54 146 75 146 84 133M124 133C135 145 155 143 163 131" fill="none" stroke="#cb8e77" stroke-width="1.4"/>
+  <path d="M45 147C59 156 77 153 85 145M124 143C136 154 154 152 163 144" fill="none" stroke="#be876f" stroke-width="1.3"/>
+  <path d="M50 149C61 154 74 152 81 148M128 148C139 152 150 150 158 146" fill="none" stroke="#ffdab8" stroke-width="1.2"/>
+  <!-- Pale, thick eyebrows are part of the silhouette, not just colored lines. -->
+  <path d="M39 115C40 103 45 96 54 97C67 96 75 105 88 109L93 118C77 119 68 109 56 108C49 107 44 111 39 115Z" fill="url(#t4Hair)" stroke="#c39965" stroke-width=".8"/>
+  <path d="M116 118C120 108 130 102 140 98C153 92 165 99 169 111C161 106 155 103 148 107C136 110 129 119 116 118Z" fill="url(#t4Hair)" stroke="#c39965" stroke-width=".8"/>
+  <g fill="none" stroke="#ffedbe" stroke-width="1.25"><path d="M43 106L47 102L52 101M52 102L60 105M60 103L69 108M70 107L79 112M80 112L87 115"/><path d="M122 114L128 110M130 108L136 104M138 103L145 100M148 100L154 101M157 103L163 107"/></g>
+  <!-- Full rounded nose and warm, softly modeled nostrils. -->
+  <path d="M101 124C96 137 98 148 91 159C85 166 88 176 97 180C105 185 120 184 127 178C135 175 133 166 127 161L119 141L115 123Z" fill="url(#t4Nose)"/>
+  <path d="M104 128C101 141 105 150 102 157" fill="none" stroke="#ffe8c8" stroke-width="4" opacity=".58" filter="url(#soft)"/>
+  <ellipse cx="109" cy="165" rx="10.5" ry="8" fill="#ffc8a7" opacity=".64"/>
+  <path d="M91 172C95 168 100 169 103 173M117 174C121 169 127 169 130 171" fill="none" stroke="#8e544a" stroke-width="2.6"/>
+  <path d="M101 181C108 186 119 183 123 179" fill="none" stroke="#b1745f" stroke-width="1.3"/>
+  <path d="M88 166C78 173 74 183 74 195M132 165C143 173 150 187 148 198" fill="none" stroke="#bf8169" stroke-width="1.8"/>
+  <path d="M84 175C79 183 79 188 80 193M139 176C145 185 145 188 145 193" fill="none" stroke="#ffd8b5" stroke-width="1.8" opacity=".72"/>
+  <path d="M103 186L101 191M115 185L119 190" fill="none" stroke="#c18a6c" stroke-width="1.1"/>
+  <!-- Downturned mouth and projecting chin reproduce the reference expression. -->
+  <path d="M76 205C83 194 92 191 104 191C118 189 134 193 145 204C130 199 120 197 107 198C93 197 86 200 76 205Z" fill="#b97062"/>
+  <path d="M77 205C93 197 126 194 144 204C136 204 129 208 109 207C94 207 86 206 77 205Z" fill="#e9aa92"/>
+  <path d="M77 204C93 194 125 192 144 203" fill="none" stroke="#91564c" stroke-width="2"/>
+  <path d="M88 203C99 200 121 200 132 202" fill="none" stroke="#ffd4b3" stroke-width="1.6"/>
+  <path d="M74 201L72 208M146 200L149 207" stroke="#b77762" stroke-width="1.5"/>
+  <path d="M95 214C103 210 122 212 130 218" fill="none" stroke="#bd876c" stroke-width="1.3" opacity=".7"/>
+  <ellipse cx="111" cy="225" rx="22" ry="12" fill="#f7c0a0" opacity=".5"/>
+  <path d="M107 220L105 223M111 223L109 227M115 221L116 224M119 225L117 228M101 225L99 227" stroke="#d3977e" stroke-width=".8" opacity=".7"/>
+  <path d="M47 177C43 190 47 206 56 212M163 177C168 191 163 205 158 212" fill="none" stroke="#bb7f68" stroke-width="1.1" opacity=".45"/>
+ </g>
+ <!-- Deeply layered pale-gold comb-over: swept volume rather than a flat yellow cap. -->
+ <path d="M28 126C19 113 20 97 21 81C14 63 23 42 37 32C55 17 79 13 100 15C120 6 148 12 161 27C179 32 188 48 186 66L180 108L175 124L166 117L163 81C153 81 142 77 134 67C108 81 73 85 41 77L38 103L34 126Z" fill="url(#t4Hair)" stroke="#bc9666" stroke-width="1.1"/>
+ <path d="M26 61C53 33 103 28 140 32C159 35 173 42 179 55C159 40 141 41 120 42C84 41 53 52 26 61Z" fill="#fff3ce" opacity=".66"/>
+ <path d="M37 73C75 71 119 61 148 43C142 62 112 78 80 80C62 81 46 79 37 73Z" fill="#efc68b"/>
+ <path d="M139 67C157 80 165 80 167 98L168 118L176 123L177 82C169 63 163 59 157 54Z" fill="#b99360" opacity=".38"/>
+ <g fill="none" stroke="#fff2c9" stroke-width="1.55" opacity=".83">
+  <path d="M26 52C51 25 86 23 119 25"/><path d="M31 57C63 28 106 27 147 36"/>
+  <path d="M36 62C67 38 109 34 144 40"/><path d="M43 68C80 49 117 45 149 43"/>
+  <path d="M53 74C96 60 127 56 151 43"/><path d="M78 76C109 65 135 54 151 43"/>
+  <path d="M103 16C126 13 151 20 164 34"/><path d="M120 21C142 20 165 31 174 43"/>
+  <path d="M25 81C24 98 26 111 30 120M31 84L31 117M36 87L34 114"/>
+  <path d="M171 73L175 103M169 88L171 113"/>
+ </g>
+ <g fill="none" stroke="#c69a65" stroke-width="1" opacity=".55">
+  <path d="M36 46C61 24 93 22 115 23M50 61C79 42 118 39 144 42"/>
+  <path d="M64 74C101 63 131 53 147 44M145 32C162 39 174 50 177 66"/>
+ </g>
+ <path d="M31 43C48 24 67 21 82 20M102 13C123 9 145 17 156 24" fill="none" stroke="#fff5d9" stroke-width="2" opacity=".75"/>
+ <path d="M24 159C26 184 37 204 49 216" fill="none" stroke="#bfe4e3" stroke-width="1.4" opacity=".38"/>
+</g>
+<!-- Reference-image portrait: Elon Musk, swept dark quiff, angular jaw and asymmetric smile. -->
+<g id="musk-reference-portrait" transform="translate(976 332) scale(.82)" stroke-linecap="round" stroke-linejoin="round">
+ <defs>
+  <radialGradient id="m4Skin" cx="34%" cy="26%" r="82%"><stop stop-color="#fff0df"/><stop offset=".38" stop-color="#efc8b0"/><stop offset=".7" stop-color="#d29e84"/><stop offset="1" stop-color="#8c6458"/></radialGradient>
+  <radialGradient id="m4Nose" cx="34%" cy="20%" r="80%"><stop stop-color="#ffe5ca"/><stop offset=".6" stop-color="#e6b096"/><stop offset="1" stop-color="#b47767"/></radialGradient>
+  <linearGradient id="m4Hair" x1="0" y1="0" x2=".85" y2="1"><stop stop-color="#735143"/><stop offset=".32" stop-color="#49342e"/><stop offset=".67" stop-color="#2b2425"/><stop offset="1" stop-color="#131c25"/></linearGradient>
+  <linearGradient id="m4Lock" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="#a07557"/><stop offset=".3" stop-color="#70503e"/><stop offset="1" stop-color="#352928"/></linearGradient>
+  <radialGradient id="m4Eye" cx="35%" cy="30%"><stop stop-color="#fffef5"/><stop offset=".76" stop-color="#f2e7d9"/><stop offset="1" stop-color="#b89d8d"/></radialGradient>
+  <radialGradient id="m4Iris" cx="40%" cy="35%"><stop stop-color="#9bc2cf"/><stop offset=".65" stop-color="#618992"/><stop offset="1" stop-color="#344c58"/></radialGradient>
+  <linearGradient id="m4Lip" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#a97569"/><stop offset=".55" stop-color="#d99e8b"/><stop offset="1" stop-color="#efbaa1"/></linearGradient>
+  <clipPath id="m4Face"><path d="M35 83C39 55 73 46 112 46C150 46 171 62 178 88L179 139C182 160 176 188 165 205C155 218 137 230 117 239C103 245 87 240 73 234L49 213C33 192 27 171 29 145Z"/></clipPath>
+  <clipPath id="m4LeftEye"><path d="M43 134C54 120 74 120 88 133C76 148 54 148 43 134Z"/></clipPath>
+  <clipPath id="m4RightEye"><path d="M120 132C131 117 153 116 167 126C159 141 135 148 120 132Z"/></clipPath>
+ </defs>
+ <path d="M60 206L149 203L155 252L130 266L89 264L55 249Z" fill="url(#m4Skin)" stroke="#947567" stroke-width="1.4"/>
+ <path d="M60 220C88 242 118 250 149 222L152 241C124 263 85 251 59 235Z" fill="#614e4a" opacity=".32"/>
+ <path d="M51 239L74 250L98 256L135 253L155 240L166 250L148 268L91 275L51 259Z" fill="#253d4e" stroke="#8da2af" stroke-width="2"/>
+ <path d="M54 247L88 263L128 262L155 250" fill="none" stroke="#bdeef5" stroke-width="2.8"/>
+ <path d="M77 260L78 269M88 263L88 272M100 264L100 272M113 264L113 271M125 263L125 269" stroke="#0f2332" stroke-width="3"/>
+ <path d="M31 123C21 113 12 120 14 136L20 158C24 169 32 171 38 161L40 140Z" fill="#dfab95" stroke="#a47666" stroke-width="1.4"/>
+ <path d="M26 126C18 122 19 136 27 142L25 155L31 158" fill="none" stroke="#b57c6b" stroke-width="1.8"/>
+ <path d="M176 122C191 103 202 113 197 133L188 158C183 169 176 171 170 162Z" fill="#d59e85" stroke="#9e6a5b" stroke-width="1.5"/>
+ <path d="M183 125C194 115 196 127 186 139L181 150L184 154" fill="none" stroke="#9a6157" stroke-width="2.3"/>
+ <path d="M188 121C193 121 193 126 189 131" fill="none" stroke="#ffd4b8" stroke-width="2"/>
+ <path d="M35 83C39 55 73 46 112 46C150 46 171 62 178 88L179 139C182 160 176 188 165 205C155 218 137 230 117 239C103 245 87 240 73 234L49 213C33 192 27 171 29 145Z" fill="url(#m4Skin)" stroke="#ad806c" stroke-width="1.3"/>
+ <g clip-path="url(#m4Face)">
+  <!-- Broad forehead, high cheek planes and a tapered but squared jaw. -->
+  <ellipse cx="93" cy="86" rx="46" ry="31" fill="#fff0d8" opacity=".36" filter="url(#soft)"/>
+  <path d="M41 83C32 133 36 170 45 191L62 214C46 209 28 187 25 162L26 106Z" fill="#ffe5c5" opacity=".4" filter="url(#soft)"/>
+  <path d="M160 65C178 107 165 133 173 154C179 180 156 214 135 224L162 222L192 168L189 89Z" fill="#735548" opacity=".21" filter="url(#soft)"/>
+  <path d="M42 155C57 145 74 145 89 157L79 177L58 173Z" fill="#ffe0c1" opacity=".4"/>
+  <path d="M125 156C141 143 159 142 170 149L158 171L146 177L136 170Z" fill="#e7ad8d" opacity=".48"/>
+  <path d="M42 174L58 187L66 207L53 203Z" fill="#c48d73" opacity=".35"/>
+  <path d="M162 177L151 190L143 212L154 208L170 184Z" fill="#a77862" opacity=".33"/>
+  <path d="M54 208L79 226C93 234 105 236 119 232L145 220C131 235 113 245 98 240L73 231Z" fill="#9d7966" opacity=".27"/>
+  <path d="M81 218C96 226 117 226 133 218" fill="none" stroke="#ffe0be" stroke-width="2.8" opacity=".55"/>
+  <path d="M58 95C77 89 101 91 119 94" fill="none" stroke="#c49d82" stroke-width="1" opacity=".5"/>
+  <path d="M63 97C81 93 101 94 114 96" fill="none" stroke="#fff0d6" stroke-width="1" opacity=".65"/>
+  <!-- Almond-shaped eyes and the raised outer brow from the supplied references. -->
+  <path d="M40 134C49 119 70 113 89 128L91 139C76 151 52 152 40 134Z" fill="#a78671" opacity=".52" filter="url(#soft)"/>
+  <path d="M119 128C130 114 153 111 169 124L167 135C151 149 130 148 119 134Z" fill="#987261" opacity=".48" filter="url(#soft)"/>
+  <path d="M43 134C54 120 74 120 88 133C76 148 54 148 43 134Z" fill="url(#m4Eye)"/>
+  <path d="M120 132C131 117 153 116 167 126C159 141 135 148 120 132Z" fill="url(#m4Eye)"/>
+  <g clip-path="url(#m4LeftEye)"><ellipse cx="67" cy="133" rx="9" ry="10.5" fill="url(#m4Iris)"/><ellipse cx="68" cy="132" rx="4.9" ry="6.7" fill="#182b34"/><path d="M61 138L63 141M71 139L73 140M59 130L59 134M75 131L75 135" stroke="#b3dbe0" stroke-width="1"/><circle cx="64.5" cy="128" r="2.7" fill="#fffef5"/><circle cx="71" cy="136" r="1" fill="#d6f1f5"/></g>
+  <g clip-path="url(#m4RightEye)"><ellipse cx="146" cy="129" rx="9.1" ry="10.4" fill="url(#m4Iris)"/><ellipse cx="147" cy="128" rx="4.9" ry="6.7" fill="#182b34"/><path d="M141 135L143 138M150 135L152 136M138 126L138 131M154 126L154 130" stroke="#b3dbe0" stroke-width="1"/><circle cx="143" cy="124" r="2.7" fill="#fffef5"/><circle cx="150" cy="132" r="1" fill="#d6f1f5"/></g>
+  <path d="M43 134C54 120 74 120 88 133M120 132C131 117 153 116 167 126" fill="none" stroke="#664e43" stroke-width="2.2"/>
+  <path d="M47 137C59 148 76 146 85 136M124 135C138 147 157 139 164 131" fill="none" stroke="#a67b67" stroke-width="1.3"/>
+  <path d="M47 145C59 152 76 151 84 145M128 144C140 150 154 145 162 140" fill="none" stroke="#b98e76" stroke-width="1.1"/>
+  <path d="M50 147C61 152 73 151 80 147M132 147C141 150 153 145 158 142" fill="none" stroke="#ffdfbe" stroke-width="1.2"/>
+  <path d="M38 137L42 136M37 143L44 140M169 133L176 130M167 139L175 139M166 143L173 146" fill="none" stroke="#b48b74" stroke-width="1" opacity=".65"/>
+  <!-- The brows are strong, diagonal and independently shaped. -->
+  <path d="M40 117C44 107 51 101 58 105L89 119L91 125C73 120 60 111 52 112L40 119Z" fill="#473229"/>
+  <path d="M116 122C129 110 144 96 154 97C161 98 168 105 171 111C164 108 158 106 153 106C143 109 131 122 118 126Z" fill="#3d2d27"/>
+  <path d="M44 114L50 109M53 108L62 113M65 113L73 117M77 118L84 121M121 119L129 113M131 111L139 105M142 103L150 101M154 101L163 106" fill="none" stroke="#8e6a50" stroke-width="1.1"/>
+  <path d="M96 117L99 125M109 113L107 123" stroke="#c19a7e" stroke-width="1.2" opacity=".62"/>
+  <!-- A narrower bridge and a short rounded tip, distinct from the rider's broad nose. -->
+  <path d="M101 130C98 142 99 151 94 161C88 168 91 176 100 179C109 183 123 179 129 174C133 169 128 162 121 158L115 134Z" fill="url(#m4Nose)"/>
+  <path d="M104 133C102 145 105 154 102 161" fill="none" stroke="#ffead0" stroke-width="4" opacity=".58" filter="url(#soft)"/>
+  <path d="M96 155L92 164C89 170 92 175 98 177" fill="none" stroke="#a37461" stroke-width="1.4" opacity=".65"/>
+  <ellipse cx="110" cy="166" rx="10.5" ry="7" fill="#f9c5a7" opacity=".65"/>
+  <path d="M94 172C98 168 102 170 104 174M118 174C122 170 126 170 129 171" fill="none" stroke="#855c50" stroke-width="2.3"/>
+  <path d="M103 179C109 183 119 179 122 177" fill="none" stroke="#af7b65" stroke-width="1.2"/>
+  <path d="M90 174C79 176 70 184 70 194M133 171C146 171 155 178 157 187" fill="none" stroke="#ae8068" stroke-width="1.7"/>
+  <path d="M83 179C76 183 73 188 74 192M141 175C149 178 152 182 152 187" fill="none" stroke="#ffdcbb" stroke-width="1.7" opacity=".8"/>
+  <path d="M62 181C57 188 61 198 69 202M161 174C166 181 165 188 161 192" fill="none" stroke="#b5826b" stroke-width="1.4" opacity=".7"/>
+  <!-- Crooked confident smile, a narrow strip of teeth and lifted right corner. -->
+  <path d="M71 195C86 191 96 187 107 190C122 193 139 185 155 183C145 199 132 209 112 211C95 212 81 205 71 195Z" fill="url(#m4Lip)"/>
+  <path d="M73 196C88 200 101 200 113 199C129 197 142 190 153 186C143 199 130 205 112 206C95 207 82 202 73 196Z" fill="#775044"/>
+  <path d="M80 197C91 201 107 201 120 198C132 195 140 191 148 189L141 196C124 205 99 206 86 200Z" fill="#fff1dd"/>
+  <path d="M94 201L96 204M106 201L107 204M119 199L119 203M132 194L132 199M140 191L139 196" stroke="#d1bfa7" stroke-width=".85"/>
+  <path d="M86 205C104 214 128 208 138 202" fill="none" stroke="#f2bca2" stroke-width="2"/>
+  <path d="M70 190C67 194 70 200 74 202M155 181C158 184 157 189 153 193" fill="none" stroke="#8c5f4f" stroke-width="1.5"/>
+  <path d="M100 216C109 213 121 213 128 213" fill="none" stroke="#a17d68" stroke-width="1.2" opacity=".7"/>
+  <path d="M56 195C60 207 72 217 83 223L101 232C117 235 142 221 154 202L158 210C145 231 124 245 106 244C84 240 64 223 53 207Z" fill="#51443c" opacity=".11"/>
+  <path d="M54 199L66 214L83 225L106 233L132 225L157 201L157 216L134 234L110 243L88 237L65 222L51 206Z" fill="url(#stubble)" opacity=".64"/>
+  <g fill="none" stroke="#6c584b" stroke-width=".85" opacity=".5"><path d="M79 189L81 187M85 188L86 186M90 188L91 186M97 188L98 186M124 187L126 184M132 185L133 183M139 183L141 181"/><path d="M94 224L95 222M100 226L101 224M108 228L109 225M115 227L116 224M121 225L122 223M91 230L92 228M105 234L106 231M115 233L116 230"/></g>
+ </g>
+ <!-- Sculpted quiff, side part and closely combed temples from the supplied artwork. -->
+ <path d="M29 130C19 113 23 96 22 81C17 68 24 51 34 39C40 25 55 18 66 17C70 9 84 4 98 10C111 2 135 9 147 20C168 22 181 33 184 48C199 56 195 75 188 91L181 120L170 133L168 103C168 87 161 74 151 67C127 71 110 64 94 60C70 59 53 70 44 89L39 118L34 132Z" fill="url(#m4Hair)" stroke="#342925" stroke-width="1.5"/>
+ <path d="M26 74C35 46 62 32 86 30C107 20 138 27 155 45C149 57 130 64 115 63C133 44 106 28 89 30C64 29 42 46 26 74Z" fill="url(#m4Lock)" opacity=".84"/>
+ <path d="M40 56C56 30 84 24 102 32C117 40 120 51 115 63L96 60C106 45 87 34 74 37C59 38 47 47 40 56Z" fill="url(#m4Lock)" opacity=".68"/>
+ <path d="M64 62C79 48 97 48 113 54C130 60 143 59 156 47C155 61 148 69 132 70C108 70 89 59 64 62Z" fill="#241e20" opacity=".5"/>
+ <path d="M156 66C174 70 179 91 173 119L177 116L188 87C187 70 179 60 164 55Z" fill="#171e23" opacity=".7"/>
+ <path d="M28 91L30 119L34 128L37 103L38 86Z" fill="#59483d"/>
+ <g fill="none" stroke="#bb8966" stroke-width="1.3" opacity=".63">
+  <path d="M29 63C40 38 60 25 80 22"/><path d="M32 60C50 31 78 24 95 31C109 38 112 51 108 60"/>
+  <path d="M38 60C53 41 78 33 91 39C102 44 104 53 102 60"/>
+  <path d="M66 26C91 12 113 26 123 40C128 50 124 57 120 63"/>
+  <path d="M88 17C111 14 131 28 137 43C140 52 134 59 130 64"/>
+  <path d="M105 13C128 15 147 31 149 45C150 54 145 61 140 65"/>
+  <path d="M128 15C149 20 163 34 166 46M153 30C174 35 179 43 180 51"/>
+  <path d="M164 60C181 62 188 71 185 82M171 69C181 77 182 88 179 101"/>
+  <path d="M29 89L30 108M34 90L33 119"/>
+ </g>
+ <g fill="none" stroke="#291f20" stroke-width="1.2" opacity=".9">
+  <path d="M40 45C55 28 76 20 92 26M53 49C70 36 87 30 98 45"/>
+  <path d="M101 17C123 22 136 41 130 57M139 26C154 36 157 49 150 61"/>
+  <path d="M170 63C184 70 185 81 181 94M27 83L27 107"/>
+ </g>
+ <path d="M42 31C52 21 60 20 68 20M70 14C83 9 91 11 98 13M104 9C119 9 137 17 143 21" fill="none" stroke="#c09977" stroke-width="1.4" opacity=".6"/>
+ <path d="M29 120L33 136M173 120L172 131" stroke="#463c34" stroke-width="3"/>
+ <path d="M27 155C29 181 40 201 54 215" fill="none" stroke="#bce9e8" stroke-width="1.7" opacity=".49"/>
+ <path d="M179 155C177 180 167 200 154 215" fill="none" stroke="#f1c6a4" stroke-width="1.5" opacity=".53"/>
+</g>
+</g>
+</g>
+<!-- Unobstructed SpaceX identification plate on the near thigh. -->
+<g class="flight" stroke-linejoin="round">
+  <path d="M616 650L719 633L738 643L723 664L616 683L607 671Z" fill="#dbe7ed" stroke="#7d97a7" stroke-width="1.6"/>
+  <path d="M616 652L717 636L732 643" fill="none" stroke="#ffffff" stroke-width="1.5" opacity=".8"/>
+  <g transform="translate(621 670) rotate(-11)">
+    <text font-family="Arial,Helvetica,sans-serif" font-size="20" font-weight="800" font-style="italic" letter-spacing="1.5" textLength="102" lengthAdjust="spacingAndGlyphs" fill="#172c3b">SPACEX</text>
+    <path d="M84-5C94-15 102-21 114-22C101-18 94-11 88-4Z" fill="#172c3b"/>
+    <text x="1" y="7" font-family="Arial,sans-serif" font-size="4.8" letter-spacing="1.6" fill="#577181">MARS / FLIGHT UNIT 01</text>
+  </g>
+  <circle cx="613" cy="666" r="2" fill="#617c8b"/><circle cx="725" cy="642" r="2" fill="#617c8b"/>
+</g>
+<!-- Quiet poster furniture and a restrained film finish. -->
+<g fill="none" stroke="#acd7e7" stroke-width="1" opacity=".26">
+  <path d="M64 764V783H83M1357 783H1376V764"/>
+  <path d="M64 801H1376" opacity=".45"/>
+</g>
+<g font-family="Arial,'Microsoft YaHei',sans-serif">
+  <text x="64" y="831" font-size="11" letter-spacing="3.2" fill="#abc2cc">DONALD TRUMP × ELON MUSK</text>
+  <text x="64" y="854" font-size="9" letter-spacing="2" fill="#79929e">PHOTO-REFERENCED SVG PORTRAITS · FICTIONAL FLIGHT</text>
+  <text x="1376" y="831" text-anchor="end" font-size="11" letter-spacing="2.5" fill="#dcaa89">DESTINATION: MARS</text>
+  <text x="1376" y="854" text-anchor="end" font-size="9" letter-spacing="1.8" fill="#819ba6">SPACEX CONCEPT ARMOR / 01</text>
+</g>
+<rect width="1440" height="900" fill="url(#vignette)" opacity=".4" pointer-events="none"/>
+<rect width="1440" height="900" filter="url(#grain)" opacity=".045" pointer-events="none"/>
+<rect x=".5" y=".5" width="1439" height="899" rx="3" fill="none" stroke="#bddfea" stroke-opacity=".16" pointer-events="none"/>
+</svg>
+</section>
+<div class="bottom">
+  <div class="caption">
+    <strong>下一站，火星。</strong>
+    <p>照片参考重绘五官 · 更丰满的骑手 · SPACEX 概念机甲 · 火星目标航线</p>
+  </div>
+  <div class="controls" role="group" aria-label="动画播放控制">
+    <button id="pause" type="button" aria-pressed="false" aria-label="暂停动画"><span id="pauseIcon" aria-hidden="true">Ⅱ</span> <span id="pauseText">暂停动画</span></button>
+    <button id="speed" type="button" aria-label="切换动画速度，当前一倍速">速度 1×</button>
+  </div>
+</div>
+<p class="note">本作品是虚构的科幻讽刺动画，不对应真实事件。机甲为原创概念设计，SPACEX 字样仅用于表现创作主题，不代表实际装备或官方背书。所有人物与场景均以 SVG 绘制。</p>
+<details class="references">
+  <summary>人物照片参考 · 4 张</summary>
+  <p>参考照片用于观察发型、脸型、五官与明暗，未将照片嵌入页面；打开 HTML 后无需联网加载素材。</p>
+  <ul>
+    <li><a href="https://www.whitehouse.gov/wp-content/uploads/2025/06/President-Donald-Trump-Official-Presidential-Portrait.png" target="_blank" rel="noopener noreferrer">特朗普：白宫官方肖像（2025）</a> — 正面脸型、浅色侧扫发型和眼部结构。</li>
+    <li><a href="https://www.whitehouse.gov/wp-content/uploads/2025/06/P20250608CS-0274.jpg" target="_blank" rel="noopener noreferrer">特朗普：白宫活动照片（2025-06-08）</a> — 面颊、颈部及自然表情参考。</li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:Elon_Musk_(The_Royal_Society).jpg" target="_blank" rel="noopener noreferrer">马斯克：英国皇家学会肖像（2018）</a> — 正面五官与微笑；原照片由 Duncan.Hull 拍摄，CC BY-SA 4.0。</li>
+    <li><a href="https://commons.wikimedia.org/wiki/File:SpaceX_Demo-2_Preflight_(NHQ202005270020).jpg" target="_blank" rel="noopener noreferrer">马斯克：NASA Demo-2 发射前照片（2020-05-27）</a> — 头部侧面和体态参考；NASA / Bill Ingalls，公有领域照片。</li>
+  </ul>
+</details>
+</main>
+<script>
+(() => {
+  'use strict';
+  const stage = document.querySelector('.art');
+  const pauseButton = document.getElementById('pause');
+  const pauseText = document.getElementById('pauseText');
+  const pauseIcon = document.getElementById('pauseIcon');
+  const speedButton = document.getElementById('speed');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const speeds = [1, 1.5, 0.65];
+  let userPaused = false;
+  let speedIndex = 0;
+
+  function synchronize() {
+    const reduced = reducedMotion.matches;
+    const shouldPause = userPaused || document.hidden || reduced;
+    if (typeof stage.getAnimations === 'function') {
+      for (const animation of stage.getAnimations({ subtree: true })) {
+        animation.updatePlaybackRate(speeds[speedIndex]);
+        if (shouldPause) animation.pause();
+        else animation.play();
+      }
+    }
+    pauseButton.disabled = reduced;
+    speedButton.disabled = reduced;
+    pauseButton.setAttribute('aria-pressed', String(userPaused || reduced));
+    const label = reduced ? '静态模式' : userPaused ? '继续动画' : '暂停动画';
+    pauseText.textContent = label;
+    pauseIcon.textContent = reduced ? '—' : userPaused ? '▶' : 'Ⅱ';
+    pauseButton.setAttribute('aria-label', label);
+    const rateLabel = speeds[speedIndex] + '×';
+    speedButton.textContent = '速度 ' + rateLabel;
+    speedButton.setAttribute('aria-label', '切换动画速度，当前 ' + rateLabel);
+    const reducedHint = reduced ? '遵循系统的减少动态效果设置，当前为静态展示。' : '';
+    pauseButton.title = reducedHint;
+    speedButton.title = reducedHint || '依次切换 1×、1.5×、0.65×';
+  }
+
+  pauseButton.addEventListener('click', () => {
+    userPaused = !userPaused;
+    synchronize();
+  });
+  speedButton.addEventListener('click', () => {
+    speedIndex = (speedIndex + 1) % speeds.length;
+    synchronize();
+  });
+  document.addEventListener('visibilitychange', synchronize);
+  reducedMotion.addEventListener('change', synchronize);
+  requestAnimationFrame(synchronize);
+})();
+</script>
+</body>
+</html>

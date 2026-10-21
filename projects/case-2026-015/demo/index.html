@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 企业协同办公赛道竞品调研报告</title>
+<style>
+  :root{
+    --ink:#1e293b; --sub:#475569; --mut:#64748b; --line:#e2e8f0;
+    --blue:#1d4ed8; --blue-l:#eff6ff; --bg:#f4f7fb; --card:#ffffff;
+    --s:#059669; --sbg:#ecfdf5; --w:#d97706; --wbg:#fffbeb;
+    --o:#2563eb; --obg:#eff6ff; --t:#dc2626; --tbg:#fef2f2;
+    --red:#b91c1c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.75}
+  .slide{max-width:1160px;margin:0 auto;padding:56px 48px;background:var(--card);border-bottom:1px solid var(--line)}
+  .kicker{font-size:13px;font-weight:700;letter-spacing:.18em;color:var(--blue);text-transform:uppercase;margin-bottom:10px}
+  h1{font-size:44px;line-height:1.25;letter-spacing:.01em}
+  h2{font-size:27px;line-height:1.35;margin-bottom:6px}
+  h3{font-size:18px;margin:18px 0 8px}
+  .lede{color:var(--sub);font-size:16px}
+  .note{font-size:12.5px;color:var(--mut);margin-top:10px}
+  table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
+  th{background:#f1f5f9;color:#334155;font-weight:700;text-align:left;padding:8px 10px;border:1px solid var(--line);white-space:nowrap}
+  td{padding:7px 10px;border:1px solid var(--line);vertical-align:top}
+  tr:nth-child(even) td{background:#fafcfe}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+  .pill{display:inline-block;font-size:12px;font-weight:700;padding:2px 10px;border-radius:999px}
+  .pill-blue{background:var(--blue-l);color:var(--blue)} .pill-red{background:#fef2f2;color:var(--red)}
+  .pill-green{background:#ecfdf5;color:#047857} .pill-amber{background:#fffbeb;color:#b45309}
+  /* 功能矩阵符号 */
+  .mk{text-align:center;font-weight:700;font-size:14px}
+  .mk-y{color:var(--s);background:#f0fdf4} .mk-p{color:var(--w);background:#fffbeb} .mk-n{color:var(--t);background:#fef2f2}
+  .matrix td:first-child{font-weight:600;white-space:nowrap}
+  /* SWOT 四宫格 */
+  .swot{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:12px;page-break-inside:avoid}
+  .swot-head{padding:10px 16px;background:#f8fafc;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline}
+  .swot-head b{font-size:16px}
+  .swot-head span{font-size:12.5px;color:var(--mut)}
+  .swot-grid{display:grid;grid-template-columns:1fr 1fr}
+  .sq{padding:12px 16px;font-size:12.8px;line-height:1.65;border-top:1px solid var(--line)}
+  .sq:nth-child(-n+2){border-top:none}
+  .sq:nth-child(even){border-left:1px solid var(--line)}
+  .sq b.tag{display:inline-block;font-size:11.5px;font-weight:800;padding:1px 8px;border-radius:6px;margin-bottom:6px}
+  .sq-s b.tag{background:var(--sbg);color:var(--s)} .sq-w b.tag{background:var(--wbg);color:var(--w)}
+  .sq-o b.tag{background:var(--obg);color:var(--o)} .sq-t b.tag{background:var(--tbg);color:var(--t)}
+  .sq ul{list-style:none} .sq li{padding-left:14px;position:relative;margin-bottom:4px}
+  .sq-s li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--s)}
+  .sq-w li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--w)}
+  .sq-o li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--o)}
+  .sq-t li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--t)}
+  /* 机会卡 */
+  .opp{border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:12px;padding:16px 20px;margin-top:14px;background:#fff;page-break-inside:avoid}
+  .opp.p0{border-left-color:var(--red)} .opp.p1{border-left-color:var(--blue)} .opp.p2{border-left-color:var(--mut)}
+  .opp-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .opp-head b{font-size:16.5px}
+  .opp-meta{font-size:12px;color:var(--mut)}
+  .opp dl{display:grid;grid-template-columns:96px 1fr;gap:4px 10px;font-size:13px;margin-top:8px}
+  .opp dt{font-weight:700;color:#334155}
+  .opp dd{color:var(--sub)}
+  .stars{color:#f59e0b;letter-spacing:2px}
+  /* 三轨 */
+  .track{border-top:4px solid var(--blue)}
+  .track h4{font-size:15.5px;margin-bottom:6px}
+  .track .who{font-size:12.5px;color:var(--mut);margin-bottom:8px}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--sub);margin-top:6px}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  .cover{background:linear-gradient(135deg,#f8fafc 0%,#eff6ff 60%,#eef2ff 100%);padding:88px 48px}
+  .cover .brandrow{display:flex;gap:8px;margin-top:34px;flex-wrap:wrap}
+  .chip{font-size:12.5px;font-weight:600;padding:5px 13px;border-radius:999px;background:#fff;border:1px solid var(--line);color:#334155}
+  .big5{counter-reset:b5}
+  .big5 li{position:relative;padding-left:44px;margin-bottom:14px;list-style:none}
+  .big5 li::before{counter-increment:b5;content:counter(b5);position:absolute;left:0;top:2px;width:30px;height:30px;border-radius:9px;background:var(--blue);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .radar-wrap{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .radar-box{text-align:center}
+  .radar-box .rt{font-weight:700;font-size:14.5px;margin-bottom:2px}
+  .path3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:14px}
+  .step{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .step b{color:var(--blue)}
+  .step .n{font-size:12px;font-weight:800;color:#94a3b8;letter-spacing:.1em}
+  @media print{.slide{border-bottom:1px solid #cbd5e1}body{background:#fff}}
+</style>
+</head>
+<body>
+
+<!-- 1 封面 -->
+<section class="slide cover">
+  <div class="kicker">竞品深度调研 · 完整模式 · 五维框架</div>
+  <h1>2026 企业协同办公赛道<br>竞品调研报告</h1>
+  <p class="lede" style="margin-top:18px;max-width:760px">覆盖国内与海外十大竞品，从功能、定价、用户规模、增长策略、优劣势五个维度系统横评，并收敛为五条差异化机会点与三级递进进入路径。</p>
+  <p style="margin-top:14px;color:var(--mut);font-size:14px">2026 年 10 月 · 数据时效窗口 2025–2026 · 核验截至 2026-10-17</p>
+  <div class="brandrow">
+    <span class="chip">飞书</span><span class="chip">钉钉</span><span class="chip">企业微信</span><span class="chip">WPS 365</span>
+    <span class="chip">Microsoft Teams</span><span class="chip">Slack</span><span class="chip">Google Workspace</span>
+    <span class="chip">Notion</span><span class="chip">ClickUp</span><span class="chip">Asana</span>
+  </div>
+</section>
+
+<!-- 2 目录与核心结论 -->
+<section class="slide">
+  <div class="kicker">Overview</div>
+  <h2>报告结构与技术要点速览</h2>
+  <div class="grid2" style="margin-top:16px">
+    <div class="card">
+      <h3 style="margin-top:0">报告结构</h3>
+      <ul style="list-style:none;font-size:14px;color:var(--sub)">
+        <li>① 赛道总览：规模口径与三大争议</li>
+        <li>② 竞品功能横评：八域功能矩阵</li>
+        <li>③ 定价与商业模式：AI 计费三轨</li>
+        <li>④ 用户规模与增长策略</li>
+        <li>⑤ 十家 SWOT 四宫格汇总</li>
+        <li>⑥ 五条差异化机会点与优先级</li>
+        <li>⑦ 结论：进入路径与未答问题</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">五大核心结论</h3>
+      <ul style="list-style:none;font-size:13.5px;color:var(--sub)">
+        <li><b style="color:var(--ink)">规模真实、付费困难</b>：全球 402 亿美元（2025），但钉钉付费率不足 1%、85% 小微年愿付 &lt;5000 元</li>
+        <li><b style="color:var(--ink)">广度竞争已结束</b>：八域全覆盖仅飞书钉钉，且无一家八域全达专业级</li>
+        <li><b style="color:var(--ink)">AI 计费三轨分化</b>：68% 新签合同含用量成分，"第二货币层"成 ARPU 分水岭</li>
+        <li><b style="color:var(--ink)">巨头能力错位</b>：信创全栈、多法域合规、行业 SOP、现场脏活均无人标定</li>
+        <li><b style="color:var(--ink)">窗口 12–24 个月</b>：节奏本身即战略</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 3 赛道总览 -->
+<section class="slide">
+  <div class="kicker">01 · 赛道总览</div>
+  <h2>市场规模：先绑口径，再谈数字</h2>
+  <p class="lede">全球两套口径、中国三层边界，任何规模数据必须先绑定统计边界。</p>
+  <table>
+    <tr><th>口径</th><th>统计边界</th><th>基期</th><th>预测与增速</th></tr>
+    <tr><td><b>GVR（全球）</b></td><td>团队协同软件（SaaS）</td><td>402 亿美元（2025）</td><td>2026 年 446 亿 → 2033 年 852 亿美元；CAGR 9.7%；北美占 38.8%</td></tr>
+    <tr><td><b>IDC（全球）</b></td><td>UC&amp;C（含硬件与托管语音）</td><td>692 亿美元（2024，+7.8%）</td><td>2025–2029 CAGR 约 3.9%；微软 315 亿美元占 45.6%</td></tr>
+    <tr><td><b>艾瑞（中国）</b></td><td>协同办公平台</td><td>139 亿元（2025）</td><td>2026E 163 亿元，增速 15%+</td></tr>
+    <tr><td><b>艾媒（中国·宽口径）</b></td><td>泛协同办公市场</td><td>330.1 亿元（2023）</td><td>2025E 414.8 亿元</td></tr>
+    <tr><td><b>GVR（中国）</b></td><td>团队协同软件</td><td>34.33 亿美元（2025）</td><td>2033 年 75.46 亿美元；CAGR 10.2%</td></tr>
+  </table>
+  <div class="grid3" style="margin-top:20px">
+    <div class="card"><b>格局：全球一超，中国三国</b><p style="font-size:13px;color:var(--sub);margin-top:6px">Teams 全球份额约 37%、Slack 约 13%（用户口径）；中国"钉飞企微"覆盖率 92%、份额合计 75.0%（钉钉 32.7%／企微 23.4%／飞书 18.9%）——覆盖率与份额是两套不可互算的数字。Teams 在华仅约 8%。</p></div>
+    <div class="card"><b>争议一：付费意愿</b><p style="font-size:13px;color:var(--sub);margin-top:6px">钉钉 2600 万组织付费率 &lt;1%；85% 小微年愿付 &lt;5000 元；65% 中小企业从未使用协同 AI。反方：飞书新增客户超九成同步采购 AI。</p></div>
+    <div class="card"><b>争议二/三：AI 虚火与垄断</b><p style="font-size:13px;color:var(--sub);margin-top:6px">Gartner：2027 年底超 40% Agent 项目将被取消、上千家供应商仅约 130 家名副其实；同时 2026 年底 40% 企业应用将嵌入任务型 Agent。微软捆绑遭欧盟承诺 + 伦敦诉讼双重挑战。</p></div>
+  </div>
+</section>
+
+<!-- 4 功能矩阵 -->
+<section class="slide">
+  <div class="kicker">02 · 竞品功能横评</div>
+  <h2>表 1｜十大产品八功能域矩阵（2026-10 官网核验）</h2>
+  <p class="lede">✓ 原生强项　◐ 存在但较弱　✗ 不提供 —— 三档含义完全不同：缺位须外采，偏弱可迭代补齐。</p>
+  <table class="matrix">
+    <tr><th>产品</th><th>即时通讯</th><th>文档协作</th><th>视频会议</th><th>日程与邮件</th><th>项目管理</th><th>低代码与自动化</th><th>知识库</th><th>开放集成与 API</th></tr>
+    <tr><td>飞书 Lark</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td></tr>
+    <tr><td>钉钉 DingTalk</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td></tr>
+    <tr><td>企业微信 WeCom</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-p">◐</td><td class="mk mk-p">◐</td><td class="mk mk-p">◐</td><td class="mk mk-y">✓</td></tr>
+    <tr><td>WPS 365</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-p">◐</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td></tr>
+    <tr><td>Microsoft Teams</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-p">◐</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td></tr>
+    <tr><td>Google Workspace</td><td class="mk mk-p">◐</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-p">◐</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td></tr>
+    <tr><td>Slack</td><td class="mk mk-y">✓</td><td class="mk mk-p">◐</td><td class="mk mk-p">◐</td><td class="mk mk-n">✗</td><td class="mk mk-p">◐</td><td class="mk mk-p">◐</td><td class="mk mk-p">◐</td><td class="mk mk-y">✓</td></tr>
+    <tr><td>Notion</td><td class="mk mk-n">✗</td><td class="mk mk-y">✓</td><td class="mk mk-n">✗</td><td class="mk mk-p">◐</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td></tr>
+    <tr><td>ClickUp</td><td class="mk mk-p">◐</td><td class="mk mk-y">✓</td><td class="mk mk-p">◐</td><td class="mk mk-p">◐</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td></tr>
+    <tr><td>Asana</td><td class="mk mk-n">✗</td><td class="mk mk-p">◐</td><td class="mk mk-n">✗</td><td class="mk mk-p">◐</td><td class="mk mk-y">✓</td><td class="mk mk-y">✓</td><td class="mk mk-p">◐</td><td class="mk mk-y">✓</td></tr>
+  </table>
+  <p class="note">八域全覆盖仅飞书与钉钉，但二者视频会议专业度未达行业标杆（Gartner《Market Guide for Meeting Solutions》列于 Note 2 附注）；八域均达专业级深度者不存在。会议短板最集中的两家：Slack 仅 Huddles 轻量音视频（免费 2 人／付费 50 人上限）、ClickUp 仅 SyncUps 内部场景（200 人上限，2026 Q1 上线，原生内置）。</p>
+</section>
+
+<!-- 5 雷达图 -->
+<section class="slide">
+  <div class="kicker">03 · 五维竞争力</div>
+  <h2>五维雷达：国内阵营 vs 国际阵营</h2>
+  <p class="lede">评分为分析师综合判断（1–5 分，非厂商官方数据），依据第 2–4 章核验事实。</p>
+  <div class="radar-wrap">
+    <div class="radar-box">
+      <div class="rt">国内阵营（4 家）</div>
+      <svg viewBox="0 0 470 440" xmlns="http://www.w3.org/2000/svg" role="img" style="width:100%;height:auto">
+<rect x="0" y="0" width="470" height="440" fill="#ffffff"/>
+<polygon points="235.0,197.6 263.9,218.6 252.9,252.6 217.1,252.6 206.1,218.6" fill="none" stroke="#dde3ec" stroke-width="1"/>
+<polygon points="235.0,167.2 292.8,209.2 270.7,277.2 199.3,277.2 177.2,209.2" fill="none" stroke="#dde3ec" stroke-width="1"/>
+<polygon points="235.0,136.8 321.7,199.8 288.6,301.8 181.4,301.8 148.3,199.8" fill="none" stroke="#dde3ec" stroke-width="1"/>
+<polygon points="235.0,106.4 350.6,190.4 306.5,326.4 163.5,326.4 119.4,190.4" fill="none" stroke="#dde3ec" stroke-width="1"/>
+<polygon points="235.0,76.0 379.6,181.0 324.3,351.0 145.7,351.0 90.4,181.0" fill="none" stroke="#dde3ec" stroke-width="1"/>
+<line x1="235.0" y1="228.0" x2="235.0" y2="76.0" stroke="#dde3ec" stroke-width="1"/>
+<line x1="235.0" y1="228.0" x2="379.6" y2="181.0" stroke="#dde3ec" stroke-width="1"/>
+<line x1="235.0" y1="228.0" x2="324.3" y2="351.0" stroke="#dde3ec" stroke-width="1"/>
+<line x1="235.0" y1="228.0" x2="145.7" y2="351.0" stroke="#dde3ec" stroke-width="1"/>
+<line x1="235.0" y1="228.0" x2="90.4" y2="181.0" stroke="#dde3ec" stroke-width="1"/>
+<text x="235" y="62" text-anchor="middle" font-size="12.5" fill="#475569" font-weight="600">功能成熟度</text>
+<text x="390" y="185" text-anchor="start" font-size="12.5" fill="#475569" font-weight="600">AI 商业化</text>
+<text x="332" y="367" text-anchor="start" font-size="12.5" fill="#475569" font-weight="600">定价竞争力</text>
+<text x="138" y="367" text-anchor="end" font-size="12.5" fill="#475569" font-weight="600">用户规模与增长</text>
+<text x="80" y="185" text-anchor="end" font-size="12.5" fill="#475569" font-weight="600">生态整合力</text>
+<polygon points="235.0,106.4 350.6,190.4 288.6,301.8 181.4,301.8 148.3,199.8" fill="#3370FF" fill-opacity="0.09" stroke="#3370FF" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="235.0" cy="106.4" r="2.6" fill="#3370FF"/><circle cx="350.6" cy="190.4" r="2.6" fill="#3370FF"/><circle cx="288.6" cy="301.8" r="2.6" fill="#3370FF"/><circle cx="181.4" cy="301.8" r="2.6" fill="#3370FF"/><circle cx="148.3" cy="199.8" r="2.6" fill="#3370FF"/>
+<polygon points="235.0,106.4 350.6,190.4 306.5,326.4 163.5,326.4 119.4,190.4" fill="#F59E0B" fill-opacity="0.09" stroke="#F59E0B" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="235.0" cy="106.4" r="2.6" fill="#F59E0B"/><circle cx="350.6" cy="190.4" r="2.6" fill="#F59E0B"/><circle cx="306.5" cy="326.4" r="2.6" fill="#F59E0B"/><circle cx="163.5" cy="326.4" r="2.6" fill="#F59E0B"/><circle cx="119.4" cy="190.4" r="2.6" fill="#F59E0B"/>
+<polygon points="235.0,136.8 292.8,209.2 306.5,326.4 181.4,301.8 90.4,181.0" fill="#07C160" fill-opacity="0.09" stroke="#07C160" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="235.0" cy="136.8" r="2.6" fill="#07C160"/><circle cx="292.8" cy="209.2" r="2.6" fill="#07C160"/><circle cx="306.5" cy="326.4" r="2.6" fill="#07C160"/><circle cx="181.4" cy="301.8" r="2.6" fill="#07C160"/><circle cx="90.4" cy="181.0" r="2.6" fill="#07C160"/>
+<polygon points="235.0,106.4 321.7,199.8 324.3,351.0 163.5,326.4 148.3,199.8" fill="#E34D50" fill-opacity="0.09" stroke="#E34D50" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="235.0" cy="106.4" r="2.6" fill="#E34D50"/><circle cx="321.7" cy="199.8" r="2.6" fill="#E34D50"/><circle cx="324.3" cy="351.0" r="2.6" fill="#E34D50"/><circle cx="163.5" cy="326.4" r="2.6" fill="#E34D50"/><circle cx="148.3" cy="199.8" r="2.6" fill="#E34D50"/>
+      </svg>
+      <div class="legend">
+        <span><i class="dot" style="background:#3370FF"></i>飞书 4/4/3/3/3</span>
+        <span><i class="dot" style="background:#F59E0B"></i>钉钉 4/4/4/4/4</span>
+        <span><i class="dot" style="background:#07C160"></i>企微 3/2/4/3/5</span>
+        <span><i class="dot" style="background:#E34D50"></i>WPS 365 4/3/5/4/3</span>
+      </div>
+    </div>
+    <div class="radar-box">
+      <div class="rt">国际阵营（6 家）</div>
+      <svg viewBox="0 0 470 440" xmlns="http://www.w3.org/2000/svg" role="img" style="width:100%;height:auto">
+<rect x="0" y="0" width="470" height="440" fill="#ffffff"/>
+<polygon points="235.0,197.6 263.9,218.6 252.9,252.6 217.1,252.6 206.1,218.6" fill="none" stroke="#dde3ec" stroke-width="1"/>
+<polygon points="235.0,167.2 292.8,209.2 270.7,277.2 199.3,277.2 177.2,209.2" fill="none" stroke="#dde3ec" stroke-width="1"/>
+<polygon points="235.0,136.8 321.7,199.8 288.6,301.8 181.4,301.8 148.3,199.8" fill="none" stroke="#dde3ec" stroke-width="1"/>
+<polygon points="235.0,106.4 350.6,190.4 306.5,326.4 163.5,326.4 119.4,190.4" fill="none" stroke="#dde3ec" stroke-width="1"/>
+<polygon points="235.0,76.0 379.6,181.0 324.3,351.0 145.7,351.0 90.4,181.0" fill="none" stroke="#dde3ec" stroke-width="1"/>
+<line x1="235.0" y1="228.0" x2="235.0" y2="76.0" stroke="#dde3ec" stroke-width="1"/>
+<line x1="235.0" y1="228.0" x2="379.6" y2="181.0" stroke="#dde3ec" stroke-width="1"/>
+<line x1="235.0" y1="228.0" x2="324.3" y2="351.0" stroke="#dde3ec" stroke-width="1"/>
+<line x1="235.0" y1="228.0" x2="145.7" y2="351.0" stroke="#dde3ec" stroke-width="1"/>
+<line x1="235.0" y1="228.0" x2="90.4" y2="181.0" stroke="#dde3ec" stroke-width="1"/>
+<text x="235" y="62" text-anchor="middle" font-size="12.5" fill="#475569" font-weight="600">功能成熟度</text>
+<text x="390" y="185" text-anchor="start" font-size="12.5" fill="#475569" font-weight="600">AI 商业化</text>
+<text x="332" y="367" text-anchor="start" font-size="12.5" fill="#475569" font-weight="600">定价竞争力</text>
+<text x="138" y="367" text-anchor="end" font-size="12.5" fill="#475569" font-weight="600">用户规模与增长</text>
+<text x="80" y="185" text-anchor="end" font-size="12.5" fill="#475569" font-weight="600">生态整合力</text>
+<polygon points="235.0,76.0 350.6,190.4 288.6,301.8 145.7,351.0 90.4,181.0" fill="#6264A7" fill-opacity="0.09" stroke="#6264A7" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="235.0" cy="76.0" r="2.6" fill="#6264A7"/><circle cx="350.6" cy="190.4" r="2.6" fill="#6264A7"/><circle cx="288.6" cy="301.8" r="2.6" fill="#6264A7"/><circle cx="145.7" cy="351.0" r="2.6" fill="#6264A7"/><circle cx="90.4" cy="181.0" r="2.6" fill="#6264A7"/>
+<polygon points="235.0,106.4 350.6,190.4 288.6,301.8 145.7,351.0 119.4,190.4" fill="#FBBC04" fill-opacity="0.09" stroke="#FBBC04" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="235.0" cy="106.4" r="2.6" fill="#FBBC04"/><circle cx="350.6" cy="190.4" r="2.6" fill="#FBBC04"/><circle cx="288.6" cy="301.8" r="2.6" fill="#FBBC04"/><circle cx="145.7" cy="351.0" r="2.6" fill="#FBBC04"/><circle cx="119.4" cy="190.4" r="2.6" fill="#FBBC04"/>
+<polygon points="235.0,106.4 321.7,199.8 288.6,301.8 181.4,301.8 119.4,190.4" fill="#E01E5A" fill-opacity="0.09" stroke="#E01E5A" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="235.0" cy="106.4" r="2.6" fill="#E01E5A"/><circle cx="321.7" cy="199.8" r="2.6" fill="#E01E5A"/><circle cx="288.6" cy="301.8" r="2.6" fill="#E01E5A"/><circle cx="181.4" cy="301.8" r="2.6" fill="#E01E5A"/><circle cx="119.4" cy="190.4" r="2.6" fill="#E01E5A"/>
+<polygon points="235.0,106.4 350.6,190.4 306.5,326.4 163.5,326.4 148.3,199.8" fill="#37352F" fill-opacity="0.09" stroke="#37352F" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="235.0" cy="106.4" r="2.6" fill="#37352F"/><circle cx="350.6" cy="190.4" r="2.6" fill="#37352F"/><circle cx="306.5" cy="326.4" r="2.6" fill="#37352F"/><circle cx="163.5" cy="326.4" r="2.6" fill="#37352F"/><circle cx="148.3" cy="199.8" r="2.6" fill="#37352F"/>
+<polygon points="235.0,106.4 321.7,199.8 324.3,351.0 181.4,301.8 177.2,209.2" fill="#00B8D9" fill-opacity="0.09" stroke="#00B8D9" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="235.0" cy="106.4" r="2.6" fill="#00B8D9"/><circle cx="321.7" cy="199.8" r="2.6" fill="#00B8D9"/><circle cx="324.3" cy="351.0" r="2.6" fill="#00B8D9"/><circle cx="181.4" cy="301.8" r="2.6" fill="#00B8D9"/><circle cx="177.2" cy="209.2" r="2.6" fill="#00B8D9"/>
+<polygon points="235.0,106.4 321.7,199.8 306.5,326.4 181.4,301.8 148.3,199.8" fill="#F06A6A" fill-opacity="0.09" stroke="#F06A6A" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="235.0" cy="106.4" r="2.6" fill="#F06A6A"/><circle cx="321.7" cy="199.8" r="2.6" fill="#F06A6A"/><circle cx="306.5" cy="326.4" r="2.6" fill="#F06A6A"/><circle cx="181.4" cy="301.8" r="2.6" fill="#F06A6A"/><circle cx="148.3" cy="199.8" r="2.6" fill="#F06A6A"/>
+      </svg>
+      <div class="legend">
+        <span><i class="dot" style="background:#6264A7"></i>Teams 5/4/3/5/5</span>
+        <span><i class="dot" style="background:#FBBC04"></i>Google 4/4/3/5/4</span>
+        <span><i class="dot" style="background:#E01E5A"></i>Slack 4/3/3/3/4</span>
+        <span><i class="dot" style="background:#37352F"></i>Notion 4/4/4/4/3</span>
+        <span><i class="dot" style="background:#00B8D9"></i>ClickUp 4/3/5/3/2</span>
+        <span><i class="dot" style="background:#F06A6A"></i>Asana 4/3/4/3/3</span>
+      </div>
+    </div>
+  </div>
+  <p class="note">读图要点：钉钉是国内唯一五边形无凹陷者（但每一维都不顶尖）；Teams 是国际阵营综合最强；企微与 ClickUp 分别在生态（5）与定价（5）上单点登顶而其余维度塌陷——这种"单尖峰"形态正是第 6 章机会点的切入依据。</p>
+</section>
+
+<!-- 6 定价表 -->
+<section class="slide">
+  <div class="kicker">04 · 定价与商业模式</div>
+  <h2>表 2｜十家定价对比（2026-10-17 官网核验，年付口径）</h2>
+  <table>
+    <tr><th>产品</th><th>免费档</th><th>入门付费</th><th>商业档</th><th>企业档</th><th>AI 计费方式</th></tr>
+    <tr><td><b>Microsoft 365</b></td><td>无免费套件档</td><td>Basic $7/用户/月</td><td>Standard $14；Premium $22</td><td>E3 $39；E5 $60；E7 $99</td><td>Copilot +$30/月；Copilot Business $21（1–300 席促销）；Agent 365 $15</td></tr>
+    <tr><td><b>Slack</b></td><td>Free $0（90 天历史）</td><td>Pro $7.25（年付）</td><td>Business+ $15</td><td>Enterprise+ 报价制</td><td>无独立加价：AI 按档位分层</td></tr>
+    <tr><td><b>Google Workspace</b></td><td>无永久免费档</td><td>Starter $7</td><td>Standard $14；Plus $22</td><td>报价制</td><td>Gemini 打包进商务版；Gemini Enterprise $21 起</td></tr>
+    <tr><td><b>Notion</b></td><td>Free $0</td><td>Plus $10（不含 AI）</td><td>Business $20（全量 AI 并入）</td><td>报价制</td><td>Custom Agents 按 Credits $10/千点</td></tr>
+    <tr><td><b>ClickUp</b></td><td>Free $0</td><td>Unlimited $7</td><td>Business $12</td><td>报价制</td><td>Brain 加购 $9（1,500 credits）；超出 $10/万点</td></tr>
+    <tr><td><b>Asana</b></td><td>Personal $0（≤2 人）</td><td>Starter $10.99</td><td>Advanced $24.99</td><td>报价制</td><td>AI Studio 按档含 credits（5 万–20 万/月）</td></tr>
+    <tr><td><b>飞书</b></td><td>免费版 ¥0（≤100 人）</td><td>商业标准版 ¥50/人/月</td><td>专业 ¥80；旗舰 ¥120</td><td>报价制</td><td>AI 独立售卖：¥9,900/年（18 万点）起，与席位解耦</td></tr>
+    <tr><td><b>钉钉</b></td><td>标准版免费</td><td>专业版 ¥9,800/年</td><td>专属版 ¥98,000/年起</td><td>混合版询价</td><td>AI 算粒四档 ¥980–¥980,000/年（企业内不限人数共享）</td></tr>
+    <tr><td><b>企业微信</b></td><td>基础功能全免费</td><td>按需增值（认证 ¥300/次起）</td><td>会话存档 ¥100–300/账号/年 等</td><td>私有化询价</td><td>无统一 AI 定价（能力在生态侧）</td></tr>
+    <tr><td><b>WPS 365</b></td><td>体验版 ¥0（≤50 人）</td><td>商业协作版 ¥199/人/年</td><td>高级 ¥399；旗舰 ¥599</td><td>智能版 ¥1,899／¥2,999</td><td>AI"智点"内嵌智能版；AI 企业版按调用询价</td></tr>
+  </table>
+  <p class="note">⚠️ 计费单位四种并存、不可横向比价：per-seat-per-month（海外六家与飞书）／per-seat-per-year（WPS 365）／per-org-per-year（钉钉）／per-account（企微）。钉钉专属版 ¥98,000 与 AI 算粒 Plus ¥98,000 同价不同产品线；Pro 档官网两页存在 10 倍口径差，本报告按 DEAP 页 ¥980,000（四档单价恒定 ≈¥0.049/算粒）。</p>
+</section>
+
+<!-- 7 AI 三轨 -->
+<section class="slide">
+  <div class="kicker">05 · AI 商业化</div>
+  <h2>AI 计费三轨分化："第二货币层"成 ARPU 分水岭</h2>
+  <p class="lede">2026 年新签 SaaS 合同含用量计费成分已达 68%（2024 年 32%），混合模式升至 51%。</p>
+  <div class="grid3" style="margin-top:16px">
+    <div class="card track"><h4>① 席位捆绑制</h4><div class="who">Microsoft · Google · Notion · 飞书</div><p style="font-size:13px;color:var(--sub)">以套件升级带动 AI 渗透。Copilot 席位 FY26 Q2 1500 万 → Q4 超 3000 万，但渗透率仅约 6.6%（4.5 亿商业席位分母，第三方测算）——高 ARPU、低渗透并存。</p></div>
+    <div class="card track"><h4>② 按量计费制</h4><div class="who">钉钉算粒 · 飞书点数 · 各家 Credits</div><p style="font-size:13px;color:var(--sub)">钉钉算粒四档单价恒定（≈¥0.049/算粒），升档买容量而非单价；Slack Flex Credits、Asana/Notion Credits、Copilot Credits 同属此轨。按量计费将 AI 成本与消耗挂钩。</p></div>
+    <div class="card track"><h4>③ 免费／低价获客制</h4><div class="who">钉钉千问办公 · ClickUp</div><p style="font-size:13px;color:var(--sub)">千问办公公测免费送积分，ClickUp Business 内置 Brain——以 AI 拉动中小企业渗透，把使用量沉淀为未来按量计费的收入基座。</p></div>
+  </div>
+  <h3>Copilot 席位跃升（官方 IR 口径）</h3>
+  <table>
+    <tr><th>时点</th><th>FY26 Q2（截至 2025-12-31）</th><th>FY26 Q3（2026-04-29）</th><th>FY26 Q4（2026-07-29）</th></tr>
+    <tr><td>Copilot 付费席位</td><td>1,500 万</td><td>超 2,000 万</td><td><b>超 3,000 万</b>（单季净增约 1,000 万）</td></tr>
+  </table>
+  <p class="note">未能建立"席位之外第二货币层"的厂商，ARR 天花板将等于席位天花板——国内侧目前仅钉钉（算粒）与飞书（点数）完成产品化。</p>
+</section>
+
+<!-- 8 用户规模表 -->
+<section class="slide">
+  <div class="kicker">06 · 用户规模</div>
+  <h2>表 3｜十大产品用户规模与商业化总览</h2>
+  <table style="font-size:12.3px">
+    <tr><th>产品</th><th>用户规模（口径）</th><th>AI 渗透／席位</th><th>收入或 ARR</th><th>数据时点</th></tr>
+    <tr><td><b>Microsoft Teams</b></td><td>MAU 3.2 亿（2023-12 后停更）</td><td>Copilot 付费席位超 3000 万（官方 IR）</td><td>FY26 Q4 生产力与业务流程收入 378 亿美元，+14%</td><td>2026-06-30</td></tr>
+    <tr><td><b>Google Workspace</b></td><td>30 亿+ 用户（服务总用户）</td><td>Gemini Enterprise 超 800 万席位、2800+ 企业（第三方转述）</td><td>未单独披露</td><td>2026 年初</td></tr>
+    <tr><td><b>Slack</b></td><td>最后官方 DAU 超 1200 万（2019-09）</td><td>Slackbot MAU 100 万+、环比 +145%（官方博客）</td><td>单一产品约 30 亿美元（CEO 口径）；分部 88.82 亿美元（FY26）</td><td>FY26</td></tr>
+    <tr><td><b>Notion</b></td><td>1 亿+ 用户（2024-08）</td><td>2025 年末 50%+ ARR 来自 AI 客户</td><td>ARR 6 亿美元（公司口径）；Sacra 估 8.65 亿（2026-07）</td><td>2026 初 / 2026-07</td></tr>
+    <tr><td><b>ClickUp</b></td><td>2000 万+ 用户</td><td>AI 销售额 +400%、使用量 +800%（2025-09-09 新闻稿）</td><td>ARR 超 3 亿美元</td><td>2025-09-09</td></tr>
+    <tr><td><b>Asana</b></td><td>付费客户 18 万+（第三方估算）</td><td>AI Studio ARR 600 万+；FY27 AI 占新增 ARR 约 15%</td><td>FY26 收入 7.908 亿美元，+9%</td><td>FY26</td></tr>
+    <tr><td><b>飞书</b></td><td>国内月活约 3000 万（QuestMobile）</td><td>新增客户超九成采购 AI；中小企业客户 +70%</td><td>2024 年 ARR 约 21 亿元（第三方估算）</td><td>2026-09-15</td></tr>
+    <tr><td><b>钉钉</b></td><td>累计 8 亿；月活约 2 亿</td><td>无公开 AI 渗透率</td><td>FY25 订阅收入超 30 亿元（媒体引述）</td><td>2026-03</td></tr>
+    <tr><td><b>企业微信</b></td><td>日服务微信用户 7.5 亿（非自身 MAU）</td><td>无公开 AI 渗透率</td><td>未披露</td><td>2025-08</td></tr>
+    <tr><td><b>WPS 365</b></td><td>全球月活设备 6.76 亿（含个人端）</td><td>WPS AI 国内月活 8013 万，+307%（截至 2025 年底）</td><td>2026H1 企业业务收入 4.97 亿元，+60.84%</td><td>2026-06-30</td></tr>
+  </table>
+  <p class="note">六条读表前提：官方与第三方口径严格分列、不可互相反算；"覆盖率 92%"非份额加总；钉钉 8 亿累计 vs 2 亿月活落差十家最大；WPS 6.76 亿为设备数且含个人端；Slack DAU 为 2019 年历史锚点。</p>
+</section>
+
+<!-- 9 增长模式 -->
+<section class="slide">
+  <div class="kicker">07 · 增长策略</div>
+  <h2>五种增长模式：路径差异大于规模差异</h2>
+  <table>
+    <tr><th>模式</th><th>代表</th><th>核心优势</th><th>结构性短板</th></tr>
+    <tr><td><b>PLG 自下而上</b></td><td>ClickUp、Asana、Notion</td><td>获客成本低、迭代快</td><td>客单价天花板明显；AI 搜索正在重排流量入口（Asana 已量化约 2pct ARR 拖累）</td></tr>
+    <tr><td><b>SLG 自上而下</b></td><td>Asana（混合）、飞书</td><td>客户价值密度高</td><td>销售周期长</td></tr>
+    <tr><td><b>生态驱动</b></td><td>企业微信、钉钉</td><td>宿主生态低成本获客、连接护城河</td><td>生态规模不自动转化为付费（钉钉付费率 &lt;1%）</td></tr>
+    <tr><td><b>收购与整合</b></td><td>Salesforce（Slack、Informatica）</td><td>一次性获取规模与数据资产</td><td>整合周期长、报表口径频繁变动</td></tr>
+    <tr><td><b>海外本地化</b></td><td>飞书（Lark）、ClickUp</td><td>高 ARPU、AI 需求接受度高</td><td>本地化成本高，存在收缩压力</td></tr>
+  </table>
+  <div class="grid3" style="margin-top:18px">
+    <div class="card"><b>组织失稳（钉钉）</b><p style="font-size:13px;color:var(--sub);margin-top:6px">2026-06-11 换帅，团队一年由约 1900 人减至 1600 人、流失 300+；ONE 项目冲至 300 万 DAU 后收缩，由「悟空」接棒。</p></div>
+    <div class="card"><b>激进重构（ClickUp）</b><p style="font-size:13px;color:var(--sub);margin-top:6px">2026-05 裁员 22%（约 290/1300 人），同步部署约 3000 个内部 Agent（约 3:1），提出「100x 组织」叙事——被 Gartner 数据提示证伪风险。</p></div>
+    <div class="card"><b>资本动作（Notion）</b><p style="font-size:13px;color:var(--sub);margin-top:6px">约 2.7 亿美元老股转让、估值 110 亿美元，GIC 领投；自 2021 年 C 轮后未再新一轮一级融资。</p></div>
+  </div>
+</section>
+
+<!-- 10 SWOT 国内 -->
+<section class="slide">
+  <div class="kicker">08 · SWOT 汇总（一）</div>
+  <h2>国内阵营四家：SWOT 四宫格</h2>
+  <p class="note" style="margin:2px 0 8px">🔗 标记条目与第 6 章机会点机械对应；每象限为精选摘录，完整条目见报告全文。</p>
+  <div class="swot">
+    <div class="swot-head"><b>飞书 Lark（字节跳动 · Agent 优先协同平台）</b><span>功能 4 · AI 4 · 定价 3 · 规模 3 · 生态 3</span></div>
+    <div class="swot-grid">
+      <div class="sq sq-s"><b class="tag">S 优势</b><ul><li>功能成熟度 5/5，八域全强，国内唯一对标 Teams 广度；增长质量最佳：2026H1 ARR 增速为去年同期 2.5 倍，超九成新增客户采购 AI</li><li>Agent 化最彻底：飞书 8.0 把智能体当一等公民，CLI 开放点 247 → 767，发布国内首个团队智能体「豆包工作伙伴」</li></ul></div>
+      <div class="sq sq-w"><b class="tag">W 劣势 🔗W-1</b><ul><li>国内月活约 3000 万，显著低于钉钉／企微，规模劣势直接削弱网络效应与议价能力</li><li>定价偏高（¥50／¥80／¥120 每人每月），AI 另需 ¥9900/年起，小微企业门槛显著更高</li></ul></div>
+      <div class="sq sq-o"><b class="tag">O 机会</b><ul><li>「豆包工作 + 飞书 + 火山引擎」三层分工，国内唯一全栈 Agent 供给</li><li>79 号文央国企 100% 国产化替换创造确定性换牌空间</li></ul></div>
+      <div class="sq sq-t"><b class="tag">T 威胁</b><ul><li>🔗 字节系资源与战略重心随时可能迁移</li><li>🔗 AI「虚火」：65% 中小企业从未使用协同 AI，若付费转化不及预期，AI 独立计费难以续费</li></ul></div>
+    </div>
+  </div>
+  <div class="swot">
+    <div class="swot-head"><b>钉钉 DingTalk（阿里巴巴 · 规模最大的国产组织底座）</b><span>功能 4 · AI 4 · 定价 4 · 规模 4 · 生态 4</span></div>
+    <div class="swot-grid">
+      <div class="sq sq-s"><b class="tag">S 优势</b><ul><li>规模第一：8 亿累计用户、2 亿月活、2600 万+ 组织、份额 32.7%</li><li>千问办公三端 Agent 架构做进 IM 主入口；AI 算粒 ¥980/年起、组织内共享，价格破坏力强</li></ul></div>
+      <div class="sq sq-w"><b class="tag">W 劣势 🔗W-2</b><ul><li>付费意愿结构性缺失：2600 万组织 vs 付费不足 20 万，付费率 &lt;1%</li><li>🔗 组织动荡代价真实：换帅、团队一年流失 300+ 人；AI 战略反复（ONE 收缩后由「悟空」接棒）；会议与国际化能力弱于飞书／Teams</li></ul></div>
+      <div class="sq sq-o"><b class="tag">O 机会</b><ul><li>信创替换窗口：少数具备全栈国产化适配的大平台</li><li>千问办公免费公测把 AI 使用量沉淀为算粒计费收入基座</li></ul></div>
+      <div class="sq sq-t"><b class="tag">T 威胁</b><ul><li>🔗 商业化天花板已被付费率 &lt;1% 反复验证</li><li>🔗 大厂组织内斗风险；AI 入口被飞书（CLI 767）与企微（CLI/MCP 十一项）双向挤压</li></ul></div>
+    </div>
+  </div>
+  <div class="swot">
+    <div class="swot-head"><b>企业微信 WeCom（腾讯 · 微信分发的零门槛连接层）</b><span>功能 3 · AI 2 · 定价 4 · 规模 3 · 生态 5</span></div>
+    <div class="swot-grid">
+      <div class="sq sq-s"><b class="tag">S 优势</b><ul><li>生态整合力 5/5：日服务微信用户 7.5 亿、1400 万企业、500 强 80% 已开通；基础功能全免费</li><li>5.0.10 经 CLI/MCP 开放十一项办公能力，不设企业规模门槛；服务端国产化 + 等保三级</li></ul></div>
+      <div class="sq sq-w"><b class="tag">W 劣势 🔗W-3</b><ul><li>🔗 项目管理与低代码均判 ◐（存在但较弱），端到端工作流闭环仍需生态补齐</li><li>AI 商业化评分仅 3/5，免费模式导致 AI 付费转化路径更窄；出海能力最弱</li></ul></div>
+      <div class="sq sq-o"><b class="tag">O 机会</b><ul><li>Agent 嵌入微信原生对话流，触达成本远低于竞品</li><li>信创 + 等保三级直接承接金融、政务、央国企替换需求</li></ul></div>
+      <div class="sq sq-t"><b class="tag">T 威胁</b><ul><li>🔗 功能短板属能力结构失衡而非版本性缺失——可改善但短期难以承载复杂企业流程</li><li>🔗 免费模式商业化天花板已被验证；被飞书（向上）与钉钉（向下）两头挤压</li></ul></div>
+    </div>
+  </div>
+  <div class="swot">
+    <div class="swot-head"><b>WPS 365（金山办公 · 定价竞争力最强的国产套件）</b><span>功能 4 · AI 3 · 定价 5 · 规模 4 · 生态 3</span></div>
+    <div class="swot-grid">
+      <div class="sq sq-s"><b class="tag">S 优势</b><ul><li>定价竞争力 5/5：¥199／¥399／¥599，智能版 ¥1,899／¥2,999，唯一能与 E3（$39）打高配低价的国产方案</li><li>WPS AI 国内月活 8013 万（+307%，截至 2025 年底）；海外 MAU 4783 万（+38.11%）；信创全栈 +「轻舟」私有化引擎</li></ul></div>
+      <div class="sq sq-w"><b class="tag">W 劣势 🔗W-4</b><ul><li>🔗 生态整合力 3/5 为十家最低——虽已补全 IM／会议／邮箱／日历，但缺 IM 级高频入口的天然关系链黏性</li><li>海外 MAU 绝对量级仅为全球 6.76 亿的约 7%，出海仍处早期</li></ul></div>
+      <div class="sq sq-o"><b class="tag">O 机会</b><ul><li>信创全栈适配直接承接 79 号文确定性需求</li><li>2000 亿日均 Token 调用可平滑切换为按量计费；承接 Teams 涨价外溢客户</li></ul></div>
+      <div class="sq sq-t"><b class="tag">T 威胁</b><ul><li>🔗 缺协作入口是最致命短板——AI 能力越强，越可能被「协作入口 + AI」反向降维打击</li><li>AI 智点打包模式难以形成与飞书／钉钉独立 AI 计费同等的 ARPU 弹性</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 SWOT 国际 I -->
+<section class="slide">
+  <div class="kicker">08 · SWOT 汇总（二）</div>
+  <h2>国际阵营 I：Teams · Slack · Notion</h2>
+  <div class="swot">
+    <div class="swot-head"><b>Microsoft Teams（微软 · 全球最大生产力底座）</b><span>功能 5 · AI 4 · 定价 3 · 规模 5 · 生态 5</span></div>
+    <div class="swot-grid">
+      <div class="sq sq-s"><b class="tag">S 优势</b><ul><li>规模与份额双第一：MAU 约 3.2 亿、协作平台份额约 37%、IDC UC&amp;C 收入份额 45.6%；Gartner UCaaS 魔力象限连续七年领导者</li><li>生态整合力 5/5：Agent 365（$15/月）+ Copilot Studio + Graph API 构成最深企业级 Agent 分发网络</li></ul></div>
+      <div class="sq sq-w"><b class="tag">W 劣势 🔗W-5</b><ul><li>唯一在 2026 年主动调价者（2026-07-01 全球调价 5–33%），叠加 Copilot $30、Agent 365 $15、E7 $99</li><li>🔗 许可架构复杂度高，Gartner 列为首要 cautions；中文区服务能力弱于本土厂商；在华无信创适配，面对 79 号文几无可能</li></ul></div>
+      <div class="sq sq-o"><b class="tag">O 机会</b><ul><li>Agent 365 打开「按 Agent 计费」第二货币层；16 万+ 组织 3 个月创建 40 万+ 自定义 Agent</li><li>在华仅约 8% 份额，保留结构性增量空间</li></ul></div>
+      <div class="sq sq-t"><b class="tag">T 威胁</b><ul><li>🔗 捆绑销售的司法反噬：伦敦诉讼 + 约 6 万家英国企业集体诉讼（上限约 £21 亿）+ CMA 正式调查</li><li>🔗 EU 救济「形式合规、实质未变」：2025-11-01 全球重启含 Teams 捆绑包</li></ul></div>
+    </div>
+  </div>
+  <div class="swot">
+    <div class="swot-head"><b>Slack（Salesforce · 协作品类开创者）</b><span>功能 4 · AI 3 · 定价 3 · 规模 3 · 生态 4</span></div>
+    <div class="swot-grid">
+      <div class="sq sq-s"><b class="tag">S 优势</b><ul><li>品类定义者：近 80% 财富 100 强依赖 Slack Connect，外部协作网络效应难复制</li><li>AI 变现路径十家最清晰（主口径）：Slackbot MAU 100 万+、环比 +145%；Agentforce + Slack 累计交付 70 亿 Agentic Work Units</li></ul></div>
+      <div class="sq sq-w"><b class="tag">W 劣势 🔗W-6</b><ul><li>无原生企业邮箱；会议仅 Huddles 轻量音视频（免费 2 人／付费 50 人上限），8 域中 1 域不提供、5 域偏弱</li><li>用户规模与收入双重口径失真：官方 DAU 停在 2019 年（1000 万），第三方推算 4700 万–6500 万互相不一致</li></ul></div>
+      <div class="sq sq-o"><b class="tag">O 机会</b><ul><li>从「消息工具」升级为「Agent 运行层」——Slack 是 Agentforce 的执行终端</li><li>Salesforce 对全部新客户自动预置 Slack，零成本获客通道</li></ul></div>
+      <div class="sq sq-t"><b class="tag">T 威胁</b><ul><li>🔗 捆绑销售直接受害方：份额约 13% vs Teams 约 37%，差距「连续两年稳定」</li><li>🔗 无会议／无邮箱缺口在会议成为 Agent 载体的时代被放大；母公司股价年内 -35.5% 压制投入意愿</li></ul></div>
+    </div>
+  </div>
+  <div class="swot">
+    <div class="swot-head"><b>Notion（Notion Labs · AI 原生工作空间）</b><span>功能 4 · AI 4 · 定价 4 · 规模 4 · 生态 3</span></div>
+    <div class="swot-grid">
+      <div class="sq sq-s"><b class="tag">S 优势</b><ul><li>AI 商业化效率最高：50%+ ARR 来自 AI 客户，Business $20 全量并入（含 Agent），唯一以「不加价」实现规模化 AI 渗透</li><li>PLG 引擎：1 亿+ 用户、ARR 公司口径 $600M、Sacra 估 $865M、估值 110 亿美元</li></ul></div>
+      <div class="sq sq-w"><b class="tag">W 劣势 🔗W-7</b><ul><li>不提供 IM 与视频会议（✗／✗，8 域中 2 域不提供），协作入口缺位；付费转化率仅约 4%</li><li>🔗 Notion Mail 于 2026-09-22 停服，全部方案受影响——产品边界收缩、「工作空间」叙事承压</li></ul></div>
+      <div class="sq sq-o"><b class="tag">O 机会</b><ul><li>超半数 Mail 用户已不再打开收件箱——从工具向 Agent 执行层转型的强信号</li><li>Gmail AI 连接器 + Agent 邮件工具保留完整 AI 邮件能力；Credits 构成第二货币层</li></ul></div>
+      <div class="sq sq-t"><b class="tag">T 威胁</b><ul><li>🔗 停服邮件与退出日历等高频刚需场景，长期削弱「工作空间」叙事</li><li>LLM 搜索改写软件发现方式（Asana 已量化约 2pct 拖累，同一机理对 Notion 影响更大）；WPS 低价压制</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 SWOT 国际 II -->
+<section class="slide">
+  <div class="kicker">08 · SWOT 汇总（三）</div>
+  <h2>国际阵营 II：Google · ClickUp · Asana</h2>
+  <div class="swot">
+    <div class="swot-head"><b>Google Workspace（搜索与 AI 基础设施外溢的全栈办公）</b><span>功能 4 · AI 4 · 定价 3 · 规模 5 · 生态 4</span></div>
+    <div class="swot-grid">
+      <div class="sq sq-s"><b class="tag">S 优势</b><ul><li>底盘最厚：30 亿+ 用户、1100 万+ 付费企业；Gemini 全档位捆绑而非独立加购</li><li>Gemini Enterprise 约 4 个月获 800 万+ 席位；数据驻留与合规最强（VPC-SC／CMEK），出海首选</li></ul></div>
+      <div class="sq sq-w"><b class="tag">W 劣势 🔗W-8</b><ul><li>Google Chat 偏弱，协作入口对话密度不及 Teams／Slack</li><li>🔗 同一「Gemini Enterprise」名下并存并入版、独立席位版与 Agent Platform 三种计费口径，采购决策成本高</li></ul></div>
+      <div class="sq sq-o"><b class="tag">O 机会</b><ul><li>连接器库（M365、SAP、ServiceNow…）使其成为跨云中立治理层、非微软栈 Agent 管控首选</li><li>PAYG 版 0 席位费；Frontline $12.50 打开一线与教育长尾</li></ul></div>
+      <div class="sq sq-t"><b class="tag">T 威胁</b><ul><li>🔗 定价认知混乱会让采购方优先砍掉「看不懂」的 Agent 附加项</li><li>Gartner UCaaS 列为 Niche Player、创新周期较慢；40%+ Agent 项目取消预警；在华无本地化</li></ul></div>
+    </div>
+  </div>
+  <div class="swot">
+    <div class="swot-head"><b>ClickUp（最激进的 AI 原生组织重构实验）</b><span>功能 4 · AI 3 · 定价 5 · 规模 3 · 生态 2</span></div>
+    <div class="swot-grid">
+      <div class="sq sq-s"><b class="tag">S 优势</b><ul><li>叙事最激进且有数据：内部约 3000 个 AI Agent（约 3:1）；AI 销售额 +400%（销售额口径）、使用量 +800%（使用量口径，两者不同源不可换算）</li><li>$7／$12 + Brain $9，功能密度／价格比十家最高之一；2000 万+ 用户</li></ul></div>
+      <div class="sq sq-w"><b class="tag">W 劣势 🔗W-9</b><ul><li>视频会议仅 SyncUps 内部小团队场景（200 人上限，2026 Q1 上线，原生内置），协作入口深度依赖任务与文档</li><li>规模最小（10 万+ 付费）且 ARR $300M+ 十家垫底，抗风险能力最弱；Brain 需额外 $9，实际 TCO 高于表观价格</li></ul></div>
+      <div class="sq sq-o"><b class="tag">O 机会</b><ul><li>「人机协同工作流层」唯一激进样本，自身即产品演示</li><li>把价值与节省时间游戏化（而非 Token 消耗量），正对齐 Gartner 的 ROI 证明方向</li></ul></div>
+      <div class="sq sq-t"><b class="tag">T 威胁</b><ul><li>🔗 2026-05-21 裁员 22%（约 290/1300 人），十家中唯一公开的大规模裁员</li><li>🔗 Gartner：约 80% 采用自主技术的企业裁员后未获有意义财务回报——「100x 组织」存在被证伪风险；Agent 任务层被 Anthropic／OpenAI 直接内化</li></ul></div>
+    </div>
+  </div>
+  <div class="swot">
+    <div class="swot-head"><b>Asana（项目管理向「人机协同工作流层」转型）</b><span>功能 4 · AI 3 · 定价 4 · 规模 3 · 生态 3</span></div>
+    <div class="swot-grid">
+      <div class="sq sq-s"><b class="tag">S 优势</b><ul><li>SLG 标杆：18 万+ 付费客户、Core 客户贡献 Q4 收入 76%；FY26 收入 $790.8M（+9%）</li><li>AI Studio ARR 超 600 万美元（Q4 环比 +50%）；「The OS for Human Agent Teams」定位十家最精确</li></ul></div>
+      <div class="sq sq-w"><b class="tag">W 劣势 🔗W-10</b><ul><li>不提供 IM 与视频会议（✗／✗），协作入口缺失；定价无弹性优势（$10.99／$24.99）</li><li>🔗 PLG 漏斗受损已确认（LLM 搜索所致），FY27 指引未假设缓解；CFO 更替与此前 COO 离任形成连续 leadership 风险</li></ul></div>
+      <div class="sq sq-o"><b class="tag">O 机会</b><ul><li>AI Teammates 已于 FY27 Q1 末 GA——从工具向平台升级的最短路径</li><li>Credits 与席位并行覆盖自助与按结果付费两类场景；大客户基座稳定（NRR 97%／96%）</li></ul></div>
+      <div class="sq sq-t"><b class="tag">T 威胁</b><ul><li>🔗 FY27 指引 7.5–8.5% 较 FY26 的 9% 进一步降速，其中约 2pct 是本报告中最可量化的「AI 冲击定价」证据</li><li>🔗 LLM 搜索是跨品类系统性威胁；ClickUp 以更激进叙事与更低价格争夺同一 PLG 客群</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 五条机会 -->
+<section class="slide">
+  <div class="kicker">09 · 差异化机会点</div>
+  <h2>五条差异化机会点</h2>
+  <p class="lede">筛选原则：避开付费意愿洼地的正面消耗、优先有外部 Deadline 的战场、选巨头「能力错位」而非「意愿不足」的战场。</p>
+
+  <div class="opp p0">
+    <div class="opp-head"><b>机会 1｜央国企与政务「信创合规底座 + 行业 AI 智能体」双轨协同平台</b>
+      <span><span class="stars">⭐⭐⭐⭐⭐</span> <span class="pill pill-red">P0 主线</span></span></div>
+    <dl>
+      <dt>机会描述</dt><dd>79 号文要求央国企 2027 年底前完成七大模块 100% 信创替代（OA／公文／门户属"全面替换"首批项，采购刚性最强）。真正的新增可寻址规模是 2023–2027 年需完成的 <b>6578 亿元</b>（浙商证券口径，须扣除已建 5123 亿元，勿用 1.56 万亿累计盘子——否则高估 2.4 倍）；叠加国办发〔2025〕34 号本国产品 20% 价格扣除。空白不是"再做一个 OA"，而是七层全栈适配 + Agent 治理底座的一体化交付——十家竞品无一将信创全栈适配标定为核心能力。</dd>
+      <dt>切入客群</dt><dd>央企集团总部及二三级子公司（500–5000 人）、省市级政务委办局、事业单位；决策链：信创办／信息中心主任（否决权）→ 数字化负责人 → CIO（预算）→ 招标办</dd>
+      <dt>防御难度</dt><dd><b>中高</b>——护城河是时间型而非技术型（七层适配 + 国密 + 等保三级 + 公文国标，18–24 个月积累）；窗口期 12–18 个月（2026Q4–2027Q4 采购窗口，2028 年后断崖回落）</dd>
+      <dt>落地路径</dt><dd>MVP（0–3 月）只做「公文/审批 + 信创适配清单 + 国密」三件套，从区县医院起步（20–40 万元）→ 等保／密评／公文国标三线并行（1–12 月，依托已测评国产底座）→ 与龙芯/麒麟/达梦互认证 + 三大集成商绑定 → 叠加行业 Agent。定价 50–120 万元三段式，不做席位订阅竞争</dd>
+    </dl>
+  </div>
+
+  <div class="opp p0">
+    <div class="opp-head"><b>机会 2｜中资企业出海「本地化合规 + 跨时区协作」协同底座</b>
+      <span><span class="stars">⭐⭐⭐⭐⭐</span> <span class="pill pill-red">P0 主线</span></span></div>
+    <dl>
+      <dt>机会描述</dt><dd>中国协同办公产品对亚中东非出口 28.6 亿美元（+34.2%），海外付费企业客户超 1.2 万家（+56%）。合规是真正付费触发点，而规则"未定程度"决定窗口宽度：<b>印尼 DPA 截至 2026-08 尚未正式设立</b>、沙特 SDAIA 白名单未发布——首站选印尼/沙特，窗口比法域已定市场更宽。</dd>
+      <dt>切入客群</dt><dd>已出海中企总部 + 海外分支（制造/新能源/跨境电商/游戏/金融科技，海外 20–2000 人）；最高价值客群是"已有海外实体、正做全球 ERP/CRM 统一"的阶段 2–3 企业</dd>
+      <dt>防御难度</dt><dd><b>高</b>（综合市场口径）——巨头是能力错位而非不想做；风险项：WPS 已在越南与 FPT 形成先手（海外 MAU 4783 万 +38.11%），若复制到印尼/沙特，窗口压缩至 12 个月内。窗口期 18–24 个月</dd>
+      <dt>落地路径</dt><dd>MVP（0–4 月）印尼单国「合规数据节点 + 双语协作空间 + 总部-海外审批链路」三件套，同一代码基线双形态打包（公有云/私有化 3:2）→ 合规底座按最严口径预建 DPIA → CDN/弱网优化 → 复制 FPT 渠道模式 → 多语种互译 + 本地工时合规。美元定价 $8–12/席/月，合规节点溢价 +20%</dd>
+    </dl>
+  </div>
+
+  <div class="opp p1">
+    <div class="opp-head"><b>机会 3｜中大型企业「行业 SOP 代码化」AI Agent 交付平台</b>
+      <span><span class="stars">⭐⭐⭐⭐</span> <span class="pill pill-blue">P1 备线</span></span></div>
+    <dl>
+      <dt>机会描述</dt><dd>中国企业级 AI 智能体市场 2026 年 449 亿元、CAGR 107%（IDC）。但三条 Gartner 数据分母各异须分开读：40% 企业应用将嵌入 Agent（渗透率）／超 40% 项目将被取消（立项淘汰率）／仅 41% 部署 12 个月内回本、19% 永不回本（部署回本率）。缺口不在模型能力，而在<b>行业 Know-how 封装 + 治理底座 + 交付</b>——巨头开放的是接口，不是行业解决方案。像素绽放（营销 Agent「小方同学」）已验证单点垂直 Agent 商业化。</dd>
+      <dt>切入客群</dt><dd>50–500 人、已完成 AI 试点但"激活即闲置"的中型企业（制造/法律/连锁零售/外贸/财务服务）；最佳客群是"已购 AI 工具但账号周活不足 30%"的二次采购买方</dd>
+      <dt>防御难度</dt><dd><b>中</b>——阿里云 AgentTeams/AgentLoop（2026-07）正补治理短板，是窗口主要压缩源；但巨头不会为单一行业做 SOP 级封装。窗口期 12–18 个月</dd>
+      <dt>落地路径</dt><dd>MVP（0–3 月）1 行业 × 1 岗位（连锁巡店督导 或 外贸 SDR）→ 治理底座先行（接入/治理/上手三道门槛做成产品）→ 端云混合降 3 年 TCO 60% → 效果定价（基础订阅 + 对赌）→ 做飞书/钉钉/企微的"非替代性插件层"。定价：单岗位 ¥3,000–8,000/年；企业版 ¥5–15 万/年起</dd>
+    </dl>
+  </div>
+
+  <div class="opp p2">
+    <div class="opp-head"><b>机会 4｜中长尾小微企业「政策补贴适配型」轻量 AI 办公</b>
+      <span><span class="stars">⭐⭐⭐</span> <span class="pill pill-amber">P2 现金流入口</span></span></div>
+    <dl>
+      <dt>机会描述</dt><dd>两股力量对冲：需求侧 58.5% 小微曾因价格放弃 AI 工具、持续使用者仅 33%；供给侧中央财政每年 300 亿元数字化转型专项 + "先用后付" + 数字化服务券单企最高 50 万元。本质是"做补贴目录里的合规供给商"——财政替企业付一半。唯一属「外部财政付费」例外的机会，例外不等于主线。</dd>
+      <dt>切入客群</dt><dd>1.27 亿个体工商户与 6000 万小微（连锁门店、小型加工厂、财税中介）；唯一决策人是老板本人；唯一有效获客入口是"已列入或可申请试点名单"</dd>
+      <dt>防御难度</dt><dd><b>低（价值也低）</b>——巨头在此层收入模型跑不通、不会认真投入；但价格战无差异化空间。不构成真正壁垒</dd>
+      <dt>落地路径</dt><dd>MVP（0–2 月）"巡检/报工 + 自动整改单"移动闭环 → 补贴适配为核心工程（自动生成验收"四件套"）→ 试点城市政府背书渠道 → 极简交付（1 分钟上岗、离线可用）。定价 ¥2,000–5,000/组织/年；止损线：18 个月 ARPU 未破 ¥3,000 或未进 3 城服务商名录则收缩</dd>
+    </dl>
+  </div>
+
+  <div class="opp p2">
+    <div class="opp-head"><b>机会 5｜一线员工「语音优先 + 弱网离线」现场作业协同</b>
+      <span><span class="stars">⭐⭐⭐</span> <span class="pill pill-amber">P2 差异化补充</span></span></div>
+    <dl>
+      <dt>机会描述</dt><dd>渗透率天花板卡在一线：传统 SaaS 上线后实际使用率不足 30%、6000 万中小微数字化程度不足 20%。语音是破局变量（全球语音 AI 融资超 70 亿美元；WPS 语音案例：巡店报告 2 小时→15 分钟、信息采集效率 +70%）。现有玩家都"从文档/IM 向下打"，而现场采集需要离线、防篡改、行业模板、分包商权限——巨头架构里最难塞的部分。</dd>
+      <dt>切入客群</dt><dd>连锁零售/餐饮/茶饮（20–500 家门店）、物业与园区后勤、制造车间、物流、建筑；决策人是运营总监（KPI：督导成本与合规率）</dd>
+      <dt>防御难度</dt><dd><b>中</b>——语音入口本身 12 个月内会被平台级玩家免费吃掉；但"离线 + 防篡改 + SOP 模板 + 分包商权限"组合是工程与行业双 Know-how，且与巨头降本动机相悖。窗口期 18–24 个月</dd>
+      <dt>落地路径</dt><dd>MVP（0–3 月）连锁门店巡检：语音报检 → 自动评分表/整改单 → 总部看板 → 三项不可妥协工程（离线优先／水印+GPS 围栏+签名防篡改／1 分钟上手）→ 分包商多租户 → 与机会 1 信创渠道合并摊薄获客。定价：一线版 ¥119–299/人/年、网点包 ¥3,000–8,000/年</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 14 优先级与路径 -->
+<section class="slide">
+  <div class="kicker">10 · 优先级与进入路径</div>
+  <h2>优先级矩阵与三级递进</h2>
+  <table>
+    <tr><th>#</th><th>机会</th><th>目标市场规模</th><th>竞争强度</th><th>壁垒要求</th><th>回本周期</th><th>优先级</th></tr>
+    <tr><td>1</td><td><b>信创合规 + 行业 AI 双轨平台</b></td><td>2023–2027 需完成建设额 6578 亿元；政企低代码 Q1 采购 47.2 亿元（+78%）</td><td>中</td><td>高（七层适配+国密+等保+公文国标，18–24 个月）</td><td>18–24 个月</td><td><b class="pill pill-red">P0 主线</b></td></tr>
+    <tr><td>2</td><td><b>中企出海本地化合规底座</b></td><td>对亚中东非出口 28.6 亿美元（+34.2%）；海外付费企业 1.2 万家（+56%）</td><td>中高（综合口径；首站单国为中低）</td><td>高（数据驻留架构+本地渠道+多语种）</td><td>12–18 个月</td><td><b class="pill pill-red">P0 主线</b></td></tr>
+    <tr><td>3</td><td><b>行业 SOP Agent 交付平台</b></td><td>2026 年 449 亿元、2029 或破 3320 亿元（CAGR 107%）</td><td>高（阿里 AgentTeams 已上线）</td><td>中高（SOP 封装 × 治理底座，正交叠加）</td><td>9–15 个月</td><td><b class="pill pill-blue">P1 备线</b></td></tr>
+    <tr><td>4</td><td><b>小微补贴适配轻量办公</b></td><td>1.27 亿个体户 + 6000 万小微；中央 300 亿元/年专项</td><td>高（价格战）</td><td>低（易被复制）</td><td>6–9 个月</td><td><b class="pill pill-amber">P2 现金流</b></td></tr>
+    <tr><td>5</td><td><b>语音优先现场协同</b></td><td>现场管控渗透率不足 30%；轻量工具 ¥119–3,000/年</td><td>中（巨头不做脏活）</td><td>中（组合工程与 Know-how）</td><td>9–12 个月</td><td><b class="pill pill-amber">P2 补充</b></td></tr>
+  </table>
+  <h3>排序逻辑：制度确定性（第一权重）→ 防御难度（第二）→ 回本周期（第三）</h3>
+  <p style="font-size:13.5px;color:var(--sub)">机会 1 优于机会 2 的唯一原因：79 号文 2027 硬期限是不可推迟的采购时间表；机会 2 在决策链与回本上更优，若其制度确定性更高则应排第一。</p>
+  <div class="path3">
+    <div class="step"><div class="n">第一级</div><b>制度刚需切入</b><p style="font-size:12.8px;color:var(--sub);margin-top:6px">机会 1 + 2 双线并进、分阶段：需求由外部规则创造（79 号文硬期限 / 各国 PDPL 义务），首批客户不需要被说服"该做什么"，只需确认"你能不能帮我合规"。</p></div>
+    <div class="step"><div class="n">第二级</div><b>增量场景卡位</b><p style="font-size:12.8px;color:var(--sub);margin-top:6px">不挑战入口，占领巨头架构装不下的位置：「IM × 项目管理 × AI」结合部、语音/一线场景、跨法域合规重活。机会 3/5 作为主线客户的增值模块存在。</p></div>
+    <div class="step"><div class="n">第三级</div><b>交付能力筑墙</b><p style="font-size:12.8px;color:var(--sub);margin-top:6px">产品能力难超巨头，交付能力可以：① 合规适配（最难被 AI 加速）② 行业 Know-how 代码化 ③ 交付实施体系（三道门槛做成验收项）。三者构成复合壁垒。</p></div>
+  </div>
+  <p class="note">最后一条路径性判断：五条机会的唯一共同风险是时间——窗口期均在 12–24 个月量级。正确顺序是先做"制度刚需"获得确定性收入与交付口碑，同时把"增量场景"做成配套模块而非独立赌注，在窗口关闭前完成交付能力的复利积累。</p>
+</section>
+
+<!-- 15 结论 -->
+<section class="slide">
+  <div class="kicker">11 · 结论</div>
+  <h2>结论：五条判断与六个未答问题</h2>
+  <ol class="big5" style="margin-top:16px">
+    <li><b>规模真实、付费困难、变量在 AI。</b>全球 402 亿美元（2025）稳健扩张，但中国收入天花板被支付能力硬锁——通用型协同 SaaS 冲规模的策略会在付费环节撞墙。</li>
+    <li><b>广度竞争已结束，Agent 化竞争刚开始。</b>八域全覆盖仅飞书钉钉且无一家全达专业级；竞争主轴切换为"Agent 进群、进文档、进审批"。做"又一个全家桶"没有胜算。</li>
+    <li><b>AI 计费三轨分化，第二货币层是分水岭。</b>68% 新签合同含用量成分；未建立席位之外第二货币层的厂商，ARR 天花板等于席位天花板。</li>
+    <li><b>巨头是结构性错位而非全面压制。</b>信创全栈、多法域合规、行业 SOP、现场脏活均无人标定；巨头自身被组织失稳、反垄断救济与 AI 项目高取消率消耗。</li>
+    <li><b>进入路径：制度刚需切入 → 增量场景卡位 → 交付能力筑墙。</b>机会 1+2 为 P0 双主线，机会 3 作溢价模块孵化，机会 4/5 仅作现金流与补充；所有窗口 12–24 个月，节奏本身即战略。</li>
+  </ol>
+  <div class="card" style="margin-top:22px;background:#f8fafc">
+    <b>本报告未能回答的问题（建议尽调前补齐）</b>
+    <ol style="font-size:13px;color:var(--sub);margin:8px 0 0 20px">
+      <li>企微与钉钉的真实收入结构（腾讯/阿里财报未单独拆分，相关数字为媒体引述口径）</li>
+      <li>Copilot 3000 万席位的活跃渗透与续费率（约 6.6% 渗透率系第三方测算）</li>
+      <li>信创 2027 大限后的需求曲线（6578 亿元口径出自 2023-09 研报，需逐季跟踪采购公告验证）</li>
+      <li>AI 算粒/点数类按量计费的续费与扩档数据（各家未披露，长期留存仍是假设）</li>
+      <li>印尼 DPA 设立与沙特白名单发布的实际时点（直接决定机会 2 首站窗口宽度）</li>
+      <li>各家 Agent 治理能力的真实成熟度（公开材料以叙事为主，缺第三方基准）</li>
+    </ol>
+  </div>
+  <p class="note" style="margin-top:20px">数据来源：本报告全部事实性陈述均带 APA 第 7 版引用，十家章末文献经 URL 去重合并共 143 条唯一来源，完整列表见配套文档《2026企业协同办公赛道竞品调研报告.md》。数据按"监管文件与财报 &gt; 权威机构报告 &gt; 媒体转引 &gt; 厂商口径"分级引用；所有第三方估算均显式标注，引用时请一并核对时效性。</p>
+</section>
+
+</body>
+</html>

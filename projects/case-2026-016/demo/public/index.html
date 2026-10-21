@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>云图智联 — 让每一条生产线都拥有 AI 的眼睛</title>
+<meta name="description" content="云图智联科技有限公司：面向制造业的 AI 质检与数字化解决方案提供商，服务汽车零部件、3C 电子、新能源等行业 120 余家工厂。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231f66e0'/%3E%3Ctext x='16' y='22' font-size='16' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'%3E云%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<noscript><style>.reveal{opacity:1;transform:none}.hero h1 .line span,.hero .sub,.hero .actions,.hero-meta,.inspector{opacity:1;transform:none;animation:none}</style></noscript>
+</head>
+<body>
+<main>
+  <!-- ================= Hero ================= -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="kicker">YUNTU INTELLIGENCE · 制造业 AI 基础设施</div>
+        <h1>
+          <span class="line"><span>让每一条生产线</span></span>
+          <span class="line"><span>都拥有 <em class="hl" style="font-style:normal">AI 的眼睛</em></span></span>
+        </h1>
+        <p class="sub">云图智联为制造企业提供 AI 视觉质检、工厂数据中台与设备智能运维一体化解决方案。缺陷检出率 99.2%，平均 6 周完成首条产线智能化改造。</p>
+        <div class="actions">
+          <a class="btn lg" href="products.html">了解产品服务<span class="arr">→</span></a>
+          <a class="btn lg ghost" href="contact.html">预约免费产线勘测</a>
+        </div>
+        <div class="hero-meta">
+          <div class="m"><b data-count="120">0</b><b><i>+</i></b><span>服务工厂客户</span></div>
+          <div class="m"><b data-count="99.2" data-dec="1">0</b><b><i>%</i></b><span>质检缺陷检出率</span></div>
+          <div class="m"><b data-count="3000">0</b><b><i>+</i></b><span>智能质检工位</span></div>
+          <div class="m"><b data-count="95">0</b><b><i>%</i></b><span>客户年度续约率</span></div>
+        </div>
+      </div>
+
+      <!-- AI 质检演示台：全站记忆点 -->
+      <div class="inspector" aria-label="AI 质检演示">
+        <div class="inspector-bar">
+          <span><span class="dot"></span>LIVE · 智检平台实时演示</span>
+          <span id="insId">UNIT #A-0723</span>
+        </div>
+        <div class="inspector-stage" id="insStage">
+          <!-- 被检测工件 -->
+          <svg viewBox="0 0 400 310" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <defs>
+              <linearGradient id="partG" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dbe4f1"/>
+              </linearGradient>
+              <linearGradient id="faceG" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#f2f6fb"/><stop offset="1" stop-color="#cbd8e9"/>
+              </linearGradient>
+              <linearGradient id="defG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="rgba(31,102,224,.16)"/><stop offset="1" stop-color="rgba(31,102,224,.05)"/>
+              </linearGradient>
+            </defs>
+            <!-- 拍摄台面（浅网格） -->
+            <rect x="0" y="0" width="400" height="310" fill="#f0f4fa"/>
+            <g stroke="#dde5f0" stroke-width="1">
+              <path d="M40 0V310M80 0V310M120 0V310M160 0V310M200 0V310M240 0V310M280 0V310M320 0V310M360 0V310"/>
+              <path d="M0 30H400M0 70H400M0 110H400M0 150H400M0 190H400M0 230H400M0 270H400"/>
+            </g>
+            <!-- 被检测工件：金属法兰盘 -->
+            <rect x="30" y="30" width="340" height="250" rx="14" fill="url(#partG)" stroke="#b8c7dd" stroke-width="1.5"/>
+            <circle cx="118" cy="118" r="46" fill="url(#faceG)" stroke="#9fb3cd" stroke-width="2"/>
+            <circle cx="118" cy="118" r="30" fill="none" stroke="#a9bcd6" stroke-width="2"/>
+            <circle cx="118" cy="118" r="9" fill="#7d93b5"/>
+            <!-- 检测台显示条 -->
+            <rect x="196" y="82" width="136" height="22" rx="6" fill="#e6edf7" stroke="#b8c7dd"/>
+            <rect x="196" y="122" width="100" height="22" rx="6" fill="#e6edf7" stroke="#b8c7dd"/>
+            <rect x="196" y="162" width="118" height="22" rx="6" fill="#e6edf7" stroke="#b8c7dd"/>
+            <rect x="206" y="90" width="86" height="6" rx="3" fill="url(#defG)"/>
+            <rect x="206" y="130" width="52" height="6" rx="3" fill="url(#defG)"/>
+            <rect x="206" y="170" width="72" height="6" rx="3" fill="url(#defG)"/>
+            <!-- 缺陷：左侧划痕 -->
+            <path d="M78 62 L150 58" stroke="#8c9db8" stroke-width="3" stroke-linecap="round" opacity=".85"/>
+            <path d="M84 70 L146 67" stroke="#a3b3c9" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+            <!-- 缺陷：中部油污 -->
+            <ellipse cx="196" cy="180" rx="26" ry="15" fill="#b9a06a" opacity=".3"/>
+            <ellipse cx="188" cy="176" rx="12" ry="7" fill="#9c8250" opacity=".26"/>
+            <!-- 合格特征：倒角槽 -->
+            <path d="M60 232 L112 232" stroke="#9fb3cd" stroke-width="7" stroke-linecap="round"/>
+            <path d="M60 252 L88 252" stroke="#b0c1d6" stroke-width="7" stroke-linecap="round"/>
+          </svg>
+          <div class="scanline" aria-hidden="true"></div>
+          <!-- 检测框由 JS 驱动 -->
+          <div class="detect-box" data-x="19%" data-y="17%" data-w="19%" data-h="8%"><span class="lbl">划痕 L12 · 96.4%</span></div>
+          <div class="detect-box" data-x="42%" data-y="52%" data-w="14%" data-h="11%"><span class="lbl">脏污 D03 · 91.8%</span></div>
+          <div class="detect-box pass" data-x="13%" data-y="71%" data-w="16%" data-h="14%"><span class="lbl">PASS</span></div>
+        </div>
+        <div class="inspector-foot">
+          <span id="insCount">今日检测 0 件</span>
+          <span class="verdict ok" id="insVerdict">PASS · 合格</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 行业跑马灯 ================= -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marqueeTrack">
+      <span>汽车零部件</span><span>3C 电子</span><span>新能源电池</span><span>光伏组件</span><span>精密五金</span><span>食品包装</span><span>医疗器械</span><span>家电制造</span>
+    </div>
+  </div>
+
+  <!-- ================= 核心能力 ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">CORE CAPABILITIES</div>
+        <h2>三大核心能力<br>覆盖<em>从质检到决策</em>的每一环</h2>
+        <p>从产线末端的一只相机，到经营驾驶舱的一块大屏——云图智联提供端到端的制造业 AI 基础设施。</p>
+      </div>
+      <div class="cap-grid">
+        <article class="cap-card reveal" data-d="1">
+          <div class="idx">01 / VISION</div>
+          <h3>AI 视觉质检</h3>
+          <p>自研缺陷检测模型，小样本即可上线，漏检率低于 0.3%，替代 80% 人眼复检工位。</p>
+          <div class="fig" aria-hidden="true">
+            <div class="row" style="top:26px"><span>检出率</span><span class="bar"><i style="width:99.2%"></i></span><span>99.2%</span></div>
+            <div class="row" style="top:56px"><span>漏检率</span><span class="bar"><i style="width:0.8%"></i></span><span>0.3%</span></div>
+            <div class="row" style="top:86px"><span>节拍</span><span class="bar"><i style="width:60%"></i></span><span>60ms</span></div>
+            <div class="scan"></div>
+          </div>
+        </article>
+        <article class="cap-card reveal" data-d="2">
+          <div class="idx">02 / DATA</div>
+          <h3>工厂数据中台</h3>
+          <p>打通 MES / ERP / SCADA / PLC 数据孤岛，统一指标口径，让良率、节拍、能耗一屏可见。</p>
+          <div class="fig" aria-hidden="true">
+            <div class="row" style="top:26px"><span>指标模板</span><span class="bar"><i style="width:100%"></i></span><span>200+</span></div>
+            <div class="row" style="top:56px"><span>数据源</span><span class="bar"><i style="width:88%"></i></span><span>12 类</span></div>
+            <div class="row" style="top:86px"><span>查询响应</span><span class="bar"><i style="width:92%"></i></span><span>&lt;1s</span></div>
+            <div class="scan"></div>
+          </div>
+        </article>
+        <article class="cap-card reveal" data-d="3">
+          <div class="idx">03 / OPS</div>
+          <h3>设备智能运维</h3>
+          <p>基于振动、电流、温度多源信号的预测性维护，提前 7 天预警故障，非计划停机下降 60%。</p>
+          <div class="fig" aria-hidden="true">
+            <div class="row" style="top:26px"><span>预警提前</span><span class="bar"><i style="width:85%"></i></span><span>7 天</span></div>
+            <div class="row" style="top:56px"><span>停机下降</span><span class="bar"><i style="width:60%"></i></span><span>60%</span></div>
+            <div class="row" style="top:86px"><span>覆盖设备</span><span class="bar"><i style="width:78%"></i></span><span>9 类</span></div>
+            <div class="scan"></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 数据带 ================= -->
+  <section class="stats-band">
+    <div class="wrap">
+      <div class="stats-grid">
+        <div class="stat-cell reveal"><b><span data-count="120">0</span><i>+</i></b><span>服务工厂客户</span></div>
+        <div class="stat-cell reveal" data-d="1"><b><span data-count="99.2" data-dec="1">0</span><i>%</i></b><span>缺陷检出率</span></div>
+        <div class="stat-cell reveal" data-d="2"><b><span data-count="35">0</span><i>%</i></b><span>平均质检成本下降</span></div>
+        <div class="stat-cell reveal" data-d="3"><b><span data-count="6">0</span><i> 周</i></b><span>首条产线改造周期</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 实施流程 ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">HOW WE WORK</div>
+        <h2>六周，从第一条产线开始</h2>
+        <p>不是交付一套软件就结束——我们与工厂共同经历完整的智能化改造周期。</p>
+      </div>
+      <div class="flow">
+        <div class="step reveal"><div class="no">STEP 01</div><h3>免费产线勘测</h3><p>行业顾问驻场 1 天，评估缺陷类型、节拍与 ROI，出具改造建议书。</p></div>
+        <div class="step reveal" data-d="1"><div class="no">STEP 02</div><h3>方案与打样</h3><p>2 周内完成光学方案设计与小批量打样，客户现场验证检出效果。</p></div>
+        <div class="step reveal" data-d="2"><div class="no">STEP 03</div><h3>部署与联调</h3><p>工位加装、模型训练、与 MES 联调，不影响现有产线正常生产。</p></div>
+        <div class="step reveal" data-d="3"><div class="no">STEP 04</div><h3>验收与持续运营</h3><p>按约定指标验收，客户成功团队每季度复盘，模型持续迭代优化。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 证言 ================= -->
+  <section class="section tight">
+    <div class="wrap">
+      <div class="quote-block reveal">
+        <blockquote>上线云图智联的视觉质检后，我们的终检工位从 14 人缩减到 2 人，漏检客诉下降了两个数量级。更重要的是，团队终于可以把质量数据用来指导工艺改进，而不是只用来救火。</blockquote>
+        <div class="who"><span class="tag">汽车零部件 · 长三角</span><span>某上市公司质量总监 · 合作 3 年</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="section tight">
+    <div class="wrap">
+      <div class="cta-panel reveal">
+        <div class="scanline" aria-hidden="true"></div>
+        <div class="kicker" style="justify-content:center">START NOW</div>
+        <h2>准备好让产线开始「思考」了吗？</h2>
+        <p>留下您的需求，我们将在 1 个工作日内安排行业顾问与您联系。</p>
+        <a class="btn lg" href="contact.html">立即联系我们<span class="arr">→</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="js/common.js"></script>
+<script>
+/* ---------- AI 质检演示台驱动 ---------- */
+(function () {
+  const stage = document.getElementById('insStage')
+  if (!stage) return
+  const boxes = stage.querySelectorAll('.detect-box')
+  const verdict = document.getElementById('insVerdict')
+  const count = document.getElementById('insCount')
+  const unitId = document.getElementById('insId')
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  boxes.forEach(b => {
+    b.style.left = b.dataset.x; b.style.top = b.dataset.y
+    b.style.width = b.dataset.w; b.style.height = b.dataset.h
+  })
+
+  const cases = [
+    { boxes: [true, true, true], verdict: 'PASS', text: 'PASS · 合格', total: 1841 },
+    { boxes: [true, true, false], verdict: 'NG', text: 'NG · 不合格', total: 1842 },
+    { boxes: [true, false, true], verdict: 'NG', text: 'NG · 不合格', total: 1843 },
+    { boxes: [false, false, true], verdict: 'PASS', text: 'PASS · 合格', total: 1844 }
+  ]
+  let ci = 0
+  function run() {
+    const c = cases[ci % cases.length]; ci++
+    boxes.forEach((b, i) => b.classList.toggle('show', c.boxes[i]))
+    verdict.textContent = c.text
+    verdict.className = 'verdict ' + (c.verdict === 'PASS' ? 'ok' : 'ng')
+    count.textContent = '今日检测 ' + c.total.toLocaleString() + ' 件'
+    unitId.textContent = 'UNIT #A-' + String(700 + ci).padStart(4, '0')
+  }
+  run()
+  if (!reduced) setInterval(run, 3400)
+})()
+</script>
+</body>
+</html>
